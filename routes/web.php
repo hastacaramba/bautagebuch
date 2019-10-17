@@ -17,10 +17,15 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/', function () {
-    return view('index');
+    return view('start');
+})->middleware('auth');
+
+Route::get('/', function () {
+    $bauprojekte = DB::table('projects')->get();
+    return view('start', ['bauprojekte' => $bauprojekte]);
 })->middleware('auth');
 
 Route::get('/bauprojekte', function () {
@@ -31,3 +36,7 @@ Route::get('/bauprojekte', function () {
 Route::post('/project', 'ProjectController@newProject')->name('newProject');
 
 Route::get('/projects', 'ProjectController@projectsJson')->name('projectsJson');
+
+Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upload');
+
+Route::post('image-upload-post', 'ImageUploadController@imageUploadPost')->name('image.upload.post');

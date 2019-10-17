@@ -21,7 +21,7 @@ class CreateProjectsTable extends Migration
             $table->string('housenumber')->nullable();
             $table->string('postcode')->nullable();
             $table->string('city')->nullable();
-            $table->string('photo')->nullable();
+            $table->string('photo')->nullable()->default('user.jpg');
             $table->timestamps();
         });
     }

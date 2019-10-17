@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Project;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -25,9 +26,9 @@ class ProjectController extends Controller
         $project->postcode = $request->postcode;
         $project->city = $request->city;
         $project->photo = $request->photo;
-
         $project->save();
     }
+
 
     /**
      * Returns all projects in DB table projects as json.

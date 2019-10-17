@@ -205,46 +205,19 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Bauprojekte</h1>
-          <div class="mt-2 mb-2">
-            <button id="btnNewProject" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neues Bauprojekt</button>
-          </div>
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Liste aller Bauprojekte</h6>
-            </div>
-            <div class="card-body">
-              <div class="table-responsive">
-                <!-- Table: Projects -->
-                <table
-                    id="table"
-                    data-id-field="Name"
-                    data-side-pagination="client"
-                    data-toggle="table"
-                    data-sortable="true"
-                    data-url="/projects"
-                    data-toolbar="#toolbar"
-                    data-search="true"
-                    data-show-columns="false"
-                    data-pagination="true"
-                    data-page-list="[10, 25, 50, 100, ALL]"
-                    data-detail-formatter="detailFormatter"
-                    data-detail-view="false"
-                    data-response-handler="responseHandler"
-                    data-show-export="false"
-                    data-show-pagination-switch="true"
-                    data-row-style="rowStyle">
-                </table>
+        <div class="container">
+          <div class="row">
+            @foreach($bauprojekte as $key => $data)
+              <div class="col-md-6">
+                <div class="card p-4" style="max-height: 400px; overflow: hidden">
+                  <h3>{{$data->number}} {{$data->name}}</h3>
+                  <img src="/img/{{$data->photo}}" style="width: 100%; max-height: 300px;">
+                </div>
               </div>
-            </div>
+            @endforeach
           </div>
-
         </div>
-        <!-- /.container-fluid -->
+        <!-- /.container -->
 
       </div>
       <!-- End of Main Content -->
@@ -253,7 +226,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2019</span>
+            <span>powered by dippl it services</span>
           </div>
         </div>
       </footer>
@@ -301,48 +274,39 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="form-group">
-            <label for="number">Laufende Nummer</label>
-            <input type="text" class="form-control" id="number" placeholder="Laufende Nummer">
-          </div>
-          <div class="form-group">
-            <label for="name">Projektname</label>
-            <input type="text" class="form-control" id="name" placeholder="Projektname">
-          </div>
-          <div class="form-group">
-            <form action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <label for="image">Foto</label>
-              <div class="row">
-                <div class="col-md-10">
-                  <input type="file" id ="image" name="image" class="form-control">
-                </div>
-                <div id="newProjectImage"></div>
-                <div class="col-md-2">
-                  <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="form-group">
-            <label for="street">Straße</label>
-            <input type="text" class="form-control" id="street" placeholder="Straße">
-          </div>
-          <div class="form-group">
-            <label for="housenumber">Hausnummer</label>
-            <input type="text" class="form-control" id="housenumber" placeholder="Hausnummer">
-          </div>
-          <div class="form-group">
-            <label for="postcode">PLZ</label>
-            <input type="text" class="form-control" id="postcode" placeholder="PLZ">
-          </div>
-          <div class="form-group">
-            <label for="city">Ort</label>
-            <input type="text" class="form-control" id="city" placeholder="Ort">
-          </div>
+          <form>
+            <div class="form-group">
+              <label for="number">Laufende Nummer</label>
+              <input type="text" class="form-control" id="number" placeholder="Laufende Nummer">
+            </div>
+            <div class="form-group">
+              <label for="name">Projektname</label>
+              <input type="text" class="form-control" id="name" placeholder="Projektname">
+            </div>
+            <div class="form-group">
+              <label for="street">Straße</label>
+              <input type="text" class="form-control" id="street" placeholder="Straße">
+            </div>
+            <div class="form-group">
+              <label for="housenumber">Hausnummer</label>
+              <input type="text" class="form-control" id="housenumber" placeholder="Hausnummer">
+            </div>
+            <div class="form-group">
+              <label for="postcode">PLZ</label>
+              <input type="text" class="form-control" id="postcode" placeholder="PLZ">
+            </div>
+            <div class="form-group">
+              <label for="city">Ort</label>
+              <input type="text" class="form-control" id="city" placeholder="Ort">
+            </div>
+            <div class="form-group">
+              <label for="photo">Foto</label>
+              <input type="text" class="form-control" id="photo" placeholder="Foto">
+            </div>
+            <button id="btnSaveNewProject" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Bauprojekt anlegen</button>
+          </form>
         </div>
         <div class="modal-footer">
-          <button id="btnSaveNewProject" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Bauprojekt anlegen</button>
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
         </div>
       </div>
@@ -373,244 +337,15 @@
 
   <script>
     $(document).ready(function () {
-
-      $imageFileName = '';
-
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
-      //init bootstrap table projects
-      initTable();
-
-      // this is the id of the form
-      $("form").submit(function(e) {
-
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-
-        var formData = new FormData();
-        // Attach file
-        formData.append('image', $('input[type=file]')[0].files[0]);
-
-        $.ajax({
-          url: '/image-upload-post',
-          data: formData,
-          type: 'POST',
-          contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-          processData: false, // NEEDED, DON'T OMIT THIS
-          success: function(data) {
-            $imageFileName = data;
-            $("#newProjectImage").html('<img class="table-img" src="images/' + data + '">');
-            $("#btnUploadImage").hide();
-            //$("#btnUploadImage").attr("disabled","disabled");
-          }
-        });
-
-      });
-
-      $("#btnSaveNewProject").click(function () {
-        //Create new project
-        $.ajax({
-          type: "POST",
-          url: "/project",
-          data: {
-            "number": $("#number").val(),
-            "name": $("#name").val(),
-            "street": $("#street").val(),
-            "housenumber": $("#housenumber").val(),
-            "postcode": $("#postcode").val(),
-            "city": $("#city").val(),
-            "photo": $imageFileName
-          },
-          success: function (data) {
-            location.reload();
-          }
-        });
-      });
-
     });
-
-
-
   </script>
 
   <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
-
-  <script>
-    $("#btnNewProject").click(function (e) {
-      e.preventDefault();
-      $("#modalNewProject").modal('toggle');
-    });
-
-
-    // - BOOTSTRAP-TABLE - //
-
-    var $table = $('#table')
-    var $remove = $('#remove')
-    var $activate = $('#activate')
-    var $deactivate = $('#deactivate')
-    var $newPW = $('#newPW')
-    var selections = []
-
-    /**
-     * Gibt eine map der Projekt-IDs der aktuell selektierten Zeilen zurück.
-     *
-     */
-    function getIdSelections() {
-      return $.map($table.bootstrapTable('getSelections'), function (row) {
-        return row.id;
-      })
-    }
-
-
-    /**
-     * Bootstrap-table response handler
-     *
-     * @param res
-     * @returns {*}
-     */
-    function responseHandler(res) {
-      $.each(res.rows, function (i, row) {
-        row.state = $.inArray(row.id, selections) !== -1
-      })
-      return res
-    }
-
-    /**
-     * Bootstrap-table detailFormatter
-     *
-     * @param index
-     * @param row
-     * @returns {string}
-     */
-    function detailFormatter(index, row) {
-      var html = []
-      $.each(row, function (key, value) {
-        html.push('<p><b>' + key + ':</b> ' + value + '</p>')
-      })
-      return html.join('')
-    }
-
-
-    /**
-     *
-     * @param value
-     * @param row
-     * @param index
-     * @returns {string}
-     */
-    function operateFormatter(value, row, index) {
-      return [
-        '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
-        '<button type="button" class="btn btn-default" style="color:#00a8D5; border: none" ><i class="fas fa-edit"></i></button>',
-        '</a>  '
-      ].join('')
-    }
-
-
-    function imageFormatter(value, row, index) {
-      return [
-        '<img class="img-fluid table-img" src="images/' + value + '" />'
-      ]
-    }
-
-    function createdAtFormatter(value, row, index) {
-        var date = value.substring(0,value.length - 9);
-      return [
-        date
-      ]
-    }
-
-    function updatedAtFormatter(value, row, index) {
-      var date = value.substring(0,value.length - 3);
-      return [
-        date
-      ]
-    }
-
-    window.operateEvents = {
-      'click .edit': function (e, value, row, index) {
-        //alert('You click like action, row: ' + JSON.stringify(row));
-        var data = row;
-        var url = "/benutzerdaten/"+ data.Benutzername;
-        var deaktiviert = false;
-        if (data.DeaktiviertAm != null) {
-          deaktiviert = true;
-        }
-      }
-    }
-
-    /**
-     * Initiiert die Bootstrap-Table.
-     */
-    function initTable() {
-      $table.bootstrapTable('destroy').bootstrapTable({
-        locale: 'de-DE',
-        columns: [
-          {
-            field: 'state',
-            checkbox: true,
-            align: 'center',
-            valign: 'middle'
-          }, {
-            field: 'photo',
-            title: 'Foto',
-            sortable: false,
-            align: 'left',
-            formatter: imageFormatter
-          }, {
-            title: 'Nummer',
-            field: 'number',
-            align: 'left',
-            valign: 'middle',
-            sortable: true,
-          }, {
-            field: 'name',
-            title: 'Name',
-            sortable: true,
-            align: 'left'
-          }, {
-            field: 'created_at',
-            title: 'erstellt',
-            sortable: true,
-            align: 'left',
-            formatter: createdAtFormatter
-          }, {
-            field: 'updated_at',
-            title: 'zuletzt bearbeitet',
-            sortable: true,
-            align: 'left',
-            formatter: updatedAtFormatter
-          }, {
-            field: 'operate',
-            title: 'Bearbeiten',
-            align: 'center',
-            events: window.operateEvents,
-            formatter: operateFormatter
-          }
-        ]
-      })
-      $table.on('check.bs.table uncheck.bs.table ' +
-              'check-all.bs.table uncheck-all.bs.table',
-              function () {
-                //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
-                //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
-                //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
-                //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
-
-                // save your data, here just save the current page
-                selections = getIdSelections()
-                // push or splice the selections if you want to save all data selections
-              })
-      $table.on('all.bs.table', function (e, name, args) {
-        //console.log(name, args)
-      })
-
-    }
-
-
-  </script>
 
 
 </body>

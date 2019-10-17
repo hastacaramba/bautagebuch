@@ -1,0 +1,18 @@
+label {
+    font-weight: bold;
+}
+
+/* placeholder style */
+.form-control::-moz-placeholder {
+    color: #bbb;
+}
+.form-control:-ms-input-placeholder {
+    color: #bbb;
+}
+.form-control::-webkit-input-placeholder {
+    color: #bbb;
+}
+
+.table-img {
+    max-width: 150px;
+}
