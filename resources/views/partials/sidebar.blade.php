@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/bauprojekte">
         <div class="sidebar-brand-icon">
             <i class="fas fa-building"></i>
         </div>
@@ -19,16 +19,9 @@
 
     <!-- Nav Item - Bauprojekte Start -->
     <li class="nav-item" id="navItemBauprojekte">
-        <a class="nav-link" href="/">
+        <a class="nav-link" href="/bauprojekte">
             <i class="fas fa-home"></i>
-            <span>Bauprojekte Übersicht</span></a>
-    </li>
-
-    <!-- Nav Item - Bauprojekte verwalten-->
-    <li class="nav-item" id="navItemBauprojekteVerwalten">
-        <a class="nav-link" href="bauprojekte">
-            <i class="fas fa-list-ol"></i>
-            <span>Bauprojekte verwalten</span></a>
+            <span>Bauprojekte</span></a>
     </li>
 
     <!-- Divider -->

@@ -211,7 +211,7 @@
               <div class="col-md-6">
                 <div class="card p-4" style="max-height: 400px; overflow: hidden">
                   <h3>{{$data->number}} {{$data->name}}</h3>
-                  <img src="/img/{{$data->photo}}" style="width: 100%; max-height: 300px;">
+                  <img src="/images/{{$data->photo}}" style="width: 100%; max-height: 300px;">
                 </div>
               </div>
             @endforeach

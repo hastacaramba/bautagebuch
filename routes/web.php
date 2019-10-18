@@ -37,6 +37,10 @@ Route::post('/project', 'ProjectController@newProject')->name('newProject');
 
 Route::get('/projects', 'ProjectController@projectsJson')->name('projectsJson');
 
+Route::patch('/projects/{projectID}/update', 'ProjectController@updateProject');
+
+Route::get('/projects/{projectID}', 'ProjectController@getProject');
+
 Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upload');
 
 Route::post('image-upload-post', 'ImageUploadController@imageUploadPost')->name('image.upload.post');

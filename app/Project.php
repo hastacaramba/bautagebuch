@@ -8,7 +8,7 @@ class Project extends Model {
 
     protected $table = 'projects';
 
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'project_id';
 
     protected $fillable = [
         'name',
@@ -20,5 +20,31 @@ class Project extends Model {
         'photo'
     ];
 
+    /**
+     * Get the projectnotes for the project.
+     */
+    public function projectnotes() {
+        return $this->hasMany('App\Projectnote');
+    }
 
+    /**
+     * Get the visits for the project.
+     */
+    public function visits() {
+        return $this->hasMany('App\Visit');
+    }
+
+    /**
+     * Get the documents for the project.
+     */
+    public function documents() {
+        return $this->hasMany('App\Document');
+    }
+
+    /**
+     * Get the members for the project.
+     */
+    public function members() {
+        return $this->hasMany('App\Member');
+    }
 }

@@ -206,40 +206,32 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
-          <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Bauprojekte</h1>
-          <div class="mt-2 mb-2">
-            <button id="btnNewProject" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neues Bauprojekt</button>
-          </div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Liste aller Bauprojekte</h6>
+              <div class="row">
+                <div class="col-md-10">
+                  <h2 class="m-0 font-weight-bold text-primary">Bauprojekt: {{ $number }} {{ $name }}</h2>
+                  <div class="border-left-primary pl-2">
+                    {{ $street }} {{ $housenumber }}, {{ $postcode }} {{ $city }}<br>
+                    Erstellt: {{ $created_at }}<br>
+                    Letzte Aktualisierung: {{ $updated_at }}
+
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <img class="img-fluid img-rounded" src="/images/{{ $photo }}">
+                </div>
+              </div>
             </div>
             <div class="card-body">
-              <div class="table-responsive">
-                <!-- Table: Projects -->
-                <table
-                    id="table"
-                    data-id-field="Name"
-                    data-side-pagination="client"
-                    data-toggle="table"
-                    data-sortable="true"
-                    data-url="/projects"
-                    data-toolbar="#toolbar"
-                    data-search="true"
-                    data-show-columns="false"
-                    data-pagination="true"
-                    data-page-list="[10, 25, 50, 100, ALL]"
-                    data-detail-formatter="detailFormatter"
-                    data-detail-view="false"
-                    data-response-handler="responseHandler"
-                    data-show-export="false"
-                    data-show-pagination-switch="true"
-                    data-row-style="rowStyle">
-                </table>
-              </div>
+              <h3>Projektbeteiligte</h3>
+            </div>
+            <div class="card-body">
+              <h3>Begehungen</h3>
+            </div>
+            <div class="card-body">
+              <h3>Bemerkungen</h3>
             </div>
           </div>
 
@@ -248,6 +240,11 @@
 
       </div>
       <!-- End of Main Content -->
+
+      @component('partials.footer')
+        <strong>Whoops!</strong> Something went wrong!
+      @endcomponent
+
 
     </div>
     <!-- End of Content Wrapper -->
@@ -340,72 +337,6 @@
   </div>
   <!-- New Project Modal [end] -->
 
-  <!-- Edit Project Modal [start] -->
-  <div class="modal fade" id="modalEditProject" tabindex="-1" role="dialog" aria-labelledby="editProjectModal" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-edit"></i> Bauprojekt bearbeiten</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="projectID">ID</label>
-            <input type="text" class="form-control" readonly id="projectID" placeholder="Projekt-ID">
-          </div>
-          <div class="form-group">
-            <label for="newNumber">Laufende Nummer</label>
-            <input type="text" class="form-control" id="newNumber" placeholder="Laufende Nummer">
-          </div>
-          <div class="form-group">
-            <label for="newName">Projektname</label>
-            <input type="text" class="form-control" id="newName" placeholder="Projektname">
-          </div>
-          <div class="form-group">
-            <label for="oldPhoto">Foto</label>
-            <div class="mb-3" id="oldPhoto"></div>
-            <form action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <label for="image">Foto ersetzen</label>
-              <div class="row">
-                <div class="col-md-9">
-                  <input type="file" id ="image" name="image" class="form-control">
-                </div>
-                <div class="col-md-3">
-                  <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
-                  <div id="newProjectImage"class="mt-1"></div>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="form-group">
-            <label for="newStreet">Straße</label>
-            <input type="text" class="form-control" id="newStreet" placeholder="Straße">
-          </div>
-          <div class="form-group">
-            <label for="newHousenumber">Hausnummer</label>
-            <input type="text" class="form-control" id="newHousenumber" placeholder="Hausnummer">
-          </div>
-          <div class="form-group">
-            <label for="newPostcode">PLZ</label>
-            <input type="text" class="form-control" id="newPostcode" placeholder="PLZ">
-          </div>
-          <div class="form-group">
-            <label for="newCity">Ort</label>
-            <input type="text" class="form-control" id="newCity" placeholder="Ort">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button id="btnSaveEditedProject" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Edit Project Modal [end] -->
-
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>
   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -493,34 +424,6 @@
 
       });
 
-      $("#btnSaveEditedProject").click(function () {
-        //Create new project
-        if (($("#newNumber").val().length) && ($("#newName").val().length) ) {
-          if ($imageFileName == '') {
-            $imageFileName = 'default.jpg';
-          }
-          $.ajax({
-            type: "PATCH",
-            url: "/projects/" + $("#projectID").val() + "/update",
-            data: {
-              "number": $("#newNumber").val(),
-              "name": $("#newName").val(),
-              "street": $("#newStreet").val(),
-              "housenumber": $("#newHousenumber").val(),
-              "postcode": $("#newPostcode").val(),
-              "city": $("#newCity").val(),
-              "photo": $imageFileName
-            },
-            success: function (data) {
-              location.reload();
-            }
-          });
-        } else {
-          alert("Bitte füllen Sie die Pflichtfelder Nummer und Name für das Projekt aus!");
-        }
-
-      });
-
     });
 
 
@@ -596,8 +499,7 @@
       return [
         '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
           '<button type="button" class="btn btn-default" style="color:#00a8D5; border: none" ><i class="fas fa-edit"></i></button>',
-        '</a>  '
-
+        '</a> '
       ].join('')
     }
 
@@ -624,16 +526,14 @@
 
     window.operateEvents = {
       'click .edit': function (e, value, row, index) {
-        $("#projectID").val(row.id);
+        alert("test");
         $("#newNumber").val(row.number);
         $("#newName").val(row.name);
         $("#newStreet").val(row.street);
         $("#newHousenumber").val(row.housenumber);
         $("#newPostcode").val(row.postcode);
         $("#newCity").val(row.city);
-        $fileName = row.photo;
-        $("#oldPhoto").html("<img class=\"img-rounded table-img\" src=\"images/" + $fileName + "\">");
-        $("#modalEditProject").modal('toggle');
+        $("#modalEditProject").fadeIn();
       }
     }
 

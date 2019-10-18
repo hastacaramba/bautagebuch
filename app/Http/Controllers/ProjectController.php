@@ -31,6 +31,29 @@ class ProjectController extends Controller
 
 
     /**
+     * Update the project with the given id.
+     *
+     * @param $id The id of the project
+     * @param  Request  $request
+     * @return Response
+     */
+    public function updateProject(Request $request, $projectID) {
+        $project = Project::where('id', '=', $projectID)->first();
+
+        if ($project != null) {
+            $project->name = $request->name;
+            $project->number = $request->number;
+            $project->street = $request->street;
+            $project->housenumber = $request->housenumber;
+            $project->postcode = $request->postcode;
+            $project->city = $request->city;
+            $project->photo = $request->photo;
+            $project->save();
+        }
+    }
+
+
+    /**
      * Returns all projects in DB table projects as json.
      *
      * @return mixed
@@ -41,4 +64,45 @@ class ProjectController extends Controller
 
         return json_encode($projects);
     }
+
+
+    /**
+     * Returns the project with the given id.
+     *
+     * @param $projectID
+     * @return array|null
+     */
+    public function getProject($projectID) {
+        $project = Project::where('id', '=', $projectID)->first();
+
+        if ($project == null) {
+            return null;
+        }
+
+        $result = [
+            'number' => $project->number,
+            'name' => $project->name,
+            'street' => $project->street,
+            'housenumber' => $project->housenumber,
+            'postcode' => $project->postcode,
+            'city' => $project->city,
+            'created_at' => $project->created_at,
+            'updated_at' => $project->updated_at,
+            'photo' => $project->photo
+        ];
+
+        return view('project', [
+            'number' => $project->number,
+            'name' => $project->name,
+            'street' => $project->street,
+            'housenumber' => $project->housenumber,
+            'postcode' => $project->postcode,
+            'city' => $project->city,
+            'created_at' => $project->created_at,
+            'updated_at' => $project->updated_at,
+            'photo' => $project->photo
+        ]);
+    }
+
+
 }

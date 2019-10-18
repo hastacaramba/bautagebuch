@@ -16,3 +16,7 @@ label {
 .table-img {
     max-width: 150px;
 }
+
+.img-rounded {
+    border-radius: 5px;
+}
