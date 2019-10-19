@@ -21,7 +21,8 @@ class Projectnote extends Model {
         'file2',
         'file3',
         'deadline',
-        'done'
+        'done',
+        'project_id'
     ];
 
     /**

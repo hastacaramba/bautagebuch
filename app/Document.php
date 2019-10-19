@@ -11,7 +11,8 @@ class Document extends Model {
     protected $primaryKey = 'document_id';
 
     protected $fillable = [
-        'filename'
+        'filename',
+        'project_id'
     ];
 
     /**

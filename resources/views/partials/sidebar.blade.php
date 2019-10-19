@@ -25,8 +25,19 @@
     </li>
 
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <hr class="sidebar-divider my-0">
 
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Listen
+    </div>
+
+    <!-- Nav Item - Bauprojekte Start -->
+    <li class="nav-item" id="navItemKontakte">
+        <a class="nav-link" href="/kontakte">
+            <i class="fas fa-users"></i>
+            <span>Kontakte</span></a>
+    </li>
 
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">

@@ -21,13 +21,11 @@ Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
 
 Route::get('/', function () {
-    $bauprojekte = DB::table('projects')->get();
-    return view('bauprojekte', ['bauprojekte' => $bauprojekte]);
+    return view('bauprojekte');
 })->middleware('auth');
 
 Route::get('/home', function () {
-    $bauprojekte = DB::table('projects')->get();
-    return view('bauprojekte', ['bauprojekte' => $bauprojekte]);
+    return view('bauprojekte');
 })->middleware('auth');
 
 /*
@@ -38,13 +36,22 @@ Route::get('/home', function () {
 */
 
 Route::get('/bauprojekte', function () {
-    $bauprojekte = DB::table('projects')->get();
-    return view('bauprojekte', ['bauprojekte' => $bauprojekte]);
+    return view('bauprojekte');
+})->middleware('auth');
+
+Route::get('/kontakte', function () {
+    return view('kontakte');
 })->middleware('auth');
 
 Route::post('/project', 'ProjectController@newProject')->name('newProject');
 
 Route::get('/projects', 'ProjectController@projectsJson')->name('projectsJson');
+
+Route::post('/contact', 'ContactController@newContact')->name('newContact');
+
+Route::get('/contacts', 'ContactController@contactsJson')->name('contactsJson');
+
+Route::patch('/contacts/{contactID}/update', 'ContactController@updateContact');
 
 Route::patch('/projects/{projectID}/update', 'ProjectController@updateProject');
 

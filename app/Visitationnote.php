@@ -21,7 +21,8 @@ class Visitationnote extends Model {
         'file2',
         'file3',
         'deadline',
-        'done'
+        'done',
+        'visit_id'
     ];
 
     /**

@@ -200,30 +200,30 @@
         <div class="container-fluid">
 
           <div class="mt-2 mb-2">
-            <button id="btnNewProject" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neues Bauprojekt</button>
+            <button id="btnNewContact" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Kontakt</button>
           </div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Liste aller Bauprojekte</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Liste aller Kontakte</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <!-- Table: Projects -->
                 <table
                     id="table"
-                    data-id-field="Name"
+                    data-id-field="contact_id"
                     data-side-pagination="client"
                     data-toggle="table"
                     data-sortable="true"
-                    data-url="/projects"
+                    data-url="/contacts"
                     data-toolbar="#toolbar"
                     data-search="true"
-                    data-show-columns="false"
+                    data-show-columns="true"
                     data-pagination="true"
                     data-page-list="[10, 25, 50, 100, ALL]"
                     data-detail-formatter="detailFormatter"
-                    data-detail-view="false"
+                    data-detail-view="true"
                     data-response-handler="responseHandler"
                     data-show-export="false"
                     data-show-pagination-switch="true"
@@ -256,39 +256,28 @@
   @endcomponent
   <!-- Logout Modal [end] -->
 
-  <!-- New Project Modal [start] -->
-  <div class="modal fade" id="modalNewProject" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true">
+  <!-- New Contact Modal [start] -->
+  <div class="modal fade" id="modalNewContact" tabindex="-1" role="dialog" aria-labelledby="newContactModal" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus-circle"></i> Neues Bauprojekt anlegen</h5>
+          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus-circle"></i> Neuen Kontakt anlegen</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="number">Laufende Nummer</label>
-            <input type="text" class="form-control" id="number" placeholder="Laufende Nummer">
+            <label for="company">Firma</label>
+            <input type="text" class="form-control" id="company" placeholder="Name der Firma">
           </div>
           <div class="form-group">
-            <label for="name">Projektname</label>
-            <input type="text" class="form-control" id="name" placeholder="Projektname">
+            <label for="surname">Nachname</label>
+            <input type="text" class="form-control" id="surname" placeholder="Nachname">
           </div>
           <div class="form-group">
-            <form action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <label for="image">Foto</label>
-              <div class="row">
-                <div class="col-md-9">
-                  <input type="file" id ="image" name="image" class="form-control">
-                </div>
-                <div class="col-md-3">
-                  <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
-                  <div id="newProjectImage"class="mt-1"></div>
-                </div>
-              </div>
-            </form>
+            <label for="firstname">Vorname</label>
+            <input type="text" class="form-control" id="firstname" placeholder="Vorname">
           </div>
           <div class="form-group">
             <label for="street">Straße</label>
@@ -306,55 +295,62 @@
             <label for="city">Ort</label>
             <input type="text" class="form-control" id="city" placeholder="Ort">
           </div>
+          <div class="form-group">
+            <label for="email">E-Mail</label>
+            <input type="text" class="form-control" id="email" placeholder="E-Mail-Adresse">
+          </div>
+          <div class="form-group">
+            <label for="phone">Telefon</label>
+            <input type="text" class="form-control" id="phone" placeholder="Telefonnummer">
+          </div>
+          <div class="form-group">
+            <label for="mobile">Mobiltelefon</label>
+            <input type="text" class="form-control" id="mobile" placeholder="Handynummer">
+          </div>
+          <div class="form-group">
+            <label for="fax">Fax</label>
+            <input type="text" class="form-control" id="fax" placeholder="Faxnummer">
+          </div>
+          <div class="form-group">
+            <label for="info">Info</label>
+            <input type="text" class="form-control" id="info" placeholder="Informationen zum Kontakt">
+          </div>
         </div>
         <div class="modal-footer">
-          <button id="btnSaveNewProject" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Bauprojekt anlegen</button>
+          <button id="btnSaveNewContact" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Kontakt anlegen</button>
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
         </div>
       </div>
     </div>
   </div>
-  <!-- New Project Modal [end] -->
+  <!-- New Contact Modal [end] -->
 
-  <!-- Edit Project Modal [start] -->
-  <div class="modal fade" id="modalEditProject" tabindex="-1" role="dialog" aria-labelledby="editProjectModal" aria-hidden="true">
+  <!-- Edit Contact Modal [start] -->
+  <div class="modal fade" id="modalEditContact" tabindex="-1" role="dialog" aria-labelledby="editContactModal" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-edit"></i> Bauprojekt bearbeiten</h5>
+          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-edit"></i> Kontakt bearbeiten</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group" style="display:none">
-            <label for="projectID">ID</label>
-            <input type="text" class="form-control" readonly id="projectID" placeholder="Projekt-ID">
+            <label for="contactID">ID</label>
+            <input type="text" class="form-control" readonly id="contactID">
           </div>
           <div class="form-group">
-            <label for="newNumber">Laufende Nummer</label>
-            <input type="text" class="form-control" id="newNumber" placeholder="Laufende Nummer">
+            <label for="newSurname">Nachname</label>
+            <input type="text" class="form-control" id="newSurname" placeholder="Nachname">
           </div>
           <div class="form-group">
-            <label for="newName">Projektname</label>
-            <input type="text" class="form-control" id="newName" placeholder="Projektname">
+            <label for="newFirstname">Vorname</label>
+            <input type="text" class="form-control" id="newFirstname" placeholder="Vorname">
           </div>
           <div class="form-group">
-            <label for="oldPhoto">Foto</label>
-            <div class="mb-3" id="oldPhoto"></div>
-            <form action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <label for="image">Foto ersetzen</label>
-              <div class="row">
-                <div class="col-md-9">
-                  <input type="file" id ="image" name="image" class="form-control">
-                </div>
-                <div class="col-md-3">
-                  <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
-                  <div id="newProjectImage"class="mt-1"></div>
-                </div>
-              </div>
-            </form>
+            <label for="newCompany">Firma</label>
+            <input type="text" class="form-control" id="newCompany" placeholder="Name der Firma">
           </div>
           <div class="form-group">
             <label for="newStreet">Straße</label>
@@ -372,9 +368,29 @@
             <label for="newCity">Ort</label>
             <input type="text" class="form-control" id="newCity" placeholder="Ort">
           </div>
+          <div class="form-group">
+            <label for="newEmail">E-Mail</label>
+            <input type="text" class="form-control" id="newEmail" placeholder="E-Mail-Adresse">
+          </div>
+          <div class="form-group">
+            <label for="newPhone">Telefon</label>
+            <input type="text" class="form-control" id="newPhone" placeholder="Telefonnummer">
+          </div>
+          <div class="form-group">
+            <label for="newMobile">Mobiltelefon</label>
+            <input type="text" class="form-control" id="newMobile" placeholder="Handynummer">
+          </div>
+          <div class="form-group">
+            <label for="newFax">Fax</label>
+            <input type="text" class="form-control" id="newFax" placeholder="Faxnummer">
+          </div>
+          <div class="form-group">
+            <label for="newInfo">Info</label>
+            <input type="text" class="form-control" id="newInfo" placeholder="Informationen zum Kontakt">
+          </div>
         </div>
         <div class="modal-footer">
-          <button id="btnSaveEditedProject" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
+          <button id="btnSaveEditedContact" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
         </div>
       </div>
@@ -400,7 +416,7 @@
   <script src="../../js/demo/datatables-demo.js"></script>
 
   <script>
-    $("#navItemBauprojekte").addClass("active");
+    $("#navItemKontakte").addClass("active");
   </script>
 
   <script>
@@ -416,84 +432,57 @@
       //init bootstrap table projects
       initTable();
 
-      // this is the id of the form
-      $("form").submit(function(e) {
-
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-
-        var formData = new FormData();
-        // Attach file
-        formData.append('image', $('input[type=file]')[0].files[0]);
+      //Button Click 'Neuer Kontakt'
+      $("#btnSaveNewContact").click(function () {
 
         $.ajax({
-          url: '/image-upload-post',
-          data: formData,
-          type: 'POST',
-          contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-          processData: false, // NEEDED, DON'T OMIT THIS
-          success: function(data) {
-            $imageFileName = data;
-            $("#newProjectImage").html('<img class="img-fluid img-rounded" src="images/' + data + '">');
-            $("#btnUploadImage").hide();
-            //$("#btnUploadImage").attr("disabled","disabled");
+          type: "POST",
+          url: "/contact",
+          data: {
+            "surname": $("#surname").val(),
+            "firstname": $("#firstname").val(),
+            "company": $("#company").val(),
+            "street": $("#street").val(),
+            "housenumber": $("#housenumber").val(),
+            "postcode": $("#postcode").val(),
+            "city": $("#city").val(),
+            "email": $("#email").val(),
+            "phone": $("#phone").val(),
+            "mobile": $("#mobile").val(),
+            "fax": $("#fax").val(),
+            "info": $("#info").val()
+          },
+          success: function (data) {
+            location.reload();
           }
         });
 
       });
 
-      $("#btnSaveNewProject").click(function () {
-        //Create new project
-        if (($("#number").val().length) && ($("#name").val().length) ) {
-          if ($imageFileName == '') {
-            $imageFileName = 'default.jpg';
-          }
-          $.ajax({
-            type: "POST",
-            url: "/project",
-            data: {
-              "number": $("#number").val(),
-              "name": $("#name").val(),
-              "street": $("#street").val(),
-              "housenumber": $("#housenumber").val(),
-              "postcode": $("#postcode").val(),
-              "city": $("#city").val(),
-              "photo": $imageFileName
-            },
-            success: function (data) {
-              location.reload();
-            }
-          });
-        } else {
-          alert("Bitte füllen Sie die Pflichtfelder Nummer und Name für das neue Projekt aus!");
-        }
+      //Button Click 'Kontakt speichern'
+      $("#btnSaveEditedContact").click(function () {
 
-      });
-
-      $("#btnSaveEditedProject").click(function () {
-        //Create new project
-        if (($("#newNumber").val().length) && ($("#newName").val().length) ) {
-          if ($imageFileName == '') {
-            $imageFileName = 'default.jpg';
+        $.ajax({
+          type: "PATCH",
+          url: "/contacts/" + $("#contactID").val() + "/update",
+          data: {
+            "surname": $("#newSurname").val(),
+            "firstname": $("#newFirstname").val(),
+            "company": $("#newCompany").val(),
+            "street": $("#newStreet").val(),
+            "housenumber": $("#newHousenumber").val(),
+            "postcode": $("#newPostcode").val(),
+            "city": $("#newCity").val(),
+            "email": $("#newEmail").val(),
+            "phone": $("#newPhone").val(),
+            "mobile": $("#newMobile").val(),
+            "fax": $("#newFax").val(),
+            "info": $("#newInfo").val()
+          },
+          success: function (data) {
+            location.reload();
           }
-          $.ajax({
-            type: "PATCH",
-            url: "/projects/" + $("#projectID").val() + "/update",
-            data: {
-              "number": $("#newNumber").val(),
-              "name": $("#newName").val(),
-              "street": $("#newStreet").val(),
-              "housenumber": $("#newHousenumber").val(),
-              "postcode": $("#newPostcode").val(),
-              "city": $("#newCity").val(),
-              "photo": $imageFileName
-            },
-            success: function (data) {
-              location.reload();
-            }
-          });
-        } else {
-          alert("Bitte füllen Sie die Pflichtfelder Nummer und Name für das Projekt aus!");
-        }
+        });
 
       });
 
@@ -502,9 +491,9 @@
   </script>
 
   <script>
-    $("#btnNewProject").click(function (e) {
+    $("#btnNewContact").click(function (e) {
       e.preventDefault();
-      $("#modalNewProject").modal('toggle');
+      $("#modalNewContact").modal('toggle');
     });
 
 
@@ -594,18 +583,29 @@
       ]
     }
 
+    function emailFormatter(value, row, index) {
+      var email = '<a href="mailto:' + value + '">' + value + '</a>';
+      return [
+        email
+      ]
+    }
+
     window.operateEvents = {
       'click .edit': function (e, value, row, index) {
-        $("#projectID").val(row.project_id);
-        $("#newNumber").val(row.number);
-        $("#newName").val(row.name);
+        $("#newCompany").val(row.company);
+        $("#contactID").val(row.contact_id);
+        $("#newSurname").val(row.surname);
+        $("#newFirstname").val(row.firstname);
         $("#newStreet").val(row.street);
         $("#newHousenumber").val(row.housenumber);
         $("#newPostcode").val(row.postcode);
         $("#newCity").val(row.city);
-        $fileName = row.photo;
-        $("#oldPhoto").html("<img class=\"img-rounded table-img\" src=\"images/" + $fileName + "\">");
-        $("#modalEditProject").modal('toggle');
+        $("#newInfo").val(row.info);
+        $("#newEmail").val(row.email);
+        $("#newPhone").val(row.phone);
+        $("#newMobile").val(row.mobile);
+        $("#newFax").val(row.fax);
+        $("#modalEditContact").modal('toggle');
       }
     }
 
@@ -617,34 +617,36 @@
         locale: 'de-DE',
         columns: [
           {
-            field: 'photo',
-            title: 'Foto',
+            field: 'surname',
+            title: 'Nachname',
             sortable: false,
-            align: 'left',
-            formatter: imageFormatter
+            align: 'left'
           }, {
-            title: 'Nummer',
-            field: 'number',
+            field: 'firstname',
+            title: 'Vorname',
             align: 'left',
-            valign: 'middle',
-            sortable: true,
+            sortable: true
           }, {
-            field: 'name',
-            title: 'Name',
+            field: 'company',
+            title: 'Firma',
             sortable: true,
             align: 'left'
           }, {
-            field: 'created_at',
-            title: 'erstellt',
+            field: 'city',
+            title: 'Ort',
             sortable: true,
-            align: 'left',
-            formatter: createdAtFormatter
+            align: 'left'
           }, {
-            field: 'updated_at',
-            title: 'zuletzt bearbeitet',
+            field: 'email',
+            title: 'E-Mail',
             sortable: true,
             align: 'left',
-            formatter: updatedAtFormatter
+            formatter: emailFormatter
+          }, {
+            field: 'phone',
+            title: 'Telefon',
+            sortable: true,
+            align: 'left'
           }, {
             field: 'operate',
             title: 'Bearbeiten',

@@ -79,18 +79,6 @@ class ProjectController extends Controller
             return null;
         }
 
-        $result = [
-            'number' => $project->number,
-            'name' => $project->name,
-            'street' => $project->street,
-            'housenumber' => $project->housenumber,
-            'postcode' => $project->postcode,
-            'city' => $project->city,
-            'created_at' => $project->created_at,
-            'updated_at' => $project->updated_at,
-            'photo' => $project->photo
-        ];
-
         return view('project', [
             'number' => $project->number,
             'name' => $project->name,

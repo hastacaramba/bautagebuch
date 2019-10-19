@@ -15,7 +15,9 @@ class CreateMembersTable extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('responsibility',['project','subarea']);
+            $table->integer('project_id');
+            $table->integer('contact_id');
+            $table->integer('subarea_id');
             $table->timestamps();
         });
     }

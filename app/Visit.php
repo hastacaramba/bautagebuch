@@ -14,7 +14,8 @@ class Visit extends Model {
         'title',
         'date',
         'time',
-        'notes'
+        'notes',
+        'project_id'
     ];
 
     /**

@@ -26,6 +26,7 @@ class CreateProjectnotesTable extends Migration
             $table->string('file3')->nullable();
             $table->date('deadline')->nullable();
             $table->boolean('done')->default(0);
+            $table->integer('project_id');
             $table->timestamps();
         });
     }

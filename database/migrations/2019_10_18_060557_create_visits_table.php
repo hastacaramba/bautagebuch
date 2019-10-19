@@ -19,6 +19,7 @@ class CreateVisitsTable extends Migration
             $table->date('date');
             $table->dateTime('time');
             $table->string('notes');
+            $table->integer('project_id');
             $table->timestamps();
         });
     }

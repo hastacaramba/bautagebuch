@@ -11,7 +11,10 @@ class Member extends Model {
     protected $primaryKey = 'member_id';
 
     protected $fillable = [
-        'responsibility'
+        'responsibility',
+        'project_id',
+        'contact_id',
+        'subarea_id'
     ];
 
 
