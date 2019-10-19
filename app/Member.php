@@ -11,7 +11,7 @@ class Member extends Model {
     protected $primaryKey = 'member_id';
 
     protected $fillable = [
-        'role',
+        'responsibility'
     ];
 
 
@@ -27,6 +27,13 @@ class Member extends Model {
      */
     public function contact() {
         return $this->hasOne('App\Contact');
+    }
+
+    /**
+     * Get the subarea of the member.
+     */
+    public function subarea() {
+        return $this->hasOne('App\Subarea');
     }
 
 }

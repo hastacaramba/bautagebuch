@@ -20,3 +20,7 @@ label {
 .img-rounded {
     border-radius: 5px;
 }
+
+.img-logo {
+    max-height: 50px;
+}

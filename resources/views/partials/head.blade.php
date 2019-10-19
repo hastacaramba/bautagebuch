@@ -23,8 +23,4 @@
     <link href="../../css/sb-admin-2.css" rel="stylesheet">
     <link href="../../css/custom.css" rel="stylesheet">
 
-    <!-- Bootstrap-tables -->
-    <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
-    <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
-
 </head>

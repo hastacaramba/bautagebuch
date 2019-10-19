@@ -29,17 +29,10 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+          <!-- m+m Logo -->
+          <div>
+            <img class="img-fluid img-logo" src="/img/logo.png">
+          </div>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -174,8 +167,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -207,8 +199,6 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-          <!-- Page Heading -->
-          <h1 class="h3 mb-2 text-gray-800">Bauprojekte</h1>
           <div class="mt-2 mb-2">
             <button id="btnNewProject" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neues Bauprojekt</button>
           </div>
@@ -261,23 +251,9 @@
   </a>
 
   <!-- Logout Modal [start] -->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login2.blade.php">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  @component('partials.logoutModal')
+    <strong>Whoops!</strong> Something went wrong!
+  @endcomponent
   <!-- Logout Modal [end] -->
 
   <!-- New Project Modal [start] -->
@@ -604,7 +580,7 @@
 
     function imageFormatter(value, row, index) {
       return [
-        '<a href="/projects/' + row.id + '"><img class="img-fluid table-img" src="images/' + value + '" /></a>'
+        '<a href="/projects/' + row.project_id + '"><img class="img-fluid table-img" src="images/' + value + '" /></a>'
       ]
     }
 
@@ -624,7 +600,7 @@
 
     window.operateEvents = {
       'click .edit': function (e, value, row, index) {
-        $("#projectID").val(row.id);
+        $("#projectID").val(row.project_id);
         $("#newNumber").val(row.number);
         $("#newName").val(row.name);
         $("#newStreet").val(row.street);
@@ -700,8 +676,11 @@
 
     }
 
-
   </script>
+
+  <!-- bootstrap tables -->
+  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-locale-all.min.js"></script>
 
 
 </body>

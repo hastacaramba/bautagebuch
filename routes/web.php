@@ -17,16 +17,25 @@ Route::get('/', function () {
 
 Auth::routes();
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 
-Route::get('/', function () {
-    return view('start');
-})->middleware('auth');
 
 Route::get('/', function () {
     $bauprojekte = DB::table('projects')->get();
+    return view('bauprojekte', ['bauprojekte' => $bauprojekte]);
+})->middleware('auth');
+
+Route::get('/home', function () {
+    $bauprojekte = DB::table('projects')->get();
+    return view('bauprojekte', ['bauprojekte' => $bauprojekte]);
+})->middleware('auth');
+
+/*
+Route::get('/home', function () {
+    $bauprojekte = DB::table('projects')->get();
     return view('start', ['bauprojekte' => $bauprojekte]);
 })->middleware('auth');
+*/
 
 Route::get('/bauprojekte', function () {
     $bauprojekte = DB::table('projects')->get();
