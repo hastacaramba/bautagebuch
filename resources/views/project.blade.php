@@ -269,7 +269,7 @@
                         data-pagination="true"
                         data-page-list="[10, 25, 50, 100, ALL]"
                         data-detail-formatter="detailFormatter"
-                        data-detail-view="false"
+                        data-detail-view="true"
                         data-response-handler="responseHandler"
                         data-show-export="false"
                         data-show-pagination-switch="true"
