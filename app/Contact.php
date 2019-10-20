@@ -29,7 +29,7 @@ class Contact extends Model {
      * Get the member objects of a contact.
      */
     public function members() {
-        return $this->hasMany('App\Member');
+        return $this->hasMany('App\Member', 'member_id', 'member_id');
     }
 
     /**

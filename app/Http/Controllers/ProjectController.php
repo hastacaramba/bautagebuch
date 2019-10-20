@@ -80,6 +80,7 @@ class ProjectController extends Controller
         }
 
         return view('project', [
+            'projectID' => $project->project_id,
             'number' => $project->number,
             'name' => $project->name,
             'street' => $project->street,

@@ -234,7 +234,7 @@
                   data-side-pagination="client"
                   data-toggle="table"
                   data-sortable="true"
-                  data-url="/"
+                  data-url="/members/{{ $projectID }}"
                   data-search="true"
                   data-show-columns="false"
                   data-pagination="true"
