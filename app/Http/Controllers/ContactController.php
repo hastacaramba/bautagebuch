@@ -11,7 +11,7 @@ class ContactController extends Controller
 {
 
     /**
-     * Create a new project instance.
+     * Create a new contact instance.
      *
      * @param  Request  $request
      * @return Response

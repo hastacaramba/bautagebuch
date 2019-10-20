@@ -1723,6 +1723,7 @@ pre code {
   border-radius: 0.35rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   margin-bottom: 5px;
+  margin-right: 5px;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -200,30 +200,30 @@
         <div class="container-fluid">
 
           <div class="mt-2 mb-2">
-            <button id="btnNewContact" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Kontakt</button>
+            <button id="btnNewSubarea" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neues Gewerk</button>
           </div>
-          <!-- DataTales Example -->
+          <!-- Table Subareas -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Liste aller Kontakte</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Liste aller Gewerke</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 <!-- Table: Projects -->
                 <table
                     id="table"
-                    data-id-field="contact_id"
+                    data-id-field="subarea_id"
                     data-side-pagination="client"
                     data-toggle="table"
                     data-sortable="true"
-                    data-url="/contacts"
+                    data-url="/subareas"
                     data-toolbar="#toolbar"
                     data-search="true"
-                    data-show-columns="true"
+                    data-show-columns="false"
                     data-pagination="true"
                     data-page-list="[10, 25, 50, 100, ALL]"
                     data-detail-formatter="detailFormatter"
-                    data-detail-view="true"
+                    data-detail-view="false"
                     data-response-handler="responseHandler"
                     data-show-export="false"
                     data-show-pagination-switch="true"
@@ -256,147 +256,59 @@
   @endcomponent
   <!-- Logout Modal [end] -->
 
-  <!-- New Contact Modal [start] -->
-  <div class="modal fade" id="modalNewContact" tabindex="-1" role="dialog" aria-labelledby="newContactModal" aria-hidden="true">
+  <!-- New Subarea Modal [start] -->
+  <div class="modal fade" id="modalNewSubarea" tabindex="-1" role="dialog" aria-labelledby="newSubareaModal" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus-circle"></i> Neuen Kontakt anlegen</h5>
+          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus-circle"></i> Neues Gewerk anlegen</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group">
-            <label for="company">Firma</label>
-            <input type="text" class="form-control" id="company" placeholder="Name der Firma">
-          </div>
-          <div class="form-group">
-            <label for="surname">Nachname</label>
-            <input type="text" class="form-control" id="surname" placeholder="Nachname">
-          </div>
-          <div class="form-group">
-            <label for="firstname">Vorname</label>
-            <input type="text" class="form-control" id="firstname" placeholder="Vorname">
-          </div>
-          <div class="form-group">
-            <label for="street">Straße</label>
-            <input type="text" class="form-control" id="street" placeholder="Straße">
-          </div>
-          <div class="form-group">
-            <label for="housenumber">Hausnummer</label>
-            <input type="text" class="form-control" id="housenumber" placeholder="Hausnummer">
-          </div>
-          <div class="form-group">
-            <label for="postcode">PLZ</label>
-            <input type="text" class="form-control" id="postcode" placeholder="PLZ">
-          </div>
-          <div class="form-group">
-            <label for="city">Ort</label>
-            <input type="text" class="form-control" id="city" placeholder="Ort">
-          </div>
-          <div class="form-group">
-            <label for="email">E-Mail</label>
-            <input type="text" class="form-control" id="email" placeholder="E-Mail-Adresse">
-          </div>
-          <div class="form-group">
-            <label for="phone">Telefon</label>
-            <input type="text" class="form-control" id="phone" placeholder="Telefonnummer">
-          </div>
-          <div class="form-group">
-            <label for="mobile">Mobiltelefon</label>
-            <input type="text" class="form-control" id="mobile" placeholder="Handynummer">
-          </div>
-          <div class="form-group">
-            <label for="fax">Fax</label>
-            <input type="text" class="form-control" id="fax" placeholder="Faxnummer">
-          </div>
-          <div class="form-group">
-            <label for="info">Info</label>
-            <input type="text" class="form-control" id="info" placeholder="Informationen zum Kontakt">
+            <label for="title">Bezeichnung</label>
+            <input type="text" class="form-control" id="title" placeholder="Bezeichnung des Gewerks">
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnSaveNewContact" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Kontakt anlegen</button>
+          <button id="btnSaveNewSubarea" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Gewerk anlegen</button>
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
         </div>
       </div>
     </div>
   </div>
-  <!-- New Contact Modal [end] -->
+  <!-- New Subarea Modal [end] -->
 
-  <!-- Edit Contact Modal [start] -->
-  <div class="modal fade" id="modalEditContact" tabindex="-1" role="dialog" aria-labelledby="editContactModal" aria-hidden="true">
+  <!-- Edit Subarea Modal [start] -->
+  <div class="modal fade" id="modalEditSubarea" tabindex="-1" role="dialog" aria-labelledby="editSubareaModal" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-edit"></i> Kontakt bearbeiten</h5>
+          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-edit"></i> Gewerk bearbeiten</h5>
           <button class="close" type="button" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="form-group" style="display:none">
-            <label for="contactID">ID</label>
-            <input type="text" class="form-control" readonly id="contactID">
+            <label for="subareaID">ID</label>
+            <input type="text" class="form-control" readonly id="subareaID">
           </div>
           <div class="form-group">
-            <label for="newSurname">Nachname</label>
-            <input type="text" class="form-control" id="newSurname" placeholder="Nachname">
-          </div>
-          <div class="form-group">
-            <label for="newFirstname">Vorname</label>
-            <input type="text" class="form-control" id="newFirstname" placeholder="Vorname">
-          </div>
-          <div class="form-group">
-            <label for="newCompany">Firma</label>
-            <input type="text" class="form-control" id="newCompany" placeholder="Name der Firma">
-          </div>
-          <div class="form-group">
-            <label for="newStreet">Straße</label>
-            <input type="text" class="form-control" id="newStreet" placeholder="Straße">
-          </div>
-          <div class="form-group">
-            <label for="newHousenumber">Hausnummer</label>
-            <input type="text" class="form-control" id="newHousenumber" placeholder="Hausnummer">
-          </div>
-          <div class="form-group">
-            <label for="newPostcode">PLZ</label>
-            <input type="text" class="form-control" id="newPostcode" placeholder="PLZ">
-          </div>
-          <div class="form-group">
-            <label for="newCity">Ort</label>
-            <input type="text" class="form-control" id="newCity" placeholder="Ort">
-          </div>
-          <div class="form-group">
-            <label for="newEmail">E-Mail</label>
-            <input type="text" class="form-control" id="newEmail" placeholder="E-Mail-Adresse">
-          </div>
-          <div class="form-group">
-            <label for="newPhone">Telefon</label>
-            <input type="text" class="form-control" id="newPhone" placeholder="Telefonnummer">
-          </div>
-          <div class="form-group">
-            <label for="newMobile">Mobiltelefon</label>
-            <input type="text" class="form-control" id="newMobile" placeholder="Handynummer">
-          </div>
-          <div class="form-group">
-            <label for="newFax">Fax</label>
-            <input type="text" class="form-control" id="newFax" placeholder="Faxnummer">
-          </div>
-          <div class="form-group">
-            <label for="newInfo">Info</label>
-            <input type="text" class="form-control" id="newInfo" placeholder="Informationen zum Kontakt">
+            <label for="newTitle">Bezeichnung</label>
+            <input type="text" class="form-control" id="newTitle" placeholder="Bezeichnung des Gewerks">
           </div>
         </div>
         <div class="modal-footer">
-          <button id="btnSaveEditedContact" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
+          <button id="btnSaveEditedSubarea" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
         </div>
       </div>
     </div>
   </div>
-  <!-- Edit Contact Modal [end] -->
+  <!-- Edit Subarea Modal [end] -->
 
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>
@@ -410,19 +322,16 @@
 
   <!-- Page level plugins -->
   <script src="../../vendor/datatables/jquery.dataTables.min.js"></script>
-  <script src="../../vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
   <!-- Page level custom scripts -->
   <script src="../../js/demo/datatables-demo.js"></script>
 
   <script>
-    $("#navItemKontakte").addClass("active");
+    $("#navItemGewerke").addClass("active");
   </script>
 
   <script>
     $(document).ready(function () {
-
-      $imageFileName = '';
 
       $.ajaxSetup({
         headers: {
@@ -432,25 +341,14 @@
       //init bootstrap table projects
       initTable();
 
-      //Button Click 'Neuer Kontakt'
-      $("#btnSaveNewContact").click(function () {
+      //Button Click 'Neues Gewerk'
+      $("#btnSaveNewSubarea").click(function () {
 
         $.ajax({
           type: "POST",
-          url: "/contact",
+          url: "/subarea",
           data: {
-            "surname": $("#surname").val(),
-            "firstname": $("#firstname").val(),
-            "company": $("#company").val(),
-            "street": $("#street").val(),
-            "housenumber": $("#housenumber").val(),
-            "postcode": $("#postcode").val(),
-            "city": $("#city").val(),
-            "email": $("#email").val(),
-            "phone": $("#phone").val(),
-            "mobile": $("#mobile").val(),
-            "fax": $("#fax").val(),
-            "info": $("#info").val()
+            "title": $("#title").val(),
           },
           success: function (data) {
             location.reload();
@@ -459,25 +357,14 @@
 
       });
 
-      //Button Click 'Kontakt speichern'
-      $("#btnSaveEditedContact").click(function () {
+      //Button Click 'Gewerk speichern'
+      $("#btnSaveEditedSubarea").click(function () {
 
         $.ajax({
           type: "PATCH",
-          url: "/contacts/" + $("#contactID").val() + "/update",
+          url: "/subareas/" + $("#subareaID").val() + "/update",
           data: {
-            "surname": $("#newSurname").val(),
-            "firstname": $("#newFirstname").val(),
-            "company": $("#newCompany").val(),
-            "street": $("#newStreet").val(),
-            "housenumber": $("#newHousenumber").val(),
-            "postcode": $("#newPostcode").val(),
-            "city": $("#newCity").val(),
-            "email": $("#newEmail").val(),
-            "phone": $("#newPhone").val(),
-            "mobile": $("#newMobile").val(),
-            "fax": $("#newFax").val(),
-            "info": $("#newInfo").val()
+            "title": $("#newTitle").val(),
           },
           success: function (data) {
             location.reload();
@@ -488,12 +375,20 @@
 
     });
 
+    //auch bei 'Enter' reagieren
+    $("#newTitle").keypress(function(event){
+      var keycode = (event.keyCode ? event.keyCode : event.which);
+      if(keycode == '13'){
+        $("#btnSaveEditedSubarea").click();
+      }
+    });
+
   </script>
 
   <script>
-    $("#btnNewContact").click(function (e) {
+    $("#btnNewSubarea").click(function (e) {
       e.preventDefault();
-      $("#modalNewContact").modal('toggle');
+      $("#modalNewSubarea").modal('toggle');
     });
 
 
@@ -562,13 +457,6 @@
       ].join('')
     }
 
-
-    function imageFormatter(value, row, index) {
-      return [
-        '<a href="/projects/' + row.project_id + '"><img class="img-fluid table-img" src="images/' + value + '" /></a>'
-      ]
-    }
-
     function createdAtFormatter(value, row, index) {
         var date = value.substring(0,value.length - 9);
       return [
@@ -583,29 +471,12 @@
       ]
     }
 
-    function emailFormatter(value, row, index) {
-      var email = '<a href="mailto:' + value + '">' + value + '</a>';
-      return [
-        email
-      ]
-    }
 
     window.operateEvents = {
       'click .edit': function (e, value, row, index) {
-        $("#newCompany").val(row.company);
-        $("#contactID").val(row.contact_id);
-        $("#newSurname").val(row.surname);
-        $("#newFirstname").val(row.firstname);
-        $("#newStreet").val(row.street);
-        $("#newHousenumber").val(row.housenumber);
-        $("#newPostcode").val(row.postcode);
-        $("#newCity").val(row.city);
-        $("#newInfo").val(row.info);
-        $("#newEmail").val(row.email);
-        $("#newPhone").val(row.phone);
-        $("#newMobile").val(row.mobile);
-        $("#newFax").val(row.fax);
-        $("#modalEditContact").modal('toggle');
+        $("#newTitle").val(row.title);
+        $("#subareaID").val(row.subarea_id);
+        $("#modalEditSubarea").modal('toggle');
       }
     }
 
@@ -617,34 +488,8 @@
         locale: 'de-DE',
         columns: [
           {
-            field: 'surname',
-            title: 'Nachname',
-            sortable: false,
-            align: 'left'
-          }, {
-            field: 'firstname',
-            title: 'Vorname',
-            align: 'left',
-            sortable: true
-          }, {
-            field: 'company',
-            title: 'Firma',
-            sortable: true,
-            align: 'left'
-          }, {
-            field: 'city',
-            title: 'Ort',
-            sortable: true,
-            align: 'left'
-          }, {
-            field: 'email',
-            title: 'E-Mail',
-            sortable: true,
-            align: 'left',
-            formatter: emailFormatter
-          }, {
-            field: 'phone',
-            title: 'Telefon',
+            field: 'title',
+            title: 'Bezeichnung des Gewerks',
             sortable: true,
             align: 'left'
           }, {

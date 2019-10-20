@@ -32,11 +32,17 @@
         Listen
     </div>
 
-    <!-- Nav Item - Bauprojekte Start -->
+    <!-- Nav Item - Kontakte Start -->
     <li class="nav-item" id="navItemKontakte">
         <a class="nav-link" href="/kontakte">
             <i class="fas fa-users"></i>
             <span>Kontakte</span></a>
+    </li>
+    <!-- Nav Item - Gewerke Start -->
+    <li class="nav-item" id="navItemGewerke">
+        <a class="nav-link" href="/gewerke">
+            <i class="fas fa-users"></i>
+            <span>Gewerke</span></a>
     </li>
 
     <!-- Sidebar Toggler (Sidebar) -->

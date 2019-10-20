@@ -43,6 +43,10 @@ Route::get('/kontakte', function () {
     return view('kontakte');
 })->middleware('auth');
 
+Route::get('/gewerke', function () {
+    return view('gewerke');
+})->middleware('auth');
+
 Route::post('/project', 'ProjectController@newProject')->name('newProject');
 
 Route::get('/projects', 'ProjectController@projectsJson')->name('projectsJson');
@@ -52,6 +56,10 @@ Route::post('/contact', 'ContactController@newContact')->name('newContact');
 Route::get('/contacts', 'ContactController@contactsJson')->name('contactsJson');
 
 Route::patch('/contacts/{contactID}/update', 'ContactController@updateContact');
+
+Route::get('/subareas', 'SubareaController@subareasJson')->name('subareasJson');
+
+Route::patch('/subareas/{subareaID}/update', 'SubareaController@updateSubarea');
 
 Route::patch('/projects/{projectID}/update', 'ProjectController@updateProject');
 

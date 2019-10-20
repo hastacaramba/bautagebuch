@@ -206,35 +206,49 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <!-- DataTales Example -->
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <div class="row">
-                <div class="col-md-10">
-                  <h2 class="m-0 font-weight-bold text-primary">Bauprojekt: {{ $number }} {{ $name }}</h2>
-                  <div class="border-left-primary pl-2">
-                    {{ $street }} {{ $housenumber }}, {{ $postcode }} {{ $city }}<br>
-                    Erstellt: {{ $created_at }}<br>
-                    Letzte Aktualisierung: {{ $updated_at }}
-
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <img class="img-fluid img-rounded" src="/images/{{ $photo }}">
-                </div>
+          <div class="row">
+            <div class="col-md-10">
+              <h2 class="m-0 font-weight-bold text-primary">Bauprojekt: {{ $number }} {{ $name }}</h2>
+              <div class="border-left-primary pl-2">
+                {{ $street }} {{ $housenumber }}, {{ $postcode }} {{ $city }}<br>
+                Erstellt: {{ $created_at }}<br>
+                Letzte Aktualisierung: {{ $updated_at }}
               </div>
             </div>
-            <div class="card-body">
-              <h3>Projektbeteiligte</h3>
-            </div>
-            <div class="card-body">
-              <h3>Begehungen</h3>
-            </div>
-            <div class="card-body">
-              <h3>Bemerkungen</h3>
+            <div class="col-md-2">
+              <img class="img-fluid img-rounded" src="/images/{{ $photo }}">
             </div>
           </div>
-
+        </div>
+        <div class="card-body">
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h4>Projektbeteiligte</h4>
+            </div>
+            <div class="card-body">
+              <!-- Table Subareas -->
+              <div class="table-responsive">
+                <table
+                  id="tableMembers"
+                  data-id-field="member_id"
+                  data-side-pagination="client"
+                  data-toggle="table"
+                  data-sortable="true"
+                  data-url="/"
+                  data-search="true"
+                  data-show-columns="false"
+                  data-pagination="true"
+                  data-page-list="[10, 25, 50, 100, ALL]"
+                  data-detail-formatter="detailFormatter"
+                  data-detail-view="false"
+                  data-response-handler="responseHandler"
+                  data-show-export="false"
+                  data-show-pagination-switch="true"
+                  data-row-style="rowStyle">
+                </table>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- /.container-fluid -->
 
@@ -441,7 +455,7 @@
 
     // - BOOTSTRAP-TABLE - //
 
-    var $table = $('#table')
+    var $tableMembers = $('#tableMembers')
     var $remove = $('#remove')
     var $activate = $('#activate')
     var $deactivate = $('#deactivate')
@@ -524,6 +538,13 @@
       ]
     }
 
+    function emailFormatter(value, row, index) {
+      var email = '<a href="mailto:' + value + '">' + value + '</a>';
+      return [
+        email
+      ]
+    }
+
     window.operateEvents = {
       'click .edit': function (e, value, row, index) {
         alert("test");
@@ -541,38 +562,35 @@
      * Initiiert die Bootstrap-Table.
      */
     function initTable() {
-      $table.bootstrapTable('destroy').bootstrapTable({
+      $tableMembers.bootstrapTable('destroy').bootstrapTable({
         locale: 'de-DE',
         columns: [
           {
-            field: 'photo',
-            title: 'Foto',
-            sortable: false,
+            field: 'company',
+            title: 'Firma',
+            sortable: true,
             align: 'left',
-            formatter: imageFormatter
           }, {
-            title: 'Nummer',
-            field: 'number',
+            title: 'Nachname',
+            field: 'surname',
             align: 'left',
-            valign: 'middle',
             sortable: true,
           }, {
-            field: 'name',
-            title: 'Name',
+            field: 'firstname',
+            title: 'Vorname',
             sortable: true,
             align: 'left'
           }, {
-            field: 'created_at',
-            title: 'erstellt',
+            field: 'email',
+            title: 'E-Mail',
             sortable: true,
             align: 'left',
-            formatter: createdAtFormatter
+            formatter: emailFormatter
           }, {
-            field: 'updated_at',
-            title: 'zuletzt bearbeitet',
+            field: 'subarea',
+            title: 'Gewerk',
             sortable: true,
             align: 'left',
-            formatter: updatedAtFormatter
           }, {
             field: 'operate',
             title: 'Bearbeiten',
