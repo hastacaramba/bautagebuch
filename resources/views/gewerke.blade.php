@@ -199,13 +199,13 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-          <div class="mt-2 mb-2">
+          <div id="toolbar">
             <button id="btnNewSubarea" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neues Gewerk</button>
           </div>
           <!-- Table Subareas -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Liste aller Gewerke</h6>
+              <h4><i class="fas fa-tools"></i> Gewerke</h4>
             </div>
             <div class="card-body">
               <div class="table-responsive">

@@ -41,7 +41,7 @@
     <!-- Nav Item - Gewerke Start -->
     <li class="nav-item" id="navItemGewerke">
         <a class="nav-link" href="/gewerke">
-            <i class="fas fa-users"></i>
+            <i class="fas fa-tools"></i>
             <span>Gewerke</span></a>
     </li>
 

@@ -67,6 +67,8 @@ Route::get('/projects/{projectID}', 'ProjectController@getProject');
 
 Route::get('/members/{projectID}', 'MemberController@projectMembersJson');
 
+Route::get('/visits/{projectID}', 'VisitController@projectVisitsJson');
+
 Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upload');
 
 Route::post('image-upload-post', 'ImageUploadController@imageUploadPost')->name('image.upload.post');

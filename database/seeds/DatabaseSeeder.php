@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             ProjectsTableSeeder::class,
             ContactsTableSeeder::class,
             SubareasTableSeeder::class,
-            MembersTableSeeder::class
+            MembersTableSeeder::class,
+            VisitsTableSeeder::class
         ]);
     }
 }

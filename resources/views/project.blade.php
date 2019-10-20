@@ -29,17 +29,10 @@
             <i class="fa fa-bars"></i>
           </button>
 
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
+          <!-- m+m Logo -->
+          <div>
+            <img class="img-fluid img-logo" src="/img/logo.png">
+          </div>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -223,10 +216,13 @@
         <div class="card-body">
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h4>Projektbeteiligte</h4>
+              <h4><i class="fas fa-users"></i> Projektbeteiligte</h4>
             </div>
             <div class="card-body">
-              <!-- Table Subareas -->
+              <div id="toolbarMembers">
+                <button id="btnNewMember" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Projektbeteiligter</button>
+              </div>
+              <!-- Table Members -->
               <div class="table-responsive">
                 <table
                   id="tableMembers"
@@ -235,6 +231,7 @@
                   data-toggle="table"
                   data-sortable="true"
                   data-url="/members/{{ $projectID }}"
+                  data-toolbar="#toolbarMembers"
                   data-search="true"
                   data-show-columns="false"
                   data-pagination="true"
@@ -245,6 +242,38 @@
                   data-show-export="false"
                   data-show-pagination-switch="true"
                   data-row-style="rowStyle">
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h4><i class="fas fa-clipboard-list"></i> Begehungen</h4>
+            </div>
+            <div class="card-body">
+              <div id="toolbarVisits">
+                <button id="btnNewVisit" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neue Begehung</button>
+              </div>
+              <!-- Table Visits -->
+              <div class="table-responsive">
+                <table
+                        id="tableVisits"
+                        data-id-field="visit_id"
+                        data-side-pagination="client"
+                        data-toggle="table"
+                        data-sortable="true"
+                        data-url="/visits/{{ $projectID }}"
+                        data-toolbar="#toolbarVisits"
+                        data-search="true"
+                        data-show-columns="false"
+                        data-pagination="true"
+                        data-page-list="[10, 25, 50, 100, ALL]"
+                        data-detail-formatter="detailFormatter"
+                        data-detail-view="false"
+                        data-response-handler="responseHandler"
+                        data-show-export="false"
+                        data-show-pagination-switch="true"
+                        data-row-style="rowStyle">
                 </table>
               </div>
             </div>
@@ -291,66 +320,6 @@
   </div>
   <!-- Logout Modal [end] -->
 
-  <!-- New Project Modal [start] -->
-  <div class="modal fade" id="modalNewProject" tabindex="-1" role="dialog" aria-labelledby="newProjectModal" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus-circle"></i> Neues Bauprojekt anlegen</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="number">Laufende Nummer</label>
-            <input type="text" class="form-control" id="number" placeholder="Laufende Nummer">
-          </div>
-          <div class="form-group">
-            <label for="name">Projektname</label>
-            <input type="text" class="form-control" id="name" placeholder="Projektname">
-          </div>
-          <div class="form-group">
-            <form action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <label for="image">Foto</label>
-              <div class="row">
-                <div class="col-md-9">
-                  <input type="file" id ="image" name="image" class="form-control">
-                </div>
-                <div class="col-md-3">
-                  <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
-                  <div id="newProjectImage"class="mt-1"></div>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="form-group">
-            <label for="street">Straße</label>
-            <input type="text" class="form-control" id="street" placeholder="Straße">
-          </div>
-          <div class="form-group">
-            <label for="housenumber">Hausnummer</label>
-            <input type="text" class="form-control" id="housenumber" placeholder="Hausnummer">
-          </div>
-          <div class="form-group">
-            <label for="postcode">PLZ</label>
-            <input type="text" class="form-control" id="postcode" placeholder="PLZ">
-          </div>
-          <div class="form-group">
-            <label for="city">Ort</label>
-            <input type="text" class="form-control" id="city" placeholder="Ort">
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button id="btnSaveNewProject" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Bauprojekt anlegen</button>
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- New Project Modal [end] -->
-
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>
   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -375,68 +344,14 @@
   <script>
     $(document).ready(function () {
 
-      $imageFileName = '';
-
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
-      //init bootstrap table projects
-      initTable();
-
-      // this is the id of the form
-      $("form").submit(function(e) {
-
-        e.preventDefault(); // avoid to execute the actual submit of the form.
-
-        var formData = new FormData();
-        // Attach file
-        formData.append('image', $('input[type=file]')[0].files[0]);
-
-        $.ajax({
-          url: '/image-upload-post',
-          data: formData,
-          type: 'POST',
-          contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-          processData: false, // NEEDED, DON'T OMIT THIS
-          success: function(data) {
-            $imageFileName = data;
-            $("#newProjectImage").html('<img class="img-fluid img-rounded" src="images/' + data + '">');
-            $("#btnUploadImage").hide();
-            //$("#btnUploadImage").attr("disabled","disabled");
-          }
-        });
-
-      });
-
-      $("#btnSaveNewProject").click(function () {
-        //Create new project
-        if (($("#number").val().length) && ($("#name").val().length) ) {
-          if ($imageFileName == '') {
-            $imageFileName = 'default.jpg';
-          }
-          $.ajax({
-            type: "POST",
-            url: "/project",
-            data: {
-              "number": $("#number").val(),
-              "name": $("#name").val(),
-              "street": $("#street").val(),
-              "housenumber": $("#housenumber").val(),
-              "postcode": $("#postcode").val(),
-              "city": $("#city").val(),
-              "photo": $imageFileName
-            },
-            success: function (data) {
-              location.reload();
-            }
-          });
-        } else {
-          alert("Bitte füllen Sie die Pflichtfelder Nummer und Name für das neue Projekt aus!");
-        }
-
-      });
+      //init bootstrap tables
+      initTableMembers();
+      initTableVisits();
 
     });
 
@@ -444,30 +359,19 @@
 
   </script>
 
-  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
-
   <script>
-    $("#btnNewProject").click(function (e) {
-      e.preventDefault();
-      $("#modalNewProject").modal('toggle');
-    });
 
 
-    // - BOOTSTRAP-TABLE - //
+    // - BOOTSTRAP-TABLE MEMBERS - //
 
     var $tableMembers = $('#tableMembers')
-    var $remove = $('#remove')
-    var $activate = $('#activate')
-    var $deactivate = $('#deactivate')
-    var $newPW = $('#newPW')
-    var selections = []
 
     /**
      * Gibt eine map der Projekt-IDs der aktuell selektierten Zeilen zurück.
      *
      */
     function getIdSelections() {
-      return $.map($table.bootstrapTable('getSelections'), function (row) {
+      return $.map($tableMembers.bootstrapTable('getSelections'), function (row) {
         return row.id;
       })
     }
@@ -548,20 +452,16 @@
     window.operateEvents = {
       'click .edit': function (e, value, row, index) {
         alert("test");
-        $("#newNumber").val(row.number);
-        $("#newName").val(row.name);
-        $("#newStreet").val(row.street);
-        $("#newHousenumber").val(row.housenumber);
-        $("#newPostcode").val(row.postcode);
-        $("#newCity").val(row.city);
-        $("#modalEditProject").fadeIn();
+      },
+      'click .editVisit': function (e, value, row, index) {
+        alert("test");
       }
     }
 
     /**
      * Initiiert die Bootstrap-Table.
      */
-    function initTable() {
+    function initTableMembers() {
       $tableMembers.bootstrapTable('destroy').bootstrapTable({
         locale: 'de-DE',
         columns: [
@@ -600,7 +500,7 @@
           }
         ]
       })
-      $table.on('check.bs.table uncheck.bs.table ' +
+      $tableMembers.on('check.bs.table uncheck.bs.table ' +
               'check-all.bs.table uncheck-all.bs.table',
               function () {
                 //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
@@ -612,7 +512,108 @@
                 selections = getIdSelections()
                 // push or splice the selections if you want to save all data selections
               })
-      $table.on('all.bs.table', function (e, name, args) {
+      $tableMembers.on('all.bs.table', function (e, name, args) {
+        //console.log(name, args)
+      })
+
+    }
+
+
+    // - BOOTSTRAP-TABLE VISITS - //
+
+    var $tableVisits = $('#tableVisits')
+
+    /**
+     * Gibt eine map der Projekt-IDs der aktuell selektierten Zeilen zurück.
+     *
+     */
+    function getIdSelectionsVisits() {
+      return $.map($tableVisits.bootstrapTable('getSelections'), function (row) {
+        return row.id;
+      })
+    }
+
+    /**
+     *
+     * @param value
+     * @param row
+     * @param index
+     * @returns {string}
+     */
+    function operateFormatterVisits(value, row, index) {
+      return [
+        '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
+        '<button type="button" class="btn btn-default" style="color:#00a8D5; border: none" ><i class="fas fa-edit"></i></button>',
+        '</a> '
+      ].join('')
+    }
+
+    /**
+     *
+     * @param value
+     * @param row
+     * @param index
+     * @returns {string}
+     */
+    function timeFormatter(value, row, index) {
+      var time = value.substring(0,value.length - 3);
+      return [
+        time
+      ]
+    }
+
+    /**
+     * Initiiert die Bootstrap-Table.
+     */
+    function initTableVisits() {
+      $tableVisits.bootstrapTable('destroy').bootstrapTable({
+        /*
+        $visit->title = $request->title;
+        $visit->date = $request->date;
+        $visit->time = $request->time;
+        $visit->notes = $request->notes;
+        $visit->project_id = $projectID;
+        */
+        locale: 'de-DE',
+        columns: [
+          {
+            field: 'date',
+            title: 'Datum',
+            sortable: true,
+            align: 'left',
+          }, {
+            field: 'title',
+            title: 'Titel',
+            align: 'left',
+            sortable: true,
+          }, {
+            field: 'time',
+            title: 'Uhrzeit',
+            align: 'left',
+            sortable: true,
+            formatter: timeFormatter
+          }, {
+            field: 'operate',
+            title: 'Bearbeiten',
+            align: 'center',
+            events: window.operateEvents,
+            formatter: operateFormatterVisits
+          }
+        ]
+      })
+      $tableVisits.on('check.bs.table uncheck.bs.table ' +
+              'check-all.bs.table uncheck-all.bs.table',
+              function () {
+                //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                // save your data, here just save the current page
+                selections = getIdSelectionsVisits()
+                // push or splice the selections if you want to save all data selections
+              })
+      $tableVisits.on('all.bs.table', function (e, name, args) {
         //console.log(name, args)
       })
 
@@ -621,6 +622,9 @@
 
   </script>
 
+  <!-- bootstrap tables -->
+  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-locale-all.min.js"></script>
 
 </body>
 
