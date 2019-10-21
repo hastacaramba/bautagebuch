@@ -416,7 +416,7 @@
     function operateFormatter(value, row, index) {
       return [
         '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
-          '<button type="button" class="btn btn-default" style="color:#00a8D5; border: none" ><i class="fas fa-edit"></i></button>',
+          '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
         '</a> '
       ].join('')
     }
@@ -543,7 +543,7 @@
     function operateFormatterVisits(value, row, index) {
       return [
         '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
-        '<button type="button" class="btn btn-default" style="color:#00a8D5; border: none" ><i class="fas fa-edit"></i></button>',
+        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
         '</a> '
       ].join('')
     }
