@@ -21,21 +21,21 @@ class Member extends Model {
      * Get the project of the member.
      */
     public function project() {
-        return $this->hasOne('App\Project', 'project_id');
+        return $this->belongsTo('App\Project', 'project_id');
     }
 
     /**
      * Get the contact of the member.
      */
     public function contact() {
-        return $this->hasOne('App\Contact', 'contact_id');
+        return $this->belongsTo('App\Contact', 'contact_id');
     }
 
     /**
      * Get the subarea of the member.
      */
     public function subarea() {
-        return $this->hasOne('App\Subarea', 'subarea_id');
+        return $this->belongsTo('App\Subarea', 'subarea_id');
     }
 
 }

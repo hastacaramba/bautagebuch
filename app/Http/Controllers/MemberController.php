@@ -57,9 +57,9 @@ class MemberController extends Controller
 
         for ($i = 0; $i < sizeof($members); $i++) {
 
-            $contact = Contact::where('contact_id', '=', $members[$i]['contact_id'])->first();
+            $contact = $members[$i]->contact;
 
-            $subarea = Subarea::where('subarea_id', '=', $members[$i]['subarea_id'])->first();
+            $subarea = $members[$i]->subarea;
 
             $item = [
                 'company' => $contact['company'],
