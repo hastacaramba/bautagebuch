@@ -167,8 +167,7 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -202,7 +201,7 @@
           <div class="row">
             <div class="col-md-10">
               <h2 class="m-0 font-weight-bold text-primary">Bauprojekt: {{ $number }} {{ $name }}</h2>
-              <div class="border-left-primary pl-2">
+              <div class="border-left-primary pl-2 text-primary">
                 {{ $street }} {{ $housenumber }}, {{ $postcode }} {{ $city }}<br>
                 Erstellt: {{ $created_at }}<br>
                 Letzte Aktualisierung: {{ $updated_at }}
@@ -214,73 +213,79 @@
           </div>
         </div>
         <div class="card-body">
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h4><i class="fas fa-users"></i> Projektbeteiligte</h4>
-            </div>
-            <div class="card-body">
-              <div id="toolbarMembers">
-                <button id="btnNewMember" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Projektbeteiligter</button>
-              </div>
-              <!-- Table Members -->
-              <div class="table-responsive">
-                <table
-                  id="tableMembers"
-                  data-id-field="member_id"
-                  data-side-pagination="client"
-                  data-toggle="table"
-                  data-sortable="true"
-                  data-url="/members/{{ $projectID }}"
-                  data-toolbar="#toolbarMembers"
-                  data-search="true"
-                  data-show-columns="false"
-                  data-pagination="true"
-                  data-page-list="[10, 25, 50, 100, ALL]"
-                  data-detail-formatter="detailFormatter"
-                  data-detail-view="false"
-                  data-response-handler="responseHandler"
-                  data-show-export="false"
-                  data-show-pagination-switch="true"
-                  data-row-style="rowStyle">
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="card shadow mb-4">
-            <div class="card-header py-3">
-              <h4><i class="fas fa-clipboard-list"></i> Begehungen</h4>
-            </div>
-            <div class="card-body">
-              <div id="toolbarVisits">
-                <button id="btnNewVisit" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neue Begehung</button>
-              </div>
-              <!-- Table Visits -->
-              <div class="table-responsive">
-                <table
-                        id="tableVisits"
-                        data-id-field="visit_id"
-                        data-side-pagination="client"
-                        data-toggle="table"
-                        data-sortable="true"
-                        data-url="/visits/{{ $projectID }}"
-                        data-toolbar="#toolbarVisits"
-                        data-search="true"
-                        data-show-columns="false"
-                        data-pagination="true"
-                        data-page-list="[10, 25, 50, 100, ALL]"
-                        data-detail-formatter="detailFormatter"
-                        data-detail-view="true"
-                        data-response-handler="responseHandler"
-                        data-show-export="false"
-                        data-show-pagination-switch="true"
-                        data-row-style="rowStyle">
-                </table>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- /.container-fluid -->
 
+            <ul class="tabs">
+                <li class="tab-link current" data-tab="tab-1"><i class="fas fa-users"></i> Projektbeteiligte</li>
+                <li class="tab-link" data-tab="tab-2"><i class="fas fa-walking"></i> Begehungen</li>
+                <li class="tab-link" data-tab="tab-3"><i class="far fa-clipboard"></i> Projektvermerke</li>
+                <li class="tab-link" data-tab="tab-3"><i class="far fa-folder"></i> Dokumente</li>
+            </ul>
+
+            <div id="tab-1" class="tab-content current">
+                <div id="toolbarMembers">
+                    <button id="btnNewMember" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Projektbeteiligter</button>
+                </div>
+                <!-- Table Members -->
+                <div class="table-responsive">
+                    <table
+                            id="tableMembers"
+                            data-id-field="member_id"
+                            data-side-pagination="client"
+                            data-toggle="table"
+                            data-sortable="true"
+                            data-url="/members/{{ $projectID }}"
+                            data-toolbar="#toolbarMembers"
+                            data-search="true"
+                            data-show-columns="false"
+                            data-pagination="true"
+                            data-page-list="[10, 25, 50, 100, ALL]"
+                            data-detail-formatter="detailFormatter"
+                            data-detail-view="false"
+                            data-response-handler="responseHandler"
+                            data-show-export="false"
+                            data-show-pagination-switch="true"
+                            data-row-style="rowStyle">
+                    </table>
+                </div>
+            </div>
+            <div id="tab-2" class="tab-content">
+                <div id="toolbarVisits">
+                    <button id="btnNewVisit" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neue Begehung</button>
+                </div>
+                <!-- Table Visits -->
+                <div class="table-responsive">
+                    <table
+                            id="tableVisits"
+                            data-id-field="visit_id"
+                            data-side-pagination="client"
+                            data-toggle="table"
+                            data-sortable="true"
+                            data-url="/visits/{{ $projectID }}"
+                            data-toolbar="#toolbarVisits"
+                            data-search="true"
+                            data-show-columns="false"
+                            data-pagination="true"
+                            data-page-list="[10, 25, 50, 100, ALL]"
+                            data-detail-formatter="detailFormatter"
+                            data-detail-view="true"
+                            data-response-handler="responseHandler"
+                            data-show-export="false"
+                            data-show-pagination-switch="true"
+                            data-row-style="rowStyle">
+                    </table>
+                </div>
+            </div>
+            <div id="tab-3" class="tab-content">
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            </div>
+        </div>
+          <!--<div class="container-fluid">
+              <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                      <h3>Dokumente</h3>
+                  </div>
+              </div>
+          </div> -->
       </div>
       <!-- End of Main Content -->
 
@@ -622,7 +627,25 @@
 
   </script>
 
-  <!-- bootstrap tables -->
+  <script>
+      $(document).ready(function(){
+
+          $('ul.tabs li').click(function(){
+              var tab_id = $(this).attr('data-tab');
+
+              $('ul.tabs li').removeClass('current');
+              $('ul.tabs li').removeClass('text-primary');
+              $('.tab-content').removeClass('current');
+
+              $(this).addClass('current');
+              $(this).addClass('text-primary');
+              $("#"+tab_id).addClass('current');
+          })
+
+      })
+  </script>
+
+  <!-- bootstrap tables js -->
   <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
   <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-locale-all.min.js"></script>
 
