@@ -30,86 +30,17 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-10">
-              <h2 class="m-0 font-weight-bold text-primary">Bauprojekt: {{ $number }} {{ $name }}</h2>
-              <div class="border-left-primary pl-2 text-primary">
-                {{ $street }} {{ $housenumber }}, {{ $postcode }} {{ $city }}<br>
-                Erstellt: {{ $created_at }}<br>
-                Letzte Aktualisierung: {{ $updated_at }}
-              </div>
-            </div>
-            <div class="col-md-2">
-              <img class="img-fluid img-rounded" src="/images/{{ $photo }}">
+            <div class="col-md-12">
+                <div>
+                    <a href="/projects">Bauprojekte</a> / <a href="/projects/{{ $project->project_id }}">Projekt: {{ $project->number }} {{ $project->name }}</a>
+                </div>
+                <h2 class="m-0 font-weight-bold text-primary">Begehung: {{ $visit->title }} {{ $visit->date }}</h2>
             </div>
           </div>
         </div>
         <div class="card-body">
 
-            <ul class="tabs">
-                <li class="tab-link current" data-tab="tab-1"><i class="fas fa-users"></i> Projektbeteiligte</li>
-                <li class="tab-link" data-tab="tab-2"><i class="fas fa-walking"></i> Begehungen</li>
-                <li class="tab-link" data-tab="tab-3"><i class="far fa-clipboard"></i> Projektvermerke</li>
-                <li class="tab-link" data-tab="tab-3"><i class="far fa-folder"></i> Dokumente</li>
-            </ul>
 
-            <div id="tab-1" class="tab-content current">
-                <div id="toolbarMembers">
-                    <button id="btnNewMember" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Projektbeteiligter</button>
-                </div>
-                <!-- Table Members -->
-                <div class="table-responsive">
-                    <table
-                            id="tableMembers"
-                            data-id-field="member_id"
-                            data-side-pagination="client"
-                            data-toggle="table"
-                            data-sortable="true"
-                            data-url="/members/{{ $projectID }}"
-                            data-toolbar="#toolbarMembers"
-                            data-search="true"
-                            data-show-columns="false"
-                            data-pagination="true"
-                            data-page-list="[10, 25, 50, 100, ALL]"
-                            data-detail-formatter="detailFormatter"
-                            data-detail-view="false"
-                            data-response-handler="responseHandler"
-                            data-show-export="false"
-                            data-show-pagination-switch="true"
-                            data-row-style="rowStyle">
-                    </table>
-                </div>
-            </div>
-            <div id="tab-2" class="tab-content">
-                <div id="toolbarVisits">
-                    <button id="btnNewVisit" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neue Begehung</button>
-                </div>
-                <!-- Table Visits -->
-                <div class="table-responsive">
-                    <table
-                            id="tableVisits"
-                            data-id-field="visit_id"
-                            data-side-pagination="client"
-                            data-toggle="table"
-                            data-sortable="true"
-                            data-url="/visits/{{ $projectID }}"
-                            data-toolbar="#toolbarVisits"
-                            data-search="true"
-                            data-show-columns="false"
-                            data-pagination="true"
-                            data-page-list="[10, 25, 50, 100, ALL]"
-                            data-detail-formatter="detailFormatter"
-                            data-detail-view="true"
-                            data-response-handler="responseHandler"
-                            data-show-export="false"
-                            data-show-pagination-switch="true"
-                            data-row-style="rowStyle">
-                    </table>
-                </div>
-            </div>
-            <div id="tab-3" class="tab-content">
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            </div>
-        </div>
           <!--<div class="container-fluid">
               <div class="card shadow mb-4">
                   <div class="card-header py-3">
@@ -362,9 +293,8 @@
         alert("test");
       },
       'click .openVisit': function (e, value, row, index) {
-        //$("#modalVisit").modal('toggle');
-        //$("#visitModalLabel").html('<h5><i class="fa fa-walking"></i> Begehung: ' + row.title + ' ' + row.date + '</h5>');
-
+        $("#modalVisit").modal('toggle');
+        $("#visitModalLabel").html('<h5><i class="fa fa-walking"></i> Begehung: ' + row.title + ' ' + row.date + '</h5>');
       }
     }
 
@@ -443,10 +373,19 @@
       })
     }
 
+    /**
+     *
+     * @param value
+     * @param row
+     * @param index
+     * @returns {string}
+     */
     function operateFormatterVisits(value, row, index) {
-        return [
-            '<a href="/visit/' + row.visit_id + '"><button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button></a>'
-        ]
+      return [
+        '<a class="openVisit" href="javascript:void(0)" title="Anzeigen">',
+        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button>',
+        '</a> '
+      ].join('')
     }
 
     /**

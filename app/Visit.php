@@ -22,7 +22,7 @@ class Visit extends Model {
      * Get the project of the visit
      */
     public function project() {
-        return $this->hasOne('App\Project');
+        return $this->belongsTo('App\Project');
     }
 
     /**
@@ -30,5 +30,12 @@ class Visit extends Model {
      */
     public function visitationnotes() {
         return $this->hasMany('App\Visitationnote');
+    }
+
+    /**
+     * Get the members of the visit
+     */
+    public function members() {
+        return $this->belongsToMany('App\Member',  'member_visit');
     }
 }

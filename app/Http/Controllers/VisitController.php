@@ -8,6 +8,7 @@ use App\Member;
 use App\Contact;
 use App\Subarea;
 use App\Visit;
+use App\Project;
 
 class VisitController extends Controller
 {
@@ -67,19 +68,21 @@ class VisitController extends Controller
 
 
     /**
-     * Returns the visit with the given id.
+     * Returns the single view for the visit with the given id.
      *
      * @param $visitID The visit_id of the visit
      * @return array|null
      */
-    public function getVisit($visitID) {
+    public function showVisit($visitID) {
+
         $visit = Visit::where('visit_id', '=', $visitID)->first();
 
-        if ($visit == null) {
-            return null;
-        }
+        $project = Project::where('project_id', '=', 1)->first();
 
-        return json_encode($visit);
+        return view('visit')
+            ->with('project', $project)
+            ->with('visit', $visit);
+
     }
 
 

@@ -38,4 +38,10 @@ class Member extends Model {
         return $this->belongsTo('App\Subarea', 'subarea_id');
     }
 
+    /**
+     * Get the visits of the member.
+     */
+    public function visits() {
+        return $this->belongsToMany('App\Visit', 'member_visit');
+    }
 }
