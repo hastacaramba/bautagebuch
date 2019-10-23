@@ -32,22 +32,37 @@
           <div class="row">
             <div class="col-md-12">
                 <div>
-                    <a href="/projects">Bauprojekte</a> / <a href="/projects/{{ $project->project_id }}">Projekt: {{ $project->number }} {{ $project->name }}</a>
+                    <a href="/bauprojekte">Bauprojekte</a> / <a href="/projects/{{ $project->project_id }}">{{ $project->number }} {{ $project->name }}</a>
                 </div>
                 <h2 class="m-0 font-weight-bold text-primary">Begehung: {{ $visit->title }} {{ $visit->date }}</h2>
             </div>
           </div>
         </div>
-        <div class="card-body">
-
-
-          <!--<div class="container-fluid">
-              <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                      <h3>Dokumente</h3>
+          <div class="card-body">
+              <div class="row mb-3">
+                  <div class="col-md-3">
+                      <label>Datum</label><br>
+                      <input id="date" class="flatpickr flatpickr-input active" type="text" placeholder="Datum..." readonly="readonly"> <button class="btn btn-success btn-circle" id="showDate"><i class="fas fa-eye"></i></button>
+                  </div>
+                  <div class="col-md-3">
+                      <label>Uhrzeit</label><br>
+                      <input id="time" class="flatpickr flatpickr-input active" type="text" placeholder="Uhrzeit..." readonly="readonly"> <button class="btn btn-success btn-circle" id="showTime"><i class="fas fa-eye"></i></button>
                   </div>
               </div>
-          </div> -->
+              <div class="form-group">
+                  <label for="description">Bemerkungen</label>
+                  <textarea rows="10" type="text" class="form-control" id="visitDescription" placeholder="Bemerkungen zur Begehung (Freitext)"></textarea>
+              </div>
+              <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                      <h4><i class="fas fa-clipboard-list"></i> Begehungsvermerke</h4>
+                  </div>
+                  <div class="card-body">
+
+                  </div>
+              </div>
+
+        </div>
       </div>
       <!-- End of Main Content -->
 
@@ -193,9 +208,16 @@
       initTableMembers();
       initTableVisits();
 
+      $("#showDate").click(function () {
+        var status = $("#date").val();
+        alert(status);
+      })
+
+        $("#showTime").click(function () {
+        var status = $("#time").val();
+        alert(status);
+      })
     });
-
-
 
   </script>
 
@@ -459,30 +481,30 @@
 
     }
 
-
   </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
   <script>
-      $(document).ready(function(){
-
-          $('ul.tabs li').click(function(){
-              var tab_id = $(this).attr('data-tab');
-
-              $('ul.tabs li').removeClass('current');
-              $('ul.tabs li').removeClass('text-primary');
-              $('.tab-content').removeClass('current');
-
-              $(this).addClass('current');
-              $(this).addClass('text-primary');
-              $("#"+tab_id).addClass('current');
-          })
-
-      })
+      $("#date").flatpickr(
+          {
+              enableTime: false,
+              noCalendar: false,
+              dateFormat: "d.m.Y",
+          }
+      );
+      $("#time").flatpickr(
+          {
+              enableTime: true,
+              noCalendar: true,
+              time_24hr: true,
+          }
+      );
   </script>
 
-  <!-- bootstrap tables js -->
-  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
-  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-locale-all.min.js"></script>
+  @component('partials.js')
+      <strong>Whoops!</strong> Something went wrong!
+  @endcomponent
 
 </body>
 

@@ -9,10 +9,12 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "components/jqueryui": "^1.12",
         "fideloper/proxy": "^4.0",
         "illuminate/support": "^6.3",
         "laravel/framework": "^6.0",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "wenzhixin/bootstrap-table": "^1.14"
     },
     "require-dev": {
         "beyondcode/laravel-er-diagram-generator": "^1.3",

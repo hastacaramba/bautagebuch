@@ -507,9 +507,9 @@
 
   </script>
 
-  <!-- bootstrap tables -->
-  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
-  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-locale-all.min.js"></script>
+  @component('partials.js')
+    <strong>Whoops!</strong> Something went wrong!
+  @endcomponent
 
 
 </body>

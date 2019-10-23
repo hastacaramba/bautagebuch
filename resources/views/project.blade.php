@@ -31,6 +31,9 @@
         <div class="container-fluid">
           <div class="row">
             <div class="col-md-10">
+              <div>
+                  <a href="/bauprojekte">Bauprojekte</a> / <a href="/projects/{{ $projectID }}">{{ $number }} {{ $name }}</a>
+              </div>
               <h2 class="m-0 font-weight-bold text-primary">Bauprojekt: {{ $number }} {{ $name }}</h2>
               <div class="border-left-primary pl-2 text-primary">
                 {{ $street }} {{ $housenumber }}, {{ $postcode }} {{ $city }}<br>
