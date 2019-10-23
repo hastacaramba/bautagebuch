@@ -18,7 +18,8 @@ class CreateVisitsTable extends Migration
             $table->string('title');
             $table->date('date');
             $table->time('time');
-            $table->string('notes');
+            $table->string('weather');
+            $table->string('description');
             $table->integer('project_id');
             $table->timestamps();
         });

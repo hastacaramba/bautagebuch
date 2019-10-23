@@ -9,9 +9,26 @@ use App\Contact;
 use App\Subarea;
 use App\Visit;
 use App\Project;
+use App\Visitationnote;
 
-class VisitController extends Controller
+class VisitationnoteController extends Controller
 {
+
+    /**
+     * Get the visitationnotes for a visit.
+     *
+     * @param $visitID The visit_id of the visit
+     * @return false|string|null
+     */
+    public function projectVisitationnotes($visitID) {
+        $visitationnotes = Visitationnote::where('visit_id', '=', $visitID)->get();
+
+        if ($visitationnotes != null) {
+            return json_encode($visitationnotes);
+        }
+
+        return null;
+    }
 
     /**
      * Create a new visit instance.

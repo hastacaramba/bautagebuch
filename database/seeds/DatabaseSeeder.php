@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             ContactsTableSeeder::class,
             SubareasTableSeeder::class,
             MembersTableSeeder::class,
-            VisitsTableSeeder::class
+            VisitsTableSeeder::class,
+            VisitationnotesTableSeeder::class
         ]);
     }
 }
