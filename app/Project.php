@@ -8,7 +8,7 @@ class Project extends Model {
 
     protected $table = 'projects';
 
-    protected $primaryKey = 'project_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'name',

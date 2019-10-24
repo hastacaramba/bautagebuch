@@ -8,7 +8,7 @@ class Contact extends Model {
 
     protected $table = 'contacts';
 
-    protected $primaryKey = 'contact_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'firstname',
@@ -29,7 +29,7 @@ class Contact extends Model {
      * Get the member objects of a contact.
      */
     public function members() {
-        return $this->hasMany('App\Member', 'member_id', 'member_id');
+        return $this->hasMany('App\Member', 'member_id', 'id');
     }
 
     /**

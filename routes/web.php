@@ -73,6 +73,8 @@ Route::get('/visit/{visitID}', 'VisitController@showVisit');
 
 Route::get('/visit/{visitID}/json', 'VisitController@getVisit');
 
+Route::get('/visit/{visitID}/presence', 'VisitController@getPresentMembers');
+
 Route::get('/visitationnotes/{visitID}', 'VisitationnoteController@projectVisitationnotes');
 
 Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upload');

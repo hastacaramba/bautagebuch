@@ -42,7 +42,7 @@ class VisitController extends Controller
      * @return Response
      */
     public function updateVisit(Request $request, $visitID) {
-        $visit = Visit::where('visit_id', '=', $visitID)->first();
+        $visit = Visit::where('id', '=', $visitID)->first();
 
         if (visit != null) {
             $visit->title = $request->title;
@@ -77,13 +77,86 @@ class VisitController extends Controller
      */
     public function showVisit($visitID) {
 
-        $visit = Visit::where('visit_id', '=', $visitID)->first();
+        $visit = Visit::where('id', '=', $visitID)->first();
 
-        $project = Project::where('project_id', '=', 1)->first();
+        $project = Project::where('id', '=', $visit->project_id)->first();
 
         return view('visit')
             ->with('project', $project)
             ->with('visit', $visit);
+
+    }
+
+
+    /**
+     * Returns the present members og a visit
+     *
+     * @param $visitID
+     * @return false|string
+     */
+    public function getPresentMembers($visitID) {
+
+        //get visit
+        $visit = Visit::where('id', '=', $visitID)->first();
+
+        //get all members of the project
+        $members = Member::where('project_id', '=', $visit->project_id)->get();
+
+        $presentMembers = [];
+
+        //run through the members and decide if he was present during visit or not
+        for ($n = 0; $n < sizeof($members); $n++) {
+            $member = $members[$n];
+            $membersContact = $member->contact;
+            $membersVisits = $member->visits;
+            for ($i = 0; $i < sizeof($membersVisits); $i++) {
+                if ($membersVisits[$i]['id'] == $visitID) {
+                    $presentMembers[] = $member;
+                }
+            }
+        }
+
+        $result = [];
+
+        for ($n = 0; $n < sizeof($members); $n++) {
+            if (in_array($members[$n],$presentMembers)) {
+                $result[] = [
+                    "firstname" => $members[$n]->contact['firstname'],
+                    "surname" => $members[$n]->contact['surname'],
+                    "company" => $members[$n]->contact['company'],
+                    "street" => $members[$n]->contact['street'],
+                    "housenumber" => $members[$n]->contact['housenumber'],
+                    "postcode" => $members[$n]->contact['postcode'],
+                    "city" => $members[$n]->contact['city'],
+                    "email" => $members[$n]->contact['email'],
+                    "phone" => $members[$n]->contact['phone'],
+                    "mobile" => $members[$n]->contact['mobile'],
+                    "fax" => $members[$n]->contact['fax'],
+                    "info" => $members[$n]->contact['info'],
+                    "subarea" => $members[$n]->subarea['title'],
+                    "present" => 1
+                ];
+            } else {
+                $result[] = [
+                    "firstname" => $members[$n]->contact['firstname'],
+                    "surname" => $members[$n]->contact['surname'],
+                    "company" => $members[$n]->contact['company'],
+                    "street" => $members[$n]->contact['street'],
+                    "housenumber" => $members[$n]->contact['housenumber'],
+                    "postcode" => $members[$n]->contact['postcode'],
+                    "city" => $members[$n]->contact['city'],
+                    "email" => $members[$n]->contact['email'],
+                    "phone" => $members[$n]->contact['phone'],
+                    "mobile" => $members[$n]->contact['mobile'],
+                    "fax" => $members[$n]->contact['fax'],
+                    "info" => $members[$n]->contact['info'],
+                    "subarea" => $members[$n]->subarea['title'],
+                    "present" => 0
+                ];
+            }
+        }
+
+        return json_encode($result);
 
     }
 

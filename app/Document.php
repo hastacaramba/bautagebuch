@@ -8,7 +8,7 @@ class Document extends Model {
 
     protected $table = 'documents';
 
-    protected $primaryKey = 'document_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'filename',

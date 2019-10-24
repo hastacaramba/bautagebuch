@@ -8,7 +8,7 @@ class Subarea extends Model
 {
     protected $table = 'subareas';
 
-    protected $primaryKey = 'subarea_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'title'

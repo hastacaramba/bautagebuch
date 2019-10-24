@@ -43,7 +43,7 @@
                 <!-- Table: Projects -->
                 <table
                     id="table"
-                    data-id-field="subarea_id"
+                    data-id-field="id"
                     data-side-pagination="client"
                     data-toggle="table"
                     data-sortable="true"
@@ -306,7 +306,7 @@
     window.operateEvents = {
       'click .edit': function (e, value, row, index) {
         $("#newTitle").val(row.title);
-        $("#subareaID").val(row.subarea_id);
+        $("#subareaID").val(row.id);
         $("#modalEditSubarea").modal('toggle');
       }
     }

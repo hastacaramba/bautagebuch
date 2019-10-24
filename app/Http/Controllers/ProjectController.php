@@ -38,7 +38,7 @@ class ProjectController extends Controller
      * @return Response
      */
     public function updateProject(Request $request, $projectID) {
-        $project = Project::where('project_id', '=', $projectID)->first();
+        $project = Project::where('id', '=', $projectID)->first();
 
         if ($project != null) {
             $project->name = $request->name;
@@ -73,14 +73,14 @@ class ProjectController extends Controller
      * @return array|null
      */
     public function getProject($projectID) {
-        $project = Project::where('project_id', '=', $projectID)->first();
+        $project = Project::where('id', '=', $projectID)->first();
 
         if ($project == null) {
             return null;
         }
 
         return view('project', [
-            'projectID' => $project->project_id,
+            'projectID' => $project->id,
             'number' => $project->number,
             'name' => $project->name,
             'street' => $project->street,

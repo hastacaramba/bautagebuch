@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Member;
+use App\Visit;
 use App\Contact;
 use App\Subarea;
 
@@ -36,7 +37,7 @@ class MemberController extends Controller
      * @return Response
      */
     public function updateMember(Request $request, $memberID) {
-        $member = Member::where('member_id', '=', $memberID)->first();
+        $member = Member::where('id', '=', $memberID)->first();
 
         if (member != null) {
             $member->contact_id = $request->contactID;
@@ -83,7 +84,7 @@ class MemberController extends Controller
      * @return array|null
      */
     public function getMember($memberID) {
-        $member = Member::where('member_id', '=', $memberID)->first();
+        $member = Member::where('id', '=', $memberID)->first();
 
         if ($member == null) {
             return null;

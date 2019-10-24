@@ -33,7 +33,7 @@ class SubareaController extends Controller
      * @return Response
      */
     public function updateSubarea(Request $request, $subareaID) {
-        $subarea = Subarea::where('subarea_id', '=', $subareaID)->first();
+        $subarea = Subarea::where('id', '=', $subareaID)->first();
 
         if ($subarea != null) {
             $subarea->title = $request->title;
@@ -63,7 +63,7 @@ class SubareaController extends Controller
      * @return array|null
      */
     public function getSubarea($subareaID) {
-        $subarea = Subarea::where('subarea_id', '=', $subareaID)->first();
+        $subarea = Subarea::where('id', '=', $subareaID)->first();
 
         if ($subarea == null) {
             return null;

@@ -63,7 +63,7 @@
                 <div class="table-responsive">
                     <table
                             id="tableMembers"
-                            data-id-field="member_id"
+                            data-id-field="id"
                             data-side-pagination="client"
                             data-toggle="table"
                             data-sortable="true"
@@ -90,7 +90,7 @@
                 <div class="table-responsive">
                     <table
                             id="tableVisits"
-                            data-id-field="visit_id"
+                            data-id-field="id"
                             data-side-pagination="client"
                             data-toggle="table"
                             data-sortable="true"
@@ -448,7 +448,7 @@
 
     function operateFormatterVisits(value, row, index) {
         return [
-            '<a href="/visit/' + row.visit_id + '"><button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button></a>'
+            '<a href="/visit/' + row.id + '"><button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button></a>'
         ]
     }
 

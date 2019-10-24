@@ -8,7 +8,7 @@ class Member extends Model {
 
     protected $table = 'members';
 
-    protected $primaryKey = 'member_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'project_id',
@@ -44,4 +44,5 @@ class Member extends Model {
     public function visits() {
         return $this->belongsToMany('App\Visit', 'member_visit');
     }
+
 }

@@ -8,7 +8,7 @@ class Visitationnote extends Model {
 
     protected $table = 'visitationnotes';
 
-    protected $primaryKey = 'visitationnote_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'category',

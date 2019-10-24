@@ -14,7 +14,7 @@ class CreateProjectnotesTable extends Migration
     public function up()
     {
         Schema::create('projectnotes', function (Blueprint $table) {
-            $table->bigIncrements('projectnote_id');
+            $table->bigIncrements('id');
             $table->enum('category',['Mangel','Information']);
             $table->string('title');
             $table->string('notes');

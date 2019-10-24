@@ -107,12 +107,11 @@
             <input type="text" class="form-control" id="name" placeholder="Projektname">
           </div>
           <div class="form-group">
-            <form action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-              @csrf
+            <form id="newForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
               <label for="image">Foto</label>
               <div class="row">
                 <div class="col-md-9">
-                  <input type="file" id ="image" name="image" class="form-control">
+                  <input type="file" id="image" name="image" class="form-control">
                 </div>
                 <div class="col-md-3">
                   <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
@@ -160,7 +159,11 @@
         <div class="modal-body">
           <div class="form-group" style="display:none">
             <label for="projectID">ID</label>
-            <input type="text" class="form-control" readonly id="projectID" placeholder="Projekt-ID">
+            <input type="text" class="form-control" readonly id="projectID">
+          </div>
+          <div class="form-group" style="display:none">
+            <label for="filename">Dateiname</label>
+            <input type="text" class="form-control" readonly id="filename" >
           </div>
           <div class="form-group">
             <label for="newNumber">Laufende Nummer</label>
@@ -171,18 +174,19 @@
             <input type="text" class="form-control" id="newName" placeholder="Projektname">
           </div>
           <div class="form-group">
-            <label for="oldPhoto">Foto</label>
+            <label for="oldPhoto">Aktuelles Foto</label>
             <div class="mb-3" id="oldPhoto"></div>
-            <form action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-              @csrf
-              <label for="image">Foto ersetzen</label>
+          </div>
+          <div class="form-group">
+            <form id ="editForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
+              <label for="image">Neues Foto</label>
               <div class="row">
                 <div class="col-md-9">
-                  <input type="file" id ="image" name="image" class="form-control">
+                  <input type="file" id="newImage" name="newImage" class="form-control">
                 </div>
                 <div class="col-md-3">
-                  <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
-                  <div id="newProjectImage"class="mt-1"></div>
+                  <button id="btnUploadNewImage" type="submit" class="btn btn-success">Upload</button>
+                  <div id="projectImageUpdate"class="mt-1"></div>
                 </div>
               </div>
             </form>
@@ -235,26 +239,35 @@
   </script>
 
   <script>
+
     $(document).ready(function () {
 
-      $imageFileName = '';
+      var newFile;
+
+      //file ulpoad
+      $('input[type="file"]').change(function(e) {
+        var fileName = e.target.files[0].name;
+        newFile =  e.target.files[0];
+      });
 
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
+
       //init bootstrap table projects
       initTable();
 
       // this is the id of the form
-      $("form").submit(function(e) {
+      $("#newForm").submit(function(e) {
 
         e.preventDefault(); // avoid to execute the actual submit of the form.
 
         var formData = new FormData();
+
         // Attach file
-        formData.append('image', $('input[type=file]')[0].files[0]);
+        formData.append('image', newFile);
 
         $.ajax({
           url: '/image-upload-post',
@@ -263,18 +276,42 @@
           contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
           processData: false, // NEEDED, DON'T OMIT THIS
           success: function(data) {
-            $imageFileName = data;
             $("#newProjectImage").html('<img class="img-fluid img-rounded" src="images/' + data + '">');
             $("#btnUploadImage").hide();
+            $("#filename").val(data);
+          }
+        });
+      });
+
+      // this is the id of the form
+      $("#editForm").submit(function(e) {
+
+        e.preventDefault(); // avoid to execute the actual submit of the form.
+
+        var formData = new FormData();
+
+        // Attach file
+        formData.append('image', newFile);
+
+        $.ajax({
+          url: '/image-upload-post',
+          data: formData,
+          type: 'POST',
+          contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+          processData: false, // NEEDED, DON'T OMIT THIS
+          success: function(data) {
+            $("#projectImageUpdate").html('<img class="img-fluid img-rounded" src="images/' + data + '">');
+            $("#btnUploadNewImage").hide();
+            $("#filename").val(data);
             //$("#btnUploadImage").attr("disabled","disabled");
           }
         });
-
       });
 
       $("#btnSaveNewProject").click(function () {
         //Create new project
         if (($("#number").val().length) && ($("#name").val().length) ) {
+          $imageFileName = $('#filename').val();
           if ($imageFileName == '') {
             $imageFileName = 'default.jpg';
           }
@@ -303,6 +340,7 @@
       $("#btnSaveEditedProject").click(function () {
         //Create new project
         if (($("#newNumber").val().length) && ($("#newName").val().length) ) {
+          $imageFileName = $('#filename').val();
           if ($imageFileName == '') {
             $imageFileName = 'default.jpg';
           }
@@ -407,7 +445,7 @@
 
     function imageFormatter(value, row, index) {
       return [
-        '<a href="/projects/' + row.project_id + '"><img class="img-fluid table-img" src="images/' + value + '" /></a>'
+        '<a href="/projects/' + row.id + '"><img class="img-fluid table-img" src="images/' + value + '" /></a>'
       ]
     }
 
@@ -427,15 +465,15 @@
 
     window.operateEvents = {
       'click .edit': function (e, value, row, index) {
-        $("#projectID").val(row.project_id);
+        $("#projectID").val(row.id);
         $("#newNumber").val(row.number);
         $("#newName").val(row.name);
         $("#newStreet").val(row.street);
         $("#newHousenumber").val(row.housenumber);
         $("#newPostcode").val(row.postcode);
         $("#newCity").val(row.city);
-        $fileName = row.photo;
-        $("#oldPhoto").html("<img class=\"img-rounded table-img\" src=\"images/" + $fileName + "\">");
+        $("#filename").val(row.photo);
+        $("#oldPhoto").html("<img class=\"img-rounded table-img\" src=\"images/" + row.photo + "\">");
         $("#modalEditProject").modal('toggle');
       }
     }

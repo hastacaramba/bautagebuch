@@ -14,7 +14,7 @@ class CreateVisitationnotesTable extends Migration
     public function up()
     {
         Schema::create('visitationnotes', function (Blueprint $table) {
-            $table->bigIncrements('visitationnote_id');
+            $table->bigIncrements('id');
             $table->enum('category',['Mangel','Information']);
             $table->string('title');
             $table->string('notes')->nullable();

@@ -8,7 +8,7 @@ class Projectnote extends Model {
 
     protected $table = 'projectnotes';
 
-    protected $primaryKey = 'projectnote_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'category',

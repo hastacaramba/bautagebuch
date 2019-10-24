@@ -39,12 +39,12 @@ class ContactController extends Controller
     /**
      * Update the contact with the given id.
      *
-     * @param $contactID The contact_id of the contact
+     * @param $contactID The id of the contact
      * @param  Request  $request
      * @return Response
      */
     public function updateContact(Request $request, $contactID) {
-        $contact = Contact::where('contact_id', '=', $contactID)->first();
+        $contact = Contact::where('id', '=', $contactID)->first();
 
         if ($contact != null) {
             $contact->firstname = $request->firstname;
@@ -85,7 +85,7 @@ class ContactController extends Controller
      * @return array|null
      */
     public function getContact($contactID) {
-        $contact = Contact::where('contact_id', '=', $contactID)->first();
+        $contact = Contact::where('id', '=', $contactID)->first();
 
         if ($contact == null) {
             return null;

@@ -14,7 +14,7 @@ class CreateSubareasTable extends Migration
     public function up()
     {
         Schema::create('subareas', function (Blueprint $table) {
-            $table->bigIncrements('subarea_id');
+            $table->bigIncrements('id');
             $table->string('title');
             $table->timestamps();
         });

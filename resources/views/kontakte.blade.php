@@ -43,7 +43,7 @@
                 <!-- Table: Projects -->
                 <table
                     id="table"
-                    data-id-field="contact_id"
+                    data-id-field="id"
                     data-side-pagination="client"
                     data-toggle="table"
                     data-sortable="true"
@@ -389,7 +389,7 @@
 
     function imageFormatter(value, row, index) {
       return [
-        '<a href="/projects/' + row.project_id + '"><img class="img-fluid table-img" src="images/' + value + '" /></a>'
+        '<a href="/projects/' + row.id + '"><img class="img-fluid table-img" src="images/' + value + '" /></a>'
       ]
     }
 
@@ -417,7 +417,7 @@
     window.operateEvents = {
       'click .edit': function (e, value, row, index) {
         $("#newCompany").val(row.company);
-        $("#contactID").val(row.contact_id);
+        $("#contactID").val(row.id);
         $("#newSurname").val(row.surname);
         $("#newFirstname").val(row.firstname);
         $("#newStreet").val(row.street);

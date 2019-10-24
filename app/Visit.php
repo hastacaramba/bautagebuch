@@ -8,7 +8,7 @@ class Visit extends Model {
 
     protected $table = 'visits';
 
-    protected $primaryKey = 'visit_id';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
         'title',

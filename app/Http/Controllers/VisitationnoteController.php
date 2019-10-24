@@ -59,7 +59,7 @@ class VisitationnoteController extends Controller
      * @return Response
      */
     public function updateVisit(Request $request, $visitID) {
-        $visit = Visit::where('visit_id', '=', $visitID)->first();
+        $visit = Visit::where('id', '=', $visitID)->first();
 
         if (visit != null) {
             $visit->title = $request->title;
@@ -94,9 +94,9 @@ class VisitationnoteController extends Controller
      */
     public function showVisit($visitID) {
 
-        $visit = Visit::where('visit_id', '=', $visitID)->first();
+        $visit = Visit::where('id', '=', $visitID)->first();
 
-        $project = Project::where('project_id', '=', 1)->first();
+        $project = Project::where('id', '=', 1)->first();
 
         return view('visit')
             ->with('project', $project)
