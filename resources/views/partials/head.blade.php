@@ -31,4 +31,7 @@
     <link href="../../css/sb-admin-2.css" rel="stylesheet">
     <link href="../../css/custom.css" rel="stylesheet">
 
+    <!-- jquery -->
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+
 </head>
