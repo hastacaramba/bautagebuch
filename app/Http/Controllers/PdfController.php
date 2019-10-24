@@ -6,18 +6,23 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use PDF;
+use App\Project;
 
 class PdfController extends Controller {
 
-    public function index(){
+    public function index(Request $request){
 
-        PDF::SetTitle('Hello World');
-
+        $users = Project::orderBy('id','asc')->get();
+        // usersPdf is the view that includes the downloading content
+        $view = \View::make('PdfDemo', ['users'=>$users]);
+        $html_content = $view->render();
+        // Set title in the PDF
+        PDF::SetTitle("List of users");
         PDF::AddPage();
+        PDF::writeHTML($html_content, true, false, true, false, '');
+        // userlist is the name of the PDF downloading
+        PDF::Output('userlist.pdf');
 
-        PDF::Write(0, 'Hello World');
-
-        PDF::Output('hello_world.pdf');
     }
 
     public function samplePDF() {

@@ -112,6 +112,7 @@
             <div id="tab-3" class="tab-content">
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
             </div>
+            <button class="btn btn-success btn-circle mt-4 ml-4" id="pdfTest"><i class="fas fa-file-pdf"></i></button>
         </div>
           <!--<div class="container-fluid">
               <div class="card shadow mb-4">
@@ -267,7 +268,10 @@
 
     });
 
+    $("#pdfTest").click(function () {
 
+        location.href = '/PdfDemo';
+    });
 
   </script>
 
