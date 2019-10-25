@@ -434,6 +434,9 @@
      */
     function operateFormatter(value, row, index) {
       return [
+        '<a class="open" href="javascript:void(0)" title="Öffnen">',
+          '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button>',
+        '</a>  ',
         '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
           '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
         '</a>  '
@@ -474,6 +477,9 @@
         $("#filename").val(row.photo);
         $("#oldPhoto").html("<img class=\"img-rounded table-img\" src=\"images/" + row.photo + "\">");
         $("#modalEditProject").modal('toggle');
+      },
+      'click .open': function (e, value, row, index) {
+        location.href = "/projects/" + row.id;
       }
     }
 
@@ -515,7 +521,7 @@
             formatter: updatedAtFormatter
           }, {
             field: 'operate',
-            title: 'Bearbeiten',
+            title: 'Aktionen',
             align: 'center',
             events: window.operateEvents,
             formatter: operateFormatter

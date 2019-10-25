@@ -270,7 +270,23 @@
 
     $("#pdfTest").click(function () {
 
-        location.href = '/PdfDemo';
+        var id = $.now().toString() + '{{ Auth::user()->id }}';
+
+        $.ajax({
+            type: "POST",
+            url: "/export/save",
+            data: JSON.stringify(
+                {
+                    'id' : id,
+                    'name' : '{{ $name }}',
+                    'number': '{{ $number }}'
+                }
+            ),
+            success: function (data) {
+                location.href = '/PdfDemo/' + id;
+            }
+        });
+        //location.href = '/PdfDemo';
     });
 
   </script>

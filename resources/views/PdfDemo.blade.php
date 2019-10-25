@@ -17,26 +17,17 @@
 </head>
 <body>
 <div class="container" style="margin-top: 50px;">
-  @if(count($users) > 0)
-    <h2 class="text-left">User List</h2><br>
-    <a href="/download" class="btn btn-success btn-sm">Download PDF</a>
-    <a href="/viewpdf" class="btn btn-primary btn-sm">Open PDF</a>
     <br><br>
     <table class="table table-bordered table-striped">
       <tr>
-        <th>ID</th>
+        <th>Nummer</th>
         <th>Name</th>
       </tr>
-      @foreach($users as $user)
         <tr>
-          <td>{{ $user->id }}</td>
-          <td>{{ $user->name }}</td>
+          <td>{{ $number }}</td>
+          <td>{{ $name }}</td>
         </tr>
-      @endforeach
     </table>
-  @else
-    <br><h4 class="text-center">There are no users</h4>
-  @endif
 
 </div>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

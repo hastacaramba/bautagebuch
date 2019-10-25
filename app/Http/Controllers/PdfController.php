@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ExportData;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
@@ -10,11 +11,35 @@ use App\Project;
 
 class PdfController extends Controller {
 
-    public function index(Request $request){
 
-        $users = Project::orderBy('id','asc')->get();
+    public function savePdfData(Request $request) {
+        $idString = $request->json("id");
+        $name = $request->json("name");
+        $number = $request->json("number");
+
+        $data = [
+            'name' => $name,
+            'number' => $number
+        ];
+
+        $exportData = new ExportData();
+        $exportData->idString = $idString;
+        $exportData->data = json_encode($data);
+        $exportData->save();
+    }
+
+    public function index($idString){
+
+        $exportData = ExportData::where('idString', '=', $idString)->first();
+
+        $number = json_decode($exportData->data)->number;
+        $name = json_decode($exportData->data)->name;
+
         // usersPdf is the view that includes the downloading content
-        $view = \View::make('PdfDemo', ['users'=>$users]);
+        $view = \View::make('PdfDemo', [
+            'name'=>$name,
+            'number'=>$number,
+            ]);
         $html_content = $view->render();
         // Set title in the PDF
         PDF::SetTitle("List of users");
@@ -22,6 +47,8 @@ class PdfController extends Controller {
         PDF::writeHTML($html_content, true, false, true, false, '');
         // userlist is the name of the PDF downloading
         PDF::Output('userlist.pdf');
+
+        ExportData::where('idString', '=', $idString)->delete();
 
     }
 

@@ -235,6 +235,15 @@
   </div>
   <!-- Visit Modal [end] -->
 
+  <!-- Bootstrap core JavaScript-->
+  <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Core plugin JavaScript-->
+  <script src="../../vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Custom scripts for all pages-->
+  <script src="../../js/sb-admin-2.js"></script>
+
   <script>
     $("#navItemBauprojekte").addClass("active");
   </script>
@@ -378,6 +387,11 @@
                       title: 'Bezeichnung',
                       sortable: true,
                       align: 'left'
+                  }, {
+                      field: 'category',
+                      title: 'Kategorie',
+                      align: 'left',
+                      sortable: true
                   }, {
                       field: 'created_at',
                       title: 'Erstellt',
