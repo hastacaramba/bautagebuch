@@ -6,6 +6,7 @@ use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Subarea;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class SubareaController extends Controller
 {
@@ -72,6 +73,49 @@ class SubareaController extends Controller
         $result = [
             'title' => $subarea->title,
         ];
+    }
+
+
+    /**
+     * Get Subareas for select2.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSubareasSelect(Request $request) {
+
+        $q = $request->get('q', null);
+
+        $_type = $request->get('_type', null);
+
+        //get subareas
+        $subareas = Subarea::all();
+
+        $results = [];
+        for ($i = 0; $i < sizeof($subareas); $i++) {
+            $results[] =
+                [
+                    'id' => $subareas[$i]['id'],
+                    'text' => $subareas[$i]['title']
+                ];
+        }
+
+        $antwort = [
+            'results' => $results
+        ];
+
+        $resultsGefiltert = [];
+        if($q != null && $_type == 'query') {
+            for ($i = 0; $i < sizeof($antwort['results']); $i++) {
+                if (Str::contains($antwort['results'][$i]['text'], $q)) {
+                    $resultsGefiltert[] = $antwort['results'][$i];
+                }
+            }
+            $antwort['results'] = $resultsGefiltert;
+        }
+
+        return response()->json($antwort,200);
+
     }
 
 

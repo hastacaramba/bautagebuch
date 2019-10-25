@@ -6,6 +6,7 @@ use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Contact;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ContactController extends Controller
 {
@@ -124,5 +125,47 @@ class ContactController extends Controller
         */
     }
 
+
+    /**
+     * Get Contacts for select2.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getContactsSelect(Request $request) {
+
+        $q = $request->get('q', null);
+
+        $_type = $request->get('_type', null);
+
+        //get contacts
+        $contacts = Contact::all();
+
+        $results = [];
+        for ($i = 0; $i < sizeof($contacts); $i++) {
+            $results[] =
+                [
+                    'id' => $contacts[$i]['id'],
+                    'text' => $contacts[$i]['company'] . " - " . $contacts[$i]['surname'] . " " . $contacts[$i]['firstname']
+                ];
+        }
+
+        $antwort = [
+            'results' => $results
+        ];
+
+        $resultsGefiltert = [];
+        if($q != null && $_type == 'query') {
+            for ($i = 0; $i < sizeof($antwort['results']); $i++) {
+                if (Str::contains($antwort['results'][$i]['text'], $q)) {
+                    $resultsGefiltert[] = $antwort['results'][$i];
+                }
+            }
+            $antwort['results'] = $resultsGefiltert;
+        }
+
+        return response()->json($antwort,200);
+
+    }
 
 }

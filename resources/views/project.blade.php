@@ -57,7 +57,7 @@
 
             <div id="tab-1" class="tab-content current">
                 <div id="toolbarMembers">
-                    <button id="btnNewMember" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Projektbeteiligter</button>
+                    <button id="btnNewMember" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Projektbeteiligte hinzufügen</button>
                 </div>
                 <!-- Table Members -->
                 <div class="table-responsive">
@@ -160,78 +160,33 @@
   </div>
   <!-- Logout Modal [end] -->
 
-  <!-- Visit Modal [start] -->
-  <div class="modal fade" id="modalVisit" tabindex="-1" role="dialog" aria-labelledby="visitModal" aria-hidden="true">
+  <!-- New Member Modal [start] -->
+  <div class="modal fade" id="modalNewMember" tabindex="-1" role="dialog" aria-labelledby="newMemberModal" aria-hidden="true">
       <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <div class="modal-title" id="visitModalLabel"><i class="fa fa-walking"></i> Begehung</div>
+                  <div class="modal-title" id="visitModalLabel"><i class="fa fa-walking"></i> Projektbeteiligte hinzufügen</div>
                   <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                   </button>
               </div>
               <div class="modal-body">
-                  <div class="form-group" style="display:none">
-                      <label for="contactID">ID</label>
-                      <input type="text" class="form-control" readonly id="contactID">
+                  <div class="form-group">
+                      <label for="contactSelect">Kontakt</label>
+                      <div id="contactSelect"></div>
                   </div>
                   <div class="form-group">
-                      <label for="newSurname">Nachname</label>
-                      <input type="text" class="form-control" id="newSurname" placeholder="Nachname">
+                      <label for="subareaSelect">Gewerk</label>
+                      <div id="subareaSelect"></div>
                   </div>
-                  <div class="form-group">
-                      <label for="newFirstname">Vorname</label>
-                      <input type="text" class="form-control" id="newFirstname" placeholder="Vorname">
-                  </div>
-                  <div class="form-group">
-                      <label for="newCompany">Firma</label>
-                      <input type="text" class="form-control" id="newCompany" placeholder="Name der Firma">
-                  </div>
-                  <div class="form-group">
-                      <label for="newStreet">Straße</label>
-                      <input type="text" class="form-control" id="newStreet" placeholder="Straße">
-                  </div>
-                  <div class="form-group">
-                      <label for="newHousenumber">Hausnummer</label>
-                      <input type="text" class="form-control" id="newHousenumber" placeholder="Hausnummer">
-                  </div>
-                  <div class="form-group">
-                      <label for="newPostcode">PLZ</label>
-                      <input type="text" class="form-control" id="newPostcode" placeholder="PLZ">
-                  </div>
-                  <div class="form-group">
-                      <label for="newCity">Ort</label>
-                      <input type="text" class="form-control" id="newCity" placeholder="Ort">
-                  </div>
-                  <div class="form-group">
-                      <label for="newEmail">E-Mail</label>
-                      <input type="text" class="form-control" id="newEmail" placeholder="E-Mail-Adresse">
-                  </div>
-                  <div class="form-group">
-                      <label for="newPhone">Telefon</label>
-                      <input type="text" class="form-control" id="newPhone" placeholder="Telefonnummer">
-                  </div>
-                  <div class="form-group">
-                      <label for="newMobile">Mobiltelefon</label>
-                      <input type="text" class="form-control" id="newMobile" placeholder="Handynummer">
-                  </div>
-                  <div class="form-group">
-                      <label for="newFax">Fax</label>
-                      <input type="text" class="form-control" id="newFax" placeholder="Faxnummer">
-                  </div>
-                  <div class="form-group">
-                      <label for="newInfo">Info</label>
-                      <input type="text" class="form-control" id="newInfo" placeholder="Informationen zum Kontakt">
-                  </div>
-              </div>
               <div class="modal-footer">
-                  <button id="btnSaveEditedContact" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
+                  <button id="btnSaveNewMember" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Hinzufügen</button>
                   <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
               </div>
           </div>
       </div>
   </div>
-  <!-- Visit Modal [end] -->
+  <!-- New Member Modal [end] -->
 
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>
@@ -266,6 +221,19 @@
       initTableMembers();
       initTableVisits();
 
+      //tabs
+        $('ul.tabs li').click(function(){
+            var tab_id = $(this).attr('data-tab');
+
+            $('ul.tabs li').removeClass('current');
+            $('ul.tabs li').removeClass('text-primary');
+            $('.tab-content').removeClass('current');
+
+            $(this).addClass('current');
+            $(this).addClass('text-primary');
+            $("#"+tab_id).addClass('current');
+        })
+
     });
 
     $("#pdfTest").click(function () {
@@ -287,6 +255,64 @@
             }
         });
         //location.href = '/PdfDemo';
+    });
+
+    $("#btnNewMember").click(function (e) {
+
+        e.preventDefault();
+
+        $("#modalNewMember").modal('toggle');
+
+        var output = "<div class=\"mb-2\"><select class=\"js-example-basic-single\" id=\"contactSelectBox\" style=\"width: 100%\">\n" +
+            "</select></div>";
+        $("#contactSelect").html(output);
+
+        //hol Dir alle Kontakte im geeigneten Format für select2
+        $('#contactSelectBox').select2({
+            placeholder: "Suchen Sie hier nach einem Kontakt...",
+            ajax: {
+                type: "GET",
+                url: '/contacts/select',
+                dataType: 'json'
+            }
+        });
+
+
+        var outputSubarea = "<div class=\"mb-2\"><select class=\"js-example-basic-single\" id=\"subareaSelectBox\" style=\"width: 100%\">\n" +
+            "</select></div>";
+        $("#subareaSelect").html(outputSubarea);
+
+        //hol Dir alle Kontakte im geeigneten Format für select2
+        $('#subareaSelectBox').select2({
+            placeholder: "Suchen Sie hier nach einem Gewerk...",
+            ajax: {
+                type: "GET",
+                url: '/subareas/select',
+                dataType: 'json'
+            }
+        });
+
+
+    });
+
+
+    $("#btnSaveNewMember").click(function () {
+
+        $.ajax({
+            type: "POST",
+            url: "/member",
+            data:
+                {
+                    'projectID' : '{{ $projectID }}',
+                    'contactID' : $("#contactSelectBox").select2('data')[0]["id"],
+                    'subareaID' : $("#subareaSelectBox").select2('data')[0]["id"]
+                }
+            ,
+            success: function (data) {
+                $("#modalNewMember").modal('toggle');
+                $tableMembers.bootstrapTable('refresh');
+            }
+        });
     });
 
   </script>
@@ -546,27 +572,9 @@
 
   </script>
 
-  <script>
-      $(document).ready(function(){
-
-          $('ul.tabs li').click(function(){
-              var tab_id = $(this).attr('data-tab');
-
-              $('ul.tabs li').removeClass('current');
-              $('ul.tabs li').removeClass('text-primary');
-              $('.tab-content').removeClass('current');
-
-              $(this).addClass('current');
-              $(this).addClass('text-primary');
-              $("#"+tab_id).addClass('current');
-          })
-
-      })
-  </script>
-
-  <!-- bootstrap tables js -->
-  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
-  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-locale-all.min.js"></script>
+  @component('partials.js')
+    <strong>Whoops!</strong> Something went wrong!
+  @endcomponent
 
 </body>
 

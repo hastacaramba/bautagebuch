@@ -55,15 +55,21 @@ Route::post('/contact', 'ContactController@newContact')->name('newContact')->mid
 
 Route::get('/contacts', 'ContactController@contactsJson')->name('contactsJson')->middleware('auth');
 
+Route::get('/contacts/select', 'ContactController@getContactsSelect')->name('contactsSelect')->middleware('auth');
+
 Route::patch('/contacts/{contactID}/update', 'ContactController@updateContact')->middleware('auth');
 
 Route::get('/subareas', 'SubareaController@subareasJson')->name('subareasJson')->middleware('auth');
+
+Route::get('/subareas/select', 'SubareaController@getSubareasSelect')->name('subareasSelect')->middleware('auth');
 
 Route::patch('/subareas/{subareaID}/update', 'SubareaController@updateSubarea')->middleware('auth');
 
 Route::patch('/projects/{projectID}/update', 'ProjectController@updateProject')->middleware('auth');
 
 Route::get('/projects/{projectID}', 'ProjectController@getProject')->middleware('auth');
+
+Route::post('/member', 'MemberController@newMember')->middleware('auth');
 
 Route::get('/members/{projectID}', 'MemberController@projectMembersJson')->middleware('auth');
 
