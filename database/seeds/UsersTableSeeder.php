@@ -23,5 +23,19 @@ class UsersTableSeeder extends Seeder {
             'created_at' => now(),
             'updated_at' => now()
         ]);
+        DB::table('users')->insert([
+            'name' => 'Tobias Maier',
+            'email' => 'tobias.maier@arch-maier.de',
+            'password' => bcrypt('maiert'),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('users')->insert([
+            'name' => 'Armin Sittinger',
+            'email' => 'armin.sittinger@arch-maier.de',
+            'password' => bcrypt('Work4arch'),
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
     }
 }

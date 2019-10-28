@@ -74,7 +74,7 @@
                             data-pagination="true"
                             data-page-list="[10, 25, 50, 100, ALL]"
                             data-detail-formatter="detailFormatter"
-                            data-detail-view="false"
+                            data-detail-view="true"
                             data-response-handler="responseHandler"
                             data-show-export="false"
                             data-show-pagination-switch="true"
@@ -373,8 +373,8 @@
      */
     function operateFormatter(value, row, index) {
       return [
-        '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
-          '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+        '<a class="delete" href="javascript:void(0)" title="Entfernen">',
+          '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
         '</a> ',
       ].join('')
     }
@@ -407,8 +407,15 @@
     }
 
     window.operateEvents = {
-      'click .edit': function (e, value, row, index) {
-        alert("test");
+      'click .delete': function (e, value, row, index) {
+          $.ajax({
+              type: "DELETE",
+              url: "/member/" + row.id,
+              data: "",
+              success: function (data) {
+                  $tableMembers.bootstrapTable('refresh');
+              }
+          });
       },
       'click .openVisit': function (e, value, row, index) {
         //$("#modalVisit").modal('toggle');
@@ -452,7 +459,7 @@
             align: 'left',
           }, {
             field: 'operate',
-            title: 'Bearbeiten',
+            title: 'Entfernen',
             align: 'center',
             events: window.operateEvents,
             formatter: operateFormatter

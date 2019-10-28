@@ -48,6 +48,22 @@ class MemberController extends Controller
 
 
     /**
+     * Delete the member with the given id.
+     *
+     * @param $id The id of the member
+     * @param  Request  $request
+     * @return Response
+     */
+    public function deleteMember($memberID) {
+        $member = Member::where('id', '=', $memberID)->first();
+
+        if ($member != null) {
+            $member->delete();
+        }
+    }
+
+
+    /**
      * Returns all members of a project as json.
      *
      * @return mixed
@@ -63,6 +79,7 @@ class MemberController extends Controller
             $subarea = $members[$i]->subarea;
 
             $item = [
+                'id' => $members[$i]['id'],
                 'company' => $contact['company'],
                 'surname' => $contact['surname'],
                 'firstname' => $contact['firstname'],
