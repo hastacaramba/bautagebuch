@@ -315,6 +315,19 @@
         });
     });
 
+
+    $("#btnNewVisit").click(function (e) {
+        $.ajax({
+            type: "GET",
+            url: "/visit/new/{{ $projectID }}",
+            data: "",
+            success: function (data) {
+                location.href="/visit/" + data;
+            }
+        });
+    });
+
+
   </script>
 
   <script>
@@ -408,12 +421,29 @@
 
     window.operateEvents = {
       'click .delete': function (e, value, row, index) {
-          $.ajax({
-              type: "DELETE",
-              url: "/member/" + row.id,
-              data: "",
-              success: function (data) {
-                  $tableMembers.bootstrapTable('refresh');
+          bootbox.confirm({
+              message: "Projektbeteiligten wirklich aus diesem Projekt entfernen?",
+              buttons: {
+                  confirm: {
+                      label: 'Ja',
+                      className: 'btn-success'
+                  },
+                  cancel: {
+                      label: 'Nein',
+                      className: 'btn-danger'
+                  }
+              },
+              callback: function (result) {
+                  if (result) {
+                      $.ajax({
+                          type: "DELETE",
+                          url: "/member/" + row.id,
+                          data: "",
+                          success: function (data) {
+                              $tableMembers.bootstrapTable('refresh');
+                          }
+                      });
+                  }
               }
           });
       },

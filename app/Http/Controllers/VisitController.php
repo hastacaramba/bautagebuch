@@ -89,6 +89,29 @@ class VisitController extends Controller
 
 
     /**
+     * Returns the view for creating a new visit.
+     *
+     * @return array|null
+     */
+    public function createVisit($projectID) {
+
+        $visit = new Visit;
+
+        $visit->title = 'Bezeichnung...';
+        $visit->date = date('Y-m-d');
+        $visit->time = date('H:i');
+        $visit->weather = 'Wetter...';
+        $visit->description = "";
+        $visit->project_id = $projectID;
+
+        $visit->save();
+
+        return $visit->id;
+
+    }
+
+
+    /**
      * Returns the present members og a visit
      *
      * @param $visitID
