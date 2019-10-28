@@ -79,6 +79,8 @@ Route::get('/visit/new/{projectID}', 'VisitController@createVisit')->middleware(
 
 Route::get('/visits/{projectID}', 'VisitController@projectVisitsJson')->middleware('auth');
 
+Route::patch('/visit/{visitID}', 'VisitController@updateVisit')->middleware('auth');
+
 Route::get('/visit/{visitID}', 'VisitController@showVisit')->middleware('auth');
 
 Route::get('/visit/{visitID}/json', 'VisitController@getVisit')->middleware('auth');

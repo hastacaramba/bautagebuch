@@ -44,9 +44,9 @@ class VisitController extends Controller
     public function updateVisit(Request $request, $visitID) {
         $visit = Visit::where('id', '=', $visitID)->first();
 
-        if (visit != null) {
+        if ($visit != null) {
             $visit->title = $request->title;
-            $visit->date = $request->date;
+            //$visit->date = $request->date;
             $visit->time = $request->time;
             $visit->weather = $request->weather;
             $visit->description = $request->description;
@@ -101,7 +101,7 @@ class VisitController extends Controller
         $visit->date = date('Y-m-d');
         $visit->time = date('H:i');
         $visit->weather = 'Wetter...';
-        $visit->description = "";
+        $visit->description = 'Bemerkungen zur Begehung (Freitext)...';
         $visit->project_id = $projectID;
 
         $visit->save();

@@ -40,23 +40,32 @@
         </div>
           <div class="card-body">
               <div class="row mb-3">
+                  <div class="col-md-12">
+                      <label>Bezeichnung</label><br>
+                      <input id="title" type="text" style="width:100%; color:#6e707e" value="{{$visit->title}}" placeholder="Bezeichnung...">
+                  </div>
+              </div>
+              <div class="row mb-3">
                   <div class="col-md-3">
                       <label>Datum</label><br>
-                      <input id="date" type="text" style="width:100%; color:#6e707e" value="{{$visit->date}}" placeholder="Datum..." readonly="readonly">
+                      <input id="date" type="text" style="width:100%; color:#6e707e" value="{{$visit->date}}" placeholder="Datum...">
                   </div>
                   <div class="col-md-3">
                       <label>Uhrzeit</label><br>
-                      <input id="time" type="text" style="width:100%; color:#6e707e" value="{{$visit->time}}" placeholder="Uhrzeit..." readonly="readonly">
+                      <input id="time" type="text" style="width:100%; color:#6e707e" value="{{$visit->time}}" placeholder="Uhrzeit...">
                   </div>
                   <div class="col-md-6">
                       <label>Wetter</label><br>
                       <input id="weather" type="text" style="width:100%; color:#6e707e" value="{{$visit->weather}}" placeholder="Wetter...">
                   </div>
               </div>
-              <div class="form-group">
-                  <label for="description">Bemerkungen</label>
-                  <textarea rows="10" type="text" class="form-control" id="visitDescription" placeholder="Bemerkungen zur Begehung (Freitext)">{{$visit->description}}</textarea>
+              <div class="row">
+                  <div class="col-md-12">
+                      <label for="visitDescription">Bemerkungen</label>
+                      <textarea rows="10" type="text" class="form-control" id="visitDescription" placeholder="Bemerkungen zur Begehung (Freitext)">{{$visit->description}}</textarea>
+                  </div>
               </div>
+              <button id="btnSaveVisit" type="button" class="btn btn-primary mb-4"><i class="fa fa-save"></i> Änderungen speichern</button>
 
               <!-- Anwensende -->
               <div class="card shadow mb-4">
@@ -162,79 +171,6 @@
   </div>
   <!-- Logout Modal [end] -->
 
-  <!-- Visit Modal [start] -->
-  <div class="modal fade" id="modalVisit" tabindex="-1" role="dialog" aria-labelledby="visitModal" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <div class="modal-title" id="visitModalLabel"><i class="fa fa-walking"></i> Begehung</div>
-                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <div class="form-group" style="display:none">
-                      <label for="contactID">ID</label>
-                      <input type="text" class="form-control" readonly id="contactID">
-                  </div>
-                  <div class="form-group">
-                      <label for="newSurname">Nachname</label>
-                      <input type="text" class="form-control" id="newSurname" placeholder="Nachname">
-                  </div>
-                  <div class="form-group">
-                      <label for="newFirstname">Vorname</label>
-                      <input type="text" class="form-control" id="newFirstname" placeholder="Vorname">
-                  </div>
-                  <div class="form-group">
-                      <label for="newCompany">Firma</label>
-                      <input type="text" class="form-control" id="newCompany" placeholder="Name der Firma">
-                  </div>
-                  <div class="form-group">
-                      <label for="newStreet">Straße</label>
-                      <input type="text" class="form-control" id="newStreet" placeholder="Straße">
-                  </div>
-                  <div class="form-group">
-                      <label for="newHousenumber">Hausnummer</label>
-                      <input type="text" class="form-control" id="newHousenumber" placeholder="Hausnummer">
-                  </div>
-                  <div class="form-group">
-                      <label for="newPostcode">PLZ</label>
-                      <input type="text" class="form-control" id="newPostcode" placeholder="PLZ">
-                  </div>
-                  <div class="form-group">
-                      <label for="newCity">Ort</label>
-                      <input type="text" class="form-control" id="newCity" placeholder="Ort">
-                  </div>
-                  <div class="form-group">
-                      <label for="newEmail">E-Mail</label>
-                      <input type="text" class="form-control" id="newEmail" placeholder="E-Mail-Adresse">
-                  </div>
-                  <div class="form-group">
-                      <label for="newPhone">Telefon</label>
-                      <input type="text" class="form-control" id="newPhone" placeholder="Telefonnummer">
-                  </div>
-                  <div class="form-group">
-                      <label for="newMobile">Mobiltelefon</label>
-                      <input type="text" class="form-control" id="newMobile" placeholder="Handynummer">
-                  </div>
-                  <div class="form-group">
-                      <label for="newFax">Fax</label>
-                      <input type="text" class="form-control" id="newFax" placeholder="Faxnummer">
-                  </div>
-                  <div class="form-group">
-                      <label for="newInfo">Info</label>
-                      <input type="text" class="form-control" id="newInfo" placeholder="Informationen zum Kontakt">
-                  </div>
-              </div>
-              <div class="modal-footer">
-                  <button id="btnSaveEditedContact" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
-                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
-              </div>
-          </div>
-      </div>
-  </div>
-  <!-- Visit Modal [end] -->
-
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -269,6 +205,27 @@
         var status = $("#time").val();
         alert(status);
       })
+    });
+
+
+    $("#btnSaveVisit").click(function () {
+        $.ajax({
+            type: "PATCH",
+            url: "/visit/{{ $visit->id }}",
+            data:
+                {
+                    'title' : $("#title").val(),
+                    'date' : $("#date").val(),
+                    'time' : $("#time").val(),
+                    'weather' : $("#weather").val(),
+                    'description' : $("#visitDescription").val()
+                }
+            ,
+            success: function (data) {
+                alert("Die Änderungen an der Begehung wurden gespeichert.");
+                location.reload();
+            }
+        });
     });
 
   </script>
