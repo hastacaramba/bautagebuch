@@ -716,6 +716,10 @@
 
       function handleClick(cb, id) {
           //alert("Clicked id " + id + " , new value = " + cb.checked);
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
 
           //update the member's presence for this visit
           $.ajax({
@@ -724,7 +728,7 @@
               data:
                   {
                       'memberID' : id,
-                      'presence' : cb.checked
+                      'presence' : checked
                   }
               ,
               success: function (data) {
