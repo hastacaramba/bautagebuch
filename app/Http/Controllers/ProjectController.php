@@ -54,6 +54,26 @@ class ProjectController extends Controller
 
 
     /**
+     * Deletes a project.
+     *
+     * @param $projectID
+     * @return string
+     */
+    public function deleteProject($projectID) {
+        $project = Project::where('id', '=', $projectID)->first();
+
+        if ($project != null) {
+            $project->delete();
+
+            return "Project with id " . $projectID . "successfully deleted.";
+        }
+
+        return "Project with id " . $projectID . " was not found.";
+
+    }
+
+
+    /**
      * Returns all projects in DB table projects as json.
      *
      * @return mixed

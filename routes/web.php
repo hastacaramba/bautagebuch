@@ -49,6 +49,8 @@ Route::get('/gewerke', function () {
 
 Route::post('/project', 'ProjectController@newProject')->name('newProject')->middleware('auth');
 
+Route::delete('/project/{projectID}', 'ProjectController@deleteProject')->name('deleteProject')->middleware('auth');
+
 Route::get('/projects', 'ProjectController@projectsJson')->name('projectsJson')->middleware('auth');
 
 Route::post('/contact', 'ContactController@newContact')->name('newContact')->middleware('auth');
