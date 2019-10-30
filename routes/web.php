@@ -91,7 +91,13 @@ Route::patch('/visit/{visitID}/presence', 'VisitController@setPresentMembers')->
 
 Route::get('/visitationnotes/{visitID}', 'VisitationnoteController@projectVisitationnotes')->middleware('auth');
 
+Route::post('/visitationnote', 'VisitationnoteController@newVisitationnote')->middleware('auth');
+
+Route::patch('/visitationnote/update/{visitationnoteID}', 'VisitationnoteController@updateVisitationnote')->middleware('auth');
+
 Route::patch('/visitationnote/{visitationnoteID}', 'VisitationnoteController@setDone')->middleware('auth');
+
+Route::delete('/visitationnote/{visitationnoteID}', 'VisitationnoteController@deleteVisitationnote')->middleware('auth');
 
 Route::post('/export/save', 'PdfController@savePdfData')->middleware('auth');
 

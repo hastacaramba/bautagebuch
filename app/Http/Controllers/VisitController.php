@@ -47,7 +47,7 @@ class VisitController extends Controller
 
         if ($visit != null) {
             $visit->title = $request->title;
-            //$visit->date = $request->date;
+            $visit->date = $request->date;
             $visit->time = $request->time;
             $visit->weather = $request->weather;
             $visit->description = $request->description;

@@ -118,15 +118,77 @@ class VisitationnoteController extends Controller
         $visitationnote = Visitationnote::where('id', '=', $visitationnoteID)->first();
 
         if ($visitationnote != null) {
-            if ($done) {
-                $visitationnote->done = 1;
-            } else {
-                $visitationnote->done = 0;
-            }
+
+            $visitationnote->done = $done;
+
             $visitationnote->save();
+        }
+
+        $visitationnote = Visitationnote::where('id', '=', $visitationnoteID)->first();
+
+        return $visitationnote->done;
+
+    }
+
+
+    /**
+     * Deletes a visitationnote.
+     *
+     * @param $visitationnoteID
+     */
+    public function deleteVisitationnote($visitationnoteID) {
+        $visitationnote = Visitationnote::where('id', '=', $visitationnoteID)->first();
+
+        if ($visitationnote != null) {
+            $visitationnote->delete();
         }
 
     }
 
+
+    /**
+     * Updates a visitationnote.
+     *
+     * @param Request $request
+     * @param $visitationnoteID
+     */
+    public function updateVisitationnote(Request $request, $visitationnoteID) {
+
+        //get the visitationnote by id
+        $visitationnote = Visitationnote::where('id', '=', $visitationnoteID)->first();
+
+        if ($visitationnote != null) {
+            $visitationnote->title = $request->title;
+            $visitationnote->created_at = $request->date;
+            $visitationnote->deadline = $request->deadline;
+            $visitationnote->notes = $request->notes;
+            $visitationnote->done = $request->done;
+            $visitationnote->category = $request->category;
+            $visitationnote->save();
+        }
+    }
+
+
+    /**
+     * Creates new visitationnote.
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function newVisitationnote(Request $request) {
+
+        $visitationnote = new Visitationnote;
+
+        $visitationnote->visit_id = $request->visit_id;
+        $visitationnote->title = $request->title;
+        $visitationnote->created_at = $request->date;
+        $visitationnote->deadline = $request->deadline;
+        $visitationnote->notes = $request->notes;
+        $visitationnote->done = $request->done;
+        $visitationnote->category = $request->category;
+
+        $visitationnote->save();
+
+    }
 
 }

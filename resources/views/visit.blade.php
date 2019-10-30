@@ -67,13 +67,12 @@
               </div>
               <button id="btnSaveVisit" type="button" class="btn btn-primary mb-4"><i class="fa fa-save"></i> Änderungen speichern</button>
 
-              <!-- Anwensende -->
+              <!-- Anwesende -->
               <div class="card shadow mb-4">
                   <div class="card-header py-3">
                       <h4><i class="fas fa-clipboard-list"></i> Anwesende</h4>
                   </div>
                   <div class="card-body">
-                      <button class="btn btn-primary" id="getSelection">getSelection</button>
                       <!-- Table Present Members -->
                       <div class="table-responsive">
                           <table
@@ -134,6 +133,7 @@
 
         </div>
       </div>
+
       <!-- End of Main Content -->
 
       @component('partials.footer')
@@ -172,6 +172,110 @@
   </div>
   <!-- Logout Modal [end] -->
 
+  <!-- Edit Visitationnote Modal [start] -->
+  <div class="modal fade" id="modalEditVisitationnnote" tabindex="-1" role="dialog" aria-labelledby="editVisitationnoteModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-clipboard-list"></i> Begehungsvermerk bearbeiten</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group" style="display:none">
+                      <label for="visitationnoteID">ID</label>
+                      <input type="text" class="form-control" id="visitationnoteID" hidden>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="visitationnoteTitle">Bezeichnung</label>
+                      <input type="text" class="form-control" id="visitationnoteTitle" placeholder="Bezeichnung...">
+                  </div>
+                  <div class="row mb-3">
+                      <div class="form-group col-md-3">
+                          <label for="visitationnoteDate">Datum</label><br>
+                          <input type="text" id="visitationnoteDate" style="width: 100%; color:#6e707e">
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="visitationnoteCategory">Kategorie</label>
+                          <select id="visitationnoteCategory">
+                              <option value="Mangel" selected="selected">Mangel</option>
+                              <option value="Information">Information</option>
+                          </select>
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="visitationnoteDeadline">Fälligkeit</label>
+                          <input type="text" id="visitationnoteDeadline" style="width: 100%; color:#6e707e">
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="visitationnoteDone">Erledigt</label>
+                          <input type="checkbox" class="form-control" id="visitationnoteDone">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="visitationnoteDescription">Bemerkungen</label>
+                      <textarea rows="10" type="text" class="form-control" id="visitationnoteDescription" placeholder="Bemerkungen (Freitext)"></textarea>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button id="btnSaveVisitationnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
+                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Edit Visitationnote Modal [end] -->
+
+  <!-- New Visitationnote Modal [start] -->
+  <div class="modal fade" id="modalNewVisitationnnote" tabindex="-1" role="dialog" aria-labelledby="newVisitationnoteModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-clipboard-list"></i> Begehungsvermerk anlegen</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group mb-3">
+                      <label for="newVisitationnoteTitle">Bezeichnung</label>
+                      <input type="text" class="form-control" id="newVisitationnoteTitle" placeholder="Bezeichnung...">
+                  </div>
+                  <div class="row mb-3">
+                      <div class="form-group col-md-3">
+                          <label for="newVisitationnoteDate">Datum</label><br>
+                          <input type="text" id="newVisitationnoteDate" style="width: 100%; color:#6e707e">
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="newVisitationnoteCategory">Kategorie</label>
+                          <select id="newVisitationnoteCategory">
+                              <option value="Mangel" selected="selected">Mangel</option>
+                              <option value="Information">Information</option>
+                          </select>
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="newVisitationnoteDeadline">Fälligkeit</label>
+                          <input type="text" id="newVisitationnoteDeadline" style="width: 100%; color:#6e707e">
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="newVisitationnoteDone">Erledigt</label>
+                          <input type="checkbox" class="form-control" id="newVisitationnoteDone">
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <label for="newVisitationnoteDescription">Bemerkungen</label>
+                      <textarea rows="10" type="text" class="form-control" id="newVisitationnoteDescription" placeholder="Bemerkungen (Freitext)"></textarea>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button id="btnSaveNewVisitationnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
+                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- New Visitationnote Modal [end] -->
+
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -188,6 +292,7 @@
   <script>
 
     $("#btnSaveVisit").click(function () {
+
         $.ajax({
             type: "PATCH",
             url: "/visit/{{ $visit->id }}",
@@ -205,6 +310,78 @@
                 location.reload();
             }
         });
+    });
+
+    $("#btnSaveVisitationnote").click(function () {
+
+        var id = $("#visitationnoteID").val();
+
+        var checked = 0;
+        if ($("#visitationnoteDone").is(':checked')) {
+            checked = 1;
+        }
+
+        $.ajax({
+            type: "PATCH",
+            url: "/visitationnote/update/" + id,
+            data:
+                {
+                    'title' : $("#visitationnoteTitle").val(),
+                    'date' : $("#visitationnoteDate").val() + " 00:00:00",
+                    'deadline' : $("#visitationnoteDeadline").val(),
+                    'notes' : $("#visitationnoteDescription").val(),
+                    'done' : checked,
+                    'category' : $("#visitationnoteCategory").val()
+                }
+            ,
+            success: function (data) {
+                alert("Die Änderungen am Begehungsvermerk wurden gespeichert.");
+                $table.bootstrapTable('refresh');
+                $("#modalEditVisitationnnote").modal('toggle');
+            }
+        });
+    });
+
+    $("#btnNewVisitationnote").click(function () {
+
+        $("#modalNewVisitationnnote").modal('toggle');
+        $("#visitationnoteDate").val("");
+        $("#visitationnoteTitle").val("");
+        $("#visitationnoteDeadline").val("");
+        $("#visitationnoteDescription").val("");
+        $("#visitationnoteDone").prop('checked', false);
+        $("#visitationnoteCategory").val("Mangel");
+
+
+    });
+
+    $("#btnSaveNewVisitationnote").click(function () {
+      var checked = 0;
+      if ($("#visitationnoteDone").is(':checked')) {
+          checked = 1;
+      }
+
+      $.ajax({
+          type: "POST",
+          url: "/visitationnote",
+          data:
+              {
+                  'visit_id' : '{{ $visit->id }}',
+                  'title' : $("#newVisitationnoteTitle").val(),
+                  'date' : $("#newVisitationnoteDate").val() + " 00:00:00",
+                  'deadline' : $("#newVisitationnoteDeadline").val(),
+                  'notes' : $("#newVisitationnoteDescription").val(),
+                  'done' : checked,
+                  'category' : $("#newVisitationnoteCategory").val()
+              }
+          ,
+          success: function (data) {
+              alert("Der Begehungsvermerk wurde erfolgreich angelegt.");
+              $table.bootstrapTable('refresh');
+              $("#modalNewVisitationnnote").modal('toggle');
+
+          }
+      });
     });
 
   </script>
@@ -268,12 +445,14 @@
        * @param index
        * @returns {string}
        */
-      function operateFormatter(value, row, index) {
+      function operateFormatterVisitationnotes(value, row, index) {
           return [
               '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
-              '</a>  '
-
+              '</a>  ',
+              '<a class="delete" href="javascript:void(0)" title="Löschen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+              '</a> ',
           ].join('')
       }
 
@@ -307,26 +486,68 @@
       function handleDoneClick(cb, id) {
           //alert("Clicked id " + id + " , new value = " + cb.checked);
 
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
           //update the done status for this visitationnote
           $.ajax({
               type: "PATCH",
               url: "/visitationnote/" + id,
               data:
                   {
-                      'done' : cb.checked
+                      'done' : checked
                   }
               ,
               success: function (data) {
                   alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  $table.bootstrapTable('refresh');
               }
           });
 
 
       }
 
+      //window.operateEvents for all bootstrap-tables
       window.operateEvents = {
           'click .edit': function (e, value, row, index) {
-              $("#modalEditVisitationnote").modal('toggle');
+
+              $("#modalEditVisitationnnote").modal('toggle');
+              $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
+              $("#visitationnoteTitle").val(row.title);
+              $("#visitationnoteDeadline").val(row.deadline);
+              $("#visitationnoteDescription").val(row.notes);
+              $("#visitationnoteDone").prop('checked', row.done);
+              $("#visitationnoteCategory").val(row.category);
+              $("#visitationnoteID").val(row.id);
+          },
+          'click .delete': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Begehungsvermerk wirklich entfernen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/visitationnote/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $table.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
           }
       }
 
@@ -365,7 +586,14 @@
                       sortable: true,
                       align: 'center',
                       formatter: doneFormatter
+                  }, {
+                      field: 'operate',
+                      title: 'Aktionen',
+                      align: 'center',
+                      events: window.operateEvents,
+                      formatter: operateFormatterVisitationnotes
                   }
+
               ]
           })
           $table.on('check.bs.table uncheck.bs.table ' +
@@ -442,7 +670,7 @@
           return [
               '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
-              '</a> ',
+              '</a> '
           ].join('')
       }
 
@@ -501,22 +729,14 @@
               ,
               success: function (data) {
                   alert("Die Änderungen bei der Anwesenheit wurden übernommen.");
+                  $tableMembers.bootstrapTable('refresh');
+
               }
           });
 
 
       }
 
-      window.operateEvents = {
-          'click .edit': function (e, value, row, index) {
-              alert("test");
-          },
-          'click .openVisit': function (e, value, row, index) {
-              //$("#modalVisit").modal('toggle');
-              //$("#visitModalLabel").html('<h5><i class="fa fa-walking"></i> Begehung: ' + row.title + ' ' + row.date + '</h5>');
-
-          }
-      }
 
       /**
        * Initiiert die Bootstrap-Table.
@@ -587,7 +807,7 @@
           {
               enableTime: false,
               noCalendar: false,
-              dateFormat: "d.m.Y",
+              dateFormat: "Y-m-d",
           }
       );
       $("#time").flatpickr(
@@ -595,6 +815,20 @@
               enableTime: true,
               noCalendar: true,
               time_24hr: true,
+          }
+      );
+      $("#visitationnoteDate").flatpickr(
+          {
+              enableTime: false,
+              noCalendar: false,
+              dateFormat: "Y-m-d",
+          }
+      );
+      $("#visitationnnoteDeadline").flatpickr(
+          {
+              enableTime: false,
+              noCalendar: false,
+              dateFormat: "Y-m-d",
           }
       );
   </script>
@@ -621,11 +855,6 @@
               var status = $("#time").val();
               alert(status);
           })
-
-          $(':checkbox').change(function() {
-              alert("Changed");
-          });
-
 
       });
 
