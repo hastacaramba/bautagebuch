@@ -480,7 +480,7 @@
                   }
               ,
               success: function (data) {
-                  alert("Die Änderungen an der Begehung wurden übernommen.");
+                  alert("Die Änderungen bei der Anwesenheit wurden übernommen.");
               }
           });
 
