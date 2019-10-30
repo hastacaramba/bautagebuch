@@ -73,7 +73,8 @@
                       <h4><i class="fas fa-clipboard-list"></i> Anwesende</h4>
                   </div>
                   <div class="card-body">
-                      <!-- Table Members -->
+                      <button class="btn btn-primary" id="getSelection">getSelection</button>
+                      <!-- Table Present Members -->
                       <div class="table-responsive">
                           <table
                                   id="tableMembers"
@@ -107,7 +108,7 @@
                   </div>
                   <div class="card-body">
                       <div class="table-responsive">
-                          <!-- Table: Projects -->
+                          <!-- Table: Visitationnotes -->
                           <table
                                   id="table"
                                   data-id-field="id"
@@ -185,28 +186,6 @@
   </script>
 
   <script>
-    $(document).ready(function () {
-
-      $.ajaxSetup({
-        headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-      });
-      //init bootstrap tables
-      initTable();
-        initTableMembers();
-
-      $("#showDate").click(function () {
-        var status = $("#date").val();
-        alert(status);
-      })
-
-        $("#showTime").click(function () {
-        var status = $("#time").val();
-        alert(status);
-      })
-    });
-
 
     $("#btnSaveVisit").click(function () {
         $.ajax({
@@ -396,7 +375,7 @@
        * Gibt eine map der Projekt-IDs der aktuell selektierten Zeilen zurück.
        *
        */
-      function getIdSelections() {
+      function getIdSelectionsMembers() {
           return $.map($tableMembers.bootstrapTable('getSelections'), function (row) {
               return row.id;
           })
@@ -478,13 +457,34 @@
 
           if (value) {
               return [
-                  '<input type="checkbox" name="erledigt" value="1" checked>'
+                  '<input class=\"presenceCheck\" type=\"checkbox\" name=\"presence\" value=\"1\" checked onclick=\"handleClick(this,\'' + row.id + '\')\">'
               ]
           }
 
           return [
-              '<input type="checkbox" name="erledigt" value="0">'
+              '<input class=\"presenceCheck\" type=\"checkbox\" name=\"presence\" value=\"0\" onclick=\"handleClick(this,\'' + row.id + '\')\">'
           ]
+      }
+
+      function handleClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+          //update the member's presence for this visit
+          $.ajax({
+              type: "PATCH",
+              url: "/visit/{{ $visit->id }}/presence",
+              data:
+                  {
+                      'memberID' : id,
+                      'presence' : cb.checked
+                  }
+              ,
+              success: function (data) {
+                  alert("Die Änderungen an der Begehung wurden übernommen.");
+              }
+          });
+
+
       }
 
       window.operateEvents = {
@@ -537,6 +537,7 @@
                       align: 'center',
                       formatter: presenceFormatter
                   }
+
               ]
           })
           $tableMembers.on('check.bs.table uncheck.bs.table ' +
@@ -577,6 +578,39 @@
           }
       );
   </script>
+
+  <script>
+
+      $(document).ready(function () {
+
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+          //init bootstrap tables
+          initTable();
+          initTableMembers();
+
+          $("#showDate").click(function () {
+              var status = $("#date").val();
+              alert(status);
+          })
+
+          $("#showTime").click(function () {
+              var status = $("#time").val();
+              alert(status);
+          })
+
+          $(':checkbox').change(function() {
+              alert("Changed");
+          });
+
+
+      });
+
+  </script>
+
 
   @component('partials.js')
       <strong>Whoops!</strong> Something went wrong!

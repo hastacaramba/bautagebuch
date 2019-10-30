@@ -9,6 +9,7 @@ use App\Contact;
 use App\Subarea;
 use App\Visit;
 use App\Project;
+use Illuminate\Support\Facades\DB;
 
 class VisitController extends Controller
 {
@@ -112,7 +113,7 @@ class VisitController extends Controller
 
 
     /**
-     * Returns the present members og a visit
+     * Returns the present members of a visit.
      *
      * @param $visitID
      * @return false|string
@@ -144,6 +145,7 @@ class VisitController extends Controller
         for ($n = 0; $n < sizeof($members); $n++) {
             if (in_array($members[$n],$presentMembers)) {
                 $result[] = [
+                    "id" => $members[$n]->id,
                     "firstname" => $members[$n]->contact['firstname'],
                     "surname" => $members[$n]->contact['surname'],
                     "company" => $members[$n]->contact['company'],
@@ -161,6 +163,7 @@ class VisitController extends Controller
                 ];
             } else {
                 $result[] = [
+                    "id" => $members[$n]->id,
                     "firstname" => $members[$n]->contact['firstname'],
                     "surname" => $members[$n]->contact['surname'],
                     "company" => $members[$n]->contact['company'],
@@ -180,6 +183,45 @@ class VisitController extends Controller
         }
 
         return json_encode($result);
+
+    }
+
+
+    /**
+     * Sets the presence Status for a member for a visit.
+     *
+     * @param Request $request
+     * @param $visitID
+     */
+    public function setPresentMembers(Request $request, $visitID) {
+
+        $memberID = $request->memberID;
+
+        $presence = $request->presence;
+
+        //get visit
+        //$visit = Visit::where('id', '=', $visitID)->first();
+
+        //get the member
+        //$member = Member::where('id', '=', $memberID)->first();
+
+        $presenceCheck = DB::table('member_visit')->where([
+            ['member_id', '=', $memberID],
+            ['visit_id', '=', $visitID],
+        ])->first();
+
+        if ($presence && $presenceCheck == null) {
+            DB::table('member_visit')->insert([
+                ['member_id' => $memberID, 'visit_id' => $visitID]
+            ]);
+        }
+
+        if (!$presence && $presenceCheck != null) {
+            DB::table('member_visit')->where([
+                ['member_id', '=', $memberID],
+                ['visit_id', '=', $visitID],
+            ])->delete();
+        }
 
     }
 

@@ -87,6 +87,8 @@ Route::get('/visit/{visitID}/json', 'VisitController@getVisit')->middleware('aut
 
 Route::get('/visit/{visitID}/presence', 'VisitController@getPresentMembers')->middleware('auth');
 
+Route::patch('/visit/{visitID}/presence', 'VisitController@setPresentMembers')->middleware('auth');
+
 Route::get('/visitationnotes/{visitID}', 'VisitationnoteController@projectVisitationnotes')->middleware('auth');
 
 Route::post('/export/save', 'PdfController@savePdfData')->middleware('auth');
