@@ -91,6 +91,8 @@ Route::patch('/visit/{visitID}/presence', 'VisitController@setPresentMembers')->
 
 Route::get('/visitationnotes/{visitID}', 'VisitationnoteController@projectVisitationnotes')->middleware('auth');
 
+Route::patch('/visitationnote/{visitationnoteID}', 'VisitationnoteController@setDone')->middleware('auth');
+
 Route::post('/export/save', 'PdfController@savePdfData')->middleware('auth');
 
 Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upload')->middleware('auth');

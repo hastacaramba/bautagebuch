@@ -295,13 +295,33 @@
 
           if (value) {
               return [
-                  '<input type="checkbox" name="erledigt" value="1" checked>'
+                  '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"1\" checked onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
               ]
           }
 
           return [
-              '<input type="checkbox" name="erledigt" value="0">'
+              '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"0\" onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
           ]
+      }
+
+      function handleDoneClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+          //update the done status for this visitationnote
+          $.ajax({
+              type: "PATCH",
+              url: "/visitationnote/" + id,
+              data:
+                  {
+                      'done' : cb.checked
+                  }
+              ,
+              success: function (data) {
+                  alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+              }
+          });
+
+
       }
 
       window.operateEvents = {

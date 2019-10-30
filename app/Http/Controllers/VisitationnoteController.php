@@ -105,4 +105,28 @@ class VisitationnoteController extends Controller
     }
 
 
+    /**
+     * Sets the done status of the visitationnote.
+     *
+     * @param Request $request
+     * @param $visitationnoteID
+     */
+    public function setDone(Request $request, $visitationnoteID) {
+
+        $done = $request->done;
+
+        $visitationnote = Visitationnote::where('id', '=', $visitationnoteID)->first();
+
+        if ($visitationnote != null) {
+            if ($done) {
+                $visitationnote->done = 1;
+            } else {
+                $visitationnote->done = 0;
+            }
+            $visitationnote->save();
+        }
+
+    }
+
+
 }
