@@ -55,13 +55,19 @@ Route::get('/projects', 'ProjectController@projectsJson')->name('projectsJson')-
 
 Route::post('/contact', 'ContactController@newContact')->name('newContact')->middleware('auth');
 
+Route::delete('/contact/{contactID}', 'ContactController@deleteContact')->name('deleteContact')->middleware('auth');
+
 Route::get('/contacts', 'ContactController@contactsJson')->name('contactsJson')->middleware('auth');
 
 Route::get('/contacts/select', 'ContactController@getContactsSelect')->name('contactsSelect')->middleware('auth');
 
 Route::patch('/contacts/{contactID}/update', 'ContactController@updateContact')->middleware('auth');
 
+Route::post('/subarea', 'SubareaController@newSubarea')->name('newSubarea')->middleware('auth');
+
 Route::get('/subareas', 'SubareaController@subareasJson')->name('subareasJson')->middleware('auth');
+
+Route::delete('/subarea/{subareaID}', 'SubareaController@deleteSubarea')->name('deleteSubarea')->middleware('auth');
 
 Route::get('/subareas/select', 'SubareaController@getSubareasSelect')->name('subareasSelect')->middleware('auth');
 

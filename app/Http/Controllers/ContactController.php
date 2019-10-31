@@ -38,6 +38,25 @@ class ContactController extends Controller
 
 
     /**
+     * Deletes a contact by id.
+     *
+     * @param $contactID
+     * @return string
+     */
+    public function deleteContact($contactID) {
+        $contact = Contact::where('id', '=', $contactID)->first();
+
+        if ($contact != null) {
+            $contact->delete();
+
+            return "Contact successfully deleted.";
+        }
+
+        return "Contact was not found.";
+    }
+
+
+    /**
      * Update the contact with the given id.
      *
      * @param $contactID The id of the contact

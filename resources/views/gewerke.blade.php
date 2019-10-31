@@ -182,6 +182,7 @@
             "title": $("#title").val(),
           },
           success: function (data) {
+            alert("Das Gewerk wurde erfolgreich angelegt.");
             location.reload();
           }
         });
@@ -283,8 +284,10 @@
       return [
         '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
           '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+        '</a>',
+        '<a class="delete" href="javascript:void(0)" title="Löschen">',
+        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
         '</a>  '
-
       ].join('')
     }
 
@@ -308,6 +311,34 @@
         $("#newTitle").val(row.title);
         $("#subareaID").val(row.id);
         $("#modalEditSubarea").modal('toggle');
+      },
+      'click .delete': function (e, value, row, index) {
+        bootbox.confirm({
+          message: "Wollen Sie das Gewerk wirklich entfernen?",
+          buttons: {
+            confirm: {
+              label: 'Ja',
+              className: 'btn-success'
+            },
+            cancel: {
+              label: 'Nein',
+              className: 'btn-danger'
+            }
+          },
+          callback: function (result) {
+            if (result) {
+              $.ajax({
+                type: "DELETE",
+                url: "/subarea/" + row.id,
+                data: "",
+                success: function (data) {
+                  alert("Das Gewerk wurde gelöscht.");
+                  location.reload();
+                }
+              });
+            }
+          }
+        });
       }
     }
 
@@ -352,9 +383,9 @@
 
   </script>
 
-  <!-- bootstrap tables -->
-  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
-  <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table-locale-all.min.js"></script>
+  @component('partials.js')
+    <strong>Whoops!</strong> Something went wrong!
+  @endcomponent
 
 
 </body>

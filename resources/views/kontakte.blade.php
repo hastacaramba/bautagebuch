@@ -381,6 +381,9 @@
       return [
         '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
           '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+        '</a>',
+        '<a class="delete" href="javascript:void(0)" title="Löschen">',
+        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
         '</a>  '
 
       ].join('')
@@ -430,6 +433,34 @@
         $("#newMobile").val(row.mobile);
         $("#newFax").val(row.fax);
         $("#modalEditContact").modal('toggle');
+      },
+      'click .delete': function (e, value, row, index) {
+        bootbox.confirm({
+          message: "Wollen Sie den Kontakt wirklich entfernen?",
+          buttons: {
+            confirm: {
+              label: 'Ja',
+              className: 'btn-success'
+            },
+            cancel: {
+              label: 'Nein',
+              className: 'btn-danger'
+            }
+          },
+          callback: function (result) {
+            if (result) {
+              $.ajax({
+                type: "DELETE",
+                url: "/contact/" + row.id,
+                data: "",
+                success: function (data) {
+                  alert("Der Kontakt wurde gelöscht.")
+                  $table.bootstrapTable('refresh');
+                }
+              });
+            }
+          }
+        });
       }
     }
 

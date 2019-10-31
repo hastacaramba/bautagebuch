@@ -45,6 +45,25 @@ class SubareaController extends Controller
 
 
     /**
+     * Deletes a subarea by id.
+     *
+     * @param $subareaID
+     * @return string
+     */
+    public function deleteSubarea($subareaID) {
+        $subarea = Subarea::where('id', '=', $subareaID)->first();
+
+        if ($subarea != null) {
+            $subarea->delete();
+
+            return "Subarea successfully deleted.";
+        }
+
+        return "Subarea was not found.";
+    }
+
+
+    /**
      * Returns all subareas in DB table subareas as json.
      *
      * @return mixed
