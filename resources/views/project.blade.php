@@ -52,7 +52,7 @@
                 <li class="tab-link current" data-tab="tab-1"><i class="fas fa-users"></i> Projektbeteiligte</li>
                 <li class="tab-link" data-tab="tab-2"><i class="fas fa-walking"></i> Begehungen</li>
                 <li class="tab-link" data-tab="tab-3"><i class="far fa-clipboard"></i> Projektvermerke</li>
-                <li class="tab-link" data-tab="tab-3"><i class="far fa-folder"></i> Dokumente</li>
+                <li class="tab-link" data-tab="tab-4"><i class="far fa-folder"></i> Dokumente</li>
             </ul>
 
             <div id="tab-1" class="tab-content current">
@@ -110,7 +110,10 @@
                 </div>
             </div>
             <div id="tab-3" class="tab-content">
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+                Hier finden Sie später die Projektvermerke für dieses Projekt...
+            </div>
+            <div id="tab-4" class="tab-content">
+                Hier finden Sie später die Dokumente für dieses Projekt...
             </div>
             <button class="btn btn-success btn-circle mt-4 ml-4" id="pdfTest"><i class="fas fa-file-pdf"></i></button>
         </div>
