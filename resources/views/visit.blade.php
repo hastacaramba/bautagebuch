@@ -30,11 +30,14 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div>
                     <a href="/bauprojekte">Bauprojekte</a> / <a href="/projects/{{ $project->id }}">{{ $project->number }} {{ $project->name }}</a>
                 </div>
                 <h2 class="m-0 font-weight-bold text-primary">Begehung: {{ $visit->title }} {{ $visit->date }}</h2>
+            </div>
+            <div class="col-md-2" style="text-align-right">
+                <button class="btn btn-success btn-circle mt-4 ml-4" id="pdfTest"><i class="fas fa-file-pdf"></i></button>
             </div>
           </div>
         </div>
@@ -291,7 +294,30 @@
 
   <script>
 
-    $("#btnSaveVisit").click(function () {
+
+      $("#pdfTest").click(function () {
+
+          var idString = $.now().toString() + '{{ Auth::user()->id }}';
+
+          $.ajax({
+              type: "POST",
+              url: "/exportvisit/save",
+              data: JSON.stringify(
+                  {
+                      'idString' : idString,
+                      'visitID' : '{{ $visit->id }}',
+                      'projectID' : '{{ $project->id }}'
+                  }
+              ),
+              success: function (data) {
+                  location.href = '/PdfDemo/' + idString;
+              }
+          });
+          //location.href = '/PdfDemo';
+      });
+
+
+      $("#btnSaveVisit").click(function () {
 
         $.ajax({
             type: "PATCH",

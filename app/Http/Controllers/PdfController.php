@@ -8,22 +8,37 @@ use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
 use PDF;
 use App\Project;
+use App\Visit;
+use App\Visitationnote;
+use App\Member;
 
 class PdfController extends Controller {
 
 
+    /**
+     * Exports visit data to pdf.
+     *
+     * @param Request $request
+     */
     public function savePdfData(Request $request) {
-        $idString = $request->json("id");
-        $name = $request->json("name");
-        $number = $request->json("number");
+
+        $reportID = $request->json("idString");
+
+        $visitID = $request->json("visitID");
+        $visit = Visit::where('id', '=', $visitID)->first();
+
+        $projectID = $request->json("projectID");
+        $project = Project::where('id', '=', $projectID)->first();
 
         $data = [
-            'name' => $name,
-            'number' => $number
+            'visitTitle' => $visit->title,
+            'visitDate' => $visit->date,
+            'projectNumber' => $project->number,
+            'projectName' => $project->name,
         ];
 
         $exportData = new ExportData();
-        $exportData->idString = $idString;
+        $exportData->idString = $reportID;
         $exportData->data = json_encode($data);
         $exportData->save();
     }
@@ -32,23 +47,27 @@ class PdfController extends Controller {
 
         $exportData = ExportData::where('idString', '=', $idString)->first();
 
-        $number = json_decode($exportData->data)->number;
-        $name = json_decode($exportData->data)->name;
+        $visitTitle = json_decode($exportData->data)->visitTitle;
+        $visitDate = json_decode($exportData->data)->visitDate;
+        $projectNumber = json_decode($exportData->data)->projectNumber;
+        $projectName = json_decode($exportData->data)->projectName;
 
         // usersPdf is the view that includes the downloading content
         $view = \View::make('PdfDemo', [
-            'name'=>$name,
-            'number'=>$number,
+            'visitTitle'=>$visitTitle,
+            'visitDate'=>$visitDate,
+            'projectNumber'=>$projectNumber,
+            'projectName'=>$projectName,
             ]);
         $html_content = $view->render();
         // Set title in the PDF
-        PDF::SetTitle("List of users");
+        PDF::SetTitle("Begehung: " . $visitTitle . ", " . $visitDate);
         PDF::AddPage();
         PDF::writeHTML($html_content, true, false, true, false, '');
         // userlist is the name of the PDF downloading
-        PDF::Output('userlist.pdf');
+        PDF::Output('begehungsbericht_' . $visitDate . '.pdf');
 
-        ExportData::where('idString', '=', $idString)->delete();
+        ExportData::where('idString', '=', $reportID)->delete();
 
     }
 

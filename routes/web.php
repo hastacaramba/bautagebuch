@@ -107,7 +107,7 @@ Route::patch('/visitationnote/{visitationnoteID}', 'VisitationnoteController@set
 
 Route::delete('/visitationnote/{visitationnoteID}', 'VisitationnoteController@deleteVisitationnote')->middleware('auth');
 
-Route::post('/export/save', 'PdfController@savePdfData')->middleware('auth');
+Route::post('/exportvisit/save', 'PdfController@savePdfData')->middleware('auth');
 
 Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upload')->middleware('auth');
 
