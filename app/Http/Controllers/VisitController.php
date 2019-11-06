@@ -131,7 +131,6 @@ class VisitController extends Controller
         //run through the members and decide if he was present during visit or not
         for ($n = 0; $n < sizeof($members); $n++) {
             $member = $members[$n];
-            $membersContact = $member->contact;
             $membersVisits = $member->visits;
             for ($i = 0; $i < sizeof($membersVisits); $i++) {
                 if ($membersVisits[$i]['id'] == $visitID) {

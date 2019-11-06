@@ -16,7 +16,7 @@ class CreateExportdataTable extends Migration
         Schema::create('exportdata', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('idString');
-            $table->string('data');
+            $table->string('data', 5000);
             $table->timestamps();
         });
     }

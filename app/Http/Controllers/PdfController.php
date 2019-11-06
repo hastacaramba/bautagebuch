@@ -11,6 +11,8 @@ use App\Project;
 use App\Visit;
 use App\Visitationnote;
 use App\Member;
+use App\Contact;
+use App\Subarea;
 
 class PdfController extends Controller {
 
@@ -30,11 +32,51 @@ class PdfController extends Controller {
         $projectID = $request->json("projectID");
         $project = Project::where('id', '=', $projectID)->first();
 
+        $visitationnotes = Visitationnote::where('visit_id', '=', $visitID)->get();
+
+
+        //present members...
+
+        //get all members of the project
+        $members = Member::where('project_id', '=', $projectID)->get();
+
+        $presentMembers = [];
+
+        //run through the members and decide if he was present during visit or not
+        for ($n = 0; $n < sizeof($members); $n++) {
+            $member = $members[$n];
+            $membersVisits = $member->visits;
+            for ($i = 0; $i < sizeof($membersVisits); $i++) {
+                if ($membersVisits[$i]['id'] == $visitID) {
+                    $presentMembers[] = $member;
+                }
+            }
+        }
+
+        //now we know the present members - we need certain attributes of them
+        $presentMembersData = [];
+
+        foreach($presentMembers as $presentMember) {
+
+            $contact = $presentMember->contact;
+            $subarea = $presentMember->subarea;
+
+            $item = [
+                'surname' => $contact->surname,
+                'firstname' => $contact->firstname,
+                'company' => $contact->company,
+                'subarea' => $subarea->title
+            ];
+
+            $presentMembersData[] = $item;
+        }
+
+
         $data = [
-            'visitTitle' => $visit->title,
-            'visitDate' => $visit->date,
-            'projectNumber' => $project->number,
-            'projectName' => $project->name,
+            'visit' => $visit,
+            'project' => $project,
+            'presentMembersData' => $presentMembersData,
+            'visitationnotes' => $visitationnotes
         ];
 
         $exportData = new ExportData();
@@ -47,27 +89,34 @@ class PdfController extends Controller {
 
         $exportData = ExportData::where('idString', '=', $idString)->first();
 
-        $visitTitle = json_decode($exportData->data)->visitTitle;
-        $visitDate = json_decode($exportData->data)->visitDate;
-        $projectNumber = json_decode($exportData->data)->projectNumber;
-        $projectName = json_decode($exportData->data)->projectName;
+        $visit = json_decode($exportData->data, true)['visit'];
+
+        $project = json_decode($exportData->data, true)['project'];
+
+        $presentMembers = json_decode($exportData->data, true)['presentMembersData'];
+
+        $visitationnotes = json_decode($exportData->data, true)['visitationnotes'];
+
 
         // usersPdf is the view that includes the downloading content
         $view = \View::make('PdfDemo', [
-            'visitTitle'=>$visitTitle,
-            'visitDate'=>$visitDate,
-            'projectNumber'=>$projectNumber,
-            'projectName'=>$projectName,
+            'visit'=>$visit,
+            'project'=>$project,
+            'presentMembers'=>$presentMembers,
+            'visitationnotes'=>$visitationnotes,
+            //'visitDate'=>$visitDate,
+            //'projectNumber'=>$projectNumber,
+            //'projectName'=>$projectName,
             ]);
         $html_content = $view->render();
         // Set title in the PDF
-        PDF::SetTitle("Begehung: " . $visitTitle . ", " . $visitDate);
+        PDF::SetTitle("Begehung: " . $visit['title']);
         PDF::AddPage();
         PDF::writeHTML($html_content, true, false, true, false, '');
         // userlist is the name of the PDF downloading
-        PDF::Output('begehungsbericht_' . $visitDate . '.pdf');
+        PDF::Output('begehungsbericht_' . '.pdf');
 
-        ExportData::where('idString', '=', $reportID)->delete();
+        //ExportData::where('idString', '=', $idString)->delete();
 
     }
 
