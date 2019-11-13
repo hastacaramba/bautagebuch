@@ -14,12 +14,6 @@ class Projectnote extends Model {
         'category',
         'title',
         'notes',
-        'image1',
-        'image2',
-        'image3',
-        'file1',
-        'file2',
-        'file3',
         'deadline',
         'done',
         'project_id'
@@ -30,5 +24,12 @@ class Projectnote extends Model {
      */
     public function project() {
         return $this->hasOne('App\Project');
+    }
+
+    /**
+     * Get the media of the projectnote.
+     */
+    public function media() {
+        return $this->hasMany('App\Media');
     }
 }

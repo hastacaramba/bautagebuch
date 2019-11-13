@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Media;
 use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Project;
@@ -25,8 +26,17 @@ class ProjectController extends Controller
         $project->housenumber = $request->housenumber;
         $project->postcode = $request->postcode;
         $project->city = $request->city;
-        $project->photo = $request->photo;
         $project->save();
+        $media = new Media();
+        if ($request->photo != "" && $request->photo != null) {
+            $media->filename = $request->photo;
+            $media->project_id = $project->id;
+            $media->save();
+        } else {
+            $media->filename = 'default.jpg';
+            $media->project_id = $project->id;
+            $media->save();
+        }
     }
 
 
@@ -47,8 +57,24 @@ class ProjectController extends Controller
             $project->housenumber = $request->housenumber;
             $project->postcode = $request->postcode;
             $project->city = $request->city;
-            $project->photo = $request->photo;
             $project->save();
+
+            //Does Project-File-Combi already exist?
+            $check = Media::where([
+                ['project_ID', $projectID],
+                ['filename', $request->photo],
+            ])->count();
+
+            if ($check === 0) {
+                Media::where([
+                    ['project_ID', $projectID],
+                ])->delete();
+
+                $media = new Media();
+                $media->filename = $request->photo;
+                $media->project_id = $projectID;
+                $media->save();
+            }
         }
     }
 
@@ -64,6 +90,7 @@ class ProjectController extends Controller
 
         if ($project != null) {
             $project->delete();
+
 
             return "Project with id " . $projectID . "successfully deleted.";
         }
@@ -82,7 +109,26 @@ class ProjectController extends Controller
 
         $projects = Project::all();
 
-        return json_encode($projects);
+        $result = [];
+
+        foreach ($projects as $project) {
+            $item = [
+                'id' => $project->id,
+                'number' => $project->number,
+                'name' => $project->name,
+                'street' => $project->street,
+                'housenumber' => $project->housenumber,
+                'postcode' => $project->postcode,
+                'city' => $project->city,
+                'photo' => $project->media()->first()['filename'],
+                'created_at' => $project->created_at,
+                'updated_at' => $project->updated_at
+            ];
+
+            $result[] = $item;
+        }
+
+        return json_encode($result);
     }
 
 
@@ -109,7 +155,7 @@ class ProjectController extends Controller
             'city' => $project->city,
             'created_at' => $project->created_at,
             'updated_at' => $project->updated_at,
-            'photo' => $project->photo
+            'photo' => $project->media()->first()['filename']
         ]);
     }
 

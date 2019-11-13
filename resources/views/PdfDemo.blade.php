@@ -67,6 +67,10 @@
           @endif
         </td>
       </tr>
+      <tr>
+        <td>{{ $visitationnote['media'][0]['filename'] ?? ""}}</td>
+        <td></td>
+      </tr>
     </table>
     <p style="font-size: 0.1em"></p>
   @endforeach

@@ -103,6 +103,8 @@ Route::post('/visitationnote', 'VisitationnoteController@newVisitationnote')->mi
 
 Route::patch('/visitationnote/update/{visitationnoteID}', 'VisitationnoteController@updateVisitationnote')->middleware('auth');
 
+Route::get('/visitationnote/media/{visitationnoteID}', 'VisitationnoteController@getMedia')->middleware('auth');
+
 Route::patch('/visitationnote/{visitationnoteID}', 'VisitationnoteController@setDone')->middleware('auth');
 
 Route::delete('/visitationnote/{visitationnoteID}', 'VisitationnoteController@deleteVisitationnote')->middleware('auth');
@@ -112,6 +114,10 @@ Route::post('/exportvisit/save', 'PdfController@savePdfData')->middleware('auth'
 Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upload')->middleware('auth');
 
 Route::post('image-upload-post', 'ImageUploadController@imageUploadPost')->name('image.upload.post')->middleware('auth');
+
+Route::post('/image-upload-post-visitationnote', 'ImageUploadController@imageUploadPostVisitationnote')->name('image.upload.post.visitationnote')->middleware('auth');
+
+Route::delete('/media/{mediaID}', 'MediaController@deleteMedia')->name('media.delete')->middleware('auth');
 
 
 

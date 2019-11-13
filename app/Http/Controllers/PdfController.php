@@ -34,6 +34,21 @@ class PdfController extends Controller {
 
         $visitationnotes = Visitationnote::where('visit_id', '=', $visitID)->get();
 
+        $visitationnotesWithMedia = [];
+
+        foreach($visitationnotes as $visitationnote) {
+            $item = [
+                'id' => $visitationnote->id,
+                'title' => $visitationnote->title,
+                'category' => $visitationnote->category,
+                'notes' => $visitationnote->notes,
+                'deadline' => $visitationnote->deadline,
+                'done' => $visitationnote->done,
+                'media' => $visitationnote->media()->get()
+            ];
+
+            $visitationnotesWithMedia[] = $item;
+        }
 
         //present members...
 
@@ -76,7 +91,7 @@ class PdfController extends Controller {
             'visit' => $visit,
             'project' => $project,
             'presentMembersData' => $presentMembersData,
-            'visitationnotes' => $visitationnotes
+            'visitationnotes' => $visitationnotesWithMedia
         ];
 
         $exportData = new ExportData();

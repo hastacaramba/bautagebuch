@@ -18,12 +18,6 @@ class CreateVisitationnotesTable extends Migration
             $table->enum('category',['Mangel','Information']);
             $table->string('title');
             $table->string('notes')->nullable();
-            $table->string('image1')->nullable();
-            $table->string('image2')->nullable();
-            $table->string('image3')->nullable();
-            $table->string('file1')->nullable();
-            $table->string('file2')->nullable();
-            $table->string('file3')->nullable();
             $table->date('deadline')->nullable();
             $table->boolean('done')->default(0);
             $table->integer('visit_id');

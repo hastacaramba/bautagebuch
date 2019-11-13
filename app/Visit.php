@@ -39,4 +39,11 @@ class Visit extends Model {
     public function members() {
         return $this->belongsToMany('App\Member',  'member_visit');
     }
+
+    /**
+     * Get the media of the visit.
+     */
+    public function media() {
+        return $this->hasMany('App\Media');
+    }
 }

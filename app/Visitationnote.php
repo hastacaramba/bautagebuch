@@ -14,12 +14,6 @@ class Visitationnote extends Model {
         'category',
         'title',
         'notes',
-        'image1',
-        'image2',
-        'image3',
-        'file1',
-        'file2',
-        'file3',
         'deadline',
         'done',
         'visit_id'
@@ -37,5 +31,12 @@ class Visitationnote extends Model {
      */
     public function project() {
         return $this->hasOneThrough('App\Project', 'App\Visit');
+    }
+
+    /**
+     * Get the media of the visitationnote.
+     */
+    public function media() {
+        return $this->hasMany('App\Media');
     }
 }

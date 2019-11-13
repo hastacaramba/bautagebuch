@@ -17,6 +17,10 @@ label {
     max-width: 150px;
 }
 
+.visitationnote-img {
+    max-width: 200px;
+}
+
 .img-rounded {
     border-radius: 5px;
 }
@@ -25,6 +29,18 @@ label {
     max-height: 50px;
 }
 
+#chooseNewMedia {
+    background:#eee;
+    border: 0.5px solid #aaa;
+    border-radius: 5px;
+    padding: 10px;
+    display:none;
+}
+
+.bootbox .modal-content{
+    -webkit-box-shadow: 0px 0px 50px -6px rgba(0,0,0,0.79);
+    box-shadow: 0px 0px 50px -6px rgba(0,0,0,0.79);
+}
 
 
 /* --- NAV TABS --- */

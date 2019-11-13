@@ -191,4 +191,19 @@ class VisitationnoteController extends Controller
 
     }
 
+
+    /**
+     * Returns the media associated with the visitnote.
+     *
+     * @param $visitationnoteID
+     * @return false|string
+     */
+    public function getMedia($visitationnoteID) {
+        $visitationnote = Visitationnote::where('id', $visitationnoteID)->first();
+
+        $media = $visitationnote->media()->get();
+
+        return json_encode($media);
+    }
+
 }

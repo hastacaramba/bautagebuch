@@ -16,7 +16,6 @@ class ProjectsTableSeeder extends Seeder {
             'housenumber' => '3a',
             'postcode' => '12345',
             'city' => 'Musterstadt',
-            'photo' => 'wohnhaus.jpeg',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -27,7 +26,6 @@ class ProjectsTableSeeder extends Seeder {
             'housenumber' => '16',
             'postcode' => '98765',
             'city' => 'Petersstetten',
-            'photo' => 'gymnasium.jpeg',
             'created_at' => now(),
             'updated_at' => now()
         ]);
@@ -38,7 +36,24 @@ class ProjectsTableSeeder extends Seeder {
             'housenumber' => '1a',
             'postcode' => '94474',
             'city' => 'Vilshofen',
-            'photo' => 'turnhalle.jpeg',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('media')->insert([
+            'filename' => 'wohnhaus.jpeg',
+            'project_id' => '1',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('media')->insert([
+            'filename' => 'gymnasium.jpeg',
+            'project_id' => '2',
+            'created_at' => now(),
+            'updated_at' => now()
+        ]);
+        DB::table('media')->insert([
+            'filename' => 'turnhalle.jpeg',
+            'project_id' => '3',
             'created_at' => now(),
             'updated_at' => now()
         ]);

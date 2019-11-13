@@ -16,8 +16,7 @@ class Project extends Model {
         'street',
         'housenumber',
         'postcode',
-        'city',
-        'photo'
+        'city'
     ];
 
     /**
@@ -46,5 +45,12 @@ class Project extends Model {
      */
     public function members() {
         return $this->hasMany('App\Member');
+    }
+
+    /**
+     * Get the media for the project.
+     */
+    public function media() {
+        return $this->hasOne('App\Media');
     }
 }
