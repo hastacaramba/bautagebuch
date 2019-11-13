@@ -37,6 +37,12 @@ class PdfController extends Controller {
         $visitationnotesWithMedia = [];
 
         foreach($visitationnotes as $visitationnote) {
+
+            $media = $visitationnote->media()->get();
+
+            //how many rows do I need?
+            $numOfRows = floor(sizeof($media)/2);
+
             $item = [
                 'id' => $visitationnote->id,
                 'title' => $visitationnote->title,
@@ -44,7 +50,7 @@ class PdfController extends Controller {
                 'notes' => $visitationnote->notes,
                 'deadline' => $visitationnote->deadline,
                 'done' => $visitationnote->done,
-                'media' => $visitationnote->media()->get()
+                'media' => $visitationnote->media
             ];
 
             $visitationnotesWithMedia[] = $item;
@@ -111,7 +117,6 @@ class PdfController extends Controller {
         $presentMembers = json_decode($exportData->data, true)['presentMembersData'];
 
         $visitationnotes = json_decode($exportData->data, true)['visitationnotes'];
-
 
         // usersPdf is the view that includes the downloading content
         $view = \View::make('PdfDemo', [

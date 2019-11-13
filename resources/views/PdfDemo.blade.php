@@ -15,6 +15,7 @@
     }
   </style>
 </head>
+<body>
 <span style="text-align: right">
     <img src="/img/logo.png" style="width: 120px">
   </span><\br>
@@ -67,10 +68,15 @@
           @endif
         </td>
       </tr>
+      @foreach ($visitationnote['media'] as $media)
+
       <tr>
-        <td>{{ $visitationnote['media'][0]['filename'] ?? ""}}</td>
+        <td style="border: 0.5px solid lightgrey" colspan="2">
+          <img src="/images/{{ $media['filename'] ?? ""}}" width="200">&nbsp;&nbsp;
+        </td>
         <td></td>
       </tr>
+      @endforeach
     </table>
     <p style="font-size: 0.1em"></p>
   @endforeach
