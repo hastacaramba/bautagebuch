@@ -37,7 +37,7 @@
                 <h2 class="m-0 font-weight-bold text-primary">Begehung: {{ $visit->title }} {{ $visit->date }}</h2>
             </div>
             <div class="col-md-2" style="text-align-right">
-                <button class="btn btn-success btn-circle mt-4 ml-4" id="pdfTest"><i class="fas fa-file-pdf"></i></button>
+                <button class="btn btn-danger btn-circle mt-4 ml-4" id="pdfTest"><i class="fas fa-file-pdf"></i></button>
             </div>
           </div>
         </div>
