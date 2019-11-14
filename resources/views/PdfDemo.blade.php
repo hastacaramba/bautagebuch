@@ -16,9 +16,9 @@
   </style>
 </head>
 <body>
-<span style="text-align: right">
+<div style="text-align: right">
     <img src="/img/logo.png" style="width: 120px">
-  </span><\br>
+  </div><\br>
 <p style="border-top: 1px solid #a42600"><span style="color:#a42600; font-size: 0.6em">{{ $project['name'] }} - {{ $project['street'] }} {{ $project['housenumber'] }}, {{ $project['postcode'] }} {{ $project['city'] }}</span><br><span style="color:grey; font-size: 1.4em">{{ $visit['title'] }}, {{ $visit['date'] }}</span>
 </p>
 <p style="font-size:0.6em"><b>Datum:</b> {{ $visit['date'] }}, {{ $visit['time'] }}&nbsp;&nbsp;&nbsp;&nbsp;<b>Wetter:</b> {{ $visit['weather'] }}</p>
@@ -49,7 +49,7 @@
   @foreach( $visitationnotes as $visitationnote )
     <table cellpadding="5" style="font-size: 0.6em" class="table table-bordered table-striped">
       <tr>
-        <td style="border: 0.5px solid lightgrey; font-weight: bold">{{ $visitationnote['title'] }}</td>
+        <td style="border: 0.5px solid lightgrey; font-weight: bold; font-size: 1.2em">{{ $visitationnote['title'] }}</td>
         <td style="border: 0.5px solid lightgrey"><b>Kategorie:</b> {{ $visitationnote['category'] }}</td>
       </tr>
       <tr>
@@ -68,15 +68,23 @@
           @endif
         </td>
       </tr>
-      @foreach ($visitationnote['media'] as $media)
+      @for ($i = 0; $i < (ceil($visitationnote['numOfRows'] / 2)); $i++)
+        <tr>
+          <td style="border: 0.5px solid lightgrey">
+            <img src="images/{{ $visitationnote['media'][2 * $i]['filename'] ?? ""}}" width="150">
 
-      <tr>
-        <td style="border: 0.5px solid lightgrey" colspan="2">
-          <img src="/images/{{ $media['filename'] ?? ""}}" width="200">&nbsp;&nbsp;
-        </td>
-        <td></td>
-      </tr>
-      @endforeach
+          </td>
+          @if( ($visitationnote['numOfRows'] % 2 == 1) && ($i == ceil($visitationnote['numOfRows'] / 2) - 1))
+            <td style="border: 0.5px solid lightgrey">
+            </td>
+          @else
+            <td style="border: 0.5px solid lightgrey">
+              <img src="images/{{ $visitationnote['media'][2 * $i + 1]['filename'] ?? ""}}" width="150">
+            </td>
+          @endif
+        </tr>
+      @endfor
+
     </table>
     <p style="font-size: 0.1em"></p>
   @endforeach

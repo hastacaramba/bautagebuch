@@ -40,8 +40,7 @@ class PdfController extends Controller {
 
             $media = $visitationnote->media()->get();
 
-            //how many rows do I need?
-            $numOfRows = floor(sizeof($media)/2);
+            $numOfRows = sizeof($media);
 
             $item = [
                 'id' => $visitationnote->id,
@@ -50,7 +49,8 @@ class PdfController extends Controller {
                 'notes' => $visitationnote->notes,
                 'deadline' => $visitationnote->deadline,
                 'done' => $visitationnote->done,
-                'media' => $visitationnote->media
+                'media' => $media,
+                'numOfRows' => $numOfRows
             ];
 
             $visitationnotesWithMedia[] = $item;
