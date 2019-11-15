@@ -45,4 +45,11 @@ class Member extends Model {
         return $this->belongsToMany('App\Visit', 'member_visit');
     }
 
+    /**
+     * Get the visitationnotes the member is mentioned as concerned.
+     */
+    public function visitationnotes() {
+        return $this->belongsToMany('App\Visitationnote', 'member_visitationnote');
+    }
+
 }

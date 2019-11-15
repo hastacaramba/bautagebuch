@@ -38,6 +38,50 @@ class PdfController extends Controller {
 
         foreach($visitationnotes as $visitationnote) {
 
+            //+++++
+
+            //get all members of the project
+            $members = Member::where('project_id', '=', $visitationnote->visit->project_id)->get();
+
+            $concernedMembers = [];
+
+            //run through the members and decide if he was present during visit or not
+            for ($n = 0; $n < sizeof($members); $n++) {
+                $member = $members[$n];
+                $membersVisitationnotes = $member->visitationnotes()->get();
+                for ($i = 0; $i < sizeof($membersVisitationnotes); $i++) {
+                    if ($membersVisitationnotes[$i]['id'] == $visitationnote->id ) {
+                        $concernedMembers[] = $member;
+                    }
+                }
+            }
+
+            $concernedmembersData = [];
+
+            for ($n = 0; $n < sizeof($members); $n++) {
+                if (in_array($members[$n],$concernedMembers)) {
+                    $concernedmembersData[] = [
+                        "id" => $members[$n]->id,
+                        "firstname" => $members[$n]->contact['firstname'],
+                        "surname" => $members[$n]->contact['surname'],
+                        "company" => $members[$n]->contact['company'],
+                        "street" => $members[$n]->contact['street'],
+                        "housenumber" => $members[$n]->contact['housenumber'],
+                        "postcode" => $members[$n]->contact['postcode'],
+                        "city" => $members[$n]->contact['city'],
+                        "email" => $members[$n]->contact['email'],
+                        "phone" => $members[$n]->contact['phone'],
+                        "mobile" => $members[$n]->contact['mobile'],
+                        "fax" => $members[$n]->contact['fax'],
+                        "info" => $members[$n]->contact['info'],
+                        "subarea" => $members[$n]->subarea['title'],
+                    ];
+                }
+            }
+
+            //+++++
+
+
             $media = $visitationnote->media()->get();
 
             $numOfRows = sizeof($media);
@@ -50,7 +94,8 @@ class PdfController extends Controller {
                 'deadline' => $visitationnote->deadline,
                 'done' => $visitationnote->done,
                 'media' => $media,
-                'numOfRows' => $numOfRows
+                'numOfRows' => $numOfRows,
+                'concernedMembers' => $concernedmembersData
             ];
 
             $visitationnotesWithMedia[] = $item;
@@ -136,7 +181,7 @@ class PdfController extends Controller {
         // userlist is the name of the PDF downloading
         PDF::Output('begehungsbericht_' . '.pdf');
 
-        //ExportData::where('idString', '=', $idString)->delete();
+        ExportData::where('idString', '=', $idString)->delete();
 
     }
 

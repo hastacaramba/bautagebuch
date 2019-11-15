@@ -84,7 +84,18 @@
           @endif
         </tr>
       @endfor
-
+      @if (sizeof($visitationnote['concernedMembers']) != 0)
+        <tr>
+          <td style="border: 0.5px solid lightgrey" colspan="2"><b>Betrifft</b></td>
+          <td style="border: 0.5px solid lightgrey"></td>
+        </tr>
+      @endif
+      @foreach ($visitationnote['concernedMembers'] as $concernedMember)
+        <tr>
+          <td style="border: 0.5px solid lightgrey">{{ $concernedMember['subarea'] }}</td>
+          <td style="border: 0.5px solid lightgrey">@if( $concernedMember['company'] != "")<b>Firma: </b>@endif{{ $concernedMember['company'] }}<br>@if( $concernedMember['surname'] != "")<b>Name: </b>@endif{{ $concernedMember['firstname'] }} {{ $concernedMember['surname'] }}<br>@if( $concernedMember['email'] != "")<b>E-Mail: </b>@endif{{ $concernedMember['email'] }}<br>@if( $concernedMember['phone'] != "")<b>Telefon: </b>@endif{{ $concernedMember['phone'] }}</td>
+        </tr>
+      @endforeach
     </table>
     <p style="font-size: 0.1em"></p>
   @endforeach

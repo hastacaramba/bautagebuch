@@ -95,7 +95,11 @@ Route::get('/visit/{visitID}/json', 'VisitController@getVisit')->middleware('aut
 
 Route::get('/visit/{visitID}/presence', 'VisitController@getPresentMembers')->middleware('auth');
 
+Route::get('/visitationnote/concerned/{visitationnoteID}', 'VisitationnoteController@getConcernedMembers')->middleware('auth');
+
 Route::patch('/visit/{visitID}/presence', 'VisitController@setPresentMembers')->middleware('auth');
+
+Route::patch('/visitationnote/{visitationnoteID}/concerned', 'VisitationnoteController@setConcernedMembers')->middleware('auth');
 
 Route::get('/visitationnotes/{visitID}', 'VisitationnoteController@projectVisitationnotes')->middleware('auth');
 

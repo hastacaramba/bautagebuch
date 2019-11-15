@@ -226,6 +226,35 @@
                       <button id="btnSaveVisitationnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
                       <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
                   </div>
+
+                  <div class="modal-footer mt-4">
+                      <div class="table-responsive">
+                          <label class="mt-3" for="tableMedia">Betroffene Projektteilnehmer bzw. Gewerke</label>
+
+                          <!-- Table Present Members -->
+                          <div class="table-responsive">
+                              <table
+                                      id="tableConcernedMembers"
+                                      data-id-field="id"
+                                      data-side-pagination="client"
+                                      data-toggle="table"
+                                      data-sortable="true"
+                                      data-url=""
+                                      data-search="true"
+                                      data-show-columns="false"
+                                      data-pagination="true"
+                                      data-page-list="[10, 25, 50, 100, ALL]"
+                                      data-detail-formatter="detailFormatter"
+                                      data-detail-view="true"
+                                      data-response-handler="responseHandler"
+                                      data-show-export="false"
+                                      data-show-pagination-switch="true"
+                                      data-row-style="rowStyle">
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+
                   <div class="modal-footer mt-4">
                       <div class="table-responsive">
                           <label class="mt-3" for="tableMedia">Fotos</label>
@@ -596,6 +625,33 @@
 
       }
 
+      function handleConcernedClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
+          //update the done status for this visitationnote
+          $.ajax({
+              type: "PATCH",
+              url: "/visitationnote/" + $("#visitationnoteID").val() + "/concerned",
+              data:
+                  {
+                      'memberID' : id,
+                      'concerned' : checked
+                  }
+              ,
+              success: function (data) {
+                  alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  $tableConcernedMembers.bootstrapTable('refresh');
+              }
+          });
+
+
+      }
+
       //window.operateEvents for all bootstrap-tables
       window.operateEvents = {
           'click .edit': function (e, value, row, index) {
@@ -609,6 +665,8 @@
               $("#visitationnoteCategory").val(row.category);
               $("#visitationnoteID").val(row.id)
               $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + row.id });
+              $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/visitationnote/concerned/' + row.id });
+
 
           },
           'click .delete': function (e, value, row, index) {
@@ -987,6 +1045,97 @@
 
       }
 
+      // - BOOTSTRAP-TABLE ConcernedMembers - //
+
+      var $tableConcernedMembers = $('#tableConcernedMembers')
+
+      /**
+       * Gibt eine map der Member-IDs der aktuell selektierten Zeilen zurück.
+       *
+       */
+      function getIdSelectionsConcernedMembers() {
+          return $.map($tableConcernedMembers.bootstrapTable('getSelections'), function (row) {
+              return row.id;
+          })
+      }
+
+      function operateFormatterConcernedMembers(value, row, index) {
+          return [
+              '<a class="deleteConcernedMember" href="javascript:void(0)" title="Löschen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+              '</a> '
+          ].join('')
+      }
+
+      function concernedFormatter(value, row, index) {
+
+          if (value) {
+              return [
+                  '<input class=\"concernedCheck\" type=\"checkbox\" name=\"concerned\" value=\"1\" checked onclick=\"handleConcernedClick(this,\'' + row.id + '\')\">'
+              ]
+          }
+
+          return [
+              '<input class=\"concernedCheck\" type=\"checkbox\" name=\"concerned\" value=\"0\" onclick=\"handleConcernedClick(this,\'' + row.id + '\')\">'
+          ]
+      }
+
+
+      /**
+       * Initiiert die Bootstrap-Table.
+       */
+      function initTableConcernedMembers() {
+          $tableConcernedMembers.bootstrapTable('destroy').bootstrapTable({
+              locale: 'de-DE',
+              columns: [
+                  {
+                      field: 'company',
+                      title: 'Firma',
+                      sortable: true,
+                      align: 'left',
+                  }, {
+                      title: 'Nachname',
+                      field: 'surname',
+                      align: 'left',
+                      sortable: true,
+                  }, {
+                      field: 'firstname',
+                      title: 'Vorname',
+                      sortable: true,
+                      align: 'left'
+                  }, {
+                      field: 'subarea',
+                      title: 'Gewerk',
+                      sortable: true,
+                      align: 'left',
+                  }, {
+                      field: 'concerned',
+                      title: 'Betroffen',
+                      align: 'center',
+                      formatter: concernedFormatter
+                  }
+
+              ]
+          })
+          $tableConcernedMembers.on('check.bs.table uncheck.bs.table ' +
+              'check-all.bs.table uncheck-all.bs.table',
+              function () {
+                  //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                  // save your data, here just save the current page
+                  selections = getIdSelections()
+                  // push or splice the selections if you want to save all data selections
+              })
+          $tableConcernedMembers.on('all.bs.table', function (e, name, args) {
+              //console.log(name, args)
+          })
+
+      }
+
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -1035,6 +1184,7 @@
           initTable();
           initTableMembers();
           initTableMedia();
+          initTableConcernedMembers();
 
           $("#showDate").click(function () {
               var status = $("#date").val();

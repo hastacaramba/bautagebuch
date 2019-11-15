@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Visitationnote;
 use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Member;

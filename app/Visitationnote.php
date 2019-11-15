@@ -23,7 +23,7 @@ class Visitationnote extends Model {
      * Get the visit of the visitationnote.
      */
     public function visit() {
-        return $this->hasOne('App\Visit');
+        return $this->belongsTo('App\Visit');
     }
 
     /**
@@ -38,5 +38,12 @@ class Visitationnote extends Model {
      */
     public function media() {
         return $this->hasMany('App\Media');
+    }
+
+    /**
+     * Get the concerned members of the visitationnote
+     */
+    public function concernedMembers() {
+        return $this->belongsToMany('App\Member',  'member_visitationnote');
     }
 }
