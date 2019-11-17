@@ -68,7 +68,64 @@
                       <textarea rows="10" type="text" class="form-control" id="visitDescription" placeholder="Bemerkungen zur Begehung (Freitext)">{{$visit->description}}</textarea>
                   </div>
               </div>
-              <button id="btnSaveVisit" type="button" class="btn btn-primary mb-4"><i class="fa fa-save"></i> Änderungen speichern</button>
+              <div style="text-align:right">
+                  <button id="btnSaveVisit" type="button" class="btn btn-primary mb-4"><i class="fa fa-save"></i> Änderungen speichern</button>
+              </div>
+
+              <!-- Begehungsfotos -->
+              <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                      <h4><i class="fas fa-clipboard-list"></i> Fotos von der Begehung</h4>
+                  </div>
+                  <div id="toolbarVisitMedia">
+                      <button id="btnNewVisitMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
+                  </div>
+                  <div class="card-body">
+                      <!-- Choose New Media [start] -->
+                      <div id="chooseNewVisitMedia" style="display:none">
+                          <div class="form-group">
+                              <form id="newVisitMediaForm" action="{{ route('image.upload.post.visit') }}" method="POST" enctype="multipart/form-data">
+                                  <label for="image">Foto hochladen</label>
+                                  <div class="row">
+                                      <div class="col-md-9">
+                                          <input type="file" id="image" name="image" class="form-control">
+                                      </div>
+                                      <div class="col-md-3">
+                                          <button id="btnUploadVisitImage" type="submit" class="btn btn-success">Upload</button>
+                                          <div id="newProjectImage"class="mt-1"></div>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                          <div>
+                              <button id="btnNewVisitMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
+                          </div>
+                      </div>
+                      <!-- Choose New Media [end] -->
+                      <!-- Table Present Members -->
+                      <div class="table-responsive">
+                          <table
+                                  id="tableVisitMedia"
+                                  data-id-field="id"
+                                  data-side-pagination="client"
+                                  data-toolbar="#toolbarVisitMedia"
+                                  data-toggle="table"
+                                  data-sortable="true"
+                                  data-url="/visit/{{ $visit->id }}/media"
+                                  data-search="true"
+                                  data-show-columns="false"
+                                  data-pagination="true"
+                                  data-page-list="[10, 25, 50, 100, ALL]"
+                                  data-detail-formatter="detailFormatter"
+                                  data-detail-view="true"
+                                  data-response-handler="responseHandler"
+                                  data-show-export="false"
+                                  data-show-pagination-switch="true"
+                                  data-row-style="rowStyle">
+                          </table>
+                      </div>
+                  </div>
+              </div>
 
               <!-- Anwesende -->
               <div class="card shadow mb-4">
@@ -226,6 +283,7 @@
                       <button id="btnSaveVisitationnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
                       <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
                   </div>
+
 
                   <div class="modal-footer mt-4">
                       <div class="table-responsive">
@@ -456,6 +514,17 @@
       $("#btnNewMediaAbbrechen").click(function () {
         $("#chooseNewMedia").hide();
         $("#btnNewMedia").fadeIn();
+      });
+
+      $("#btnNewVisitMedia").click(function () {
+          $("#btnNewVisitMedia").hide();
+          $("#image").val("");
+          $("#chooseNewVisitMedia").fadeIn();
+      });
+
+      $("#btnNewVisitMediaAbbrechen").click(function () {
+          $("#chooseNewVisitMedia").hide();
+          $("#btnNewVisitMedia").fadeIn();
       });
 
     $("#btnNewVisitationnote").click(function () {
@@ -717,6 +786,33 @@
                               data: "",
                               success: function (data) {
                                   $tableMedia.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
+          'click .deleteVisitMedia': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Foto wirklich löschen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/media/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $tableVisitMedia.bootstrapTable('refresh');
                               }
                           });
                       }
@@ -1136,6 +1232,69 @@
       }
 
 
+      // - BOOTSTRAP-TABLE VisitMedia - //
+
+      var $tableVisitMedia = $('#tableVisitMedia')
+
+      /**
+       * Gibt eine map der Media-IDs der aktuell selektierten Zeilen zurück.
+       *
+       */
+      function getIdSelectionsVisitMedia() {
+          return $.map($tableVisitMedia.bootstrapTable('getSelections'), function (row) {
+              return row.id;
+          })
+      }
+
+      function operateFormatterVisitMedia(value, row, index) {
+          return [
+              '<a class="deleteVisitMedia" href="javascript:void(0)" title="Löschen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+              '</a> '
+          ].join('')
+      }
+
+      /**
+       * Initiiert die Bootstrap-Table.
+       */
+      function initTableVisitMedia() {
+          $tableVisitMedia.bootstrapTable('destroy').bootstrapTable({
+              locale: 'de-DE',
+              columns: [
+                  {
+                      field: 'filename',
+                      title: 'Foto',
+                      sortable: false,
+                      align: 'left',
+                      formatter: imageFormatterMedia
+                  }, {
+                      field: 'operate',
+                      title: 'Aktionen',
+                      align: 'center',
+                      events: window.operateEvents,
+                      formatter: operateFormatterVisitMedia
+                  }
+              ]
+          })
+          $tableConcernedMembers.on('check.bs.table uncheck.bs.table ' +
+              'check-all.bs.table uncheck-all.bs.table',
+              function () {
+                  //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                  // save your data, here just save the current page
+                  selections = getIdSelections()
+                  // push or splice the selections if you want to save all data selections
+              })
+          $tableConcernedMembers.on('all.bs.table', function (e, name, args) {
+              //console.log(name, args)
+          })
+
+      }
+
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -1184,6 +1343,7 @@
           initTable();
           initTableMembers();
           initTableMedia();
+          initTableVisitMedia();
           initTableConcernedMembers();
 
           $("#showDate").click(function () {
@@ -1228,6 +1388,40 @@
                   }
               });
           });
+
+          var newVisitMediaFile;
+
+          //file ulpoad
+          $('input[type="file"]').change(function(e) {
+              var fileName = e.target.files[0].name;
+              newVisitMediaFile =  e.target.files[0];
+          });
+
+          // this is the id of the form
+          $("#newVisitMediaForm").submit(function(e) {
+
+              e.preventDefault(); // avoid to execute the actual submit of the form.
+
+              var visitMediaFormData = new FormData();
+
+              // Attach file
+              visitMediaFormData.append('image', newVisitMediaFile);
+
+              visitMediaFormData.append('visitID', '{{ $visit->id }}');
+
+              $.ajax({
+                  url: '/image-upload-post-visit',
+                  data: visitMediaFormData,
+                  type: 'POST',
+                  contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                  processData: false, // NEEDED, DON'T OMIT THIS
+                  success: function(data) {
+                      $("#btnNewVisitMediaAbbrechen").click();
+                      $tableVisitMedia.bootstrapTable('refresh');
+                  }
+              });
+          });
+
       });
 
   </script>

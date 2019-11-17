@@ -24,6 +24,27 @@
 <p style="font-size:0.6em"><b>Datum:</b> {{ $visit['date'] }}, {{ $visit['time'] }}&nbsp;&nbsp;&nbsp;&nbsp;<b>Wetter:</b> {{ $visit['weather'] }}</p>
 <p style="font-size:0.6em"><b>Anmerkungen:</b><br>{{ $visit['description'] }}</p>
 <p></p>
+@if ($numOfVisitMedia > 0)
+<p style="font-size: 1em; color: #a42600; line-height: 0.9em">Fotos von der Begehung</p>
+@endif
+<table cellpadding="5" style="font-size: 0.6em" class="table table-bordered table-striped">
+@for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
+    <tr>
+      <td style="border: 0.5px solid lightgrey">
+        <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150">
+      </td>
+      @if( ($numOfVisitMedia % 2 == 1) && ($i == ceil($numOfVisitMedia / 2) - 1))
+        <td style="border: 0.5px solid lightgrey">
+        </td>
+      @else
+        <td style="border: 0.5px solid lightgrey">
+          <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150">
+        </td>
+      @endif
+    </tr>
+@endfor
+</table>
+<p></p>
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Anwesende</p>
   <table cellpadding="5" style="font-size: 0.6em" class="table table-bordered table-striped">
     <tr>

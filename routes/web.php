@@ -99,6 +99,8 @@ Route::get('/visitationnote/concerned/{visitationnoteID}', 'VisitationnoteContro
 
 Route::patch('/visit/{visitID}/presence', 'VisitController@setPresentMembers')->middleware('auth');
 
+Route::get('/visit/{visitID}/media', 'VisitController@getVisitMedia')->middleware('auth');
+
 Route::patch('/visitationnote/{visitationnoteID}/concerned', 'VisitationnoteController@setConcernedMembers')->middleware('auth');
 
 Route::get('/visitationnotes/{visitID}', 'VisitationnoteController@projectVisitationnotes')->middleware('auth');
@@ -120,6 +122,8 @@ Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upl
 Route::post('image-upload-post', 'ImageUploadController@imageUploadPost')->name('image.upload.post')->middleware('auth');
 
 Route::post('/image-upload-post-visitationnote', 'ImageUploadController@imageUploadPostVisitationnote')->name('image.upload.post.visitationnote')->middleware('auth');
+
+Route::post('/image-upload-post-visit', 'ImageUploadController@imageUploadPostVisit')->name('image.upload.post.visit')->middleware('auth');
 
 Route::delete('/media/{mediaID}', 'MediaController@deleteMedia')->name('media.delete')->middleware('auth');
 

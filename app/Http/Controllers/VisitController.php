@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Visitationnote;
 use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Member;
-use App\Contact;
-use App\Subarea;
+use App\Media;
 use App\Visit;
 use App\Project;
 use Illuminate\Support\Facades\DB;
@@ -223,6 +221,16 @@ class VisitController extends Controller
             ])->delete();
         }
 
+    }
+
+
+    /**
+     * Get the media of th visit.
+     */
+    public function getVisitMedia($visitID) {
+        $media = Media::where('visit_id', $visitID)->get();
+
+        return $media;
     }
 
 

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use PDF;
 use App\Project;
 use App\Visit;
+use App\Media;
 use App\Visitationnote;
 use App\Member;
 use App\Contact;
@@ -32,13 +33,18 @@ class PdfController extends Controller {
         $projectID = $request->json("projectID");
         $project = Project::where('id', '=', $projectID)->first();
 
+
+
+        //get the visit media
+        $visitMedia = Media::where('visit_id', $visitID)->get();
+
+        $numOfVisitMedia = sizeof($visitMedia);
+
         $visitationnotes = Visitationnote::where('visit_id', '=', $visitID)->get();
 
         $visitationnotesWithMedia = [];
 
         foreach($visitationnotes as $visitationnote) {
-
-            //+++++
 
             //get all members of the project
             $members = Member::where('project_id', '=', $visitationnote->visit->project_id)->get();
@@ -78,9 +84,6 @@ class PdfController extends Controller {
                     ];
                 }
             }
-
-            //+++++
-
 
             $media = $visitationnote->media()->get();
 
@@ -142,7 +145,9 @@ class PdfController extends Controller {
             'visit' => $visit,
             'project' => $project,
             'presentMembersData' => $presentMembersData,
-            'visitationnotes' => $visitationnotesWithMedia
+            'visitationnotes' => $visitationnotesWithMedia,
+            'visitMedia' => $visitMedia,
+            'numOfVisitMedia' => $numOfVisitMedia
         ];
 
         $exportData = new ExportData();
@@ -163,12 +168,18 @@ class PdfController extends Controller {
 
         $visitationnotes = json_decode($exportData->data, true)['visitationnotes'];
 
+        $visitMedia = json_decode($exportData->data, true)['visitMedia'];
+
+        $numOfVisitMedia = json_decode($exportData->data, true)['numOfVisitMedia'];
+
         // usersPdf is the view that includes the downloading content
         $view = \View::make('PdfDemo', [
             'visit'=>$visit,
             'project'=>$project,
             'presentMembers'=>$presentMembers,
             'visitationnotes'=>$visitationnotes,
+            'visitMedia'=>$visitMedia,
+            'numOfVisitMedia'=>$numOfVisitMedia
             //'visitDate'=>$visitDate,
             //'projectNumber'=>$projectNumber,
             //'projectName'=>$projectName,
