@@ -192,7 +192,7 @@ class PdfController extends Controller {
         // userlist is the name of the PDF downloading
         PDF::Output('begehungsbericht_' . '.pdf');
 
-        ExportData::where('idString', '=', $idString)->delete();
+        //ExportData::where('idString', '=', $idString)->delete();
 
     }
 
