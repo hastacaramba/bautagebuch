@@ -23,7 +23,6 @@
 </p>
 <p style="font-size:0.6em"><b>Datum:</b> {{ $visit['date'] }}, {{ $visit['time'] }}&nbsp;&nbsp;&nbsp;&nbsp;<b>Wetter:</b> {{ $visit['weather'] }}</p>
 <p style="font-size:0.6em"><b>Anmerkungen:</b><br>{{ $visit['description'] }}</p>
-<p></p>
 <table cellpadding="5" style="font-size: 0.6em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
