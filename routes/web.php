@@ -103,6 +103,8 @@ Route::get('/visit/{visitID}/media', 'VisitController@getVisitMedia')->middlewar
 
 Route::patch('/visitationnote/{visitationnoteID}/concerned', 'VisitationnoteController@setConcernedMembers')->middleware('auth');
 
+Route::patch('/visitationnote/{visitationnoteID}/important', 'VisitationnoteController@setImportant')->middleware('auth');
+
 Route::get('/visitationnotes/{visitID}', 'VisitationnoteController@projectVisitationnotes')->middleware('auth');
 
 Route::post('/visitationnote', 'VisitationnoteController@newVisitationnote')->middleware('auth');

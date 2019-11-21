@@ -64,8 +64,8 @@
               </div>
               <div class="row">
                   <div class="col-md-12">
-                      <label for="visitDescription">Bemerkungen</label>
-                      <textarea rows="10" type="text" class="form-control" id="visitDescription" placeholder="Bemerkungen zur Begehung (Freitext)">{{$visit->description}}</textarea>
+                      <label for="visitDescription">Baufortschritt</label>
+                      <textarea rows="10" type="text" class="form-control" id="visitDescription" placeholder="Bemerkungen zum Baufortschritt (Freitext)">{{$visit->description}}</textarea>
                   </div>
               </div>
               <div style="text-align:right">
@@ -75,7 +75,7 @@
               <!-- Begehungsfotos -->
               <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                      <h4><i class="fas fa-clipboard-list"></i> Fotos von der Begehung</h4>
+                      <h4><i class="fas fa-clipboard-list"></i> Fotos zum Baufortschritt</h4>
                   </div>
                   <div id="toolbarVisitMedia">
                       <button id="btnNewVisitMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
@@ -87,6 +87,9 @@
                               <form id="newVisitMediaForm" action="{{ route('image.upload.post.visit') }}" method="POST" enctype="multipart/form-data">
                                   <label for="image">Foto hochladen</label>
                                   <div class="row">
+                                      <div class="col-md-12 mb-3">
+                                          <input id="photoDescription" type="text" style="width:100%; color:#6e707e" placeholder="Beschreibung zum Foto...">
+                                      </div>
                                       <div class="col-md-9">
                                           <input type="file" id="image" name="image" class="form-control">
                                       </div>
@@ -260,7 +263,9 @@
                           <label for="visitationnoteCategory">Kategorie</label>
                           <select id="visitationnoteCategory">
                               <option value="Mangel" selected="selected">Mangel</option>
+                              <option value="Restarbeit">Restarbeit</option>
                               <option value="Information">Information</option>
+                              <option value="zu erledigen">zu erledigen</option>
                           </select>
                       </div>
                       <div class="form-group col-md-3">
@@ -273,8 +278,8 @@
                       </div>
                   </div>
                   <div class="form-group mb-3">
-                      <label for="visitationnoteDescription">Bemerkungen</label>
-                      <textarea rows="10" type="text" class="form-control" id="visitationnoteDescription" placeholder="Bemerkungen (Freitext)"></textarea>
+                      <label for="visitationnoteDescription">Baufortschritt</label>
+                      <textarea rows="10" type="text" class="form-control" id="visitationnoteDescription" placeholder="Bemerkungen zum Baufortschritt (Freitext)"></textarea>
                   </div>
                   <div id="toolbarMedia">
                       <button id="btnNewMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
@@ -382,19 +387,21 @@
                   </div>
                   <div class="row mb-3">
                       <div class="form-group col-md-3">
-                          <label for="newVisitationnoteDate">Datum</label><br>
-                          <input type="text" id="newVisitationnoteDate" style="width: 100%; color:#6e707e">
+                          <label>Datum</label><br>
+                          <input id="newVisitationnoteDate" type="text" style="width:100%; color:#6e707e" placeholder="Datum...">
                       </div>
                       <div class="form-group col-md-3">
                           <label for="newVisitationnoteCategory">Kategorie</label>
                           <select id="newVisitationnoteCategory">
                               <option value="Mangel" selected="selected">Mangel</option>
+                              <option value="Restarbeit">Restarbeit</option>
                               <option value="Information">Information</option>
+                              <option value="zu erledigen">zu erledigen</option>
                           </select>
                       </div>
                       <div class="form-group col-md-3">
-                          <label for="newVisitationnoteDeadline">Fälligkeit</label>
-                          <input type="text" id="newVisitationnoteDeadline" style="width: 100%; color:#6e707e">
+                          <label>Fälligkeit</label><br>
+                          <input id="newVisitationnoteDeadline" type="text" style="width:100%; color:#6e707e" placeholder="Fälligkeit...">
                       </div>
                       <div class="form-group col-md-3">
                           <label for="newVisitationnoteDone">Erledigt</label>
@@ -402,8 +409,8 @@
                       </div>
                   </div>
                   <div class="form-group">
-                      <label for="newVisitationnoteDescription">Bemerkungen</label>
-                      <textarea rows="10" type="text" class="form-control" id="newVisitationnoteDescription" placeholder="Bemerkungen (Freitext)"></textarea>
+                      <label for="newVisitationnoteDescription">Baufortschritt</label>
+                      <textarea rows="10" type="text" class="form-control" id="newVisitationnoteDescription" placeholder="Bemerkungen zum Baufortschritt (Freitext)"></textarea>
                   </div>
               </div>
               <div class="modal-footer">
@@ -541,10 +548,14 @@
     });
 
     $("#btnSaveNewVisitationnote").click(function () {
-      var checked = 0;
+      var done = 0;
       if ($("#visitationnoteDone").is(':checked')) {
-          checked = 1;
+          done = 1;
       }
+        var important = 0;
+        if ($("#visitationnoteImportant").is(':checked')) {
+            important = 1;
+        }
 
       $.ajax({
           type: "POST",
@@ -556,7 +567,8 @@
                   'date' : $("#newVisitationnoteDate").val() + " 00:00:00",
                   'deadline' : $("#newVisitationnoteDeadline").val(),
                   'notes' : $("#newVisitationnoteDescription").val(),
-                  'done' : checked,
+                  'done' : done,
+                  'important' : important,
                   'category' : $("#newVisitationnoteCategory").val()
               }
           ,
@@ -653,6 +665,45 @@
           return [
               date
           ]
+      }
+
+      function importantFormatter(value, row, index) {
+
+          if (value) {
+              return [
+                  '<input class=\"importantCheck\" type=\"checkbox\" name=\"important\" value=\"1\" checked onclick=\"handleImportantClick(this,\'' + row.id + '\')\">'
+              ]
+          }
+
+          return [
+              '<input class=\"importantCheck\" type=\"checkbox\" name=\"important\" value=\"0\" onclick=\"handleImportantClick(this,\'' + row.id + '\')\">'
+          ]
+      }
+
+      function handleImportantClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
+          //update the done status for this visitationnote
+          $.ajax({
+              type: "PATCH",
+              url: "/visitationnote/" + id + "/important",
+              data:
+                  {
+                      'important' : checked
+                  }
+              ,
+              success: function (data) {
+                  alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  $table.bootstrapTable('refresh');
+              }
+          });
+
+
       }
 
       function doneFormatter(value, row, index) {
@@ -856,6 +907,12 @@
                       sortable: true,
                       align: 'center',
                       formatter: doneFormatter
+                  }, {
+                      field: 'important',
+                      title: 'wichtig',
+                      sortable: true,
+                      align: 'center',
+                      formatter: importantFormatter
                   }, {
                       field: 'operate',
                       title: 'Aktionen',
@@ -1267,6 +1324,11 @@
                       sortable: false,
                       align: 'left',
                       formatter: imageFormatterMedia
+                  },{
+                      field: 'info',
+                      title: 'Beschreibung',
+                      sortable: true,
+                      align: 'left'
                   }, {
                       field: 'operate',
                       title: 'Aktionen',
@@ -1321,7 +1383,21 @@
               dateFormat: "Y-m-d",
           }
       );
-      $("#visitationnnoteDeadline").flatpickr(
+      $("#visitationnoteDeadline").flatpickr(
+          {
+              enableTime: false,
+              noCalendar: false,
+              dateFormat: "Y-m-d",
+          }
+      );
+      $("#newVisitationnoteDate").flatpickr(
+          {
+              enableTime: false,
+              noCalendar: false,
+              dateFormat: "Y-m-d",
+          }
+      );
+      $("#newVisitationnoteDeadline").flatpickr(
           {
               enableTime: false,
               noCalendar: false,
@@ -1353,6 +1429,16 @@
 
           $("#showTime").click(function () {
               var status = $("#time").val();
+              alert(status);
+          })
+
+          $("#showDateVisitationNote").click(function () {
+              var status = $("#newVisitationnoteDate").val();
+              alert(status);
+          })
+
+          $("#showDeadlineVisitationNote").click(function () {
+              var status = $("#newVisitationnoteDeadline").val();
               alert(status);
           })
 
@@ -1408,6 +1494,8 @@
               visitMediaFormData.append('image', newVisitMediaFile);
 
               visitMediaFormData.append('visitID', '{{ $visit->id }}');
+
+              visitMediaFormData.append('info', $("#photoDescription").val());
 
               $.ajax({
                   url: '/image-upload-post-visit',

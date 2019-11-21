@@ -16,6 +16,7 @@ class Visitationnote extends Model {
         'notes',
         'deadline',
         'done',
+        'important',
         'visit_id'
     ];
 

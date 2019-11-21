@@ -31,80 +31,6 @@ class VisitationnoteController extends Controller
         return null;
     }
 
-    /**
-     * Create a new visit instance.
-     *
-     * @param  Request  $request
-     * @param  $projectID The project_id od the project
-     * @return Response
-     */
-    public function newVisit(Request $request, $projectID) {
-        $visit = new Visit;
-
-        $visit->title = $request->title;
-        $visit->date = $request->date;
-        $visit->time = $request->time;
-        $visit->weather = $request->weather;
-        $visit->description = $request->description;
-        $visit->project_id = $projectID;
-
-        $visit->save();
-    }
-
-
-    /**
-     * Update the visit with the given id.
-     *
-     * @param $visitID The visit_id of the visit
-     * @param  Request  $request
-     * @return Response
-     */
-    public function updateVisit(Request $request, $visitID) {
-        $visit = Visit::where('id', '=', $visitID)->first();
-
-        if (visit != null) {
-            $visit->title = $request->title;
-            $visit->date = $request->date;
-            $visit->time = $request->time;
-            $visit->weather = $request->weather;
-            $visit->description = $request->description;
-            $visit->save();
-        }
-    }
-
-
-    /**
-     * Returns all visits of a project as json.
-     *
-     * @param $projectID
-     * @return mixed
-     */
-    public function projectVisitsJson($projectID) {
-
-        $visits = Visit::where('project_id', '=', $projectID)->get();
-
-        return json_encode($visits);
-    }
-
-
-    /**
-     * Returns the single view for the visit with the given id.
-     *
-     * @param $visitID The visit_id of the visit
-     * @return array|null
-     */
-    public function showVisit($visitID) {
-
-        $visit = Visit::where('id', '=', $visitID)->first();
-
-        $project = Project::where('id', '=', 1)->first();
-
-        return view('visit')
-            ->with('project', $project)
-            ->with('visit', $visit);
-
-    }
-
 
     /**
      * Sets the done status of the visitationnote.
@@ -128,6 +54,32 @@ class VisitationnoteController extends Controller
         $visitationnote = Visitationnote::where('id', '=', $visitationnoteID)->first();
 
         return $visitationnote->done;
+
+    }
+
+
+    /**
+     * Sets the important status of the visitationnote.
+     *
+     * @param Request $request
+     * @param $visitationnoteID
+     */
+    public function setImportant(Request $request, $visitationnoteID) {
+
+        $important = $request->important;
+
+        $visitationnote = Visitationnote::where('id', $visitationnoteID)->first();
+
+        if ($visitationnote != null) {
+
+            $visitationnote->important = $important;
+
+            $visitationnote->save();
+        }
+
+        $visitationnote = Visitationnote::where('id', $visitationnoteID)->first();
+
+        return $visitationnote->important;
 
     }
 
@@ -164,6 +116,7 @@ class VisitationnoteController extends Controller
             $visitationnote->deadline = $request->deadline;
             $visitationnote->notes = $request->notes;
             $visitationnote->done = $request->done;
+            $visitationnote->important = $request->important;
             $visitationnote->category = $request->category;
             $visitationnote->save();
         }
@@ -186,6 +139,7 @@ class VisitationnoteController extends Controller
         $visitationnote->deadline = $request->deadline;
         $visitationnote->notes = $request->notes;
         $visitationnote->done = $request->done;
+        $visitationnote->important = $request->important;
         $visitationnote->category = $request->category;
 
         $visitationnote->save();

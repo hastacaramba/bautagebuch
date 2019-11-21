@@ -79,8 +79,11 @@ class ImageUploadController extends Controller
 
         $visitID = $request->visitID;
 
+        $info = $request->info;
+
         $media = new Media();
         $media->filename = $imageName;
+        $media->info = $info;
         $media->visit_id = $visitID;
         $media->save();
 

@@ -22,12 +22,13 @@
 <p style="border-top: 1px solid #a42600"><span style="color:#a42600; font-size: 0.6em">{{ $project['name'] }} - {{ $project['street'] }} {{ $project['housenumber'] }}, {{ $project['postcode'] }} {{ $project['city'] }}</span><br><span style="color:grey; font-size: 1.4em">{{ $visit['title'] }}, {{ $visit['date'] }}</span>
 </p>
 <p style="font-size:0.6em"><b>Datum:</b> {{ $visit['date'] }}, {{ $visit['time'] }}&nbsp;&nbsp;&nbsp;&nbsp;<b>Wetter:</b> {{ $visit['weather'] }}</p>
-<p style="font-size:0.6em"><b>Anmerkungen:</b><br>{{ $visit['description'] }}</p>
+<p style="font-size:0.6em"><b>Baufortschritt:</b><br>{{ $visit['description'] }}</p>
 <table cellpadding="5" style="font-size: 0.6em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
       <td style="border: 0.5px solid lightgrey">
-        <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150">
+        <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150"><br>
+        {{ $visitMedia[2 * $i]['info'] ?? ""}}
       </td>
       @if( ($numOfVisitMedia % 2 == 1) && ($i == ceil($numOfVisitMedia / 2) - 1))
         <td style="border: 0.5px solid lightgrey">
@@ -66,7 +67,14 @@
   @foreach( $visitationnotes as $visitationnote )
     <table cellpadding="5" style="font-size: 0.6em" class="table table-bordered table-striped">
       <tr>
-        <td style="border: 0.5px solid lightgrey; font-weight: bold; font-size: 1.2em">{{ $visitationnote['title'] }}</td>
+        <td style="border: 0.5px solid lightgrey; font-weight: bold; font-size: 1.2em">
+        @if($visitationnote['important'])
+            <img src="/img/important.png" style="width: 15px">
+            <span style="color: #a42600">{{ $visitationnote['title'] }}</span>
+        @else
+            {{ $visitationnote['title'] }}
+        @endif
+        </td>
         <td style="border: 0.5px solid lightgrey"><b>Kategorie:</b> {{ $visitationnote['category'] }}</td>
       </tr>
       <tr>
