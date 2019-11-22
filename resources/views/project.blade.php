@@ -370,7 +370,7 @@
                           </div>
                           <!-- Choose New Media [end] -->
                           <!-- Table: Media -->
-                          <table
+                          <!--table
                                   id="tableMedia"
                                   data-id-field="id"
                                   data-side-pagination="client"
@@ -388,7 +388,7 @@
                                   data-show-export="false"
                                   data-show-pagination-switch="true"
                                   data-row-style="rowStyle">
-                          </table>
+                          </table-->
                       </div>
                   </div>
               </div>
