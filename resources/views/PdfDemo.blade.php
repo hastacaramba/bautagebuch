@@ -69,7 +69,7 @@
       <tr>
         <td style="border: 0.5px solid lightgrey; font-weight: bold; font-size: 1.2em">
         @if($visitationnote['important'])
-            !!!&nbsp;<span style="color: #a42600">{{ $visitationnote['title'] }}</span>
+            <span style="color: #a42600">!!!&nbsp;{{ $visitationnote['title'] }}</span>
         @else
             {{ $visitationnote['title'] }}
         @endif
