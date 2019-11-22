@@ -69,8 +69,7 @@
       <tr>
         <td style="border: 0.5px solid lightgrey; font-weight: bold; font-size: 1.2em">
         @if($visitationnote['important'])
-            <img src="/img/important.png" style="width: 15px">
-            <span style="color: #a42600">{{ $visitationnote['title'] }}</span>
+            !!!&nbsp;<span style="color: #a42600">{{ $visitationnote['title'] }}</span>
         @else
             {{ $visitationnote['title'] }}
         @endif
