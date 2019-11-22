@@ -147,6 +147,8 @@ Route::get('/projectnote/concerned/{projectnoteID}', 'ProjectController@getConce
 
 Route::patch('/projectnote/{projectnoteID}/concerned', 'ProjectController@setConcernedMembers')->middleware('auth');
 
+Route::patch('/projectnote/update/{projectnoteID}', 'ProjectController@updateProjectNote')->middleware('auth');
+
 /* ------------ Image Control ------------ */
 
 Route::get('resizeImage', 'ImageController@resizeImage');

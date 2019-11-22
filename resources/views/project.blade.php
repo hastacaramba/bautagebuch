@@ -275,8 +275,8 @@
               </div>
               <div class="modal-body">
                   <div class="form-group" style="display:none">
-                      <label for="projectnoteID">ID</label>
-                      <input type="text" class="form-control" id="projectnoteID" hidden>
+                      <label for="editedProjectnoteID">ID</label>
+                      <input type="text" class="form-control" id="editedProjectnoteID" hidden>
                   </div>
                   <div class="form-group mb-3">
                       <label for="projectnoteTitle">Bezeichnung</label>
@@ -309,12 +309,10 @@
                       <label for="projectnoteDescription">Bemerkungen</label>
                       <textarea rows="10" type="text" class="form-control" id="projectnoteDescription" placeholder="Bemerkungen (Freitext)"></textarea>
                   </div>
-                  <div id="toolbarMedia">
-                      <button id="btnNewMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
-                  </div>
+
                   <div style="text-align:right">
-                      <button id="btnSaveprojectnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
-                      <button id="btnSaveprojectnoteAbbrechen" class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
+                      <button id="btnSaveProjectnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
+                      <button id="btnSaveProjectnoteAbbrechen" class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
                   </div>
 
                   <div class="modal-footer mt-4">
@@ -371,6 +369,8 @@
     $("#navItemBauprojekte").addClass("active");
   </script>
 
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
   <script>
     $(document).ready(function () {
 
@@ -420,6 +420,37 @@
         });
         //location.href = '/PdfDemo';
     });
+
+
+    $("#projectnoteDate").flatpickr(
+        {
+            enableTime: false,
+            noCalendar: false,
+            dateFormat: "Y-m-d",
+        }
+    );
+    $("#projectnoteDeadline").flatpickr(
+        {
+            enableTime: false,
+            noCalendar: false,
+            dateFormat: "Y-m-d",
+        }
+    );
+
+    $("#newProjectnoteDate").flatpickr(
+        {
+            enableTime: false,
+            noCalendar: false,
+            dateFormat: "Y-m-d",
+        }
+    );
+    $("#newProjectnoteDeadline").flatpickr(
+        {
+            enableTime: false,
+            noCalendar: false,
+            dateFormat: "Y-m-d",
+        }
+    );
 
     $("#btnNewMember").click(function (e) {
 
@@ -493,6 +524,38 @@
 
     $("#btnSaveNewProjectnoteAbbrechen").click(function () {
         $("#modalNewProjectnote").modal('toggle');
+        $tableProjectNotes.bootstrapTable('refresh');
+    });
+
+
+    $("#btnSaveProjectnote").click(function () {
+
+        var checked = 0;
+        if ($("#projectnoteDone").is(':checked')) {
+            checked = 1;
+        }
+
+        $.ajax({
+            type: "patch",
+            url: "/projectnote/update/" + $("#editedProjectnoteID").val(),
+            data:
+                {
+                    'title' : $("#projectnoteTitle").val(),
+                    'date' : $("#projectnoteDate").val(),
+                    'category' : $("#projectnoteCategory").val(),
+                    'notes' : $("#projectnoteDescription").val(),
+                    'deadline' : $("#projectnoteDeadline").val(),
+                    'done' : checked,
+                }
+            ,
+            success: function (data) {
+                $("#btnSaveProjectnoteAbbrechen").click();
+            }
+        });
+    });
+
+    $("#btnSaveProjectnoteAbbrechen").click(function () {
+        $("#modalEditProjectnote").modal('toggle');
         $tableProjectNotes.bootstrapTable('refresh');
     });
 
@@ -631,7 +694,7 @@
         //update the concerned status for this projectnote
         $.ajax({
             type: "PATCH",
-            url: "/projectnote/" + $("#projectnoteID").val() + "/concerned",
+            url: "/projectnote/" + $("#editedProjectnoteID").val() + "/concerned",
             data:
                 {
                     'memberID' : id,
@@ -684,12 +747,12 @@
           $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/projectnote/concerned/' + row.id });
           $("#modalEditProjectnote").modal('toggle');
           $("#projectnoteTitle").val(row.title);
-          $("#projectnoteDate").val(row.created_at);
+          $("#projectnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
           $("#projectnoteCategory").val(row.category);
           $("#projectnoteDeadline").val(row.deadline);
           $("#projectnoteDescription").val(row.notes);
           $("#projectnoteDone").prop('checked', row.done);
-          $("#projectnoteID").val(row.id);
+          $("#editedProjectnoteID").val(row.id);
           //$("#visitModalLabel").html('<h5><i class="fa fa-walking"></i> Begehung: ' + row.title + ' ' + row.date + '</h5>');
 
       },

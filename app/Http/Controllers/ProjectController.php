@@ -363,4 +363,25 @@ class ProjectController extends Controller
 
     }
 
+
+    /**
+     * @param Request $request
+     * @param $projectnoteID
+     */
+    public function updateProjectNote(Request $request, $projectnoteID) {
+        $projectnote = Projectnote::where('id', $projectnoteID)->first();
+
+        if ($projectnote != null) {
+            $projectnote->title = $request->title;
+            $projectnote->category = $request->category;
+            $projectnote->created_at = $request->date;
+            $projectnote->deadline = $request->deadline;
+            $projectnote->notes = $request->notes;
+            $projectnote->done = $request->done;
+
+            $projectnote->save();
+        }
+
+    }
+
 }
