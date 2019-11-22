@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Media;
 use Illuminate\Http\Request;
+use Image;
 
 class ImageUploadController extends Controller
 {
@@ -28,12 +29,19 @@ class ImageUploadController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
         ]);
 
+        $image = $request->file('image');
+
         $imageName = time().'.'.$request->image->extension();
 
-        $request->image->move(public_path('images'), $imageName);
+        $destinationPath = public_path('images');
+
+        $img = Image::make($image->getRealPath());
+
+        $img->resize(1000, 1000, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imageName);
 
         return $imageName;
-
     }
 
     /**
@@ -46,9 +54,17 @@ class ImageUploadController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
         ]);
 
+        $image = $request->file('image');
+
         $imageName = time().'.'.$request->image->extension();
 
-        $request->image->move(public_path('images'), $imageName);
+        $destinationPath = public_path('images');
+
+        $img = Image::make($image->getRealPath());
+
+        $img->resize(1000, 1000, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imageName);
 
         $visitationnoteID = $request->visitationnoteID;
 
@@ -72,9 +88,17 @@ class ImageUploadController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
         ]);
 
+        $image = $request->file('image');
+
         $imageName = time().'.'.$request->image->extension();
 
-        $request->image->move(public_path('images'), $imageName);
+        $destinationPath = public_path('images');
+
+        $img = Image::make($image->getRealPath());
+
+        $img->resize(1000, 1000, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imageName);
 
         $visitID = $request->visitID;
 
@@ -101,9 +125,17 @@ class ImageUploadController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
         ]);
 
+        $image = $request->file('image');
+
         $imageName = time().'.'.$request->image->extension();
 
-        $request->image->move(public_path('images'), $imageName);
+        $destinationPath = public_path('images');
+
+        $img = Image::make($image->getRealPath());
+
+        $img->resize(1000, 1000, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imageName);
 
         $mediaID = $request->mediaID;
 
