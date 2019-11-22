@@ -134,6 +134,12 @@ Route::delete('/media/{mediaID}', 'MediaController@deleteMedia')->name('media.de
 Route::patch('/media/{mediaID}', 'MediaController@editMedia')->name('media.edit')->middleware('auth');
 
 
+/* ------------ Image Control ------------ */
+
+Route::get('resizeImage', 'ImageController@resizeImage');
+
+Route::post('resizeImagePost', 'ImageController@resizeImagePost')->name('resizeImagePost');
+
 
 /* ------------ TCPDF Routen ------------ */
 
