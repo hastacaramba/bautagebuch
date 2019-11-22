@@ -127,7 +127,11 @@ Route::post('/image-upload-post-visitationnote', 'ImageUploadController@imageUpl
 
 Route::post('/image-upload-post-visit', 'ImageUploadController@imageUploadPostVisit')->name('image.upload.post.visit')->middleware('auth');
 
+Route::post('/image-upload-post-edited-visit', 'ImageUploadController@imageUploadPostEditedVisit')->name('image.upload.post.edited.visit')->middleware('auth');
+
 Route::delete('/media/{mediaID}', 'MediaController@deleteMedia')->name('media.delete')->middleware('auth');
+
+Route::patch('/media/{mediaID}', 'MediaController@editMedia')->name('media.edit')->middleware('auth');
 
 
 

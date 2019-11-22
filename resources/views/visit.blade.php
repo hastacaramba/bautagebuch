@@ -422,6 +422,53 @@
   </div>
   <!-- New Visitationnote Modal [end] -->
 
+  <!-- Edit VisitMedia Modal [start] -->
+  <div class="modal fade" id="modalEditVisitMedia" tabindex="-1" role="dialog" aria-labelledby="editVisitMediaModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-photo"></i> Foto bearbeiten</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group mb-3" style="display:none">
+                      <input type="text" class="form-control" id="mediaID">
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="newPhotoDesc">Beschreibung</label>
+                      <input type="text" class="form-control" id="newPhotoDesc" placeholder="Beschreibung...">
+                  </div>
+                  <div class="form-group">
+                      <label for="oldPhoto">Aktuelles Foto</label>
+                      <div class="mb-3" id="oldVisitPhoto"></div>
+                  </div>
+                  <div class="form-group">
+                      <form id ="editVisitMediaForm" action="{{ route('image.upload.post.edited.visit') }}" method="POST" enctype="multipart/form-data">
+                          <label for="image">Neues Foto</label>
+                          <div class="row">
+                              <div class="col-md-9">
+                                  <input type="file" id="newVisitImage" name="newVisitImage" class="form-control">
+                              </div>
+                              <div class="col-md-3">
+                                  <button id="btnUploadNewImage" type="submit" class="btn btn-success">Upload</button>
+                                  <div id="projectImageUpdate"class="mt-1"></div>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button id="btnSaveEditedVisitMedia" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
+                  <button id="btnCancelEditedVisitMedia" class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Edit VisitMedia Modal [end] -->
+
+
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -580,6 +627,26 @@
           }
       });
     });
+
+      $("#btnSaveEditedVisitMedia").click(function () {
+
+          $.ajax({
+              url: '/media/' + $("#mediaID").val(),
+              data: {
+                  'info' : $("#newPhotoDesc").val()
+              },
+              type: 'PATCH',
+              success: function(data) {
+                  $("#btnCancelEditedVisitMedia").click();
+                  $tableVisitMedia.bootstrapTable('refresh');
+              }
+          });
+      });
+
+      $("#btnCancelEditedVisitMedia").click(function () {
+        $("#modalEditVisitMedia").modal('toggle');
+      });
+
 
   </script>
 
@@ -842,6 +909,12 @@
                       }
                   }
               });
+          },
+          'click .editVisitMedia': function (e, value, row, index) {
+              $("#modalEditVisitMedia").modal('toggle');
+              $("#mediaID").val(row.id);
+              $("#newPhotoDesc").val(row.info);
+              $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + row.filename + '">');
           },
           'click .deleteVisitMedia': function (e, value, row, index) {
               bootbox.confirm({
@@ -1305,6 +1378,9 @@
 
       function operateFormatterVisitMedia(value, row, index) {
           return [
+              '<a class="editVisitMedia" href="javascript:void(0)" title="Bearbeiten">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+              '</a> ',
               '<a class="deleteVisitMedia" href="javascript:void(0)" title="Löschen">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
               '</a> '
@@ -1504,7 +1580,41 @@
                   contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
                   processData: false, // NEEDED, DON'T OMIT THIS
                   success: function(data) {
-                      $("#btnNewVisitMediaAbbrechen").click();
+                      $("#newVisitImage").html('<img class="img-fluid img-rounded" src="images/' + data + '">');
+                      $("#btnUploadImage").hide();
+                      $("#filename").val(data);
+                      $("#btnEditVisitMediaAbbrechen").click();
+                      $tableVisitMedia.bootstrapTable('refresh');
+                  }
+              });
+          });
+
+          // this is the id of the form
+          $("#editVisitMediaForm").submit(function(e) {
+
+              e.preventDefault(); // avoid to execute the actual submit of the form.
+
+              var editVisitMediaFormData = new FormData();
+
+              // Attach file
+              editVisitMediaFormData.append('image', newVisitMediaFile);
+
+              editVisitMediaFormData.append('visitID', '{{ $visit->id }}');
+
+              editVisitMediaFormData.append('info', $("#newPhotoDesc").val());
+
+              editVisitMediaFormData.append('mediaID', $("#mediaID").val());
+
+              $.ajax({
+                  url: '/image-upload-post-edited-visit',
+                  data: editVisitMediaFormData,
+                  type: 'POST',
+                  contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                  processData: false, // NEEDED, DON'T OMIT THIS
+                  success: function(data) {
+                      $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data + '">');
+                      $("#newVisitImage").val('');
+                      $("#btnEditVisitMediaAbbrechen").click();
                       $tableVisitMedia.bootstrapTable('refresh');
                   }
               });

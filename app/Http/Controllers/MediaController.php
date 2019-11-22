@@ -23,6 +23,22 @@ class MediaController extends Controller
 
 
     /**
+     * Edit the info of the media with the given id.
+     *
+     * @param Request $request
+     * @param $mediaID
+     */
+    public function editMedia(Request $request, $mediaID) {
+        $media = Media::where('id', $mediaID)->first();
+
+        if ($media != null) {
+            $media->info = $request->info;
+            $media->save();
+        }
+    }
+
+
+    /**
      * Returns all members of a project as json.
      *
      * @return mixed

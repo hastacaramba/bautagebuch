@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Media;
 use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
 
 class ImageUploadController extends Controller
 {
@@ -85,6 +84,34 @@ class ImageUploadController extends Controller
         $media->filename = $imageName;
         $media->info = $info;
         $media->visit_id = $visitID;
+        $media->save();
+
+        return $imageName;
+
+    }
+
+
+    /**
+     * @param Request $request
+     * @return string
+     */
+    public function imageUploadPostEditedVisit(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        ]);
+
+        $imageName = time().'.'.$request->image->extension();
+
+        $request->image->move(public_path('images'), $imageName);
+
+        $mediaID = $request->mediaID;
+
+        $info = $request->info;
+
+        $media = Media::where('id', $mediaID)->first();
+        $media->filename = $imageName;
+        $media->info = $info;
         $media->save();
 
         return $imageName;
