@@ -110,7 +110,31 @@
                 </div>
             </div>
             <div id="tab-3" class="tab-content">
-                Hier finden Sie später die Projektvermerke für dieses Projekt...
+                <div id="toolbarProjectNotes">
+                    <button id="btnNewProjectNote" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Projektvermerk</button>
+                </div>
+                <!-- Table ProjectNotes -->
+                <div class="table-responsive">
+                    <table
+                            id="tableProjectNotes"
+                            data-id-field="id"
+                            data-side-pagination="client"
+                            data-toggle="table"
+                            data-sortable="true"
+                            data-url="/projectnotes/{{ $projectID }}"
+                            data-toolbar="#toolbarProjectNotes"
+                            data-search="true"
+                            data-show-columns="false"
+                            data-pagination="true"
+                            data-page-list="[10, 25, 50, 100, ALL]"
+                            data-detail-formatter="detailFormatter"
+                            data-detail-view="true"
+                            data-response-handler="responseHandler"
+                            data-show-export="false"
+                            data-show-pagination-switch="true"
+                            data-row-style="rowStyle">
+                    </table>
+                </div>
             </div>
             <div id="tab-4" class="tab-content">
                 Hier finden Sie später die Dokumente für dieses Projekt...
@@ -169,9 +193,10 @@
           <div class="modal-content">
               <div class="modal-header">
                   <div class="modal-title" id="visitModalLabel"><i class="fa fa-walking"></i> Projektbeteiligte hinzufügen</div>
-                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                  </button>
+                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                      </button>
+                  </div>
               </div>
               <div class="modal-body">
                   <div class="form-group">
@@ -190,6 +215,192 @@
       </div>
   </div>
   <!-- New Member Modal [end] -->
+
+  <!-- New Projectnote Modal [start] -->
+  <div class="modal fade" id="modalNewProjectnote" tabindex="-1" role="dialog" aria-labelledby="newProjectnoteModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-plus-circle"></i> Neuer Projektvermerk</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group mb-3">
+                      <label for="newProjectnoteTitle">Bezeichnung</label>
+                      <input type="text" class="form-control" id="newProjectnoteTitle" placeholder="Bezeichnung...">
+                  </div>
+                  <div class="row mb-3">
+                      <div class="form-group col-md-3">
+                          <label for="newProjectnoteDate">Datum</label><br>
+                          <input type="text" id="newProjectnoteDate" style="width: 100%; color:#6e707e">
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="newProjectnoteCategory">Kategorie</label>
+                          <select id="newProjectnoteCategory">
+                              <option value="Mangel" selected="selected">Mangel</option>
+                              <option value="Restarbeit">Restarbeit</option>
+                              <option value="Information">Information</option>
+                              <option value="zu erledigen">zu erledigen</option>
+                          </select>
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="newProjectnoteDeadline">Fälligkeit</label>
+                          <input type="text" id="newProjectnoteDeadline" style="width: 100%; color:#6e707e">
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="newProjectnoteDone">Erledigt</label>
+                          <input type="checkbox" class="form-control" id="newProjectnoteDone">
+                      </div>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="newProjectnoteDescription">Bemerkungen</label>
+                      <textarea rows="10" type="text" class="form-control" id="newProjectnoteDescription" placeholder="Bemerkungen (Freitext)"></textarea>
+                  </div>
+                  <div style="text-align:right">
+                      <button id="btnSaveNewProjectnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
+                      <button id="btnSaveNewProjectnoteAbbrechen" class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- New Projectnote Modal [end] -->
+
+  <!-- Edit Projectnote Modal [start] -->
+  <div class="modal fade" id="modalEditProjectnote" tabindex="-1" role="dialog" aria-labelledby="editProjectnoteModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-clipboard"></i> Projektvermerk bearbeiten</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group" style="display:none">
+                      <label for="projectnoteID">ID</label>
+                      <input type="text" class="form-control" id="projectnoteID" hidden>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="projectnoteTitle">Bezeichnung</label>
+                      <input type="text" class="form-control" id="projectnoteTitle" placeholder="Bezeichnung...">
+                  </div>
+                  <div class="row mb-3">
+                      <div class="form-group col-md-3">
+                          <label for="projectnoteDate">Datum</label><br>
+                          <input type="text" id="projectnoteDate" style="width: 100%; color:#6e707e">
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="projectnoteCategory">Kategorie</label>
+                          <select id="projectnoteCategory">
+                              <option value="Mangel" selected="selected">Mangel</option>
+                              <option value="Restarbeit">Restarbeit</option>
+                              <option value="Information">Information</option>
+                              <option value="zu erledigen">zu erledigen</option>
+                          </select>
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="projectnoteDeadline">Fälligkeit</label>
+                          <input type="text" id="projectnoteDeadline" style="width: 100%; color:#6e707e">
+                      </div>
+                      <div class="form-group col-md-3">
+                          <label for="projectnoteDone">Erledigt</label>
+                          <input type="checkbox" class="form-control" id="projectnoteDone">
+                      </div>
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="projectnoteDescription">Bemerkungen</label>
+                      <textarea rows="10" type="text" class="form-control" id="projectnoteDescription" placeholder="Bemerkungen (Freitext)"></textarea>
+                  </div>
+                  <div id="toolbarMedia">
+                      <button id="btnNewMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
+                  </div>
+                  <div style="text-align:right">
+                      <button id="btnSaveprojectnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
+                      <button id="btnSaveprojectnoteAbbrechen" class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
+                  </div>
+
+                  <div class="modal-footer mt-4">
+                      <div class="table-responsive">
+                          <label class="mt-3" for="tableMedia">Betroffene Projektteilnehmer bzw. Gewerke</label>
+
+                          <!-- Table Present Members -->
+                          <div class="table-responsive">
+                              <table
+                                      id="tableConcernedMembers"
+                                      data-id-field="id"
+                                      data-side-pagination="client"
+                                      data-toggle="table"
+                                      data-sortable="true"
+                                      data-url=""
+                                      data-search="true"
+                                      data-show-columns="false"
+                                      data-pagination="true"
+                                      data-page-list="[10, 25, 50, 100, ALL]"
+                                      data-detail-formatter="detailFormatter"
+                                      data-detail-view="true"
+                                      data-response-handler="responseHandler"
+                                      data-show-export="false"
+                                      data-show-pagination-switch="true"
+                                      data-row-style="rowStyle">
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="modal-footer mt-4">
+                      <div class="table-responsive">
+                          <label class="mt-3" for="tableMedia">Fotos</label>
+                          <!-- Choose New Media [start] -->
+                          <div id="chooseNewMedia">
+                              <div class="form-group">
+                                  <form id="newForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
+                                      <label for="image">Foto hochladen</label>
+                                      <div class="row">
+                                          <div class="col-md-9">
+                                              <input type="file" id="image" name="image" class="form-control">
+                                          </div>
+                                          <div class="col-md-3">
+                                              <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
+                                              <div id="newProjectImage"class="mt-1"></div>
+                                          </div>
+                                      </div>
+                                  </form>
+                              </div>
+                              <div>
+                                  <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
+                              </div>
+                          </div>
+                          <!-- Choose New Media [end] -->
+                          <!-- Table: Media -->
+                          <table
+                                  id="tableMedia"
+                                  data-id-field="id"
+                                  data-side-pagination="client"
+                                  data-toggle="table"
+                                  data-sortable="true"
+                                  data-url=""
+                                  data-toolbar="#toolbarMedia"
+                                  data-search="true"
+                                  data-show-columns="true"
+                                  data-pagination="true"
+                                  data-page-list="[10, 25, 50, 100, ALL]"
+                                  data-detail-formatter="detailFormatter"
+                                  data-detail-view="false"
+                                  data-response-handler="responseHandler"
+                                  data-show-export="false"
+                                  data-show-pagination-switch="true"
+                                  data-row-style="rowStyle">
+                          </table>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Edit Projectnote Modal [end] -->
 
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/jquery/jquery.min.js"></script>
@@ -222,7 +433,9 @@
       });
       //init bootstrap tables
       initTableMembers();
+      initTableProjectNotes();
       initTableVisits();
+      initTableConcernedMembers();
 
       //tabs
         $('ul.tabs li').click(function(){
@@ -296,6 +509,43 @@
         });
 
 
+    });
+
+
+    $("#btnNewProjectNote").click(function () {
+        $("#modalNewProjectnote").modal('toggle');
+    });
+
+    $("#btnSaveNewProjectnote").click(function () {
+
+        var checked = 0;
+        if ($("#newProjectnoteDone").is(':checked')) {
+            checked = 1;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/projectnote",
+            data:
+                {
+                    'projectID' : '{{ $projectID }}',
+                    'title' : $("#newProjectnoteTitle").val(),
+                    'date' : $("#newProjectnoteDate").val(),
+                    'category' : $("#newProjectnoteCategory").val(),
+                    'notes' : $("#newProjectnoteDescription").val(),
+                    'deadline' : $("#newProjectnoteDeadline").val(),
+                    'done' : checked,
+                }
+            ,
+            success: function (data) {
+                $("#btnSaveNewProjectnoteAbbrechen").click();
+            }
+        });
+    });
+
+    $("#btnSaveNewProjectnoteAbbrechen").click(function () {
+        $("#modalNewProjectnote").modal('toggle');
+        $tableProjectNotes.bootstrapTable('refresh');
     });
 
 
@@ -422,6 +672,33 @@
       ]
     }
 
+    function handleConcernedClick(cb, id) {
+        //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+        var checked = 0;
+        if (cb.checked) {
+            checked = 1;
+        }
+
+        //update the concerned status for this projectnote
+        $.ajax({
+            type: "PATCH",
+            url: "/projectnote/" + $("#projectnoteID").val() + "/concerned",
+            data:
+                {
+                    'memberID' : id,
+                    'concerned' : checked
+                }
+            ,
+            success: function (data) {
+                alert("Die Änderungen beim Projektvermerk wurden übernommen.");
+                $tableConcernedMembers.bootstrapTable('refresh');
+            }
+        });
+
+
+    }
+
     window.operateEvents = {
       'click .delete': function (e, value, row, index) {
           bootbox.confirm({
@@ -454,6 +731,46 @@
         //$("#modalVisit").modal('toggle');
         //$("#visitModalLabel").html('<h5><i class="fa fa-walking"></i> Begehung: ' + row.title + ' ' + row.date + '</h5>');
 
+      },
+      'click .editProjectnote':function (e, value, row, index) {
+          $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/projectnote/concerned/' + row.id });
+          $("#modalEditProjectnote").modal('toggle');
+          $("#projectnoteTitle").val(row.title);
+          $("#projectnoteDate").val(row.created_at);
+          $("#projectnoteCategory").val(row.category);
+          $("#projectnoteDeadline").val(row.deadline);
+          $("#projectnoteDescription").val(row.notes);
+          $("#projectnoteDone").prop('checked', row.done);
+          $("#projectnoteID").val(row.id);
+          //$("#visitModalLabel").html('<h5><i class="fa fa-walking"></i> Begehung: ' + row.title + ' ' + row.date + '</h5>');
+
+      },
+      'click .deleteProjectnote':function (e, value, row, index) {
+          bootbox.confirm({
+              message: "Projektvermerk wirklich löschen?",
+              buttons: {
+                  confirm: {
+                      label: 'Ja',
+                      className: 'btn-success'
+                  },
+                  cancel: {
+                      label: 'Nein',
+                      className: 'btn-danger'
+                  }
+              },
+              callback: function (result) {
+                  if (result) {
+                      $.ajax({
+                          type: "DELETE",
+                          url: "/projectnote/" + row.id,
+                          data: "",
+                          success: function (data) {
+                              $tableProjectNotes.bootstrapTable('refresh');
+                          }
+                      });
+                  }
+              }
+          });
       }
     }
 
@@ -518,6 +835,135 @@
     }
 
 
+    // - BOOTSTRAP-TABLE PROJECTNOTES - //
+
+    var $tableProjectNotes = $('#tableProjectNotes')
+
+    /**
+     * Gibt eine map der Projectnote-IDs der aktuell selektierten Zeilen zurück.
+     *
+     */
+    function getIdSelectionsProjectNotes() {
+      return $.map($tableProjectNotes.bootstrapTable('getSelections'), function (row) {
+        return row.id;
+      })
+    }
+
+    function operateFormatterProjectNotes(value, row, index) {
+        return [
+            '<button type="button" class="btn btn-default editProjectnote" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+            '<button type="button" class="btn btn-default deleteProjectnote" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+        ]
+    }
+
+    function doneFormatter(value, row, index) {
+
+        if (value) {
+            return [
+                '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"1\" checked onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
+            ]
+        }
+
+        return [
+            '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"0\" onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
+        ]
+    }
+
+    function handleDoneClick(cb, id) {
+        //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+        var checked = 0;
+        if (cb.checked) {
+            checked = 1;
+        }
+
+        //update the done status for this visitationnote
+        $.ajax({
+            type: "PATCH",
+            url: "/projectnote/" + id,
+            data:
+                {
+                    'done' : checked
+                }
+            ,
+            success: function (data) {
+                alert("Die Änderungen beim Projektvermerk wurden übernommen.");
+                $tableProjectNotes.bootstrapTable('refresh');
+            }
+        });
+
+
+    }
+
+    /**
+     * Initiiert die Bootstrap-Table.
+     */
+    function initTableProjectNotes() {
+      $tableProjectNotes.bootstrapTable('destroy').bootstrapTable({
+        /*
+        $visit->title = $request->title;
+        $visit->date = $request->date;
+        $visit->time = $request->time;
+        $visit->notes = $request->notes;
+        $visit->project_id = $projectID;
+        */
+        locale: 'de-DE',
+        columns: [
+          {
+            field: 'title',
+            title: 'Bezeichnung',
+            align: 'left',
+            sortable: true,
+          }, {
+            field: 'category',
+            title: 'Kategorie',
+            align: 'left',
+            sortable: true,
+          }, {
+            field: 'created_at',
+            title: 'Erstellt',
+            align: 'left',
+            sortable: true,
+            formatter: createdAtFormatter
+          }, {
+            field: 'deadline',
+            title: 'Fälligkeit',
+            align: 'left',
+            sortable: true
+          }, {
+            field: 'done',
+            title: 'erledigt',
+            align: 'center',
+            sortable: true,
+                formatter: doneFormatter
+          }, {
+            field: 'operate',
+            title: 'Aktionen',
+            align: 'center',
+            events: window.operateEvents,
+            formatter: operateFormatterProjectNotes
+          }
+        ]
+      })
+      $tableProjectNotes.on('check.bs.table uncheck.bs.table ' +
+              'check-all.bs.table uncheck-all.bs.table',
+              function () {
+                //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                // save your data, here just save the current page
+                selections = getIdSelectionsProjectNotes()
+                // push or splice the selections if you want to save all data selections
+              })
+      $tableProjectNotes.on('all.bs.table', function (e, name, args) {
+        //console.log(name, args)
+      })
+
+    }
+
+
     // - BOOTSTRAP-TABLE VISITS - //
 
     var $tableVisits = $('#tableVisits')
@@ -527,9 +973,9 @@
      *
      */
     function getIdSelectionsVisits() {
-      return $.map($tableVisits.bootstrapTable('getSelections'), function (row) {
-        return row.id;
-      })
+        return $.map($tableVisits.bootstrapTable('getSelections'), function (row) {
+            return row.id;
+        })
     }
 
     function operateFormatterVisits(value, row, index) {
@@ -546,54 +992,54 @@
      * @returns {string}
      */
     function timeFormatter(value, row, index) {
-      var time = value.substring(0,value.length - 3);
-      return [
-        time
-      ]
+        var time = value.substring(0,value.length - 3);
+        return [
+            time
+        ]
     }
 
     /**
      * Initiiert die Bootstrap-Table.
      */
     function initTableVisits() {
-      $tableVisits.bootstrapTable('destroy').bootstrapTable({
-        /*
-        $visit->title = $request->title;
-        $visit->date = $request->date;
-        $visit->time = $request->time;
-        $visit->notes = $request->notes;
-        $visit->project_id = $projectID;
-        */
-        locale: 'de-DE',
-        columns: [
-          {
-            field: 'date',
-            title: 'Datum',
-            sortable: true,
-            align: 'left',
-          }, {
-            field: 'title',
-            title: 'Titel',
-            align: 'left',
-            sortable: true,
-          }, {
-            field: 'time',
-            title: 'Uhrzeit',
-            align: 'left',
-            sortable: true,
-            formatter: timeFormatter
-          }, {
-            field: 'operate',
-            title: 'Anzeigen',
-            align: 'center',
-            events: window.operateEvents,
-            formatter: operateFormatterVisits
-          }
-        ]
-      })
-      $tableVisits.on('check.bs.table uncheck.bs.table ' +
-              'check-all.bs.table uncheck-all.bs.table',
-              function () {
+        $tableVisits.bootstrapTable('destroy').bootstrapTable({
+            /*
+            $visit->title = $request->title;
+            $visit->date = $request->date;
+            $visit->time = $request->time;
+            $visit->notes = $request->notes;
+            $visit->project_id = $projectID;
+            */
+            locale: 'de-DE',
+            columns: [
+                {
+                    field: 'date',
+                    title: 'Datum',
+                    sortable: true,
+                    align: 'left',
+                }, {
+                    field: 'title',
+                    title: 'Titel',
+                    align: 'left',
+                    sortable: true,
+                }, {
+                    field: 'time',
+                    title: 'Uhrzeit',
+                    align: 'left',
+                    sortable: true,
+                    formatter: timeFormatter
+                }, {
+                    field: 'operate',
+                    title: 'Anzeigen',
+                    align: 'center',
+                    events: window.operateEvents,
+                    formatter: operateFormatterVisits
+                }
+            ]
+        })
+        $tableVisits.on('check.bs.table uncheck.bs.table ' +
+            'check-all.bs.table uncheck-all.bs.table',
+            function () {
                 //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
                 //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
                 //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
@@ -602,12 +1048,104 @@
                 // save your data, here just save the current page
                 selections = getIdSelectionsVisits()
                 // push or splice the selections if you want to save all data selections
-              })
-      $tableVisits.on('all.bs.table', function (e, name, args) {
-        //console.log(name, args)
-      })
+            })
+        $tableVisits.on('all.bs.table', function (e, name, args) {
+            //console.log(name, args)
+        })
 
     }
+
+
+    // - BOOTSTRAP-TABLE ConcernedMembers - //
+
+    var $tableConcernedMembers = $('#tableConcernedMembers')
+
+    /**
+     * Gibt eine map der Member-IDs der aktuell selektierten Zeilen zurück.
+     *
+     */
+    function getIdSelectionsConcernedMembers() {
+        return $.map($tableConcernedMembers.bootstrapTable('getSelections'), function (row) {
+            return row.id;
+        })
+    }
+
+    function operateFormatterConcernedMembers(value, row, index) {
+        return [
+            '<a class="deleteConcernedMember" href="javascript:void(0)" title="Löschen">',
+            '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+            '</a> '
+        ].join('')
+    }
+
+    function concernedFormatter(value, row, index) {
+
+        if (value) {
+            return [
+                '<input class=\"concernedCheck\" type=\"checkbox\" name=\"concerned\" value=\"1\" checked onclick=\"handleConcernedClick(this,\'' + row.id + '\')\">'
+            ]
+        }
+
+        return [
+            '<input class=\"concernedCheck\" type=\"checkbox\" name=\"concerned\" value=\"0\" onclick=\"handleConcernedClick(this,\'' + row.id + '\')\">'
+        ]
+    }
+
+
+    /**
+     * Initiiert die Bootstrap-Table.
+     */
+    function initTableConcernedMembers() {
+        $tableConcernedMembers.bootstrapTable('destroy').bootstrapTable({
+            locale: 'de-DE',
+            columns: [
+                {
+                    field: 'company',
+                    title: 'Firma',
+                    sortable: true,
+                    align: 'left',
+                }, {
+                    title: 'Nachname',
+                    field: 'surname',
+                    align: 'left',
+                    sortable: true,
+                }, {
+                    field: 'firstname',
+                    title: 'Vorname',
+                    sortable: true,
+                    align: 'left'
+                }, {
+                    field: 'subarea',
+                    title: 'Gewerk',
+                    sortable: true,
+                    align: 'left',
+                }, {
+                    field: 'concerned',
+                    title: 'Betroffen',
+                    align: 'center',
+                    formatter: concernedFormatter
+                }
+
+            ]
+        })
+        $tableConcernedMembers.on('check.bs.table uncheck.bs.table ' +
+            'check-all.bs.table uncheck-all.bs.table',
+            function () {
+                //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                // save your data, here just save the current page
+                selections = getIdSelections()
+                // push or splice the selections if you want to save all data selections
+            })
+        $tableConcernedMembers.on('all.bs.table', function (e, name, args) {
+            //console.log(name, args)
+        })
+
+    }
+
 
 
   </script>

@@ -32,4 +32,11 @@ class Projectnote extends Model {
     public function media() {
         return $this->hasMany('App\Media');
     }
+
+    /**
+     * Get the mmembers of the projectnote.
+     */
+    public function members() {
+        return $this->belongsToMany('App\Member', 'member_projectnote');
+    }
 }

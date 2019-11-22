@@ -15,9 +15,9 @@ class CreateProjectnotesTable extends Migration
     {
         Schema::create('projectnotes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->enum('category',['Mangel','Information']);
+            $table->enum('category',['Mangel','Restarbeit','Information','zu erledigen']);
             $table->string('title');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->date('deadline')->nullable();
             $table->boolean('done')->default(0);
             $table->integer('project_id');

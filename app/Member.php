@@ -52,4 +52,11 @@ class Member extends Model {
         return $this->belongsToMany('App\Visitationnote', 'member_visitationnote');
     }
 
+    /**
+     * Get the projectnotes the member is mentioned as concerned.
+     */
+    public function projectnotes() {
+        return $this->belongsToMany('App\Projectnote', 'member_projectnote');
+    }
+
 }

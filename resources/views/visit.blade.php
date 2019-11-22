@@ -75,7 +75,7 @@
               <!-- Begehungsfotos -->
               <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                      <h4><i class="fas fa-clipboard-list"></i> Fotos zum Baufortschritt</h4>
+                      <h4><i class="far fa-images"></i> Fotos zum Baufortschritt</h4>
                   </div>
                   <div id="toolbarVisitMedia">
                       <button id="btnNewVisitMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
@@ -133,7 +133,7 @@
               <!-- Anwesende -->
               <div class="card shadow mb-4">
                   <div class="card-header py-3">
-                      <h4><i class="fas fa-clipboard-list"></i> Anwesende</h4>
+                      <h4><i class="fas fa-users"></i> Anwesende</h4>
                   </div>
                   <div class="card-body">
                       <!-- Table Present Members -->
@@ -427,7 +427,7 @@
       <div class="modal-dialog modal-lg" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-photo"></i> Foto bearbeiten</h5>
+                  <h5 class="modal-title" id="exampleModalLabel"><i class="far fa-image"></i></i> Foto bearbeiten</h5>
                   <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                   </button>

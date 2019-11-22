@@ -133,6 +133,19 @@ Route::delete('/media/{mediaID}', 'MediaController@deleteMedia')->name('media.de
 
 Route::patch('/media/{mediaID}', 'MediaController@editMedia')->name('media.edit')->middleware('auth');
 
+Route::post('/projectnote', 'ProjectController@newProjectNote')->name('projectnote.new')->middleware('auth')->middleware('auth');
+
+Route::get('/projectnotes/{projectID}', 'ProjectController@getProjectNotes')->name('projectnotes')->middleware('auth');
+
+Route::patch('/projectnote/{projectnoteID}', 'ProjectController@setDoneStatus')->name('projectnote.setDone')->middleware('auth');
+
+Route::get('/projectnote/{projectnoteID}', 'ProjectController@getProjectNote')->name('projectnote.get')->middleware('auth');
+
+Route::delete('/projectnote/{projectnoteID}', 'ProjectController@deleteProjectNote')->name('projectnote.delete')->middleware('auth');
+
+Route::get('/projectnote/concerned/{projectnoteID}', 'ProjectController@getConcernedMembers')->name('projectnote.concerned')->middleware('auth');
+
+Route::patch('/projectnote/{projectnoteID}/concerned', 'ProjectController@setConcernedMembers')->middleware('auth');
 
 /* ------------ Image Control ------------ */
 
