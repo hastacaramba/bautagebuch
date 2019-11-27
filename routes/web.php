@@ -91,6 +91,8 @@ Route::patch('/visit/{visitID}', 'VisitController@updateVisit')->middleware('aut
 
 Route::get('/visit/{visitID}', 'VisitController@showVisit')->middleware('auth');
 
+Route::delete('/visit/{visitID}', 'VisitController@deleteVisit')->middleware('auth');
+
 Route::get('/visit/{visitID}/json', 'VisitController@getVisit')->middleware('auth');
 
 Route::get('/visit/{visitID}/presence', 'VisitController@getPresentMembers')->middleware('auth');

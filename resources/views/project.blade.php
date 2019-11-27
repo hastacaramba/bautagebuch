@@ -773,10 +773,32 @@
               }
           });
       },
-      'click .openVisit': function (e, value, row, index) {
-        //$("#modalVisit").modal('toggle');
-        //$("#visitModalLabel").html('<h5><i class="fa fa-walking"></i> Begehung: ' + row.title + ' ' + row.date + '</h5>');
-
+      'click .deleteVisit': function (e, value, row, index) {
+          bootbox.confirm({
+              message: "Wollen Sie die Begehung wirklich vollständig löschen?",
+              buttons: {
+                  confirm: {
+                      label: 'Ja',
+                      className: 'btn-success'
+                  },
+                  cancel: {
+                      label: 'Nein',
+                      className: 'btn-danger'
+                  }
+              },
+              callback: function (result) {
+                  if (result) {
+                      $.ajax({
+                          type: "DELETE",
+                          url: "/visit/" + row.id,
+                          data: "",
+                          success: function (data) {
+                              $tableVisits.bootstrapTable('refresh');
+                          }
+                      });
+                  }
+              }
+          });
       },
       'click .editProjectnote':function (e, value, row, index) {
           $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/projectnote/concerned/' + row.id });
@@ -897,7 +919,7 @@
 
     function operateFormatterProjectNotes(value, row, index) {
         return [
-            '<button type="button" class="btn btn-default editProjectnote" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+            '<button type="button" class="btn btn-default editProjectnote" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>' +
             '<button type="button" class="btn btn-default deleteProjectnote" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
         ]
     }
@@ -1027,7 +1049,8 @@
 
     function operateFormatterVisits(value, row, index) {
         return [
-            '<a href="/visit/' + row.id + '"><button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button></a>'
+            "<a href=\"/visit/" + row.id + "\"><button type=\"button\" class=\"btn btn-default\" style=\"color:#345589; border: none\" ><i class=\"fas fa-eye\"></i></button></a>" +
+            "<button type=\"button\" class=\"btn btn-default deleteVisit\" style=\"color:#345589; border: none\" ><i class=\"fas fa-trash\"></i></button>"
         ]
     }
 

@@ -56,6 +56,20 @@ class VisitController extends Controller
 
 
     /**
+     * Deletes the visit with the given id.
+     *
+     * @param $visitID
+     */
+    public function deleteVisit($visitID) {
+        $visit = Visit::where('id', '=', $visitID)->first();
+
+        if ($visit != null) {
+            $visit->delete();
+        }
+    }
+
+
+    /**
      * Returns all visits of a project as json.
      *
      * @param $projectID
