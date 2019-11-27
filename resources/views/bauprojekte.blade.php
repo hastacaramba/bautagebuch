@@ -473,11 +473,23 @@
 
       var timestamp = new Date(value);
       var d = timestamp.getDate().toString();
+      if(timestamp.getDate() < 10) {
+        d = "0" + d;
+      }
       var m = timestamp.getMonth().toString();
+      if(timestamp.getMonth() < 10) {
+        m = "0" + m;
+      }
       var y = timestamp.getFullYear().toString();
 
       var h = timestamp.getHours().toString();
+      if(timestamp.getHours() < 10) {
+        h = "0" + h;
+      }
       var min = timestamp.getMinutes().toString();
+      if(timestamp.getMinutes() < 10) {
+        min = "0" + min;
+      }
 
       var output = d + "." + m + "." + y + ", " + h + ":" + min;
 
