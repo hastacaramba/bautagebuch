@@ -663,10 +663,45 @@
     }
 
     function createdAtFormatter(value, row, index) {
-        var date = value.substring(0,value.length - 9);
+        var date = new Date(value);
+        var d = date.getDate().toString();
+        var m = date.getMonth().toString();
+        if(date.getMonth() < 10) {
+            m = "0" + m;
+        }
+        if(date.getDate() < 10) {
+            d = "0" + d;
+        }
+
+        var y = date.getFullYear().toString();
+
+
+        var output = d + "." + m + "." + y;
+
       return [
-        date
+        output
       ]
+    }
+
+    function createdAtFormatterProjectNotes(value, row, index) {
+        var date = new Date(value.substr(0,10));
+        var d = date.getDate();
+        var m = date.getMonth();
+        if(date.getMonth() < 10) {
+            m = "0" + m;
+        }
+        if(date.getDate() < 10) {
+            d = "0" + d;
+        }
+
+        var y = date.getFullYear().toString();
+
+
+        var output = d + "." + m + "." + y;
+
+        return [
+            output
+        ]
     }
 
     function updatedAtFormatter(value, row, index) {
@@ -935,12 +970,13 @@
             title: 'Erstellt',
             align: 'left',
             sortable: true,
-            formatter: createdAtFormatter
+            formatter: createdAtFormatterProjectNotes
           }, {
             field: 'deadline',
             title: 'Fälligkeit',
             align: 'left',
-            sortable: true
+            sortable: true,
+            formatter: createdAtFormatter
           }, {
             field: 'done',
             title: 'erledigt',
@@ -1028,6 +1064,7 @@
                     title: 'Datum',
                     sortable: true,
                     align: 'left',
+                    formatter: createdAtFormatter
                 }, {
                     field: 'title',
                     title: 'Titel',

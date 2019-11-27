@@ -269,6 +269,12 @@
                           </select>
                       </div>
                       <div class="form-group col-md-3">
+                          <label for="visitationnoteImportant">Wichtig</label>
+                          <input type="checkbox" class="form-control" id="visitationnoteImportant">
+                      </div>
+                  </div>
+                  <div class="row mb-3">
+                      <div class="form-group col-md-3">
                           <label for="visitationnoteDeadline">Fälligkeit</label>
                           <input type="text" id="visitationnoteDeadline" style="width: 100%; color:#6e707e">
                       </div>
@@ -276,6 +282,7 @@
                           <label for="visitationnoteDone">Erledigt</label>
                           <input type="checkbox" class="form-control" id="visitationnoteDone">
                       </div>
+
                   </div>
                   <div class="form-group mb-3">
                       <label for="visitationnoteDescription">Baufortschritt</label>
@@ -537,16 +544,22 @@
             checked = 1;
         }
 
+        var importantChecked = 0;
+        if ($("#visitationnoteImportant").is(':checked')) {
+            importantChecked = 1;
+        }
+
         $.ajax({
             type: "PATCH",
             url: "/visitationnote/update/" + id,
             data:
                 {
                     'title' : $("#visitationnoteTitle").val(),
-                    'date' : $("#visitationnoteDate").val() + " 00:00:00",
+                    'date' : $("#visitationnoteDate").val(),
                     'deadline' : $("#visitationnoteDeadline").val(),
                     'notes' : $("#visitationnoteDescription").val(),
                     'done' : checked,
+                    'important' : importantChecked,
                     'category' : $("#visitationnoteCategory").val()
                 }
             ,
@@ -720,19 +733,6 @@
           ].join('')
       }
 
-      function createdAtFormatter(value, row, index) {
-          var date = value.substring(0,value.length - 9);
-          return [
-              date
-          ]
-      }
-
-      function updatedAtFormatter(value, row, index) {
-          var date = value.substring(0,value.length - 3);
-          return [
-              date
-          ]
-      }
 
       function importantFormatter(value, row, index) {
 
@@ -849,6 +849,7 @@
               $("#visitationnoteDeadline").val(row.deadline);
               $("#visitationnoteDescription").val(row.notes);
               $("#visitationnoteDone").prop('checked', row.done);
+              $("#visitationnoteImportant").prop('checked', row.important);
               $("#visitationnoteCategory").val(row.category);
               $("#visitationnoteID").val(row.id)
               $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + row.id });
@@ -1080,15 +1081,15 @@
           ]
       }
 
-      function createdAtFormatter(value, row, index) {
-          var date = value.substring(0,value.length - 9);
+      function updatedAtFormatter(value, row, index) {
+          var date = value.substring(0,value.length - 3);
           return [
               date
           ]
       }
 
-      function updatedAtFormatter(value, row, index) {
-          var date = value.substring(0,value.length - 3);
+      function createdAtFormatter(value, row, index) {
+          var date = value.substring(0,value.length - 9);
           return [
               date
           ]

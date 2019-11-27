@@ -454,16 +454,35 @@
     }
 
     function createdAtFormatter(value, row, index) {
-        var date = value.substring(0,value.length - 9);
+
+      var timestamp = new Date(value);
+      var d = timestamp.getDate().toString();
+      var m = timestamp.getMonth().toString();
+      var y = timestamp.getFullYear().toString();
+
+      var output = d + "." + m + "." + y;
+
       return [
-        date
+        output
       ]
     }
 
+
+
     function updatedAtFormatter(value, row, index) {
-      var date = value.substring(0,value.length - 3);
+
+      var timestamp = new Date(value);
+      var d = timestamp.getDate().toString();
+      var m = timestamp.getMonth().toString();
+      var y = timestamp.getFullYear().toString();
+
+      var h = timestamp.getHours().toString();
+      var min = timestamp.getMinutes().toString();
+
+      var output = d + "." + m + "." + y + ", " + h + ":" + min;
+
       return [
-        date
+        output
       ]
     }
 
