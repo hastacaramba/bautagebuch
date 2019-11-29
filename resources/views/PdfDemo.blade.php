@@ -76,7 +76,7 @@
           @else
             <span style="color:#000">
           @endif
-          <b>({{ $visitationnote['number'] }})</b>
+          <b>({{ $visitationnote['number'] }})</b> {{ $visitationnote['category'] }}
           </span>
         </td>
         <td style="text-indent:-8px; border: 0.5px solid lightgrey">

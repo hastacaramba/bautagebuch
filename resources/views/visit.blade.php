@@ -415,11 +415,7 @@
                       </div>
                   </div>
                   <div class="row mb-3">
-                      <div class="form-group col-md-1">
-                          <label>Nr</label><br>
-                          <input id="newVisitationnoteNumber" type="text" style="width:100%; color:#6e707e" readonly>
-                      </div>
-                      <div class="form-group col-md-11">
+                      <div class="form-group col-md-12">
                           <label for="newVisitationnoteDescription">Beschreibung</label>
                           <textarea rows="5" type="text" class="form-control" id="newVisitationnoteDescription"></textarea>
                       </div>
