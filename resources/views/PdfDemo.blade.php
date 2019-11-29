@@ -46,7 +46,7 @@
 <p></p>
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Baufortschritt</p><br>
 <p style="font-size:0.6em">{{ $visit['description'] }}</p>
-<table cellpadding="2" style="font-size: 0.6em" class="table table-bordered table-striped">
+<table cellpadding="0" style="font-size: 0.6em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
       <td>
