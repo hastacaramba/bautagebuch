@@ -111,7 +111,6 @@ class VisitationnoteController extends Controller
         $visitationnote = Visitationnote::where('id', '=', $visitationnoteID)->first();
 
         if ($visitationnote != null) {
-            $visitationnote->title = $request->title;
             $visitationnote->created_at = $request->date;
             $visitationnote->deadline = $request->deadline;
             $visitationnote->notes = $request->notes;
@@ -131,10 +130,22 @@ class VisitationnoteController extends Controller
      */
     public function newVisitationnote(Request $request) {
 
+        //get the number for the new visitationnote
+        $visit = Visit::where('id', $request->visit_id)->first();
+        $projectID = $visit->project_id;
+        $allProjectVisits = Visit::where('project_id', $projectID)->get();
+
+        $visitationnoteCounter = 0;
+        foreach ($allProjectVisits as $projectVisit) {
+            $numberOfVisitationnotes = Visitationnote::where('visit_id', $projectVisit->id)->count();
+            $visitationnoteCounter += $numberOfVisitationnotes;
+        }
+        $nextNumber = $visitationnoteCounter + 1;
+
         $visitationnote = new Visitationnote;
 
         $visitationnote->visit_id = $request->visit_id;
-        $visitationnote->title = $request->title;
+        $visitationnote->number = $nextNumber;
         $visitationnote->created_at = $request->date;
         $visitationnote->deadline = $request->deadline;
         $visitationnote->notes = $request->notes;

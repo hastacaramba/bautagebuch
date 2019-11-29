@@ -22,8 +22,31 @@
 <p style="border-top: 1px solid #a42600"><span style="color:#a42600; font-size: 0.6em">{{ $project['name'] }} - {{ $project['street'] }} {{ $project['housenumber'] }}, {{ $project['postcode'] }} {{ $project['city'] }}</span><br><span style="color:grey; font-size: 1.4em">{{ $visit['title'] }}, {{ $visit['date'] }}</span>
 </p>
 <p style="font-size:0.6em"><b>Datum:</b> {{ $visit['date'] }}, {{ $visit['time'] }}&nbsp;&nbsp;&nbsp;&nbsp;<b>Wetter:</b> {{ $visit['weather'] }}</p>
-<p style="font-size:0.6em"><b>Baufortschritt:</b><br>{{ $visit['description'] }}</p>
-<table cellpadding="5" style="font-size: 0.6em" class="table table-bordered table-striped">
+<p></p>
+<p style="font-size: 1em; color: #a42600; line-height: 0.9em">Anwesende</p>
+<table cellpadding="2" style="font-size: 0.6em" class="table table-bordered table-striped">
+  <tr>
+    <th style="border: 0.5px solid lightgrey; font-weight: bold" >Name</th>
+    <th style="border: 0.5px solid lightgrey; font-weight: bold" >Firma (ggf.)</th>
+    <th style="border: 0.5px solid lightgrey; font-weight: bold" >Gewerk / Funktion</th>
+  </tr>
+  @foreach( $presentMembers as $presentMember )
+    <tr>
+      <td style="text-indent:-4px; border: 0.5px solid lightgrey" >
+        {{ $presentMember['surname'] }} {{ $presentMember['firstname'] }}
+      </td>
+      <td style="text-indent:0px; border: 0.5px solid lightgrey" >{{ $presentMember['company'] }}
+      </td>
+      <td style="text-indent:-4px;border: 0.5px solid lightgrey" >
+        {{ $presentMember['subarea'] }}
+      </td>
+    </tr>
+  @endforeach
+</table>
+<p></p>
+<p style="font-size: 1em; color: #a42600; line-height: 0.9em">Baufortschritt</p><br>
+<p style="font-size:0.6em">{{ $visit['description'] }}</p>
+<table cellpadding="2" style="font-size: 0.6em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
       <td style="border: 0.5px solid lightgrey">
@@ -42,56 +65,64 @@
 @endfor
 </table>
 <p></p>
-<p style="font-size: 1em; color: #a42600; line-height: 0.9em">Anwesende</p>
-  <table cellpadding="5" style="font-size: 0.6em" class="table table-bordered table-striped">
-    <tr>
-      <th style="border: 0.5px solid lightgrey; font-weight: bold" >Name</th>
-      <th style="border: 0.5px solid lightgrey; font-weight: bold" >Firma (ggf.)</th>
-      <th style="border: 0.5px solid lightgrey; font-weight: bold" >Gewerk / Funktion</th>
-    </tr>
-    @foreach( $presentMembers as $presentMember )
-    <tr>
-      <td style="border: 0.5px solid lightgrey" >
-        {{ $presentMember['surname'] }} {{ $presentMember['firstname'] }}
-      </td>
-      <td style="border: 0.5px solid lightgrey" >{{ $presentMember['company'] }}
-      </td>
-      <td style="border: 0.5px solid lightgrey" >
-        {{ $presentMember['subarea'] }}
-      </td>
-    </tr>
-    @endforeach
-  </table>
-<p></p>
+
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Begehungsvermerke</p>
   @foreach( $visitationnotes as $visitationnote )
-    <table cellpadding="5" style="font-size: 0.6em" class="table table-bordered table-striped">
+    <table cellpadding="2" style="font-size: 0.6em" class="table table-bordered table-striped">
       <tr>
-        <td style="border: 0.5px solid lightgrey; font-weight: bold; font-size: 1.2em">
-        @if($visitationnote['important'])
-            <span style="color: #a42600">!!!&nbsp;{{ $visitationnote['title'] }}</span>
-        @else
-            {{ $visitationnote['title'] }}
-        @endif
-        </td>
-        <td style="border: 0.5px solid lightgrey"><b>Kategorie:</b> {{ $visitationnote['category'] }}</td>
-      </tr>
-      <tr>
-        <td style="border: 0.5px solid lightgrey" colspan="2"><b>Beschreibung:</b><br>{{ $visitationnote['notes'] }}
-        </td >
-        <td style="border: 0.5px solid lightgrey"></td>
-      </tr>
-      <tr>
-        <td style="border: 0.5px solid lightgrey"><b>Fälligkeit: </b>{{ $visitationnote['deadline'] }}
-        </td>
-        <td style="border: 0.5px solid lightgrey"><b>Erledigt: </b>
-          @if ( $visitationnote['done'] == 1)
-            ja
+        <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+          @if ($visitationnote['important'])
+            <span style="color:#a42600">
           @else
-            nein
+            <span style="color:#000">
           @endif
+          <b>({{ $visitationnote['number'] }})</b>
+          </span>
+        </td>
+        <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+          @if ($visitationnote['important'])
+            <span style="color:#a42600">
+          @else
+            <span style="color:#000">
+          @endif
+          Erstellt am: {{ $visitationnote['createdAt'] }}
+          @if ($visitationnote['deadline'] != null) / Fälligkeit: {{ $visitationnote['deadline'] }}
+          @endif
+          </span>
         </td>
       </tr>
+      <tr>
+        <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+          @if ($visitationnote['important'])
+            <span style="color:#a42600">
+          @else
+            <span style="color:#000">
+          @endif
+            {{ $visitationnote['notes'] }}
+          </span>
+        </td>
+        <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+          @if ($visitationnote['important'])
+            <span style="color:#a42600">
+          @else
+            <span style="color:#000">
+          @endif
+            @if (sizeof($visitationnote['concernedMembers']) != 0)
+                Betrifft:<br>
+            @endif
+            @foreach ($visitationnote['concernedMembers'] as $concernedMember)
+              @if( $concernedMember['company'] != "")
+                  {{ $concernedMember['company'] }}
+              @endif
+              @if( $concernedMember['surname'] != "")
+                  ,{{ $concernedMember['firstname'] }} {{ $concernedMember['surname'] }} ({{ $concernedMember['subarea'] }})
+              @endif
+              <br>
+            @endforeach
+          </span>
+        </td>
+      </tr>
+
       @for ($i = 0; $i < (ceil($visitationnote['numOfRows'] / 2)); $i++)
         <tr>
           <td style="border: 0.5px solid lightgrey">
@@ -108,18 +139,7 @@
           @endif
         </tr>
       @endfor
-      @if (sizeof($visitationnote['concernedMembers']) != 0)
-        <tr>
-          <td style="border: 0.5px solid lightgrey" colspan="2"><b>Betrifft</b></td>
-          <td style="border: 0.5px solid lightgrey"></td>
-        </tr>
-      @endif
-      @foreach ($visitationnote['concernedMembers'] as $concernedMember)
-        <tr>
-          <td style="border: 0.5px solid lightgrey">{{ $concernedMember['subarea'] }}</td>
-          <td style="border: 0.5px solid lightgrey">@if( $concernedMember['company'] != "")<b>Firma: </b>@endif{{ $concernedMember['company'] }}<br>@if( $concernedMember['surname'] != "")<b>Name: </b>@endif{{ $concernedMember['firstname'] }} {{ $concernedMember['surname'] }}<br>@if( $concernedMember['email'] != "")<b>E-Mail: </b>@endif{{ $concernedMember['email'] }}<br>@if( $concernedMember['phone'] != "")<b>Telefon: </b>@endif{{ $concernedMember['phone'] }}</td>
-        </tr>
-      @endforeach
+
     </table>
     <p style="font-size: 0.1em"></p>
   @endforeach

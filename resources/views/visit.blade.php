@@ -65,7 +65,7 @@
               <div class="row">
                   <div class="col-md-12">
                       <label for="visitDescription">Baufortschritt</label>
-                      <textarea rows="10" type="text" class="form-control" id="visitDescription" placeholder="Bemerkungen zum Baufortschritt (Freitext)">{{$visit->description}}</textarea>
+                      <textarea rows="10" type="text" class="form-control" id="visitDescription">{{$visit->description}}</textarea>
                   </div>
               </div>
               <div style="text-align:right">
@@ -184,7 +184,7 @@
                                   data-pagination="true"
                                   data-page-list="[10, 25, 50, 100, ALL]"
                                   data-detail-formatter="detailFormatter"
-                                  data-detail-view="true"
+                                  data-detail-view="false"
                                   data-response-handler="responseHandler"
                                   data-show-export="false"
                                   data-show-pagination-switch="true"
@@ -246,20 +246,12 @@
                   </button>
               </div>
               <div class="modal-body">
-                  <div class="form-group" style="display:none">
-                      <label for="visitationnoteID">ID</label>
-                      <input type="text" class="form-control" id="visitationnoteID" hidden>
-                  </div>
-                  <div class="form-group mb-3">
-                      <label for="visitationnoteTitle">Bezeichnung</label>
-                      <input type="text" class="form-control" id="visitationnoteTitle" placeholder="Bezeichnung...">
-                  </div>
                   <div class="row mb-3">
                       <div class="form-group col-md-3">
                           <label for="visitationnoteDate">Datum</label><br>
                           <input type="text" id="visitationnoteDate" style="width: 100%; color:#6e707e">
                       </div>
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-2">
                           <label for="visitationnoteCategory">Kategorie</label>
                           <select id="visitationnoteCategory">
                               <option value="Mangel" selected="selected">Mangel</option>
@@ -268,25 +260,32 @@
                               <option value="zu erledigen">zu erledigen</option>
                           </select>
                       </div>
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-2">
                           <label for="visitationnoteImportant">Wichtig</label>
                           <input type="checkbox" class="form-control" id="visitationnoteImportant">
                       </div>
-                  </div>
-                  <div class="row mb-3">
                       <div class="form-group col-md-3">
                           <label for="visitationnoteDeadline">Fälligkeit</label>
                           <input type="text" id="visitationnoteDeadline" style="width: 100%; color:#6e707e">
                       </div>
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-2">
                           <label for="visitationnoteDone">Erledigt</label>
                           <input type="checkbox" class="form-control" id="visitationnoteDone">
                       </div>
-
                   </div>
-                  <div class="form-group mb-3">
-                      <label for="visitationnoteDescription">Baufortschritt</label>
-                      <textarea rows="10" type="text" class="form-control" id="visitationnoteDescription" placeholder="Bemerkungen zum Baufortschritt (Freitext)"></textarea>
+                  <div class="row mb-3">
+                      <div class="form-group col-md-1">
+                          <label>Nr</label><br>
+                          <input id="visitationnoteNumber" type="text" style="width:100%; color:#6e707e" readonly>
+                      </div>
+                      <div class="form-group col-md-11">
+                          <label for="visitationnoteDescription">Beschreibung</label>
+                          <textarea rows="5" type="text" class="form-control" id="visitationnoteDescription"></textarea>
+                      </div>
+                  </div>
+                  <div class="form-group" style="display:none">
+                      <label for="visitationnoteID">ID</label>
+                      <input type="text" class="form-control" id="visitationnoteID" hidden>
                   </div>
                   <div id="toolbarMedia">
                       <button id="btnNewMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
@@ -388,16 +387,12 @@
                   </button>
               </div>
               <div class="modal-body">
-                  <div class="form-group mb-3">
-                      <label for="newVisitationnoteTitle">Bezeichnung</label>
-                      <input type="text" class="form-control" id="newVisitationnoteTitle" placeholder="Bezeichnung...">
-                  </div>
                   <div class="row mb-3">
                       <div class="form-group col-md-3">
                           <label>Datum</label><br>
                           <input id="newVisitationnoteDate" type="text" style="width:100%; color:#6e707e" placeholder="Datum...">
                       </div>
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-2">
                           <label for="newVisitationnoteCategory">Kategorie</label>
                           <select id="newVisitationnoteCategory">
                               <option value="Mangel" selected="selected">Mangel</option>
@@ -406,18 +401,28 @@
                               <option value="zu erledigen">zu erledigen</option>
                           </select>
                       </div>
+                      <div class="form-group col-md-2">
+                          <label for="newVisitationnoteImportant">Wichtig</label>
+                          <input type="checkbox" class="form-control" id="newVisitationnoteImportant">
+                      </div>
                       <div class="form-group col-md-3">
                           <label>Fälligkeit</label><br>
                           <input id="newVisitationnoteDeadline" type="text" style="width:100%; color:#6e707e" placeholder="Fälligkeit...">
                       </div>
-                      <div class="form-group col-md-3">
+                      <div class="form-group col-md-2">
                           <label for="newVisitationnoteDone">Erledigt</label>
                           <input type="checkbox" class="form-control" id="newVisitationnoteDone">
                       </div>
                   </div>
-                  <div class="form-group">
-                      <label for="newVisitationnoteDescription">Baufortschritt</label>
-                      <textarea rows="10" type="text" class="form-control" id="newVisitationnoteDescription" placeholder="Bemerkungen zum Baufortschritt (Freitext)"></textarea>
+                  <div class="row mb-3">
+                      <div class="form-group col-md-1">
+                          <label>Nr</label><br>
+                          <input id="newVisitationnoteNumber" type="text" style="width:100%; color:#6e707e" readonly>
+                      </div>
+                      <div class="form-group col-md-11">
+                          <label for="newVisitationnoteDescription">Beschreibung</label>
+                          <textarea rows="5" type="text" class="form-control" id="newVisitationnoteDescription"></textarea>
+                      </div>
                   </div>
               </div>
               <div class="modal-footer">
@@ -597,23 +602,24 @@
     $("#btnNewVisitationnote").click(function () {
 
         $("#modalNewVisitationnnote").modal('toggle');
-        $("#visitationnoteDate").val("");
-        $("#visitationnoteTitle").val("");
-        $("#visitationnoteDeadline").val("");
-        $("#visitationnoteDescription").val("");
-        $("#visitationnoteDone").prop('checked', false);
-        $("#visitationnoteCategory").val("Mangel");
+        $("#newVisitationnoteDate").val("");
+        $("#newVisitationnoteTitle").val("");
+        $("#newVisitationnoteDeadline").val("");
+        $("#newVisitationnoteDescription").val("");
+        $("#newVisitationnoteDone").prop('checked', false);
+        $("#newVisitationnoteImportant").prop('checked', false);
+        $("#newVisitationnoteCategory").val("Mangel");
 
 
     });
 
     $("#btnSaveNewVisitationnote").click(function () {
       var done = 0;
-      if ($("#visitationnoteDone").is(':checked')) {
+      if ($("#newVisitationnoteDone").is(':checked')) {
           done = 1;
       }
         var important = 0;
-        if ($("#visitationnoteImportant").is(':checked')) {
+        if ($("#newVisitationnoteImportant").is(':checked')) {
             important = 1;
         }
 
@@ -623,7 +629,6 @@
           data:
               {
                   'visit_id' : '{{ $visit->id }}',
-                  'title' : $("#newVisitationnoteTitle").val(),
                   'date' : $("#newVisitationnoteDate").val() + " 00:00:00",
                   'deadline' : $("#newVisitationnoteDeadline").val(),
                   'notes' : $("#newVisitationnoteDescription").val(),
@@ -845,7 +850,7 @@
 
               $("#modalEditVisitationnnote").modal('toggle');
               $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
-              $("#visitationnoteTitle").val(row.title);
+              $("#visitationnoteNumber").val(row.number);
               $("#visitationnoteDeadline").val(row.deadline);
               $("#visitationnoteDescription").val(row.notes);
               $("#visitationnoteDone").prop('checked', row.done);
@@ -955,42 +960,55 @@
               locale: 'de-DE',
               columns: [
                   {
-                      field: 'title',
-                      title: 'Bezeichnung',
+                      field: 'number',
+                      title: 'Nr',
                       sortable: true,
-                      align: 'left'
+                      align: 'left',
+                      valign: 'top'
+                  },{
+                      field: 'notes',
+                      title: 'Beschreibung',
+                      sortable: false,
+                      align: 'left',
+                      valign: 'top'
+                  }, {
+                      field: 'created_at',
+                      title: 'erstellt',
+                      align: 'left',
+                      valign: 'top',
+                      sortable: true,
+                      formatter: createdAtFormatter
                   }, {
                       field: 'category',
                       title: 'Kategorie',
                       align: 'left',
+                      valign: 'top',
                       sortable: true
-                  }, {
-                      field: 'created_at',
-                      title: 'Erstellt',
-                      align: 'left',
-                      sortable: true,
-                      formatter: createdAtFormatter
                   }, {
                       field: 'deadline',
                       title: 'Fälligkeit',
                       sortable: true,
-                      align: 'left'
-                  }, {
-                      field: 'done',
-                      title: 'erledigt',
-                      sortable: true,
-                      align: 'center',
-                      formatter: doneFormatter
+                      align: 'left',
+                      valign: 'top'
                   }, {
                       field: 'important',
                       title: 'wichtig',
                       sortable: true,
                       align: 'center',
+                      valign: 'top',
                       formatter: importantFormatter
                   }, {
-                      field: 'operate',
-                      title: 'Aktionen',
+                      field: 'done',
+                      title: 'erledigt',
+                      sortable: true,
                       align: 'center',
+                      valign: 'top',
+                      formatter: doneFormatter
+                  }, {
+                      field: 'operate',
+                      title: '',
+                      align: 'center',
+                      valign: 'top',
                       events: window.operateEvents,
                       formatter: operateFormatterVisitationnotes
                   }

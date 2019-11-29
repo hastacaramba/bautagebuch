@@ -40,7 +40,17 @@ class PdfController extends Controller {
 
         $numOfVisitMedia = sizeof($visitMedia);
 
-        $visitationnotes = Visitationnote::where('visit_id', '=', $visitID)->get();
+        //all visits of the project
+        $projectVisits = Visit::where('project_id', $projectID)->get();
+
+        $visitationnotes = [];
+
+        foreach($projectVisits as $projectVisit) {
+            $visitVisitationnotes = Visitationnote::where('visit_id', $projectVisit->id)->get();
+            foreach($visitVisitationnotes as $visitationnote) {
+                $visitationnotes[] = $visitationnote;
+            }
+        }
 
         $visitationnotesWithMedia = [];
 
@@ -89,12 +99,17 @@ class PdfController extends Controller {
 
             $numOfRows = sizeof($media);
 
+            $createdAt = date('d.m.Y', strtotime($visitationnote->created_at));
+
+            $deadline = date('d.m.Y', strtotime($visitationnote->deadline));
+
             $item = [
                 'id' => $visitationnote->id,
-                'title' => $visitationnote->title,
+                'number' => $visitationnote->number,
+                'createdAt' => $createdAt,
                 'category' => $visitationnote->category,
                 'notes' => $visitationnote->notes,
-                'deadline' => $visitationnote->deadline,
+                'deadline' => $deadline,
                 'done' => $visitationnote->done,
                 'important' => $visitationnote->important,
                 'media' => $media,

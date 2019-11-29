@@ -68,6 +68,9 @@
 
       </div>
       <!-- End of Main Content -->
+      @component('partials.footer')
+        <strong>Whoops!</strong> Something went wrong!
+      @endcomponent
 
     </div>
     <!-- End of Content Wrapper -->
