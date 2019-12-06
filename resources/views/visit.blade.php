@@ -30,14 +30,11 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <div>
                     <a href="/bauprojekte">Bauprojekte</a> / <a href="/projects/{{ $project->id }}">{{ $project->number }} {{ $project->name }}</a>
                 </div>
                 <h2 class="m-0 font-weight-bold text-primary">Begehung: {{ $visit->title }} {{ $visit->date }}</h2>
-            </div>
-            <div class="col-md-2" style="text-align-right">
-                <button class="btn btn-danger btn-circle mt-4 ml-4" title="PDF Bericht generieren" id="pdfTest"><i class="fas fa-file-pdf"></i></button>
             </div>
           </div>
         </div>
@@ -163,6 +160,7 @@
               <div id="toolbar">
                   <button id="btnNewVisitationnote" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Begehungsvermerk</button>
               </div>
+
               <!-- Begehungsvermerke -->
               <div class="card shadow mb-4">
                   <div class="card-header py-3">
@@ -180,6 +178,42 @@
                                   data-url="/visitationnotes/{{$visit->id}}"
                                   data-toolbar="#toolbar"
                                   data-search="true"
+                                  data-show-columns="true"
+                                  data-pagination="true"
+                                  data-page-list="[10, 25, 50, 100, ALL]"
+                                  data-detail-formatter="detailFormatter"
+                                  data-detail-view="false"
+                                  data-response-handler="responseHandler"
+                                  data-show-export="false"
+                                  data-show-pagination-switch="true"
+                                  data-row-style="rowStyle">
+                          </table>
+                      </div>
+                  </div>
+              </div>
+
+
+              <div id="toolbarReports">
+                  <button class="btn btn-danger" title="PDF Bericht generieren" id="pdfTest"><i class="fas fa-file-pdf"></i> Neuen Begehungsbericht erzeugen</button>
+              </div>
+
+              <!-- Berichte -->
+              <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                      <h4><i class="fas fa-file-pdf"></i> Berichte</h4>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <!-- Table: Reports -->
+                          <table
+                                  id="reportsTable"
+                                  data-id-field="id"
+                                  data-side-pagination="client"
+                                  data-toggle="table"
+                                  data-sortable="true"
+                                  data-url="/reports/{{$visit->id}}"
+                                  data-search="true"
+                                  data-toolbar="#toolbarReports"
                                   data-show-columns="true"
                                   data-pagination="true"
                                   data-page-list="[10, 25, 50, 100, ALL]"
@@ -508,7 +542,21 @@
                   }
               ),
               success: function (data) {
-                  location.href = '/PdfDemo/' + idString;
+                  //location.href = '/PdfDemo/' + idString;
+                  //$("#reportsTable").bootstrapTable('refresh');
+                  $.ajax({
+                      type: "get",
+                      url: '/PdfDemo/' + idString,
+                      data: '',
+                      success: function (data) {
+                          $("#reportsTable").bootstrapTable('refresh');
+                          $('html,body').animate({
+                                  scrollTop: $("#reportsTable").offset().top},
+                              'slow');
+                      }
+                  });
+
+
               }
           });
           //location.href = '/PdfDemo';
@@ -530,7 +578,7 @@
                 }
             ,
             success: function (data) {
-                alert("Die Änderungen an der Begehung wurden gespeichert.");
+                //alert("Die Änderungen an der Begehung wurden gespeichert.");
                 location.reload();
             }
         });
@@ -565,7 +613,7 @@
                 }
             ,
             success: function (data) {
-                alert("Die Änderungen am Begehungsvermerk wurden gespeichert.");
+                //alert("Die Änderungen am Begehungsvermerk wurden gespeichert.");
                 $table.bootstrapTable('refresh');
                 $("#modalEditVisitationnnote").modal('toggle');
             }
@@ -634,7 +682,7 @@
               }
           ,
           success: function (data) {
-              alert("Der Begehungsvermerk wurde erfolgreich angelegt.");
+              //alert("Der Begehungsvermerk wurde erfolgreich angelegt.");
               $table.bootstrapTable('refresh');
               $("#modalNewVisitationnnote").modal('toggle');
 
@@ -766,7 +814,7 @@
                   }
               ,
               success: function (data) {
-                  alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
                   $table.bootstrapTable('refresh');
               }
           });
@@ -805,7 +853,7 @@
                   }
               ,
               success: function (data) {
-                  alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
                   $table.bootstrapTable('refresh');
               }
           });
@@ -832,7 +880,7 @@
                   }
               ,
               success: function (data) {
-                  alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
                   $tableConcernedMembers.bootstrapTable('refresh');
               }
           });
@@ -944,7 +992,34 @@
                       }
                   }
               });
-          }
+          },
+          'click .deleteReport': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Bericht wirklich löschen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/report/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $reportsTable.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
       }
 
       /**
@@ -1109,6 +1184,29 @@
           ]
       }
 
+      function createdAtFormatterReports(value, row, index) {
+          var date = new Date(value);
+          var d = date.getDate();
+          var m = date.getMonth();
+          var h = date.getHours();
+          var min = date.getMinutes();
+          if(date.getMonth() < 10) {
+              m = "0" + m;
+          }
+          if(date.getDate() < 10) {
+              d = "0" + d;
+          }
+
+          var y = date.getFullYear().toString();
+
+
+          var output = d + "." + m + "." + y + ", " + h + ":" + min;
+
+          return [
+              output
+          ]
+      }
+
       function emailFormatter(value, row, index) {
           var email = '<a href="mailto:' + value + '">' + value + '</a>';
           return [
@@ -1126,6 +1224,19 @@
 
           return [
               '<input class=\"presenceCheck\" type=\"checkbox\" name=\"presence\" value=\"0\" onclick=\"handleClick(this,\'' + row.id + '\')\">'
+          ]
+      }
+
+      function subscribeFormatter(value, row, index) {
+
+          if (value) {
+              return [
+                  '<input class=\"presenceCheck\" type=\"checkbox\" name=\"presence\" value=\"1\" checked onclick=\"handleSubscribeClick(this,\'' + row.id + '\')\">'
+              ]
+          }
+
+          return [
+              '<input class=\"presenceCheck\" type=\"checkbox\" name=\"presence\" value=\"0\" onclick=\"handleSubscribeClick(this,\'' + row.id + '\')\">'
           ]
       }
 
@@ -1147,7 +1258,34 @@
                   }
               ,
               success: function (data) {
-                  alert("Die Änderungen bei der Anwesenheit wurden übernommen.");
+                  //alert("Die Änderungen bei der Anwesenheit wurden übernommen.");
+                  $tableMembers.bootstrapTable('refresh');
+
+              }
+          });
+
+
+      }
+
+      function handleSubscribeClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
+          //update the member's presence for this visit
+          $.ajax({
+              type: "PATCH",
+              url: "/visit/{{ $visit->id }}/subscribe",
+              data:
+                  {
+                      'memberID' : id,
+                      'subscribe' : checked
+                  }
+              ,
+              success: function (data) {
+                  //alert("Die Änderungen am Verteiler wurden übernommen.");
                   $tableMembers.bootstrapTable('refresh');
 
               }
@@ -1195,6 +1333,11 @@
                       title: 'Anwesend',
                       align: 'center',
                       formatter: presenceFormatter
+                  }, {
+                      field: 'subscribe',
+                      title: 'Verteiler',
+                      align: 'center',
+                      formatter: subscribeFormatter
                   }
 
               ]
@@ -1448,6 +1591,74 @@
       }
 
 
+      // - REPORTS BOOTSTRAP-TABLE - //
+
+      var $reportsTable = $('#reportsTable')
+
+
+      function operateFormatterReports(value, row, index) {
+          var url = "{{url('/storage/reports/')}}/" + row.filename;
+          return [
+              '<a class="showReport" href="' + url + '" title="Anzeigen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button>',
+              '</a>  ',
+              '<a class="downloadReport" href="' + url + '" title="Download" download>',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-download"></i></button>',
+              '</a>  ',
+              '<a class="deleteReport" href="javascript:void(0)" title="Löschen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+              '</a> '
+          ].join('')
+      }
+
+      /**
+       * Initiiert die Bootstrap-Table.
+       */
+      function initReportsTable() {
+          $reportsTable.bootstrapTable('destroy').bootstrapTable({
+              locale: 'de-DE',
+              columns: [
+                  {
+                      field: 'filename',
+                      title: 'Dateiname',
+                      sortable: false,
+                      align: 'left'
+                  }, {
+                      field: 'created_at',
+                      title: 'erstellt am',
+                      align: 'left',
+                      sortable: true,
+                      formatter: createdAtFormatterReports
+
+                  },{
+                      field: 'operate',
+                      title: 'Aktion',
+                      sortable: false,
+                      align: 'left',
+                      events: window.operateEvents,
+                      formatter: operateFormatterReports
+                  }
+              ]
+          })
+          $reportsTable.on('check.bs.table uncheck.bs.table ' +
+              'check-all.bs.table uncheck-all.bs.table',
+              function () {
+                  //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                  // save your data, here just save the current page
+                  selections = getIdSelections()
+                  // push or splice the selections if you want to save all data selections
+              })
+          $reportsTable.on('all.bs.table', function (e, name, args) {
+              //console.log(name, args)
+          })
+
+      }
+
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -1512,6 +1723,7 @@
           initTableMedia();
           initTableVisitMedia();
           initTableConcernedMembers();
+          initReportsTable();
 
           $("#showDate").click(function () {
               var status = $("#date").val();

@@ -63,6 +63,12 @@ Route::get('/contacts/select', 'ContactController@getContactsSelect')->name('con
 
 Route::patch('/contacts/{contactID}/update', 'ContactController@updateContact')->middleware('auth');
 
+Route::get('/reports', 'ReportController@reportsJson')->name('reportsJson')->middleware('auth');
+
+Route::get('/reports/{visitID}', 'ReportController@visitReportsJson')->name('visitReportsJson')->middleware('auth');
+
+Route::delete('/report/{reportID}', 'ReportController@deleteReport')->name('deleteReport')->middleware('auth');
+
 Route::post('/subarea', 'SubareaController@newSubarea')->name('newSubarea')->middleware('auth');
 
 Route::get('/subareas', 'SubareaController@subareasJson')->name('subareasJson')->middleware('auth');
@@ -100,6 +106,8 @@ Route::get('/visit/{visitID}/presence', 'VisitController@getPresentMembers')->mi
 Route::get('/visitationnote/concerned/{visitationnoteID}', 'VisitationnoteController@getConcernedMembers')->middleware('auth');
 
 Route::patch('/visit/{visitID}/presence', 'VisitController@setPresentMembers')->middleware('auth');
+
+Route::patch('/visit/{visitID}/subscribe', 'VisitController@setSubscriptions')->middleware('auth');
 
 Route::get('/visit/{visitID}/media', 'VisitController@getVisitMedia')->middleware('auth');
 

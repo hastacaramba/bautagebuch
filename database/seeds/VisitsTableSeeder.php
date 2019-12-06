@@ -51,28 +51,53 @@ class VisitsTableSeeder extends Seeder
             'created_at' => now(),
             'updated_at' => now()
         ]);
-        // MEMBERS
-        DB::table('member_visit')->insert([
+        // PRESENT MEMBERS
+        DB::table('presences')->insert([
             'member_id' => 1,
-            'visit_id' => 1
+            'visit_id' => 1,
         ]);
-        DB::table('member_visit')->insert([
+        DB::table('presences')->insert([
             'member_id' => 2,
             'visit_id' => 1
         ]);
-        DB::table('member_visit')->insert([
+        DB::table('presences')->insert([
             'member_id' => 1,
             'visit_id' => 2
         ]);
-        DB::table('member_visit')->insert([
+        DB::table('presences')->insert([
             'member_id' => 2,
             'visit_id' => 2
         ]);
-        DB::table('member_visit')->insert([
+        DB::table('presences')->insert([
             'member_id' => 2,
             'visit_id' => 3
         ]);
-        DB::table('member_visit')->insert([
+        DB::table('presences')->insert([
+            'member_id' => 8,
+            'visit_id' => 3
+        ]);
+        // SUBSCRIBED MEMBERS
+        DB::table('subscriptions')->insert([
+            'member_id' => 1,
+            'visit_id' => 1,
+        ]);
+        DB::table('subscriptions')->insert([
+            'member_id' => 2,
+            'visit_id' => 1
+        ]);
+        DB::table('subscriptions')->insert([
+            'member_id' => 1,
+            'visit_id' => 2
+        ]);
+        DB::table('subscriptions')->insert([
+            'member_id' => 2,
+            'visit_id' => 2
+        ]);
+        DB::table('subscriptions')->insert([
+            'member_id' => 2,
+            'visit_id' => 3
+        ]);
+        DB::table('subscriptions')->insert([
             'member_id' => 8,
             'visit_id' => 3
         ]);

@@ -34,10 +34,17 @@ class Visit extends Model {
     }
 
     /**
-     * Get the members of the visit
+     * Get the present members of the visit.
      */
     public function members() {
-        return $this->belongsToMany('App\Member',  'member_visit');
+        return $this->belongsToMany('App\Member',  'presences');
+    }
+
+    /**
+     * Get the subscribed members of the visit.
+     */
+    public function subscribedMembers() {
+        return $this->belongsToMany('App\Member',  'subscriptions');
     }
 
     /**
@@ -46,4 +53,12 @@ class Visit extends Model {
     public function media() {
         return $this->hasMany('App\Media');
     }
+
+    /**
+     * Get the reports of the visit.
+     */
+    public function reports() {
+        return $this->hasMany('App\Report');
+    }
+
 }

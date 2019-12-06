@@ -149,13 +149,29 @@ class VisitController extends Controller
                 if ($membersVisits[$i]['id'] == $visitID) {
                     $presentMembers[] = $member;
                 }
+
             }
         }
+
+        $subscribedMembers = [];
+
+        //run through the members and decide if he has a subscription for the visit or not
+        for ($n = 0; $n < sizeof($members); $n++) {
+            $member = $members[$n];
+            $membersVisits = $member->subscribedVisits;
+            for ($i = 0; $i < sizeof($membersVisits); $i++) {
+                if ($membersVisits[$i]['id'] == $visitID) {
+                    $subscribedMembers[] = $member;
+                }
+
+            }
+        }
+
 
         $result = [];
 
         for ($n = 0; $n < sizeof($members); $n++) {
-            if (in_array($members[$n],$presentMembers)) {
+            if (in_array($members[$n],$presentMembers) && in_array($members[$n],$subscribedMembers)) {
                 $result[] = [
                     "id" => $members[$n]->id,
                     "firstname" => $members[$n]->contact['firstname'],
@@ -171,9 +187,11 @@ class VisitController extends Controller
                     "fax" => $members[$n]->contact['fax'],
                     "info" => $members[$n]->contact['info'],
                     "subarea" => $members[$n]->subarea['title'],
-                    "present" => 1
+                    "present" => 1,
+                    "subscribe" => 1
                 ];
-            } else {
+            }
+            if (in_array($members[$n],$presentMembers) && !(in_array($members[$n],$subscribedMembers))) {
                 $result[] = [
                     "id" => $members[$n]->id,
                     "firstname" => $members[$n]->contact['firstname'],
@@ -189,7 +207,48 @@ class VisitController extends Controller
                     "fax" => $members[$n]->contact['fax'],
                     "info" => $members[$n]->contact['info'],
                     "subarea" => $members[$n]->subarea['title'],
-                    "present" => 0
+                    "present" => 1,
+                    "subscribe" => 0
+                ];
+            }
+            if (!(in_array($members[$n],$presentMembers)) && !(in_array($members[$n],$subscribedMembers))) {
+                $result[] = [
+                    "id" => $members[$n]->id,
+                    "firstname" => $members[$n]->contact['firstname'],
+                    "surname" => $members[$n]->contact['surname'],
+                    "company" => $members[$n]->contact['company'],
+                    "street" => $members[$n]->contact['street'],
+                    "housenumber" => $members[$n]->contact['housenumber'],
+                    "postcode" => $members[$n]->contact['postcode'],
+                    "city" => $members[$n]->contact['city'],
+                    "email" => $members[$n]->contact['email'],
+                    "phone" => $members[$n]->contact['phone'],
+                    "mobile" => $members[$n]->contact['mobile'],
+                    "fax" => $members[$n]->contact['fax'],
+                    "info" => $members[$n]->contact['info'],
+                    "subarea" => $members[$n]->subarea['title'],
+                    "present" => 0,
+                    "subscribe" => 0
+                ];
+            }
+            if (!(in_array($members[$n],$presentMembers)) && in_array($members[$n],$subscribedMembers)) {
+                $result[] = [
+                    "id" => $members[$n]->id,
+                    "firstname" => $members[$n]->contact['firstname'],
+                    "surname" => $members[$n]->contact['surname'],
+                    "company" => $members[$n]->contact['company'],
+                    "street" => $members[$n]->contact['street'],
+                    "housenumber" => $members[$n]->contact['housenumber'],
+                    "postcode" => $members[$n]->contact['postcode'],
+                    "city" => $members[$n]->contact['city'],
+                    "email" => $members[$n]->contact['email'],
+                    "phone" => $members[$n]->contact['phone'],
+                    "mobile" => $members[$n]->contact['mobile'],
+                    "fax" => $members[$n]->contact['fax'],
+                    "info" => $members[$n]->contact['info'],
+                    "subarea" => $members[$n]->subarea['title'],
+                    "present" => 0,
+                    "subscribe" => 1
                 ];
             }
         }
@@ -211,30 +270,55 @@ class VisitController extends Controller
 
         $presence = $request->presence;
 
-        //get visit
-        //$visit = Visit::where('id', '=', $visitID)->first();
-
-        //get the member
-        //$member = Member::where('id', '=', $memberID)->first();
-
-        $presenceCheck = DB::table('member_visit')->where([
+        $presenceCheck = DB::table('presences')->where([
             ['member_id', '=', $memberID],
             ['visit_id', '=', $visitID],
         ])->first();
 
         if ($presence && $presenceCheck == null) {
-            DB::table('member_visit')->insert([
+            DB::table('presences')->insert([
                 ['member_id' => $memberID, 'visit_id' => $visitID]
             ]);
         }
 
         if (!$presence && $presenceCheck != null) {
-            DB::table('member_visit')->where([
+            DB::table('presences')->where([
                 ['member_id', '=', $memberID],
                 ['visit_id', '=', $visitID],
             ])->delete();
         }
 
+    }
+
+    /**
+     * Sets the subscriptions for a member for a visit.
+     *
+     * @param Request $request
+     * @param $visitID
+     */
+    public function setSubscriptions(Request $request, $visitID) {
+
+        $memberID = $request->memberID;
+
+        $subscription = $request->subscribe;
+
+        $subscriptionCheck = DB::table('subscriptions')->where([
+            ['member_id', '=', $memberID],
+            ['visit_id', '=', $visitID],
+        ])->first();
+
+        if ($subscription && $subscriptionCheck == null) {
+            DB::table('subscriptions')->insert([
+                ['member_id' => $memberID, 'visit_id' => $visitID]
+            ]);
+        }
+
+        if (!$subscription && $subscriptionCheck != null) {
+            DB::table('subscriptions')->where([
+                ['member_id', '=', $memberID],
+                ['visit_id', '=', $visitID],
+            ])->delete();
+        }
     }
 
 

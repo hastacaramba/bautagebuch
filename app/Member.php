@@ -39,10 +39,17 @@ class Member extends Model {
     }
 
     /**
-     * Get the visits of the member.
+     * Get the visits where the the member was present.
      */
     public function visits() {
-        return $this->belongsToMany('App\Visit', 'member_visit');
+        return $this->belongsToMany('App\Visit', 'presences');
+    }
+
+    /**
+     * Get the visits with member subscriptions.
+     */
+    public function subscribedVisits() {
+        return $this->belongsToMany('App\Visit', 'subscriptions');
     }
 
     /**

@@ -6,6 +6,7 @@ use App\ExportData;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PDF;
 use App\Project;
 use App\Visit;
@@ -14,6 +15,7 @@ use App\Visitationnote;
 use App\Member;
 use App\Contact;
 use App\Subarea;
+use App\Report;
 
 class PdfController extends Controller {
 
@@ -205,8 +207,19 @@ class PdfController extends Controller {
         PDF::SetTitle("Begehung: " . $visit['title']);
         PDF::AddPage();
         PDF::writeHTML($html_content, true, false, true, false, '');
-        // userlist is the name of the PDF downloading
-        PDF::Output('begehungsbericht_' . '.pdf');
+
+        $filename = $project['number'] . '_' . $visit['date'] . '_' . uniqid() . '.pdf';
+
+        // first save the report
+        PDF::Output(storage_path('app/public/reports/'.$filename), 'F');
+
+        //write the report in DB
+        DB::table('reports')->insert([
+            ['filename' => $filename, 'visit_id' => $visit['id'], 'created_at' => now()]
+        ]);
+
+        //open the report
+        //PDF::Output($filename);
 
         //ExportData::where('idString', '=', $idString)->delete();
 
