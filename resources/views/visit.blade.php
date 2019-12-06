@@ -1597,7 +1597,7 @@
 
 
       function operateFormatterReports(value, row, index) {
-          var url = "{{url('/storage/reports/')}}/" + row.filename;
+          var url = "{{url('/storage/app/public/reports/')}}/" + row.filename;
           return [
               '<a class="showReport" href="' + url + '" title="Anzeigen">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button>',
