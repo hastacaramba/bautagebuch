@@ -12,7 +12,8 @@ class Report extends Model
 
     protected $fillable = [
         'visit_id',
-        'filename'
+        'filename',
+        'log',
     ];
 
     public function visit() {

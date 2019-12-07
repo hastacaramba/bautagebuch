@@ -30,11 +30,14 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div>
                     <a href="/bauprojekte">Bauprojekte</a> / <a href="/projects/{{ $project->id }}">{{ $project->number }} {{ $project->name }}</a>
                 </div>
                 <h2 class="m-0 font-weight-bold text-primary">Begehung: {{ $visit->title }} {{ $visit->date }}</h2>
+            </div>
+            <div class="col-md-2" style="text-align-right">
+                <button class="btn btn-danger btn-circle mt-4 ml-4" title="PDF Bericht generieren" id="pdfTest2"><i class="fas fa-file-pdf"></i></button>
             </div>
           </div>
         </div>
@@ -194,7 +197,7 @@
 
 
               <div id="toolbarReports">
-                  <button class="btn btn-danger" title="PDF Bericht generieren" id="pdfTest"><i class="fas fa-file-pdf"></i> Neuen Begehungsbericht erzeugen</button>
+                  <button class="btn btn-danger btn-circle" title="PDF Bericht generieren" id="pdfTest"><i class="fas fa-file-pdf"></i></button> Neuen Begehungsbericht generieren
               </div>
 
               <!-- Berichte -->
@@ -217,8 +220,8 @@
                                   data-show-columns="true"
                                   data-pagination="true"
                                   data-page-list="[10, 25, 50, 100, ALL]"
-                                  data-detail-formatter="detailFormatter"
-                                  data-detail-view="false"
+                                  data-detail-formatter="detailFormatterReports"
+                                  data-detail-view="true"
                                   data-response-handler="responseHandler"
                                   data-show-export="false"
                                   data-show-pagination-switch="true"
@@ -526,6 +529,10 @@
 
   <script>
 
+      $("#pdfTest2").click(function () {
+          $("#pdfTest").click();
+      });
+
 
       $("#pdfTest").click(function () {
 
@@ -759,6 +766,25 @@
           var html = []
           $.each(row, function (key, value) {
               html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+          })
+          return html.join('')
+      }
+
+
+      /**
+       * Bootstrap-table detailFormatterReports
+       *
+       * @param index
+       * @param row
+       * @returns {string}
+       */
+      function detailFormatterReports(index, row) {
+          var html = []
+          $.each(row, function (key, value) {
+              if (key === 'log') {
+                html.push('<p style="font-size:0.9em"><b>Verlauf:</b><br>' + value + '</p>')
+              }
+
           })
           return html.join('')
       }
@@ -1020,6 +1046,33 @@
                   }
               });
           },
+          'click .sendReport': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Bericht jetzt per E-Mail an alle Projektteilnehmer im aktuellen Verteiler senden?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "GET",
+                              url: "/report/" + row.id + "/send",
+                              data: "",
+                              success: function (data) {
+                                  $reportsTable.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
       }
 
       /**
@@ -1195,6 +1248,12 @@
           }
           if(date.getDate() < 10) {
               d = "0" + d;
+          }
+          if(date.getHours() < 10) {
+              h = "0" + h;
+          }
+          if(date.getMinutes() < 10) {
+              min = "0" + min;
           }
 
           var y = date.getFullYear().toString();
@@ -1388,6 +1447,7 @@
               '<a href="/images/' + value + '"><img class="img-fluid visitationnote-img" src="/images/' + value + '" /></a>'
           ]
       }
+
 
       /**
        * Initiiert die Bootstrap-Table.
@@ -1602,6 +1662,9 @@
               '<a class="showReport" href="' + url + '" title="Anzeigen">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button>',
               '</a>  ',
+              '<a class="sendReport" title="Bericht an aktuellen Verteiler senden">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-envelope"></i></button>',
+              '</a>  ',
               '<a class="downloadReport" href="' + url + '" title="Download" download>',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-download"></i></button>',
               '</a>  ',
@@ -1610,6 +1673,13 @@
               '</a> '
           ].join('')
       }
+
+      function filenameFormatterReports(value, row, index) {
+          var url = "{{url('/storage/app/public/reports/')}}/" + value;
+
+          return '<a href="' + url + '"><i class=\"far fa-file-pdf\"></i> ' + value + '</a>';
+      }
+
 
       /**
        * Initiiert die Bootstrap-Table.
@@ -1622,7 +1692,8 @@
                       field: 'filename',
                       title: 'Dateiname',
                       sortable: false,
-                      align: 'left'
+                      align: 'left',
+                      formatter: filenameFormatterReports
                   }, {
                       field: 'created_at',
                       title: 'erstellt am',
