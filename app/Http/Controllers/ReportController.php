@@ -2,15 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Media;
 use App\Member;
-use App\Visitationnote;
-use http\Client\Response;
-use Illuminate\Http\Request;
-use App\Project;
 use App\Report;
-use App\Projectnote;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use DateTime;
+
 
 class ReportController extends Controller {
 
@@ -57,6 +53,7 @@ class ReportController extends Controller {
                 'id' => $report->id,
                 'filename' => $report->filename,
                 'created_at' => $report->created_at,
+                'log' => $report->log,
                 'visit_id' => $report->visit['id'],
                 'visit_date' => $report->visit['date'],
 
@@ -78,8 +75,100 @@ class ReportController extends Controller {
         $report = Report::where('id', $reportID)->first();
 
         if ($report != null) {
+
+            $filename = $report->filename;
+
+            if (file_exists(storage_path('app/public/reports/'.$filename))) {
+                unlink(storage_path('app/public/reports/' . $filename));
+            }
+
             $report->delete();
         }
+    }
+
+
+    /**
+     * Sends a report to the subscripted members of a visit.
+     *
+     * @param $reportID
+     */
+    public function sendReport($reportID) {
+
+        $report = Report::where('id', $reportID)->first();
+
+        $visit = $report->visit;
+
+        $visitDate = $visit->date;
+
+        $project = $visit->project;
+
+        $projectName = $project->name;
+
+        //who has a subscription for visit mail at the moment?
+        //get all members of the project
+        $members = Member::where('project_id', '=', $report->visit->project_id)->get();
+
+        $subscribedMembers = [];
+        //run through the members and decide if he has a subscription for the visit or not
+        for ($n = 0; $n < sizeof($members); $n++) {
+            $member = $members[$n];
+            $membersVisits = $member->subscribedVisits;
+            for ($i = 0; $i < sizeof($membersVisits); $i++) {
+                if ($membersVisits[$i]['id'] == $report->visit->id) {
+                    $subscribedMembers[] = $member;
+                }
+
+            }
+        }
+
+        //run through the subscribed members and write the mail addresses into the array
+        $emptyMailFlag = 0;
+        $mailAddresses = [];
+        foreach($subscribedMembers as $member) {
+            if ($member->contact->email != null) {
+                $mailAddresses[] = $member->contact->email;
+            } else {
+                $emptyMailFlag = 1;
+            }
+        }
+
+        $log = $report->log;
+
+        $log = $log . '<i class="far fa-envelope"></i> ' . now() . ', ';
+
+        $allMailAddresses = "";
+
+        foreach($mailAddresses as $mailAddress) {
+
+            $log .= $mailAddress . ", ";
+
+            //send mail with attached report
+            $to_email = $mailAddress;
+
+            $date = new DateTime($visitDate);
+
+            $data = array(
+                'projectName' => $projectName,
+                'visitDate' => $date->format('d.m.Y')
+            );
+            Mail::send('emails.mail', $data, function($message) use ($to_email, $report, $visitDate, $projectName) {
+                $message->to($to_email)
+                    ->subject($projectName . ', Begehungsbericht ' . $visitDate)
+                    ->from('arch.maier2017@gmail.com','Begehungsbericht');
+                $message->attach('storage/reports/' . $report->filename, [
+                    'mime' => 'application/pdf'
+                ]);
+            });
+
+        }
+
+        $log = substr($log, 0, -2);
+
+        $log .= '<br>';
+
+        $report->log = $log;
+        $report->save();
+
     }
 
 }

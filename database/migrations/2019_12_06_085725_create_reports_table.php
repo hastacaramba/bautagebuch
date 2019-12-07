@@ -17,6 +17,7 @@ class CreateReportsTable extends Migration
             $table->bigIncrements('id');
             $table->string('filename');
             $table->bigInteger('visit_id');
+            $table->longText('log')->nullable();
             $table->timestamps();
         });
     }
