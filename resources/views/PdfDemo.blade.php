@@ -24,7 +24,7 @@
 <p style="font-size:0.6em"><b>Datum:</b> {{ $visit['date'] }}, {{ substr($visit['time'],0, 5) }}&nbsp;&nbsp;&nbsp;&nbsp;<b>Wetter:</b> {{ $visit['weather'] }}</p>
 <p></p>
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Anwesende</p>
-<table cellpadding="2" style="font-size: 0.6em" class="table table-bordered table-striped">
+<table cellpadding="2" style="font-size: 0.7em" class="table table-bordered table-striped">
   <tr>
     <th style="border: 0.5px solid lightgrey; font-weight: bold" >Name</th>
     <th style="border: 0.5px solid lightgrey; font-weight: bold" >Firma (ggf.)</th>
@@ -46,7 +46,7 @@
 <p></p>
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Baufortschritt</p><br>
 <p style="font-size:0.7em">{{ $visit['description'] }}</p>
-<table cellpadding="0" style="font-size: 0.6em" class="table table-bordered table-striped">
+<table cellpadding="0" style="font-size: 0.7em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
       <td>
@@ -68,7 +68,7 @@
 
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Begehungsvermerke</p>
   @foreach( $visitationnotes as $visitationnote )
-    <table cellpadding="2" style="font-size: 0.6em" class="table table-bordered table-striped">
+    <table cellpadding="2" style="font-size: 0.8em" class="table table-bordered table-striped">
       <tr>
         <td style="text-indent:-8px; border: 0.5px solid lightgrey">
           @if ($visitationnote['important'])
@@ -141,7 +141,7 @@
       @endfor
 
     </table>
-    <p style="font-size: 0.1em"></p>
+    <p style="font-size: 0.1em; line-height: 0.1em"></p>
   @endforeach
 </body>
 </html>
