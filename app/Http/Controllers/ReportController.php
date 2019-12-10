@@ -155,7 +155,7 @@ class ReportController extends Controller {
                 $message->to($to_email)
                     ->subject($projectName . ', Begehungsbericht ' . $visitDate)
                     ->from('bauleitung@arch-maier.de','maier + maier architekten gmbh');
-                $message->attach('storage/reports/' . $report->filename, [
+                $message->attach('storage/app/public/reports/' . $report->filename, [
                     'mime' => 'application/pdf'
                 ]);
             });
