@@ -154,7 +154,7 @@ class ReportController extends Controller {
             Mail::send('emails.mail', $data, function($message) use ($to_email, $report, $visitDate, $projectName) {
                 $message->to($to_email)
                     ->subject($projectName . ', Begehungsbericht ' . $visitDate)
-                    ->from('bauleitung@arch-maier.de','maier + maier architekten gmbh');
+                    ->from('bauleitung@bautagebuch-cloud.de','maier + maier architekten gmbh');
                 $message->attach('storage/app/public/reports/' . $report->filename, [
                     'mime' => 'application/pdf'
                 ]);
