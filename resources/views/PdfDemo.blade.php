@@ -45,7 +45,7 @@
 </table>
 <p></p>
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Baufortschritt</p><br>
-<p style="white-space: pre-line; font-size:0.7em">{{ str_replace("\n","<br>",$visit['description']); }}</p>
+<p style="white-space: pre-line; font-size:0.7em">{{ $visit['description'] }}</p>
 <table cellpadding="0" style="font-size: 0.7em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
