@@ -19,7 +19,7 @@
 <div style="text-align: right">
     <img src="/img/logo.png" style="width: 120px">
   </div><\br>
-<p style="border-top: 1px solid #a42600"><span style="color:#a42600; font-size: 0.6em">{{ $project['name'] }} - {{ $project['street'] }} {{ $project['housenumber'] }}, {{ $project['postcode'] }} {{ $project['city'] }}</span><br><span style="color:grey; font-size: 1.6em">{{ $visit['title'] }}, {{ $visit['date'] }}</span>
+<p style="border-top: 1px solid #a42600"><span style="color:#a42600; font-size: 0.6em">{{ $project['name'] }} - {{ $project['street'] }} {{ $project['housenumber'] }}, {{ $project['postcode'] }} {{ $project['city'] }}</span><br><span style="color:grey; font-size: 1.4em">{{ $visit['title'] }}, {{ $visit['date'] }}</span>
 </p>
 <p style="font-size:0.6em"><b>Datum:</b> {{ $visit['date'] }}, {{ substr($visit['time'],0, 5) }}&nbsp;&nbsp;&nbsp;&nbsp;<b>Wetter:</b> {{ $visit['weather'] }}</p>
 <p></p>
@@ -45,7 +45,7 @@
 </table>
 <p></p>
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Baufortschritt</p><br>
-<pre><p style="font-size:0.7em">{{ $visit['description'] }}</p></pre>
+<pre style="font-family: Helvetica"><p style="font-size:0.7em">{{ $visit['description'] }}</p></pre>
 <table cellpadding="0" style="font-size: 0.7em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
