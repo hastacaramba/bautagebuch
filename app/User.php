@@ -36,4 +36,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Get the visits of the user.
+     */
+    public function visits() {
+        return $this->hasMany('App\Visit');
+    }
 }
