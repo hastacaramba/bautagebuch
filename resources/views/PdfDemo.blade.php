@@ -52,7 +52,7 @@
 </p>
 <table cellpadding="0" style="font-size: 0.7em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
-    <tr>
+    <tr style="padding-bottom: 5px;">
       <td>
         <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150"><br>
         {{ $visitMedia[2 * $i]['info'] ?? ""}}
