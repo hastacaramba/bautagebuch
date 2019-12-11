@@ -32,13 +32,10 @@ class PdfController extends Controller {
         $visitID = $request->json("visitID");
         $visit = Visit::where('id', '=', $visitID)->first();
 
-        $visit->description = $strText = str_replace("\n","utf8_decode(chr(10));",$visit->description);
-        $visit->save();
-
-        $visit = Visit::where('id', '=', $visitID)->first();
-
         $projectID = $request->json("projectID");
         $project = Project::where('id', '=', $projectID)->first();
+
+
 
         //get the visit media
         $visitMedia = Media::where('visit_id', $visitID)->get();
