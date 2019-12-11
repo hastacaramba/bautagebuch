@@ -338,9 +338,6 @@
                       <label for="visitationnoteID">ID</label>
                       <input type="text" class="form-control" id="visitationnoteID" hidden>
                   </div>
-                  <div id="toolbarMedia">
-                      <button id="btnNewMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
-                  </div>
                   <div style="text-align:right">
                       <button id="btnSaveVisitationnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
                       <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
@@ -375,6 +372,9 @@
                   </div>
 
                   <div class="modal-footer mt-4">
+                      <div id="toolbarMedia">
+                          <button id="btnNewMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
+                      </div>
                       <div class="table-responsive">
                           <label class="mt-3" for="tableMedia">Fotos</label>
                           <!-- Choose New Media [start] -->
@@ -425,132 +425,6 @@
       </div>
   </div>
   <!-- Edit Visitationnote Modal [end] -->
-
-  <!-- New Visitationnote Modal [start] -->
-  <div class="modal fade" id="modalNewVisitationnnote" tabindex="-1" role="dialog" aria-labelledby="newVisitationnoteModal" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-clipboard-list"></i> Begehungsvermerk anlegen</h5>
-                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <div class="row mb-3">
-                      <div class="form-group col-md-3">
-                          <label>Datum</label><br>
-                          <input id="newVisitationnoteDate" type="text" style="width:100%; color:#6e707e" placeholder="Datum...">
-                      </div>
-                      <div class="form-group col-md-2">
-                          <label for="newVisitationnoteCategory">Kategorie</label>
-                          <select id="newVisitationnoteCategory">
-                              <option value="Mangel" selected="selected">Mangel</option>
-                              <option value="Restarbeit">Restarbeit</option>
-                              <option value="Information">Information</option>
-                              <option value="zu erledigen">zu erledigen</option>
-                          </select>
-                      </div>
-                      <div class="form-group col-md-2">
-                          <label for="newVisitationnoteImportant">Wichtig</label>
-                          <input type="checkbox" class="form-control" id="newVisitationnoteImportant">
-                      </div>
-                      <div class="form-group col-md-3">
-                          <label>Fälligkeit</label><br>
-                          <input id="newVisitationnoteDeadline" type="text" style="width:100%; color:#6e707e" placeholder="Fälligkeit...">
-                      </div>
-                      <div class="form-group col-md-2">
-                          <label for="newVisitationnoteDone">Erledigt</label>
-                          <input type="checkbox" class="form-control" id="newVisitationnoteDonebtnNew">
-                      </div>
-                  </div>
-                  <div class="row mb-3">
-                      <div class="form-group col-md-12">
-                          <label for="newVisitationnoteDescription">Beschreibung</label>
-                          <textarea rows="5" type="text" class="form-control" id="newVisitationnoteDescription"></textarea>
-                      </div>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                  <button id="btnSaveNewVisitationnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
-                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
-              </div>
-              <div class="modal-footer mt-4">
-                  <div class="table-responsive">
-                      <label class="mt-3" for="tableMedia">Betroffene Projektteilnehmer bzw. Gewerke</label>
-                      <!-- Table Present Members -->
-                      <div class="table-responsive">
-                          <table
-                                  id="tableConcernedMembers"
-                                  data-id-field="id"
-                                  data-side-pagination="client"
-                                  data-toggle="table"
-                                  data-sortable="true"
-                                  data-url=""
-                                  data-search="true"
-                                  data-show-columns="false"
-                                  data-pagination="true"
-                                  data-page-list="[10, 25, 50, 100, ALL]"
-                                  data-detail-formatter="detailFormatter"
-                                  data-detail-view="true"
-                                  data-response-handler="responseHandler"
-                                  data-show-export="false"
-                                  data-show-pagination-switch="true"
-                                  data-row-style="rowStyle">
-                          </table>
-                      </div>
-                  </div>
-              </div>
-              <div class="modal-footer mt-4">
-                  <div class="table-responsive">
-                      <label class="mt-3" for="tableMedia">Fotos</label>
-                      <!-- Choose New Media [start] -->
-                      <div id="chooseNewMedia">
-                          <div class="form-group">
-                              <form id="newForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-                                  <label for="image">Foto hochladen</label>
-                                  <div class="row">
-                                      <div class="col-md-9">
-                                          <input type="file" id="image" name="image" class="form-control">
-                                      </div>
-                                      <div class="col-md-3">
-                                          <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
-                                          <div id="newProjectImage"class="mt-1"></div>
-                                      </div>
-                                  </div>
-                              </form>
-                          </div>
-                          <div>
-                              <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
-                          </div>
-                      </div>
-                      <!-- Choose New Media [end] -->
-                      <!-- Table: Media -->
-                      <table
-                              id="tableMedia"
-                              data-id-field="id"
-                              data-side-pagination="client"
-                              data-toggle="table"
-                              data-sortable="true"
-                              data-url=""
-                              data-toolbar="#toolbarMedia"
-                              data-search="true"
-                              data-show-columns="true"
-                              data-pagination="true"
-                              data-page-list="[10, 25, 50, 100, ALL]"
-                              data-detail-formatter="detailFormatter"
-                              data-detail-view="false"
-                              data-response-handler="responseHandler"
-                              data-show-export="false"
-                              data-show-pagination-switch="true"
-                              data-row-style="rowStyle">
-                      </table>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </div>
-  <!-- New Visitationnote Modal [end] -->
 
   <!-- Edit VisitMedia Modal [start] -->
   <div class="modal fade" id="modalEditVisitMedia" tabindex="-1" role="dialog" aria-labelledby="editVisitMediaModal" aria-hidden="true">
