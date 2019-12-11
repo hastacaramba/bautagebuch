@@ -21,7 +21,7 @@
   </div><\br>
 <p style="border-top: 1px solid #a42600"><span style="color:#a42600; font-size: 1em">{{ $project['name'] }} </span><span style="color:#a42600; font-size: 0.6em">- {{ $project['street'] }} {{ $project['housenumber'] }}, {{ $project['postcode'] }} {{ $project['city'] }}</span><br><span style="color:grey; font-size: 1.4em">{{ $visit['title'] }}, {{ $visit['date'] }}</span>
 </p>
-<p style="font-size:0.6em"><b>Datum:</b> {{ $visit['date'] }}, {{ substr($visit['time'],0, 5) }}&nbsp;&nbsp;&nbsp;&nbsp;<b>Wetter:</b> {{ $visit['weather'] }}</p>
+<p style="font-size:0.7em"><b>Datum:</b> {{ $visit['date'] }}, {{ substr($visit['time'],0, 5) }}&nbsp;&nbsp;&nbsp;&nbsp;<b>Bauleiter:</b> {{ $responsible }}&nbsp;&nbsp;&nbsp;&nbsp;<b>Wetter:</b> {{ $visit['weather'] }}</p>
 <p></p>
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Anwesende</p>
 <table cellpadding="2" style="font-size: 0.7em" class="table table-bordered table-striped">

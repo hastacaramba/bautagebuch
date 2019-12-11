@@ -47,6 +47,7 @@ class VisitController extends Controller
 
         if ($visit != null) {
             $visit->title = $request->title;
+            $visit->user_id = $request->userID;
             $visit->date = $request->date;
             $visit->time = $request->time;
             $visit->weather = $request->weather;
@@ -111,11 +112,12 @@ class VisitController extends Controller
      *
      * @return array|null
      */
-    public function createVisit($projectID) {
+    public function createVisit(Request $request, $projectID) {
 
         $visit = new Visit;
 
         $visit->title = 'Bezeichnung...';
+        $visit->user_id = $request->userID;
         $visit->date = date('Y-m-d');
         $visit->time = date('H:i');
         $visit->weather = 'Wetter...';

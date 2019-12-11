@@ -552,9 +552,11 @@
 
     $("#btnNewVisit").click(function (e) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/visit/new/{{ $projectID }}",
-            data: "",
+            data: {
+                'userID' : '{{ Auth::user()->id }}'
+            },
             success: function (data) {
                 location.href="/visit/" + data;
             }
