@@ -43,9 +43,13 @@
         </div>
           <div class="card-body">
               <div class="row mb-3">
-                  <div class="col-md-12">
+                  <div class="col-md-6">
                       <label>Bezeichnung</label><br>
                       <input id="title" type="text" style="width:100%; color:#6e707e" value="{{$visit->title}}" placeholder="Bezeichnung...">
+                  </div>
+                  <div class="col-md-6">
+                      <label>Bauleiter</label><br>
+                      <input id="responsible" type="text" style="width:100%; color:#6e707e" value="{{ Auth::user()->id }}">
                   </div>
               </div>
               <div class="row mb-3">
