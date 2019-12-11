@@ -73,85 +73,87 @@
 
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Begehungsvermerke</p>
   @foreach( $visitationnotes as $visitationnote )
-    <table cellpadding="2" style="font-size: 0.7em" class="table table-bordered table-striped">
-      <tr>
-        <td style="text-indent:-8px; border: 0.5px solid lightgrey">
-          @if ($visitationnote['important'])
-            <span style="color:#a42600">
-          @else
-            <span style="color:#000">
-          @endif
-          <b>({{ $visitationnote['number'] }})</b> {{ $visitationnote['category'] }}
-          </span>
-        </td>
-        <td style="text-indent:-8px; border: 0.5px solid lightgrey">
-          @if ($visitationnote['important'])
-            <span style="color:#a42600">
-          @else
-            <span style="color:#000">
-          @endif
-          Erstellt am: {{ $visitationnote['createdAt'] }}
-          @if ($visitationnote['deadline'] != null) / Fälligkeit: {{ $visitationnote['deadline'] }}
-          @endif
-          </span>
-        </td>
-      </tr>
-      <tr>
-        <td style="text-indent:-8px; border: 0.5px solid lightgrey">
-          @if ($visitationnote['important'])
-            <span style="color:#a42600">
-          @else
-            <span style="color:#000">
-          @endif
-            {{ $visitationnote['notes'] }}
-          </span>
-        </td>
-        <td style="text-indent:-8px; border: 0.5px solid lightgrey">
-          @if ($visitationnote['important'])
-            <span style="color:#a42600">
-          @else
-            <span style="color:#000">
-          @endif
-            @if (sizeof($visitationnote['concernedMembers']) != 0)
-                Betrifft:<br>
-            @endif
-            @if ($visitationnote['concernsAll'])
-                BETRIFFT ALLE GEWERKE
-            @endif
-            @if (!$visitationnote['concernsAll'])
-                @foreach ($visitationnote['concernedMembers'] as $concernedMember)
-                    @if( $concernedMember['company'] != "")
-                        {{ $concernedMember['company'] }}
-                    @endif
-                    @if( $concernedMember['surname'] != "")
-                        ,{{ $concernedMember['firstname'] }} {{ $concernedMember['surname'] }} ({{ $concernedMember['subarea'] }})
-                    @endif
-                    <br>
-                @endforeach
-            @endif
-          </span>
-        </td>
-      </tr>
-
-      @for ($i = 0; $i < (ceil($visitationnote['numOfRows'] / 2)); $i++)
-        <tr>
-          <td style="border: 0.5px solid lightgrey">
-            <img src="images/{{ $visitationnote['media'][2 * $i]['filename'] ?? ""}}" width="150">
-
-          </td>
-          @if( ($visitationnote['numOfRows'] % 2 == 1) && ($i == ceil($visitationnote['numOfRows'] / 2) - 1))
-            <td style="border: 0.5px solid lightgrey">
+      @if(!$visitationnote['done'])
+        <table cellpadding="2" style="font-size: 0.7em" class="table table-bordered table-striped">
+          <tr>
+            <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+              @if ($visitationnote['important'])
+                <span style="color:#a42600">
+              @else
+                <span style="color:#000">
+              @endif
+              <b>({{ $visitationnote['number'] }})</b> {{ $visitationnote['category'] }}
+              </span>
             </td>
-          @else
-            <td style="border: 0.5px solid lightgrey">
-              <img src="images/{{ $visitationnote['media'][2 * $i + 1]['filename'] ?? ""}}" width="150">
+            <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+              @if ($visitationnote['important'])
+                <span style="color:#a42600">
+              @else
+                <span style="color:#000">
+              @endif
+              Erstellt am: {{ $visitationnote['createdAt'] }}
+              @if ($visitationnote['deadline'] != null) / Fälligkeit: {{ $visitationnote['deadline'] }}
+              @endif
+              </span>
             </td>
-          @endif
-        </tr>
-      @endfor
+          </tr>
+          <tr>
+            <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+              @if ($visitationnote['important'])
+                <span style="color:#a42600">
+              @else
+                <span style="color:#000">
+              @endif
+                {{ $visitationnote['notes'] }}
+              </span>
+            </td>
+            <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+              @if ($visitationnote['important'])
+                <span style="color:#a42600">
+              @else
+                <span style="color:#000">
+              @endif
+                @if (sizeof($visitationnote['concernedMembers']) != 0)
+                    Betrifft:<br>
+                @endif
+                @if ($visitationnote['concernsAll'])
+                    BETRIFFT ALLE GEWERKE
+                @endif
+                @if (!$visitationnote['concernsAll'])
+                    @foreach ($visitationnote['concernedMembers'] as $concernedMember)
+                        @if( $concernedMember['company'] != "")
+                            {{ $concernedMember['company'] }}
+                        @endif
+                        @if( $concernedMember['surname'] != "")
+                            ,{{ $concernedMember['firstname'] }} {{ $concernedMember['surname'] }} ({{ $concernedMember['subarea'] }})
+                        @endif
+                        <br>
+                    @endforeach
+                @endif
+              </span>
+            </td>
+          </tr>
 
-    </table>
-    <p style="font-size: 0.1em; line-height: 0.1em"></p>
+          @for ($i = 0; $i < (ceil($visitationnote['numOfRows'] / 2)); $i++)
+            <tr>
+              <td style="border: 0.5px solid lightgrey">
+                <img src="images/{{ $visitationnote['media'][2 * $i]['filename'] ?? ""}}" width="150">
+
+              </td>
+              @if( ($visitationnote['numOfRows'] % 2 == 1) && ($i == ceil($visitationnote['numOfRows'] / 2) - 1))
+                <td style="border: 0.5px solid lightgrey">
+                </td>
+              @else
+                <td style="border: 0.5px solid lightgrey">
+                  <img src="images/{{ $visitationnote['media'][2 * $i + 1]['filename'] ?? ""}}" width="150">
+                </td>
+              @endif
+            </tr>
+          @endfor
+
+        </table>
+        <p style="font-size: 0.1em; line-height: 0.1em"></p>
+      @endif
   @endforeach
 </body>
 </html>
