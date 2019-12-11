@@ -71,7 +71,9 @@
 </table>
 <p></p>
 
-<p style="font-size: 1em; color: #a42600; line-height: 0.9em">Begehungsvermerke</p>
+  @if(sizeof($visitationnotes))
+    <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Begehungsvermerke</p>
+  @endif
   @foreach( $visitationnotes as $visitationnote )
       @if(!$visitationnote['done'])
         <table cellpadding="2" style="font-size: 0.7em" class="table table-bordered table-striped">
