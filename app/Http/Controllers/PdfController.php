@@ -32,6 +32,8 @@ class PdfController extends Controller {
         $visitID = $request->json("visitID");
         $visit = Visit::where('id', '=', $visitID)->first();
 
+        $visitDescription = explode("\n", $visit->description);
+
         $projectID = $request->json("projectID");
         $project = Project::where('id', '=', $projectID)->first();
 
@@ -161,6 +163,7 @@ class PdfController extends Controller {
 
         $data = [
             'visit' => $visit,
+            'visitDescription' => $visitDescription,
             'project' => $project,
             'presentMembersData' => $presentMembersData,
             'visitationnotes' => $visitationnotesWithMedia,
@@ -180,6 +183,8 @@ class PdfController extends Controller {
 
         $visit = json_decode($exportData->data, true)['visit'];
 
+        $visitDescription = json_decode($exportData->data, true)['visitDescription'];
+
         $project = json_decode($exportData->data, true)['project'];
 
         $presentMembers = json_decode($exportData->data, true)['presentMembersData'];
@@ -193,6 +198,7 @@ class PdfController extends Controller {
         // usersPdf is the view that includes the downloading content
         $view = \View::make('PdfDemo', [
             'visit'=>$visit,
+            'visitDescription'=>$visitDescription,
             'project'=>$project,
             'presentMembers'=>$presentMembers,
             'visitationnotes'=>$visitationnotes,
