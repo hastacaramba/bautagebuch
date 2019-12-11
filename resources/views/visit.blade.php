@@ -645,12 +645,13 @@
 
       $("#btnNewMediaAbbrechen").click(function () {
         $("#chooseNewMedia").hide();
+        $("#image").val("");
         $("#btnNewMedia").fadeIn();
       });
 
       $("#btnNewVisitMedia").click(function () {
           $("#btnNewVisitMedia").hide();
-          $("#image").val("");
+          $("#image").text("");
           $("#chooseNewVisitMedia").fadeIn();
       });
 
