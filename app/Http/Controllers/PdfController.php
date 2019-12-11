@@ -32,7 +32,7 @@ class PdfController extends Controller {
         $visitID = $request->json("visitID");
         $visit = Visit::where('id', '=', $visitID)->first();
 
-        $visit->description = $strText = str_replace("\n","xxx",$visit->description);
+        $visit->description = $strText = str_replace("\n","<br />",$visit->description);
         $visit->save();
 
         $visit = Visit::where('id', '=', $visitID)->first();
