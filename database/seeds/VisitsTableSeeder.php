@@ -13,6 +13,7 @@ class VisitsTableSeeder extends Seeder
     {
         DB::table('visits')->insert([
             'project_id' => 1,
+            'user_id' => 2,
             'title' => 'Baustellenbegehung',
             'date' => '2019-10-19',
             'time' => '10:00',
@@ -23,6 +24,7 @@ class VisitsTableSeeder extends Seeder
         ]);
         DB::table('visits')->insert([
             'project_id' => 1,
+            'user_id' => 1,
             'title' => 'Jour Fix',
             'date' => '2019-10-10',
             'time' => '09:00',
@@ -33,6 +35,7 @@ class VisitsTableSeeder extends Seeder
         ]);
         DB::table('visits')->insert([
             'project_id' => 2,
+            'user_id' => 1,
             'title' => 'Baustellenbegehung',
             'date' => '2019-10-19',
             'time' => '10:00',
@@ -43,6 +46,7 @@ class VisitsTableSeeder extends Seeder
         ]);
         DB::table('visits')->insert([
             'project_id' => 3,
+            'user_id' => 3,
             'title' => 'Jour Fix',
             'date' => '2019-10-10',
             'time' => '09:00',

@@ -13,6 +13,7 @@ use App\Visit;
 use App\Media;
 use App\Visitationnote;
 use App\Member;
+use App\User;
 use App\Contact;
 use App\Subarea;
 use App\Report;
@@ -37,7 +38,7 @@ class PdfController extends Controller {
         $projectID = $request->json("projectID");
         $project = Project::where('id', '=', $projectID)->first();
 
-
+        $responsible = User::where('id', $visit->user_id)->first()->name;
 
         //get the visit media
         $visitMedia = Media::where('visit_id', $visitID)->get();
@@ -163,6 +164,7 @@ class PdfController extends Controller {
 
         $data = [
             'visit' => $visit,
+            'responsible' => $responsible,
             'visitDescription' => $visitDescription,
             'project' => $project,
             'presentMembersData' => $presentMembersData,
@@ -183,6 +185,8 @@ class PdfController extends Controller {
 
         $visit = json_decode($exportData->data, true)['visit'];
 
+        $responsible = json_decode($exportData->data, true)['responsible'];
+
         $visitDescription = json_decode($exportData->data, true)['visitDescription'];
 
         $project = json_decode($exportData->data, true)['project'];
@@ -198,6 +202,7 @@ class PdfController extends Controller {
         // usersPdf is the view that includes the downloading content
         $view = \View::make('PdfDemo', [
             'visit'=>$visit,
+            'responsible'=>$responsible,
             'visitDescription'=>$visitDescription,
             'project'=>$project,
             'presentMembers'=>$presentMembers,

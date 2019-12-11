@@ -43,15 +43,15 @@
         </div>
           <div class="card-body">
               <div class="row mb-3">
-                  <div class="col-md-6">
+                  <div class="col-md-9">
                       <label>Bezeichnung</label><br>
                       <input id="title" type="text" style="width:100%; color:#6e707e" value="{{$visit->title}}" placeholder="Bezeichnung...">
                   </div>
-                  <div class="col-md-6">
+                  <div class="col-md-3">
                       <label>Bauleiter</label><br>
                       <select id="responsible">
                           @foreach($users as $user)
-                            <option>{{ $user->name }}</option>
+                            <option value="{{ $user->id }}" @if($user->id == $visit->user_id) selected="selected" @endif>{{ $user->name }}</option>
                           @endforeach
                       </select>
                   </div>
@@ -586,6 +586,7 @@
             data:
                 {
                     'title' : $("#title").val(),
+                    'userID' : $("#responsible").val(),
                     'date' : $("#date").val(),
                     'time' : $("#time").val(),
                     'weather' : $("#weather").val(),

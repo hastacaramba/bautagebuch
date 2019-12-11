@@ -91,7 +91,7 @@ Route::delete('/member/{memberID}', 'MemberController@deleteMember')->middleware
 
 Route::get('/members/{projectID}', 'MemberController@projectMembersJson')->middleware('auth');
 
-Route::get('/visit/new/{projectID}', 'VisitController@createVisit')->middleware('auth');
+Route::post('/visit/new/{projectID}', 'VisitController@createVisit')->middleware('auth');
 
 Route::get('/visits/{projectID}', 'VisitController@projectVisitsJson')->middleware('auth');
 
