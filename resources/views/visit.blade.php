@@ -65,7 +65,7 @@
               <div class="row">
                   <div class="col-md-12">
                       <label for="visitDescription">Baufortschritt</label>
-                      <textarea rows="10" type="text" class="form-control" id="visitDescription">{{$visit->description}}</textarea>
+                      <textarea rows="5" style="white-space: pre-wrap" type="text" class="form-control" id="visitDescription">{{$visit->description}}</textarea>
                   </div>
               </div>
               <div style="text-align:right">
