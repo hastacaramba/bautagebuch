@@ -71,7 +71,7 @@
 </table>
 <p></p>
 
-  @if(sizeof($visitationnotes) > 0)
+  @if($openVisitationNotesCounter  > 0)
     <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Begehungsvermerke</p>
   @endif
   @foreach( $visitationnotes as $visitationnote )
