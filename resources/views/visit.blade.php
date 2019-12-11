@@ -1892,6 +1892,7 @@
                       $("#filename").val(data);
                       $("#btnEditVisitMediaAbbrechen").click();
                       $tableVisitMedia.bootstrapTable('refresh');
+                      $("#btnNewVisitMediaAbbrechen").click();
                   }
               });
           });
