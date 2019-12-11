@@ -59,7 +59,13 @@ class PdfController extends Controller {
 
         $visitationnotesWithMedia = [];
 
+        $openVisitationNotesCounter = 0
+
         foreach($visitationnotes as $visitationnote) {
+
+            if(!$visitationnote['done']) {
+                $openVisitationNotesCounter += 1;
+            }
 
             //get all members of the project
             $members = Member::where('project_id', '=', $visitationnote->visit->project_id)->get();
@@ -166,6 +172,7 @@ class PdfController extends Controller {
         $data = [
             'visit' => $visit,
             'responsible' => $responsible,
+            'openVisitationNotesCounter' => $openVisitationNotesCounter,
             'visitDescription' => $visitDescription,
             'project' => $project,
             'presentMembersData' => $presentMembersData,
@@ -188,6 +195,8 @@ class PdfController extends Controller {
 
         $responsible = json_decode($exportData->data, true)['responsible'];
 
+        $openVisitationNotesCounter = json_decode($exportData->data, true)['openVisitationNotesCounter'];
+
         $visitDescription = json_decode($exportData->data, true)['visitDescription'];
 
         $project = json_decode($exportData->data, true)['project'];
@@ -204,6 +213,7 @@ class PdfController extends Controller {
         $view = \View::make('PdfDemo', [
             'visit'=>$visit,
             'responsible'=>$responsible,
+            'openVisitationNotesCounter' => $openVisitationNotesCounter,
             'visitDescription'=>$visitDescription,
             'project'=>$project,
             'presentMembers'=>$presentMembers,
