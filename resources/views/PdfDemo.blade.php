@@ -45,9 +45,11 @@
 </table>
 <p></p>
 <p style="font-size: 1em; color: #a42600; line-height: 0.9em">Baufortschritt</p><br>
-@foreach($visitDescription as $line)
-    <p style="font-size:0.7em">{{ $line }}</p>
-@endforeach
+<p style="font-size:0.7em">
+    @foreach($visitDescription as $line)
+        {{ $line }}<br>
+    @endforeach
+</p>
 <table cellpadding="0" style="font-size: 0.7em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
