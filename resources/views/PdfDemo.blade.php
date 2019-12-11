@@ -52,10 +52,10 @@
 </p>
 <table cellpadding="0" style="font-size: 0.7em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
-    <tr style="padding-bottom: 5px;">
+    <tr>
       <td>
         <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150"><br>
-        {{ $visitMedia[2 * $i]['info'] ?? ""}}
+        {{ $visitMedia[2 * $i]['info'] ?? ""}}<br>
       </td>
       @if( ($numOfVisitMedia % 2 == 1) && ($i == ceil($numOfVisitMedia / 2) - 1))
         <td>
@@ -63,6 +63,7 @@
       @else
         <td>
           <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150">
+          {{ $visitMedia[2 * $i + 1]['info'] ?? ""}}<br>
         </td>
       @endif
     </tr>
