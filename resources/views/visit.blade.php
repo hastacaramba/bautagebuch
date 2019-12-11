@@ -285,7 +285,7 @@
       <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-clipboard-list"></i> Begehungsvermerk bearbeiten</h5>
+                  <h5 class="modal-title" id="editVisitationnoteLabel"><i class="fa fa-clipboard-list"></i> Begehungsvermerk bearbeiten</h5>
                   <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                   </button>
@@ -296,7 +296,7 @@
                           <label for="visitationnoteDate">Datum</label><br>
                           <input type="text" id="visitationnoteDate" style="width: 100%; color:#6e707e">
                       </div>
-                      <div class="form-group col-md-2">
+                      <div class="form-group col-md-3">
                           <label for="visitationnoteCategory">Kategorie</label>
                           <select id="visitationnoteCategory">
                               <option value="Mangel" selected="selected">Mangel</option>
@@ -305,17 +305,23 @@
                               <option value="zu erledigen">zu erledigen</option>
                           </select>
                       </div>
-                      <div class="form-group col-md-2">
-                          <label for="visitationnoteImportant">Wichtig</label>
-                          <input type="checkbox" class="form-control" id="visitationnoteImportant">
-                      </div>
-                      <div class="form-group col-md-3">
+                      <div class="col-md-3">
                           <label for="visitationnoteDeadline">Fälligkeit</label>
                           <input type="text" id="visitationnoteDeadline" style="width: 100%; color:#6e707e">
                       </div>
-                      <div class="form-group col-md-2">
+                  </div>
+                  <div class="row mb-3">
+                      <div class="col-md-3">
+                          <input type="checkbox" id="visitationnoteImportant">
+                          <label for="visitationnoteImportant">Wichtig</label>
+                      </div>
+                      <div class="col-md-3">
+                          <input type="checkbox" id="visitationnoteConcernsAll">
+                          <label for="visitationnoteConcernsAll">Betrifft alle</label>
+                      </div>
+                      <div class="col-md-3">
+                          <input type="checkbox" id="visitationnoteDone">
                           <label for="visitationnoteDone">Erledigt</label>
-                          <input type="checkbox" class="form-control" id="visitationnoteDone">
                       </div>
                   </div>
                   <div class="row mb-3">
@@ -344,7 +350,6 @@
                   <div class="modal-footer mt-4">
                       <div class="table-responsive">
                           <label class="mt-3" for="tableMedia">Betroffene Projektteilnehmer bzw. Gewerke</label>
-
                           <!-- Table Present Members -->
                           <div class="table-responsive">
                               <table
@@ -473,7 +478,6 @@
               <div class="modal-footer mt-4">
                   <div class="table-responsive">
                       <label class="mt-3" for="tableMedia">Betroffene Projektteilnehmer bzw. Gewerke</label>
-
                       <!-- Table Present Members -->
                       <div class="table-responsive">
                           <table
@@ -687,6 +691,11 @@
             importantChecked = 1;
         }
 
+        var concernsAllChecked = 0;
+        if ($("#visitationnoteConcernsAll").is(':checked')) {
+            concernsAllChecked = 1;
+        }
+
         $.ajax({
             type: "PATCH",
             url: "/visitationnote/update/" + id,
@@ -697,6 +706,7 @@
                     'deadline' : $("#visitationnoteDeadline").val(),
                     'notes' : $("#visitationnoteDescription").val(),
                     'done' : checked,
+                    'concernsAll' : concernsAllChecked,
                     'important' : importantChecked,
                     'category' : $("#visitationnoteCategory").val()
                 }
@@ -747,12 +757,14 @@
             success: function (data) {
                 //alert("Der Begehungsvermerk wurde erfolgreich angelegt.");
                 $table.bootstrapTable('refresh');
+                $("#editVisitationnoteLabel").html("<i class=\"fa fa-plus-circle\"></i> Neuer Begehungsvermerk");
                 $("#modalEditVisitationnnote").modal('toggle');
                 $("#visitationnoteDate").val(data.created_at.substring(0,data.created_at.length - 9));
                 $("#visitationnoteNumber").val(data.number);
                 $("#visitationnoteDeadline").val(null);
                 $("#visitationnoteDescription").val("");
                 $("#visitationnoteDone").prop('checked', 0);
+                $("#visitationnoteConcernsAll").prop('checked', 0);
                 $("#visitationnoteImportant").prop('checked', 0);
                 $("#visitationnoteCategory").val("Mangel");
                 $("#visitationnoteID").val(data.id)
@@ -1017,6 +1029,7 @@
       window.operateEvents = {
           'click .edit': function (e, value, row, index) {
 
+              $("#editVisitationnoteLabel").html("<i class=\"fa fa-clipboard-list\"></i> Begehungsvermerk bearbeiten");
               $("#modalEditVisitationnnote").modal('toggle');
               $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
               $("#visitationnoteNumber").val(row.number);
@@ -1024,6 +1037,7 @@
               $("#visitationnoteDescription").val(row.notes);
               $("#visitationnoteDone").prop('checked', row.done);
               $("#visitationnoteImportant").prop('checked', row.important);
+              $("#visitationnoteConcernsAll").prop('checked', row.concernsAll);
               $("#visitationnoteCategory").val(row.category);
               $("#visitationnoteID").val(row.id)
               $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + row.id });

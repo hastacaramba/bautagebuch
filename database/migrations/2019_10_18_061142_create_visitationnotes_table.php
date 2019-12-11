@@ -21,6 +21,7 @@ class CreateVisitationnotesTable extends Migration
             $table->date('deadline')->nullable();
             $table->boolean('done')->default(0);
             $table->boolean('important')->default(0);
+            $table->boolean('concernsAll')->default(0);
             $table->integer('visit_id');
             $table->timestamps();
         });

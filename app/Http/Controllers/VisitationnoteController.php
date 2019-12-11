@@ -133,6 +133,7 @@ class VisitationnoteController extends Controller
             $visitationnote->deadline = $request->deadline;
             $visitationnote->notes = $request->notes;
             $visitationnote->done = $request->done;
+            $visitationnote->concernsAll = $request->concernsAll;
             $visitationnote->important = $request->important;
             $visitationnote->category = $request->category;
             $visitationnote->save();

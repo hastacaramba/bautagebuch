@@ -115,15 +115,20 @@
             @if (sizeof($visitationnote['concernedMembers']) != 0)
                 Betrifft:<br>
             @endif
-            @foreach ($visitationnote['concernedMembers'] as $concernedMember)
-              @if( $concernedMember['company'] != "")
-                  {{ $concernedMember['company'] }}
-              @endif
-              @if( $concernedMember['surname'] != "")
-                  ,{{ $concernedMember['firstname'] }} {{ $concernedMember['surname'] }} ({{ $concernedMember['subarea'] }})
-              @endif
-              <br>
-            @endforeach
+            @if ($visitationnote['concernsAll'])
+                BETRIFFT ALLE GEWERKE
+            @endif
+            @if (!$visitationnote['concernsAll'])
+                @foreach ($visitationnote['concernedMembers'] as $concernedMember)
+                    @if( $concernedMember['company'] != "")
+                        {{ $concernedMember['company'] }}
+                    @endif
+                    @if( $concernedMember['surname'] != "")
+                        ,{{ $concernedMember['firstname'] }} {{ $concernedMember['surname'] }} ({{ $concernedMember['subarea'] }})
+                    @endif
+                    <br>
+                @endforeach
+            @endif
           </span>
         </td>
       </tr>
