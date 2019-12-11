@@ -35,6 +35,8 @@ class PdfController extends Controller {
         $visit->description = $strText = str_replace("\n","<br />",$visit->description);
         $visit->save();
 
+        $visit = Visit::where('id', '=', $visitID)->first();
+
         $projectID = $request->json("projectID");
         $project = Project::where('id', '=', $projectID)->first();
 
