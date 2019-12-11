@@ -59,7 +59,7 @@ class PdfController extends Controller {
 
         $visitationnotesWithMedia = [];
 
-        $openVisitationNotesCounter = 0
+        $openVisitationNotesCounter = 0;
 
         foreach($visitationnotes as $visitationnote) {
 
