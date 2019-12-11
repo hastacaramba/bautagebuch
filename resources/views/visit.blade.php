@@ -456,7 +456,7 @@
                       </div>
                       <div class="form-group col-md-2">
                           <label for="newVisitationnoteDone">Erledigt</label>
-                          <input type="checkbox" class="form-control" id="newVisitationnoteDone">
+                          <input type="checkbox" class="form-control" id="newVisitationnoteDonebtnNew">
                       </div>
                   </div>
                   <div class="row mb-3">
@@ -469,6 +469,79 @@
               <div class="modal-footer">
                   <button id="btnSaveNewVisitationnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
                   <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
+              </div>
+              <div class="modal-footer mt-4">
+                  <div class="table-responsive">
+                      <label class="mt-3" for="tableMedia">Betroffene Projektteilnehmer bzw. Gewerke</label>
+
+                      <!-- Table Present Members -->
+                      <div class="table-responsive">
+                          <table
+                                  id="tableConcernedMembers"
+                                  data-id-field="id"
+                                  data-side-pagination="client"
+                                  data-toggle="table"
+                                  data-sortable="true"
+                                  data-url=""
+                                  data-search="true"
+                                  data-show-columns="false"
+                                  data-pagination="true"
+                                  data-page-list="[10, 25, 50, 100, ALL]"
+                                  data-detail-formatter="detailFormatter"
+                                  data-detail-view="true"
+                                  data-response-handler="responseHandler"
+                                  data-show-export="false"
+                                  data-show-pagination-switch="true"
+                                  data-row-style="rowStyle">
+                          </table>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer mt-4">
+                  <div class="table-responsive">
+                      <label class="mt-3" for="tableMedia">Fotos</label>
+                      <!-- Choose New Media [start] -->
+                      <div id="chooseNewMedia">
+                          <div class="form-group">
+                              <form id="newForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
+                                  <label for="image">Foto hochladen</label>
+                                  <div class="row">
+                                      <div class="col-md-9">
+                                          <input type="file" id="image" name="image" class="form-control">
+                                      </div>
+                                      <div class="col-md-3">
+                                          <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
+                                          <div id="newProjectImage"class="mt-1"></div>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                          <div>
+                              <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
+                          </div>
+                      </div>
+                      <!-- Choose New Media [end] -->
+                      <!-- Table: Media -->
+                      <table
+                              id="tableMedia"
+                              data-id-field="id"
+                              data-side-pagination="client"
+                              data-toggle="table"
+                              data-sortable="true"
+                              data-url=""
+                              data-toolbar="#toolbarMedia"
+                              data-search="true"
+                              data-show-columns="true"
+                              data-pagination="true"
+                              data-page-list="[10, 25, 50, 100, ALL]"
+                              data-detail-formatter="detailFormatter"
+                              data-detail-view="false"
+                              data-response-handler="responseHandler"
+                              data-show-export="false"
+                              data-show-pagination-switch="true"
+                              data-row-style="rowStyle">
+                      </table>
+                  </div>
               </div>
           </div>
       </div>
@@ -662,16 +735,32 @@
 
     $("#btnNewVisitationnote").click(function () {
 
-        $("#modalNewVisitationnnote").modal('toggle');
-        $("#newVisitationnoteDate").val("");
-        $("#newVisitationnoteTitle").val("");
-        $("#newVisitationnoteDeadline").val("");
-        $("#newVisitationnoteDescription").val("");
-        $("#newVisitationnoteDone").prop('checked', false);
-        $("#newVisitationnoteImportant").prop('checked', false);
-        $("#newVisitationnoteCategory").val("Mangel");
+        $.ajax({
+            type: "POST",
+            url: "/visitationnote",
+            data:
+                {
+                    'visit_id' : '{{ $visit->id }}',
+                    'category' : "Mangel"
+                }
+            ,
+            success: function (data) {
+                //alert("Der Begehungsvermerk wurde erfolgreich angelegt.");
+                $table.bootstrapTable('refresh');
+                $("#modalEditVisitationnnote").modal('toggle');
+                $("#visitationnoteDate").val(data.created_at.substring(0,data.created_at.length - 9));
+                $("#visitationnoteNumber").val(data.number);
+                $("#visitationnoteDeadline").val(null);
+                $("#visitationnoteDescription").val("");
+                $("#visitationnoteDone").prop('checked', 0);
+                $("#visitationnoteImportant").prop('checked', 0);
+                $("#visitationnoteCategory").val("Mangel");
+                $("#visitationnoteID").val(data.id)
+                $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + data.id });
+                $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/visitationnote/concerned/' + data.id });
 
-
+            }
+        });
     });
 
     $("#btnSaveNewVisitationnote").click(function () {

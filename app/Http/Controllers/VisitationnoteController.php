@@ -93,7 +93,25 @@ class VisitationnoteController extends Controller
         $visitationnote = Visitationnote::where('id', '=', $visitationnoteID)->first();
 
         if ($visitationnote != null) {
+
+            $visit = Visit::where('id', $visitationnote->visit->id)->first();
+            $projectID = $visit->project_id;
+            $allProjectVisits = Visit::where('project_id', $projectID)->get();
+
+            $higherNumberVisitationnotes = [];
+
+            foreach($allProjectVisits as $projectVisit) {
+                $items = Visitationnote::where('visit_id', $projectVisit->id)->get();
+                foreach ($items as $item) {
+                    if($item->number > $visitationnote->number) {
+                        $item->number -= 1;
+                        $item->save();
+                    }
+                }
+            }
+
             $visitationnote->delete();
+
         }
 
     }
@@ -146,14 +164,10 @@ class VisitationnoteController extends Controller
 
         $visitationnote->visit_id = $request->visit_id;
         $visitationnote->number = $nextNumber;
-        $visitationnote->created_at = $request->date;
-        $visitationnote->deadline = $request->deadline;
-        $visitationnote->notes = $request->notes;
-        $visitationnote->done = $request->done;
-        $visitationnote->important = $request->important;
-        $visitationnote->category = $request->category;
-
+        $visitationnote->created_at = now();
         $visitationnote->save();
+
+        return $visitationnote;
 
     }
 
