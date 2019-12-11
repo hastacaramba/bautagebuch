@@ -116,6 +116,7 @@ class PdfController extends Controller {
                 'notes' => $visitationnote->notes,
                 'deadline' => $deadline,
                 'done' => $visitationnote->done,
+                'concernsAll' => $visitationnote->concernsAll,
                 'important' => $visitationnote->important,
                 'media' => $media,
                 'numOfRows' => $numOfRows,
