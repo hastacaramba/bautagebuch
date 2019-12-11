@@ -62,7 +62,7 @@
         </td>
       @else
         <td>
-          <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150">
+          <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150"><br>
           {{ $visitMedia[2 * $i + 1]['info'] ?? ""}}<br>
         </td>
       @endif
