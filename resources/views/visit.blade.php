@@ -49,7 +49,11 @@
                   </div>
                   <div class="col-md-6">
                       <label>Bauleiter</label><br>
-                      <input id="responsible" type="text" style="width:100%; color:#6e707e" value="{{ Auth::user()->id }}">
+                      <select id="responsible">
+                          @foreach($users as $user)
+                            <option>{{ $user->name }}</option>
+                          @endforeach
+                      </select>
                   </div>
               </div>
               <div class="row mb-3">

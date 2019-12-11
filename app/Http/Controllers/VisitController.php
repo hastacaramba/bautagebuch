@@ -8,6 +8,7 @@ use App\Member;
 use App\Media;
 use App\Visit;
 use App\Project;
+use App\User;
 use Illuminate\Support\Facades\DB;
 
 class VisitController extends Controller
@@ -95,9 +96,12 @@ class VisitController extends Controller
 
         $project = Project::where('id', '=', $visit->project_id)->first();
 
+        $users = User::all();
+
         return view('visit')
             ->with('project', $project)
-            ->with('visit', $visit);
+            ->with('visit', $visit)
+            ->with('users', $users);
 
     }
 

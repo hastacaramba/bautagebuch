@@ -16,7 +16,8 @@ class Visit extends Model {
         'time',
         'weather',
         'description',
-        'project_id'
+        'project_id',
+        'responsible'
     ];
 
     /**
@@ -24,6 +25,13 @@ class Visit extends Model {
      */
     public function project() {
         return $this->belongsTo('App\Project');
+    }
+
+    /**
+     * Get the responsible user
+     */
+    public function responsible() {
+        return $this->belongsTo('App\User');
     }
 
     /**
@@ -58,7 +66,7 @@ class Visit extends Model {
      * Get the reports of the visit.
      */
     public function reports() {
-        return $this->hasMany('App\Report');
+        return $this->hasMany('App\Report', 'user_id');
     }
 
 }
