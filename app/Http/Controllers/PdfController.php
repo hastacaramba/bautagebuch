@@ -114,6 +114,8 @@ class PdfController extends Controller {
 
             $deadline = date('d.m.Y', strtotime($visitationnote->deadline));
 
+
+
             $item = [
                 'id' => $visitationnote->id,
                 'number' => $visitationnote->number,
