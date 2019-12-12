@@ -121,7 +121,7 @@ class VisitController extends Controller
         $visit->date = date('Y-m-d');
         $visit->time = date('H:i');
         $visit->weather = 'Wetter...';
-        $visit->description = 'Bemerkungen zur Begehung (Freitext)...';
+        $visit->description = '';
         $visit->project_id = $projectID;
 
         $visit->save();
