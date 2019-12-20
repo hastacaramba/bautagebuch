@@ -1227,7 +1227,7 @@
       function createdAtFormatterReports(value, row, index) {
           var date = new Date(value);
           var d = date.getDate();
-          var m = date.getMonth();
+          var m = date.getMonth()+1;
           var h = date.getHours();
           var min = date.getMinutes();
           if(date.getMonth() < 10) {

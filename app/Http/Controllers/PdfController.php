@@ -239,7 +239,7 @@ class PdfController extends Controller {
 
         //write the report in DB
         DB::table('reports')->insert([
-            ['filename' => $filename, 'visit_id' => $visit['id'], 'created_at' => time()]
+            ['filename' => $filename, 'visit_id' => $visit['id'], 'created_at' => now()]
         ]);
 
         //open the report
