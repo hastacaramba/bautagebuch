@@ -1224,7 +1224,7 @@
           ]
       }
 
-      function createdAtFormatterReports(value, row, index) {
+      function createdAtFormatterReports("2019-10-20T12:09:00.000000Z", row, index) {
           var date = new Date(value);
           var d = date.getDate();
           var m = date.getMonth()+1;
@@ -1249,7 +1249,7 @@
           var output = d + "." + m + "." + y + ", " + h + ":" + min;
 
           return [
-              value
+              output
           ]
       }
 
