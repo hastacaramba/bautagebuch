@@ -1224,15 +1224,13 @@
           ]
       }
 
-      value="2019-10-20T12:09:00.000000Z";
-
       function createdAtFormatterReports(value, row, index) {
           var date = new Date(value);
           var d = date.getDate();
-          var m = date.getMonth()+1;
+          var m = date.getMonth() + 1;
           var h = date.getHours();
           var min = date.getMinutes();
-          if(date.getMonth() < 10) {
+          if((date.getMonth() + 1) < 10) {
               m = "0" + m;
           }
           if(date.getDate() < 10) {
