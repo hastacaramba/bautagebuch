@@ -34,7 +34,7 @@
                 <div>
                     <a href="/bauprojekte">Bauprojekte</a> / <a href="/projects/{{ $project->id }}">{{ $project->number }} {{ $project->name }}</a>
                 </div>
-                <h2 class="m-0 font-weight-bold text-primary">Begehung: {{ $visit->title }} {{ $visit->date }}</h2>
+                <h2 class="m-0 font-weight-bold text-primary">Begehung: {{ $visit->title }}, {{ date('d.m.Y', strtotime($visit->date))}}</h2>
             </div>
             <div class="col-md-2" style="text-align-right">
                 <button class="btn btn-danger btn-circle mt-4 ml-4" title="PDF Bericht generieren" id="pdfTest2"><i class="fas fa-file-pdf"></i></button>
