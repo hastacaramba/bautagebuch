@@ -1249,7 +1249,7 @@
           var output = d + "." + m + "." + y + ", " + h + ":" + min;
 
           return [
-              output
+              value
           ]
       }
 
