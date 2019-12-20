@@ -766,6 +766,9 @@
       function detailFormatterReports(index, row) {
           var html = []
           $.each(row, function (key, value) {
+              if (value === null) {
+                  value = "Bericht wurde bisher noch nicht verschickt";
+              }
               if (key === 'log') {
                 html.push('<p style="font-size:0.9em"><b>Verlauf:</b><br>' + value + '</p>')
               }
