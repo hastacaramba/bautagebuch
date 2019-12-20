@@ -36,8 +36,8 @@
                         <h2 class="m-0 font-weight-bold text-primary">Bauprojekt: {{ $number }} {{ $name }}</h2>
                         <div class="border-left-primary pl-2 text-primary mb-2">
                             {{ $street }} {{ $housenumber }}, {{ $postcode }} {{ $city }}<br>
-                            Erstellt: {{ $created_at }}<br>
-                            Letzte Aktualisierung: {{ $updated_at }}
+                            Erstellt: {{ date('d.m.Y', strtotime($created_at)) }}<br>
+                            Letzte Aktualisierung: {{ date('d.m.Y', strtotime($updated_at)) }}
                         </div>
                     </div>
                     <div class="col-md-2">
