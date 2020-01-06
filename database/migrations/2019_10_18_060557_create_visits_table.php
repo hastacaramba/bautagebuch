@@ -17,9 +17,9 @@ class CreateVisitsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->date('date');
-            $table->time('time');
-            $table->string('weather');
-            $table->string('description');
+            $table->time('time')->nullable();
+            $table->string('weather')->nullable();
+            $table->string('description')->nullable();
             $table->integer('project_id');
             $table->timestamps();
         });
