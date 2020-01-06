@@ -54,16 +54,20 @@
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
       <td>
-        <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150"><br>
-        <div style="width: 180px">{{ $visitMedia[2 * $i]['info'] ?? ""}}</div>
+          <div style="width: 170px">
+            <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150"><br>
+            {{ $visitMedia[2 * $i]['info'] ?? ""}}
+          </div>
       </td>
       @if( ($numOfVisitMedia % 2 == 1) && ($i == ceil($numOfVisitMedia / 2) - 1))
         <td>
         </td>
       @else
         <td>
-          <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150"><br>
-          <div style="width: 180px">{{ $visitMedia[2 * $i + 1]['info'] ?? ""}}</div>
+            <div style="width: 170px">
+                <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150"><br>
+                {{ $visitMedia[2 * $i + 1]['info'] ?? ""}}
+            </div>
         </td>
       @endif
     </tr>
