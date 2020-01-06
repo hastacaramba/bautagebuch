@@ -54,7 +54,7 @@
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
       <td>
-          <div style="width: 170px">
+          <div width="170">
             <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150"><br>
             {{ $visitMedia[2 * $i]['info'] ?? ""}}
           </div>
@@ -64,7 +64,7 @@
         </td>
       @else
         <td>
-            <div style="width: 170px">
+            <div width="170">
                 <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150"><br>
                 {{ $visitMedia[2 * $i + 1]['info'] ?? ""}}
             </div>
