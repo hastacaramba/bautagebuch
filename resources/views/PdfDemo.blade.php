@@ -50,7 +50,7 @@
         {{ $line }}<br>
     @endforeach
 </p>
-<table cellpadding="10" style="font-size: 0.7em" class="table table-bordered table-striped">
+<table cellpadding="10" style="text-indent: -10px; font-size: 0.7em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
       <td>
@@ -76,7 +76,7 @@
   @endif
   @foreach( $visitationnotes as $visitationnote )
       @if(!$visitationnote['done'])
-        <table cellpadding="2" style="text-indent: -10px; font-size: 0.7em" class="table table-bordered table-striped">
+        <table cellpadding="2" style="font-size: 0.7em" class="table table-bordered table-striped">
           <tr>
             <td style="text-indent:-10px; border: 0.5px solid lightgrey">
               @if ($visitationnote['important'])
