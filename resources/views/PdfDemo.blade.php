@@ -53,7 +53,7 @@
 <table cellpadding="0" style="font-size: 0.7em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
-      <td style="text-indent: -4px; padding-right: 10px">
+      <td style="text-indent: -10px; padding-right: 10px">
         <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150"><br>
         {{ $visitMedia[2 * $i]['info'] ?? ""}}<br>
       </td>
@@ -61,7 +61,7 @@
         <td>
         </td>
       @else
-        <td style="text-indent: -4px; padding-right: 10px">
+        <td style="text-indent: -10px; padding-right: 10px">
           <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150"><br>
           {{ $visitMedia[2 * $i + 1]['info'] ?? ""}}<br>
         </td>
@@ -78,7 +78,7 @@
       @if(!$visitationnote['done'])
         <table cellpadding="2" style="font-size: 0.7em" class="table table-bordered table-striped">
           <tr>
-            <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+            <td style="text-indent:-10px; border: 0.5px solid lightgrey">
               @if ($visitationnote['important'])
                 <span style="color:#a42600">
               @else
@@ -87,7 +87,7 @@
               <b>({{ $visitationnote['number'] }})</b> {{ $visitationnote['category'] }}
               </span>
             </td>
-            <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+            <td style="text-indent:-10px; border: 0.5px solid lightgrey">
               @if ($visitationnote['important'])
                 <span style="color:#a42600">
               @else
@@ -100,7 +100,7 @@
             </td>
           </tr>
           <tr>
-            <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+            <td style="text-indent:-10px; border: 0.5px solid lightgrey">
               @if ($visitationnote['important'])
                 <span style="color:#a42600">
               @else
@@ -109,7 +109,7 @@
                 {{ $visitationnote['notes'] }}
               </span>
             </td>
-            <td style="text-indent:-8px; border: 0.5px solid lightgrey">
+            <td style="text-indent:-10px; border: 0.5px solid lightgrey">
               @if ($visitationnote['important'])
                 <span style="color:#a42600">
               @else
