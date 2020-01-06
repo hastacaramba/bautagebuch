@@ -12,11 +12,12 @@ class Visitationnote extends Model {
 
     protected $fillable = [
         'category',
-        'title',
+        'number',
         'notes',
         'deadline',
         'done',
         'important',
+        'concernsAll',
         'visit_id'
     ];
 

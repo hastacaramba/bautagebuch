@@ -34,18 +34,26 @@
                 <div>
                     <a href="/bauprojekte">Bauprojekte</a> / <a href="/projects/{{ $project->id }}">{{ $project->number }} {{ $project->name }}</a>
                 </div>
-                <h2 class="m-0 font-weight-bold text-primary">Begehung: {{ $visit->title }} {{ $visit->date }}</h2>
+                <h2 class="m-0 font-weight-bold text-primary">Begehung: {{ $visit->title }}, {{ date('d.m.Y', strtotime($visit->date))}}</h2>
             </div>
             <div class="col-md-2" style="text-align-right">
-                <button class="btn btn-danger btn-circle mt-4 ml-4" title="PDF Bericht generieren" id="pdfTest"><i class="fas fa-file-pdf"></i></button>
+                <button class="btn btn-danger btn-circle mt-4 ml-4" title="PDF Bericht generieren" id="pdfTest2"><i class="fas fa-file-pdf"></i></button>
             </div>
           </div>
         </div>
           <div class="card-body">
               <div class="row mb-3">
-                  <div class="col-md-12">
+                  <div class="col-md-9">
                       <label>Bezeichnung</label><br>
                       <input id="title" type="text" style="width:100%; color:#6e707e" value="{{$visit->title}}" placeholder="Bezeichnung...">
+                  </div>
+                  <div class="col-md-3">
+                      <label>Bauleiter</label><br>
+                      <select id="responsible">
+                          @foreach($users as $user)
+                            <option value="{{ $user->id }}" @if($user->id == $visit->user_id) selected="selected" @endif>{{ $user->name }}</option>
+                          @endforeach
+                      </select>
                   </div>
               </div>
               <div class="row mb-3">
@@ -65,7 +73,7 @@
               <div class="row">
                   <div class="col-md-12">
                       <label for="visitDescription">Baufortschritt</label>
-                      <textarea rows="10" type="text" class="form-control" id="visitDescription" placeholder="Bemerkungen zum Baufortschritt (Freitext)">{{$visit->description}}</textarea>
+                      <textarea rows="5" type="text" class="form-control" id="visitDescription">{{$visit->description}}</textarea>
                   </div>
               </div>
               <div style="text-align:right">
@@ -163,6 +171,7 @@
               <div id="toolbar">
                   <button id="btnNewVisitationnote" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Begehungsvermerk</button>
               </div>
+
               <!-- Begehungsvermerke -->
               <div class="card shadow mb-4">
                   <div class="card-header py-3">
@@ -184,6 +193,42 @@
                                   data-pagination="true"
                                   data-page-list="[10, 25, 50, 100, ALL]"
                                   data-detail-formatter="detailFormatter"
+                                  data-detail-view="false"
+                                  data-response-handler="responseHandler"
+                                  data-show-export="false"
+                                  data-show-pagination-switch="true"
+                                  data-row-style="rowStyle">
+                          </table>
+                      </div>
+                  </div>
+              </div>
+
+
+              <div id="toolbarReports">
+                  <button class="btn btn-danger btn-circle" title="PDF Bericht generieren" id="pdfTest"><i class="fas fa-file-pdf"></i></button> Neuen Begehungsbericht generieren
+              </div>
+
+              <!-- Berichte -->
+              <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                      <h4><i class="fas fa-file-pdf"></i> Berichte</h4>
+                  </div>
+                  <div class="card-body">
+                      <div class="table-responsive">
+                          <!-- Table: Reports -->
+                          <table
+                                  id="reportsTable"
+                                  data-id-field="id"
+                                  data-side-pagination="client"
+                                  data-toggle="table"
+                                  data-sortable="true"
+                                  data-url="/reports/{{$visit->id}}"
+                                  data-search="true"
+                                  data-toolbar="#toolbarReports"
+                                  data-show-columns="true"
+                                  data-pagination="true"
+                                  data-page-list="[10, 25, 50, 100, ALL]"
+                                  data-detail-formatter="detailFormatterReports"
                                   data-detail-view="true"
                                   data-response-handler="responseHandler"
                                   data-show-export="false"
@@ -240,20 +285,12 @@
       <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
           <div class="modal-content">
               <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-clipboard-list"></i> Begehungsvermerk bearbeiten</h5>
+                  <h5 class="modal-title" id="editVisitationnoteLabel"><i class="fa fa-clipboard-list"></i> Begehungsvermerk bearbeiten</h5>
                   <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">×</span>
                   </button>
               </div>
               <div class="modal-body">
-                  <div class="form-group" style="display:none">
-                      <label for="visitationnoteID">ID</label>
-                      <input type="text" class="form-control" id="visitationnoteID" hidden>
-                  </div>
-                  <div class="form-group mb-3">
-                      <label for="visitationnoteTitle">Bezeichnung</label>
-                      <input type="text" class="form-control" id="visitationnoteTitle" placeholder="Bezeichnung...">
-                  </div>
                   <div class="row mb-3">
                       <div class="form-group col-md-3">
                           <label for="visitationnoteDate">Datum</label><br>
@@ -268,28 +305,38 @@
                               <option value="zu erledigen">zu erledigen</option>
                           </select>
                       </div>
-                      <div class="form-group col-md-3">
-                          <label for="visitationnoteImportant">Wichtig</label>
-                          <input type="checkbox" class="form-control" id="visitationnoteImportant">
-                      </div>
-                  </div>
-                  <div class="row mb-3">
-                      <div class="form-group col-md-3">
+                      <div class="col-md-3">
                           <label for="visitationnoteDeadline">Fälligkeit</label>
                           <input type="text" id="visitationnoteDeadline" style="width: 100%; color:#6e707e">
                       </div>
-                      <div class="form-group col-md-3">
-                          <label for="visitationnoteDone">Erledigt</label>
-                          <input type="checkbox" class="form-control" id="visitationnoteDone">
+                  </div>
+                  <div class="row mb-3">
+                      <div class="col-md-3">
+                          <input type="checkbox" id="visitationnoteImportant">
+                          <label for="visitationnoteImportant">Wichtig</label>
                       </div>
-
+                      <div class="col-md-3">
+                          <input type="checkbox" id="visitationnoteConcernsAll">
+                          <label for="visitationnoteConcernsAll">Betrifft alle</label>
+                      </div>
+                      <div class="col-md-3">
+                          <input type="checkbox" id="visitationnoteDone">
+                          <label for="visitationnoteDone">Erledigt</label>
+                      </div>
                   </div>
-                  <div class="form-group mb-3">
-                      <label for="visitationnoteDescription">Baufortschritt</label>
-                      <textarea rows="10" type="text" class="form-control" id="visitationnoteDescription" placeholder="Bemerkungen zum Baufortschritt (Freitext)"></textarea>
+                  <div class="row mb-3">
+                      <div class="form-group col-md-1">
+                          <label>Nr</label><br>
+                          <input id="visitationnoteNumber" type="text" style="width:100%; color:#6e707e" readonly>
+                      </div>
+                      <div class="form-group col-md-11">
+                          <label for="visitationnoteDescription">Beschreibung</label>
+                          <textarea rows="5" type="text" class="form-control" id="visitationnoteDescription"></textarea>
+                      </div>
                   </div>
-                  <div id="toolbarMedia">
-                      <button id="btnNewMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
+                  <div class="form-group" style="display:none">
+                      <label for="visitationnoteID">ID</label>
+                      <input type="text" class="form-control" id="visitationnoteID" hidden>
                   </div>
                   <div style="text-align:right">
                       <button id="btnSaveVisitationnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
@@ -300,7 +347,6 @@
                   <div class="modal-footer mt-4">
                       <div class="table-responsive">
                           <label class="mt-3" for="tableMedia">Betroffene Projektteilnehmer bzw. Gewerke</label>
-
                           <!-- Table Present Members -->
                           <div class="table-responsive">
                               <table
@@ -326,6 +372,9 @@
                   </div>
 
                   <div class="modal-footer mt-4">
+                      <div id="toolbarMedia">
+                          <button id="btnNewMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Foto hinzufügen</button>
+                      </div>
                       <div class="table-responsive">
                           <label class="mt-3" for="tableMedia">Fotos</label>
                           <!-- Choose New Media [start] -->
@@ -376,58 +425,6 @@
       </div>
   </div>
   <!-- Edit Visitationnote Modal [end] -->
-
-  <!-- New Visitationnote Modal [start] -->
-  <div class="modal fade" id="modalNewVisitationnnote" tabindex="-1" role="dialog" aria-labelledby="newVisitationnoteModal" aria-hidden="true">
-      <div class="modal-dialog modal-lg" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-clipboard-list"></i> Begehungsvermerk anlegen</h5>
-                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                  </button>
-              </div>
-              <div class="modal-body">
-                  <div class="form-group mb-3">
-                      <label for="newVisitationnoteTitle">Bezeichnung</label>
-                      <input type="text" class="form-control" id="newVisitationnoteTitle" placeholder="Bezeichnung...">
-                  </div>
-                  <div class="row mb-3">
-                      <div class="form-group col-md-3">
-                          <label>Datum</label><br>
-                          <input id="newVisitationnoteDate" type="text" style="width:100%; color:#6e707e" placeholder="Datum...">
-                      </div>
-                      <div class="form-group col-md-3">
-                          <label for="newVisitationnoteCategory">Kategorie</label>
-                          <select id="newVisitationnoteCategory">
-                              <option value="Mangel" selected="selected">Mangel</option>
-                              <option value="Restarbeit">Restarbeit</option>
-                              <option value="Information">Information</option>
-                              <option value="zu erledigen">zu erledigen</option>
-                          </select>
-                      </div>
-                      <div class="form-group col-md-3">
-                          <label>Fälligkeit</label><br>
-                          <input id="newVisitationnoteDeadline" type="text" style="width:100%; color:#6e707e" placeholder="Fälligkeit...">
-                      </div>
-                      <div class="form-group col-md-3">
-                          <label for="newVisitationnoteDone">Erledigt</label>
-                          <input type="checkbox" class="form-control" id="newVisitationnoteDone">
-                      </div>
-                  </div>
-                  <div class="form-group">
-                      <label for="newVisitationnoteDescription">Baufortschritt</label>
-                      <textarea rows="10" type="text" class="form-control" id="newVisitationnoteDescription" placeholder="Bemerkungen zum Baufortschritt (Freitext)"></textarea>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                  <button id="btnSaveNewVisitationnote" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
-                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
-              </div>
-          </div>
-      </div>
-  </div>
-  <!-- New Visitationnote Modal [end] -->
 
   <!-- Edit VisitMedia Modal [start] -->
   <div class="modal fade" id="modalEditVisitMedia" tabindex="-1" role="dialog" aria-labelledby="editVisitMediaModal" aria-hidden="true">
@@ -491,6 +488,10 @@
 
   <script>
 
+      $("#pdfTest2").click(function () {
+          $("#pdfTest").click();
+      });
+
 
       $("#pdfTest").click(function () {
 
@@ -507,7 +508,21 @@
                   }
               ),
               success: function (data) {
-                  location.href = '/PdfDemo/' + idString;
+                  //location.href = '/PdfDemo/' + idString;
+                  //$("#reportsTable").bootstrapTable('refresh');
+                  $.ajax({
+                      type: "get",
+                      url: '/PdfDemo/' + idString,
+                      data: '',
+                      success: function (data) {
+                          $("#reportsTable").bootstrapTable('refresh');
+                          $('html,body').animate({
+                                  scrollTop: $("#reportsTable").offset().top},
+                              'slow');
+                      }
+                  });
+
+
               }
           });
           //location.href = '/PdfDemo';
@@ -522,6 +537,7 @@
             data:
                 {
                     'title' : $("#title").val(),
+                    'userID' : $("#responsible").val(),
                     'date' : $("#date").val(),
                     'time' : $("#time").val(),
                     'weather' : $("#weather").val(),
@@ -529,7 +545,7 @@
                 }
             ,
             success: function (data) {
-                alert("Die Änderungen an der Begehung wurden gespeichert.");
+                //alert("Die Änderungen an der Begehung wurden gespeichert.");
                 location.reload();
             }
         });
@@ -549,6 +565,11 @@
             importantChecked = 1;
         }
 
+        var concernsAllChecked = 0;
+        if ($("#visitationnoteConcernsAll").is(':checked')) {
+            concernsAllChecked = 1;
+        }
+
         $.ajax({
             type: "PATCH",
             url: "/visitationnote/update/" + id,
@@ -559,12 +580,13 @@
                     'deadline' : $("#visitationnoteDeadline").val(),
                     'notes' : $("#visitationnoteDescription").val(),
                     'done' : checked,
+                    'concernsAll' : concernsAllChecked,
                     'important' : importantChecked,
                     'category' : $("#visitationnoteCategory").val()
                 }
             ,
             success: function (data) {
-                alert("Die Änderungen am Begehungsvermerk wurden gespeichert.");
+                //alert("Die Änderungen am Begehungsvermerk wurden gespeichert.");
                 $table.bootstrapTable('refresh');
                 $("#modalEditVisitationnnote").modal('toggle');
             }
@@ -580,12 +602,13 @@
 
       $("#btnNewMediaAbbrechen").click(function () {
         $("#chooseNewMedia").hide();
+        $("#image").val("");
         $("#btnNewMedia").fadeIn();
       });
 
       $("#btnNewVisitMedia").click(function () {
           $("#btnNewVisitMedia").hide();
-          $("#image").val("");
+          $("#image").text("");
           $("#chooseNewVisitMedia").fadeIn();
       });
 
@@ -596,24 +619,43 @@
 
     $("#btnNewVisitationnote").click(function () {
 
-        $("#modalNewVisitationnnote").modal('toggle');
-        $("#visitationnoteDate").val("");
-        $("#visitationnoteTitle").val("");
-        $("#visitationnoteDeadline").val("");
-        $("#visitationnoteDescription").val("");
-        $("#visitationnoteDone").prop('checked', false);
-        $("#visitationnoteCategory").val("Mangel");
+        $.ajax({
+            type: "POST",
+            url: "/visitationnote",
+            data:
+                {
+                    'visit_id' : '{{ $visit->id }}',
+                    'category' : "Mangel"
+                }
+            ,
+            success: function (data) {
+                //alert("Der Begehungsvermerk wurde erfolgreich angelegt.");
+                $table.bootstrapTable('refresh');
+                $("#editVisitationnoteLabel").html("<i class=\"fa fa-plus-circle\"></i> Neuer Begehungsvermerk");
+                $("#modalEditVisitationnnote").modal('toggle');
+                $("#visitationnoteDate").val(data.created_at.substring(0,data.created_at.length - 9));
+                $("#visitationnoteNumber").val(data.number);
+                $("#visitationnoteDeadline").val(null);
+                $("#visitationnoteDescription").val("");
+                $("#visitationnoteDone").prop('checked', 0);
+                $("#visitationnoteConcernsAll").prop('checked', 0);
+                $("#visitationnoteImportant").prop('checked', 0);
+                $("#visitationnoteCategory").val("Mangel");
+                $("#visitationnoteID").val(data.id)
+                $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + data.id });
+                $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/visitationnote/concerned/' + data.id });
 
-
+            }
+        });
     });
 
     $("#btnSaveNewVisitationnote").click(function () {
       var done = 0;
-      if ($("#visitationnoteDone").is(':checked')) {
+      if ($("#newVisitationnoteDone").is(':checked')) {
           done = 1;
       }
         var important = 0;
-        if ($("#visitationnoteImportant").is(':checked')) {
+        if ($("#newVisitationnoteImportant").is(':checked')) {
             important = 1;
         }
 
@@ -623,7 +665,6 @@
           data:
               {
                   'visit_id' : '{{ $visit->id }}',
-                  'title' : $("#newVisitationnoteTitle").val(),
                   'date' : $("#newVisitationnoteDate").val() + " 00:00:00",
                   'deadline' : $("#newVisitationnoteDeadline").val(),
                   'notes' : $("#newVisitationnoteDescription").val(),
@@ -633,7 +674,7 @@
               }
           ,
           success: function (data) {
-              alert("Der Begehungsvermerk wurde erfolgreich angelegt.");
+              //alert("Der Begehungsvermerk wurde erfolgreich angelegt.");
               $table.bootstrapTable('refresh');
               $("#modalNewVisitationnnote").modal('toggle');
 
@@ -716,6 +757,28 @@
 
 
       /**
+       * Bootstrap-table detailFormatterReports
+       *
+       * @param index
+       * @param row
+       * @returns {string}
+       */
+      function detailFormatterReports(index, row) {
+          var html = []
+          $.each(row, function (key, value) {
+              if (value === null) {
+                  value = "Bericht wurde bisher noch nicht verschickt";
+              }
+              if (key === 'log') {
+                html.push('<p style="font-size:0.9em"><b>Verlauf:</b><br>' + value + '</p>')
+              }
+
+          })
+          return html.join('')
+      }
+
+
+      /**
        *
        * @param value
        * @param row
@@ -765,7 +828,7 @@
                   }
               ,
               success: function (data) {
-                  alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
                   $table.bootstrapTable('refresh');
               }
           });
@@ -804,7 +867,7 @@
                   }
               ,
               success: function (data) {
-                  alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
                   $table.bootstrapTable('refresh');
               }
           });
@@ -831,7 +894,7 @@
                   }
               ,
               success: function (data) {
-                  alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
                   $tableConcernedMembers.bootstrapTable('refresh');
               }
           });
@@ -843,13 +906,15 @@
       window.operateEvents = {
           'click .edit': function (e, value, row, index) {
 
+              $("#editVisitationnoteLabel").html("<i class=\"fa fa-clipboard-list\"></i> Begehungsvermerk bearbeiten");
               $("#modalEditVisitationnnote").modal('toggle');
               $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
-              $("#visitationnoteTitle").val(row.title);
+              $("#visitationnoteNumber").val(row.number);
               $("#visitationnoteDeadline").val(row.deadline);
               $("#visitationnoteDescription").val(row.notes);
               $("#visitationnoteDone").prop('checked', row.done);
               $("#visitationnoteImportant").prop('checked', row.important);
+              $("#visitationnoteConcernsAll").prop('checked', row.concernsAll);
               $("#visitationnoteCategory").val(row.category);
               $("#visitationnoteID").val(row.id)
               $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + row.id });
@@ -943,7 +1008,61 @@
                       }
                   }
               });
-          }
+          },
+          'click .deleteReport': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Bericht wirklich löschen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/report/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $reportsTable.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
+          'click .sendReport': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Bericht jetzt per E-Mail an alle Projektteilnehmer im aktuellen Verteiler senden?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "GET",
+                              url: "/report/" + row.id + "/send",
+                              data: "",
+                              success: function (data) {
+                                  $reportsTable.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
       }
 
       /**
@@ -955,42 +1074,55 @@
               locale: 'de-DE',
               columns: [
                   {
-                      field: 'title',
-                      title: 'Bezeichnung',
+                      field: 'number',
+                      title: 'Nr',
                       sortable: true,
-                      align: 'left'
+                      align: 'left',
+                      valign: 'top'
+                  },{
+                      field: 'notes',
+                      title: 'Beschreibung',
+                      sortable: false,
+                      align: 'left',
+                      valign: 'top'
+                  }, {
+                      field: 'created_at',
+                      title: 'erstellt',
+                      align: 'left',
+                      valign: 'top',
+                      sortable: true,
+                      formatter: createdAtFormatter
                   }, {
                       field: 'category',
                       title: 'Kategorie',
                       align: 'left',
+                      valign: 'top',
                       sortable: true
-                  }, {
-                      field: 'created_at',
-                      title: 'Erstellt',
-                      align: 'left',
-                      sortable: true,
-                      formatter: createdAtFormatter
                   }, {
                       field: 'deadline',
                       title: 'Fälligkeit',
                       sortable: true,
-                      align: 'left'
-                  }, {
-                      field: 'done',
-                      title: 'erledigt',
-                      sortable: true,
-                      align: 'center',
-                      formatter: doneFormatter
+                      align: 'left',
+                      valign: 'top'
                   }, {
                       field: 'important',
                       title: 'wichtig',
                       sortable: true,
                       align: 'center',
+                      valign: 'top',
                       formatter: importantFormatter
                   }, {
-                      field: 'operate',
-                      title: 'Aktionen',
+                      field: 'done',
+                      title: 'erledigt',
+                      sortable: true,
                       align: 'center',
+                      valign: 'top',
+                      formatter: doneFormatter
+                  }, {
+                      field: 'operate',
+                      title: '',
+                      align: 'center',
+                      valign: 'top',
                       events: window.operateEvents,
                       formatter: operateFormatterVisitationnotes
                   }
@@ -1095,6 +1227,35 @@
           ]
       }
 
+      function createdAtFormatterReports(value, row, index) {
+          var date = new Date(value);
+          var d = date.getDate();
+          var m = date.getMonth() + 1;
+          var h = date.getHours();
+          var min = date.getMinutes();
+          if((date.getMonth() + 1) < 10) {
+              m = "0" + m;
+          }
+          if(date.getDate() < 10) {
+              d = "0" + d;
+          }
+          if(date.getHours() < 10) {
+              h = "0" + h;
+          }
+          if(date.getMinutes() < 10) {
+              min = "0" + min;
+          }
+
+          var y = date.getFullYear().toString();
+
+
+          var output = d + "." + m + "." + y + ", " + h + ":" + min;
+
+          return [
+              output
+          ]
+      }
+
       function emailFormatter(value, row, index) {
           var email = '<a href="mailto:' + value + '">' + value + '</a>';
           return [
@@ -1112,6 +1273,19 @@
 
           return [
               '<input class=\"presenceCheck\" type=\"checkbox\" name=\"presence\" value=\"0\" onclick=\"handleClick(this,\'' + row.id + '\')\">'
+          ]
+      }
+
+      function subscribeFormatter(value, row, index) {
+
+          if (value) {
+              return [
+                  '<input class=\"presenceCheck\" type=\"checkbox\" name=\"presence\" value=\"1\" checked onclick=\"handleSubscribeClick(this,\'' + row.id + '\')\">'
+              ]
+          }
+
+          return [
+              '<input class=\"presenceCheck\" type=\"checkbox\" name=\"presence\" value=\"0\" onclick=\"handleSubscribeClick(this,\'' + row.id + '\')\">'
           ]
       }
 
@@ -1133,7 +1307,34 @@
                   }
               ,
               success: function (data) {
-                  alert("Die Änderungen bei der Anwesenheit wurden übernommen.");
+                  //alert("Die Änderungen bei der Anwesenheit wurden übernommen.");
+                  $tableMembers.bootstrapTable('refresh');
+
+              }
+          });
+
+
+      }
+
+      function handleSubscribeClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
+          //update the member's presence for this visit
+          $.ajax({
+              type: "PATCH",
+              url: "/visit/{{ $visit->id }}/subscribe",
+              data:
+                  {
+                      'memberID' : id,
+                      'subscribe' : checked
+                  }
+              ,
+              success: function (data) {
+                  //alert("Die Änderungen am Verteiler wurden übernommen.");
                   $tableMembers.bootstrapTable('refresh');
 
               }
@@ -1181,6 +1382,11 @@
                       title: 'Anwesend',
                       align: 'center',
                       formatter: presenceFormatter
+                  }, {
+                      field: 'subscribe',
+                      title: 'Verteiler',
+                      align: 'center',
+                      formatter: subscribeFormatter
                   }
 
               ]
@@ -1231,6 +1437,7 @@
               '<a href="/images/' + value + '"><img class="img-fluid visitationnote-img" src="/images/' + value + '" /></a>'
           ]
       }
+
 
       /**
        * Initiiert die Bootstrap-Table.
@@ -1434,6 +1641,85 @@
       }
 
 
+      // - REPORTS BOOTSTRAP-TABLE - //
+
+      var $reportsTable = $('#reportsTable')
+
+
+      function operateFormatterReports(value, row, index) {
+          var url = "{{url('/storage/app/public/reports/')}}/" + row.filename;
+          return [
+              '<a class="showReport" href="' + url + '" title="Anzeigen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button>',
+              '</a>  ',
+              '<a class="sendReport" title="Bericht an aktuellen Verteiler senden">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-envelope"></i></button>',
+              '</a>  ',
+              '<a class="downloadReport" href="' + url + '" title="Download" download>',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-download"></i></button>',
+              '</a>  ',
+              '<a class="deleteReport" href="javascript:void(0)" title="Löschen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+              '</a> '
+          ].join('')
+      }
+
+      function filenameFormatterReports(value, row, index) {
+          var url = "{{url('/storage/app/public/reports/')}}/" + value;
+
+          return '<a href="' + url + '"><i class=\"far fa-file-pdf\"></i> ' + value + '</a>';
+      }
+
+
+      /**
+       * Initiiert die Bootstrap-Table.
+       */
+      function initReportsTable() {
+          $reportsTable.bootstrapTable('destroy').bootstrapTable({
+              locale: 'de-DE',
+              columns: [
+                  {
+                      field: 'filename',
+                      title: 'Dateiname',
+                      sortable: false,
+                      align: 'left',
+                      formatter: filenameFormatterReports
+                  }, {
+                      field: 'created_at',
+                      title: 'erstellt am',
+                      align: 'left',
+                      sortable: true,
+                      formatter: createdAtFormatterReports
+
+                  },{
+                      field: 'operate',
+                      title: 'Aktion',
+                      sortable: false,
+                      align: 'left',
+                      events: window.operateEvents,
+                      formatter: operateFormatterReports
+                  }
+              ]
+          })
+          $reportsTable.on('check.bs.table uncheck.bs.table ' +
+              'check-all.bs.table uncheck-all.bs.table',
+              function () {
+                  //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                  // save your data, here just save the current page
+                  selections = getIdSelections()
+                  // push or splice the selections if you want to save all data selections
+              })
+          $reportsTable.on('all.bs.table', function (e, name, args) {
+              //console.log(name, args)
+          })
+
+      }
+
+
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -1498,6 +1784,7 @@
           initTableMedia();
           initTableVisitMedia();
           initTableConcernedMembers();
+          initReportsTable();
 
           $("#showDate").click(function () {
               var status = $("#date").val();
@@ -1586,6 +1873,7 @@
                       $("#filename").val(data);
                       $("#btnEditVisitMediaAbbrechen").click();
                       $tableVisitMedia.bootstrapTable('refresh');
+                      $("#btnNewVisitMediaAbbrechen").click();
                   }
               });
           });

@@ -19,8 +19,9 @@ class CreateVisitsTable extends Migration
             $table->date('date');
             $table->time('time')->nullable();
             $table->string('weather')->nullable();
-            $table->string('description')->nullable();
+            $table->longText('description')->nullable();
             $table->integer('project_id');
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

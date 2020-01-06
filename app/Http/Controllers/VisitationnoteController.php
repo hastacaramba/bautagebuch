@@ -93,7 +93,25 @@ class VisitationnoteController extends Controller
         $visitationnote = Visitationnote::where('id', '=', $visitationnoteID)->first();
 
         if ($visitationnote != null) {
+
+            $visit = Visit::where('id', $visitationnote->visit->id)->first();
+            $projectID = $visit->project_id;
+            $allProjectVisits = Visit::where('project_id', $projectID)->get();
+
+            $higherNumberVisitationnotes = [];
+
+            foreach($allProjectVisits as $projectVisit) {
+                $items = Visitationnote::where('visit_id', $projectVisit->id)->get();
+                foreach ($items as $item) {
+                    if($item->number > $visitationnote->number) {
+                        $item->number -= 1;
+                        $item->save();
+                    }
+                }
+            }
+
             $visitationnote->delete();
+
         }
 
     }
@@ -111,11 +129,11 @@ class VisitationnoteController extends Controller
         $visitationnote = Visitationnote::where('id', '=', $visitationnoteID)->first();
 
         if ($visitationnote != null) {
-            $visitationnote->title = $request->title;
             $visitationnote->created_at = $request->date;
             $visitationnote->deadline = $request->deadline;
             $visitationnote->notes = $request->notes;
             $visitationnote->done = $request->done;
+            $visitationnote->concernsAll = $request->concernsAll;
             $visitationnote->important = $request->important;
             $visitationnote->category = $request->category;
             $visitationnote->save();
@@ -131,18 +149,26 @@ class VisitationnoteController extends Controller
      */
     public function newVisitationnote(Request $request) {
 
+        //get the number for the new visitationnote
+        $visit = Visit::where('id', $request->visit_id)->first();
+        $projectID = $visit->project_id;
+        $allProjectVisits = Visit::where('project_id', $projectID)->get();
+
+        $visitationnoteCounter = 0;
+        foreach ($allProjectVisits as $projectVisit) {
+            $numberOfVisitationnotes = Visitationnote::where('visit_id', $projectVisit->id)->count();
+            $visitationnoteCounter += $numberOfVisitationnotes;
+        }
+        $nextNumber = $visitationnoteCounter + 1;
+
         $visitationnote = new Visitationnote;
 
         $visitationnote->visit_id = $request->visit_id;
-        $visitationnote->title = $request->title;
-        $visitationnote->created_at = $request->date;
-        $visitationnote->deadline = $request->deadline;
-        $visitationnote->notes = $request->notes;
-        $visitationnote->done = $request->done;
-        $visitationnote->important = $request->important;
-        $visitationnote->category = $request->category;
-
+        $visitationnote->number = $nextNumber;
+        $visitationnote->created_at = now();
         $visitationnote->save();
+
+        return $visitationnote;
 
     }
 

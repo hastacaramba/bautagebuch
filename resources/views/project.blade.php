@@ -17,139 +17,109 @@
 
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
 
-      <!-- Main Content -->
-      <div id="content">
+            <!-- Topbar -->
+            @component('partials.topbar')
+              <strong>Whoops!</strong> Something went wrong!
+            @endcomponent
+            <!-- End of Topbar -->
 
-        <!-- Topbar -->
-        @component('partials.topbar')
-          <strong>Whoops!</strong> Something went wrong!
+            <!-- Begin Page Content -->
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-10">
+                        <div>
+                            <a href="/bauprojekte">Bauprojekte</a> / <a href="/projects/{{ $projectID }}">{{ $number }} {{ $name }}</a>
+                        </div>
+                        <h2 class="m-0 font-weight-bold text-primary">Bauprojekt: {{ $number }} {{ $name }}</h2>
+                        <div class="border-left-primary pl-2 text-primary mb-2">
+                            {{ $street }} {{ $housenumber }}, {{ $postcode }} {{ $city }}<br>
+                            Erstellt: {{ date('d.m.Y', strtotime($created_at)) }}<br>
+                            Letzte Aktualisierung: {{ date('d.m.Y', strtotime($updated_at)) }}
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <img class="img-fluid img-rounded" src="/images/{{ $photo }}">
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                      <h4><i class="fas fa-users"></i> Projektbeteiligte</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="toolbarMembers">
+                            <button id="btnNewMember" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Projektbeteiligte hinzufügen</button>
+                        </div>
+                        <!-- Table Members -->
+                        <div class="table-responsive">
+                            <table
+                                  id="tableMembers"
+                                  data-id-field="id"
+                                  data-side-pagination="client"
+                                  data-toggle="table"
+                                  data-sortable="true"
+                                  data-url="/members/{{ $projectID }}"
+                                  data-toolbar="#toolbarMembers"
+                                  data-search="true"
+                                  data-show-columns="false"
+                                  data-pagination="true"
+                                  data-page-list="[10, 25, 50, 100, ALL]"
+                                  data-detail-formatter="detailFormatter"
+                                  data-detail-view="true"
+                                  data-response-handler="responseHandler"
+                                  data-show-export="false"
+                                  data-show-pagination-switch="true"
+                                  data-row-style="rowStyle">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h4><i class="fas fa-walking"></i> Begehungen</h4>
+                    </div>
+                    <div class="card-body">
+                        <div id="toolbarVisits">
+                            <button id="btnNewVisit" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neue Begehung</button>
+                        </div>
+                        <!-- Table Visits -->
+                        <div class="table-responsive">
+                            <table
+                              id="tableVisits"
+                              data-id-field="id"
+                              data-side-pagination="client"
+                              data-toggle="table"
+                              data-sortable="true"
+                              data-url="/visits/{{ $projectID }}"
+                              data-toolbar="#toolbarVisits"
+                              data-search="true"
+                              data-show-columns="false"
+                              data-pagination="true"
+                              data-page-list="[10, 25, 50, 100, ALL]"
+                              data-detail-formatter="detailFormatter"
+                              data-detail-view="true"
+                              data-response-handler="responseHandler"
+                              data-show-export="false"
+                              data-show-pagination-switch="true"
+                              data-row-style="rowStyle">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- End of Main Content -->
+
+        @component('partials.footer')
+            <strong>Whoops!</strong> Something went wrong!
         @endcomponent
-        <!-- End of Topbar -->
-
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-10">
-              <div>
-                  <a href="/bauprojekte">Bauprojekte</a> / <a href="/projects/{{ $projectID }}">{{ $number }} {{ $name }}</a>
-              </div>
-              <h2 class="m-0 font-weight-bold text-primary">Bauprojekt: {{ $number }} {{ $name }}</h2>
-              <div class="border-left-primary pl-2 text-primary">
-                {{ $street }} {{ $housenumber }}, {{ $postcode }} {{ $city }}<br>
-                Erstellt: {{ $created_at }}<br>
-                Letzte Aktualisierung: {{ $updated_at }}
-              </div>
-            </div>
-            <div class="col-md-2">
-              <img class="img-fluid img-rounded" src="/images/{{ $photo }}">
-            </div>
-          </div>
-        </div>
-        <div class="card-body">
-
-            <ul class="tabs">
-                <li class="tab-link current" data-tab="tab-1"><i class="fas fa-users"></i> Projektbeteiligte</li>
-                <li class="tab-link" data-tab="tab-2"><i class="fas fa-walking"></i> Begehungen</li>
-                <li class="tab-link" data-tab="tab-3"><i class="far fa-clipboard"></i> Projektvermerke</li>
-            </ul>
-
-            <div id="tab-1" class="tab-content current">
-                <div id="toolbarMembers">
-                    <button id="btnNewMember" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Projektbeteiligte hinzufügen</button>
-                </div>
-                <!-- Table Members -->
-                <div class="table-responsive">
-                    <table
-                            id="tableMembers"
-                            data-id-field="id"
-                            data-side-pagination="client"
-                            data-toggle="table"
-                            data-sortable="true"
-                            data-url="/members/{{ $projectID }}"
-                            data-toolbar="#toolbarMembers"
-                            data-search="true"
-                            data-show-columns="false"
-                            data-pagination="true"
-                            data-page-list="[10, 25, 50, 100, ALL]"
-                            data-detail-formatter="detailFormatter"
-                            data-detail-view="true"
-                            data-response-handler="responseHandler"
-                            data-show-export="false"
-                            data-show-pagination-switch="true"
-                            data-row-style="rowStyle">
-                    </table>
-                </div>
-            </div>
-            <div id="tab-2" class="tab-content">
-                <div id="toolbarVisits">
-                    <button id="btnNewVisit" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neue Begehung</button>
-                </div>
-                <!-- Table Visits -->
-                <div class="table-responsive">
-                    <table
-                            id="tableVisits"
-                            data-id-field="id"
-                            data-side-pagination="client"
-                            data-toggle="table"
-                            data-sortable="true"
-                            data-url="/visits/{{ $projectID }}"
-                            data-toolbar="#toolbarVisits"
-                            data-search="true"
-                            data-show-columns="false"
-                            data-pagination="true"
-                            data-page-list="[10, 25, 50, 100, ALL]"
-                            data-detail-formatter="detailFormatter"
-                            data-detail-view="true"
-                            data-response-handler="responseHandler"
-                            data-show-export="false"
-                            data-show-pagination-switch="true"
-                            data-row-style="rowStyle">
-                    </table>
-                </div>
-            </div>
-            <div id="tab-3" class="tab-content">
-                <div id="toolbarProjectNotes">
-                    <button id="btnNewProjectNote" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neuer Projektvermerk</button>
-                </div>
-                <!-- Table ProjectNotes -->
-                <div class="table-responsive">
-                    <table
-                            id="tableProjectNotes"
-                            data-id-field="id"
-                            data-side-pagination="client"
-                            data-toggle="table"
-                            data-sortable="true"
-                            data-url="/projectnotes/{{ $projectID }}"
-                            data-toolbar="#toolbarProjectNotes"
-                            data-search="true"
-                            data-show-columns="false"
-                            data-pagination="true"
-                            data-page-list="[10, 25, 50, 100, ALL]"
-                            data-detail-formatter="detailFormatter"
-                            data-detail-view="true"
-                            data-response-handler="responseHandler"
-                            data-show-export="false"
-                            data-show-pagination-switch="true"
-                            data-row-style="rowStyle">
-                    </table>
-                </div>
-            </div>
-        </div>
-          <!--<div class="container-fluid">
-              <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                      <h3>Dokumente</h3>
-                  </div>
-              </div>
-          </div> -->
-      </div>
-      <!-- End of Main Content -->
-
-      @component('partials.footer')
-        <strong>Whoops!</strong> Something went wrong!
-      @endcomponent
-
 
     </div>
     <!-- End of Content Wrapper -->
@@ -188,11 +158,10 @@
           <div class="modal-content">
               <div class="modal-header">
                   <div class="modal-title" id="visitModalLabel"><i class="fa fa-walking"></i> Projektbeteiligte hinzufügen</div>
-                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">×</span>
-                      </button>
-                  </div>
-              </div>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+               </div>
               <div class="modal-body">
                   <div class="form-group">
                       <label for="contactSelect">Kontakt</label>
@@ -202,6 +171,7 @@
                       <label for="subareaSelect">Gewerk</label>
                       <div id="subareaSelect"></div>
                   </div>
+              </div>
               <div class="modal-footer">
                   <button id="btnSaveNewMember" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Hinzufügen</button>
                   <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
@@ -582,9 +552,11 @@
 
     $("#btnNewVisit").click(function (e) {
         $.ajax({
-            type: "GET",
+            type: "POST",
             url: "/visit/new/{{ $projectID }}",
-            data: "",
+            data: {
+                'userID' : '{{ Auth::user()->id }}'
+            },
             success: function (data) {
                 location.href="/visit/" + data;
             }

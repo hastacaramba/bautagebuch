@@ -6,14 +6,17 @@ use App\ExportData;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use PDF;
 use App\Project;
 use App\Visit;
 use App\Media;
 use App\Visitationnote;
 use App\Member;
+use App\User;
 use App\Contact;
 use App\Subarea;
+use App\Report;
 
 class PdfController extends Controller {
 
@@ -30,21 +33,39 @@ class PdfController extends Controller {
         $visitID = $request->json("visitID");
         $visit = Visit::where('id', '=', $visitID)->first();
 
+        $visitDescription = explode("\n", $visit->description);
+
         $projectID = $request->json("projectID");
         $project = Project::where('id', '=', $projectID)->first();
 
-
+        $responsible = User::where('id', $visit->user_id)->first()->name;
 
         //get the visit media
         $visitMedia = Media::where('visit_id', $visitID)->get();
 
         $numOfVisitMedia = sizeof($visitMedia);
 
-        $visitationnotes = Visitationnote::where('visit_id', '=', $visitID)->get();
+        //all visits of the project
+        $projectVisits = Visit::where('project_id', $projectID)->get();
+
+        $visitationnotes = [];
+
+        foreach($projectVisits as $projectVisit) {
+            $visitVisitationnotes = Visitationnote::where('visit_id', $projectVisit->id)->get();
+            foreach($visitVisitationnotes as $visitationnote) {
+                $visitationnotes[] = $visitationnote;
+            }
+        }
 
         $visitationnotesWithMedia = [];
 
+        $openVisitationNotesCounter = 0;
+
         foreach($visitationnotes as $visitationnote) {
+
+            if(!$visitationnote['done']) {
+                $openVisitationNotesCounter += 1;
+            }
 
             //get all members of the project
             $members = Member::where('project_id', '=', $visitationnote->visit->project_id)->get();
@@ -89,13 +110,21 @@ class PdfController extends Controller {
 
             $numOfRows = sizeof($media);
 
+            $createdAt = date('d.m.Y', strtotime($visitationnote->created_at));
+
+            $deadline = date('d.m.Y', strtotime($visitationnote->deadline));
+
+
+
             $item = [
                 'id' => $visitationnote->id,
-                'title' => $visitationnote->title,
+                'number' => $visitationnote->number,
+                'createdAt' => $createdAt,
                 'category' => $visitationnote->category,
                 'notes' => $visitationnote->notes,
-                'deadline' => $visitationnote->deadline,
+                'deadline' => $deadline,
                 'done' => $visitationnote->done,
+                'concernsAll' => $visitationnote->concernsAll,
                 'important' => $visitationnote->important,
                 'media' => $media,
                 'numOfRows' => $numOfRows,
@@ -144,6 +173,9 @@ class PdfController extends Controller {
 
         $data = [
             'visit' => $visit,
+            'responsible' => $responsible,
+            'openVisitationNotesCounter' => $openVisitationNotesCounter,
+            'visitDescription' => $visitDescription,
             'project' => $project,
             'presentMembersData' => $presentMembersData,
             'visitationnotes' => $visitationnotesWithMedia,
@@ -163,6 +195,12 @@ class PdfController extends Controller {
 
         $visit = json_decode($exportData->data, true)['visit'];
 
+        $responsible = json_decode($exportData->data, true)['responsible'];
+
+        $openVisitationNotesCounter = json_decode($exportData->data, true)['openVisitationNotesCounter'];
+
+        $visitDescription = json_decode($exportData->data, true)['visitDescription'];
+
         $project = json_decode($exportData->data, true)['project'];
 
         $presentMembers = json_decode($exportData->data, true)['presentMembersData'];
@@ -176,6 +214,9 @@ class PdfController extends Controller {
         // usersPdf is the view that includes the downloading content
         $view = \View::make('PdfDemo', [
             'visit'=>$visit,
+            'responsible'=>$responsible,
+            'openVisitationNotesCounter' => $openVisitationNotesCounter,
+            'visitDescription'=>$visitDescription,
             'project'=>$project,
             'presentMembers'=>$presentMembers,
             'visitationnotes'=>$visitationnotes,
@@ -190,8 +231,19 @@ class PdfController extends Controller {
         PDF::SetTitle("Begehung: " . $visit['title']);
         PDF::AddPage();
         PDF::writeHTML($html_content, true, false, true, false, '');
-        // userlist is the name of the PDF downloading
-        PDF::Output('begehungsbericht_' . '.pdf');
+
+        $filename = $project['number'] . '_' . $visit['date'] . '_' . uniqid() . '.pdf';
+
+        // first save the report
+        PDF::Output(storage_path('app/public/reports/'.$filename), 'F');
+
+        //write the report in DB
+        DB::table('reports')->insert([
+            ['filename' => $filename, 'visit_id' => $visit['id'], 'created_at' => now()]
+        ]);
+
+        //open the report
+        //PDF::Output($filename);
 
         //ExportData::where('idString', '=', $idString)->delete();
 

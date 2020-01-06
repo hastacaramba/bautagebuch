@@ -16,11 +16,12 @@ class CreateVisitationnotesTable extends Migration
         Schema::create('visitationnotes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->enum('category',['Mangel','Restarbeit','Information','zu erledigen']);
-            $table->string('title');
+            $table->integer('number');
             $table->string('notes')->nullable();
             $table->date('deadline')->nullable();
             $table->boolean('done')->default(0);
             $table->boolean('important')->default(0);
+            $table->boolean('concernsAll')->default(0);
             $table->integer('visit_id');
             $table->timestamps();
         });
