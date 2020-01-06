@@ -50,12 +50,12 @@
         {{ $line }}<br>
     @endforeach
 </p>
-<table cellpadding="10" style="text-indent: -10px; font-size: 0.7em" class="table table-bordered table-striped">
+<table cellpadding="10" style="font-size: 0.7em" class="table table-bordered table-striped">
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
       <td>
         <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150"><br>
-        {{ $visitMedia[2 * $i]['info'] ?? ""}}<br>
+          <span style="text-indent: -10px">{{ $visitMedia[2 * $i]['info'] ?? ""}}</span><br>
       </td>
       @if( ($numOfVisitMedia % 2 == 1) && ($i == ceil($numOfVisitMedia / 2) - 1))
         <td>
@@ -63,7 +63,7 @@
       @else
         <td>
           <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150"><br>
-          {{ $visitMedia[2 * $i + 1]['info'] ?? ""}}<br>
+            <span style="text-indent: -10px">{{ $visitMedia[2 * $i + 1]['info'] ?? ""}}</span><br>
         </td>
       @endif
     </tr>
