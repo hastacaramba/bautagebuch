@@ -55,7 +55,7 @@
     <tr>
       <td>
         <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150"><br>
-          <span style="text-indent: -10px">{{ $visitMedia[2 * $i]['info'] ?? ""}}</span><br>
+        {{ $visitMedia[2 * $i]['info'] ?? ""}}<br>
       </td>
       @if( ($numOfVisitMedia % 2 == 1) && ($i == ceil($numOfVisitMedia / 2) - 1))
         <td>
@@ -63,7 +63,7 @@
       @else
         <td>
           <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150"><br>
-            <span style="text-indent: -10px">{{ $visitMedia[2 * $i + 1]['info'] ?? ""}}</span><br>
+          {{ $visitMedia[2 * $i + 1]['info'] ?? ""}}<br>
         </td>
       @endif
     </tr>
