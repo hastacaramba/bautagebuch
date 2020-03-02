@@ -51,7 +51,7 @@ class ImageUploadController extends Controller
     public function imageUploadPostVisitationnote(Request $request)
     {
         $request->validate([
-            'image' => 'required|mimes:jpeg,png,pdf,jpg,gif,svg|max:10240',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
         ]);
 
         $image = $request->file('image');
@@ -62,12 +62,9 @@ class ImageUploadController extends Controller
 
         $img = Image::make($image->getRealPath());
 
-        /*
         $img->resize(1000, 1000, function ($constraint) {
             $constraint->aspectRatio();
         })->save($destinationPath.'/'.$imageName);
-        */
-        $img->save($destinationPath.'/'.$imageName);
 
         $visitationnoteID = $request->visitationnoteID;
 
