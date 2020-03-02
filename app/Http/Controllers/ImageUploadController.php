@@ -62,9 +62,12 @@ class ImageUploadController extends Controller
 
         $img = Image::make($image->getRealPath());
 
+        /*
         $img->resize(1000, 1000, function ($constraint) {
             $constraint->aspectRatio();
         })->save($destinationPath.'/'.$imageName);
+        */
+        $img->save($destinationPath.'/'.$imageName);
 
         $visitationnoteID = $request->visitationnoteID;
 
