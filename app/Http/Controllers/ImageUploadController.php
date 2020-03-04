@@ -50,30 +50,69 @@ class ImageUploadController extends Controller
      */
     public function imageUploadPostVisitationnote(Request $request)
     {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-        ]);
 
-        $image = $request->file('image');
+        //get the filetype by extension
+        $extension = $request->image->extension();
 
-        $imageName = time().'.'.$request->image->extension();
+        if ($extension === ".pdf") {
+            $request->validate([
+                'image' => 'required|pdf_file|mimes:pdf|max:900240',
+            ]);
 
-        $destinationPath = public_path('images');
+            $image = $request->file('image');
 
-        $img = Image::make($image->getRealPath());
+            $imageName = time().'.'.$request->image->extension();
 
-        $img->resize(1000, 1000, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($destinationPath.'/'.$imageName);
+            $destinationPath = public_path('images');
 
-        $visitationnoteID = $request->visitationnoteID;
+            $request->move($destinationPath,$imageName);
 
-        $media = new Media();
-        $media->filename = $imageName;
-        $media->visitationnote_id = $visitationnoteID;
-        $media->save();
 
-        return $imageName;
+
+            //$img = Image::make($image->getRealPath());
+
+            //$img->resize(1000, 1000, function ($constraint) {
+            //    $constraint->aspectRatio();
+            //})->save($destinationPath.'/'.$imageName);
+
+            $visitationnoteID = $request->visitationnoteID;
+
+            $media = new Media();
+            $media->filename = $imageName;
+            $media->visitationnote_id = $visitationnoteID;
+            $media->save();
+
+            return $imageName;
+
+        } else {
+
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            ]);
+
+            $image = $request->file('image');
+
+            $imageName = time().'.'.$request->image->extension();
+
+            $destinationPath = public_path('images');
+
+            $img = Image::make($image->getRealPath());
+
+            $img->resize(1000, 1000, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$imageName);
+
+            $visitationnoteID = $request->visitationnoteID;
+
+            $media = new Media();
+            $media->filename = $imageName;
+            $media->visitationnote_id = $visitationnoteID;
+            $media->save();
+
+            return $imageName;
+        }
+
+
 
     }
 
