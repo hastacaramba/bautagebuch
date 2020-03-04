@@ -90,7 +90,7 @@ class ImageUploadController extends Controller
 
             $destinationPath = public_path('images');
 
-            $image->save($destinationPath,$imageName);
+            $image->move($destinationPath,$imageName);
 
 
 
