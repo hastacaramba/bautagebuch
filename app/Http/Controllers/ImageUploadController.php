@@ -25,23 +25,46 @@ class ImageUploadController extends Controller
      */
     public function imageUploadPost(Request $request)
     {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-        ]);
+        //get the filetype by extension
+        $extension = $request->image->extension();
 
-        $image = $request->file('image');
+        if ($extension === ".pdf") {
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            ]);
 
-        $imageName = time().'.'.$request->image->extension();
+            $image = $request->file('image');
 
-        $destinationPath = public_path('images');
+            $imageName = time().'.'.$request->image->extension();
 
-        $img = Image::make($image->getRealPath());
+            $destinationPath = public_path('images');
 
-        $img->resize(1000, 1000, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($destinationPath.'/'.$imageName);
+            $img = Image::make($image->getRealPath());
 
-        return $imageName;
+            $img->resize(1000, 1000, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$imageName);
+
+            return $imageName;
+
+        } else {
+
+            $request->validate([
+                'image' => 'required|pdf_file|mimes:pdf|max:900240',
+            ]);
+
+            $pdf = $request->file('image');
+
+            $pdfName = time().'.'.$request->image->extension();
+
+            $destinationPath = public_path('images');
+
+            $pdf->save($destinationPath.'/'.$pdfName);
+
+            return $pdfName;
+        }
+
+
     }
 
     /**
