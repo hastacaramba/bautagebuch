@@ -29,6 +29,23 @@ class ImageUploadController extends Controller
         $extension = $request->image->extension();
 
         if ($extension === ".pdf") {
+
+            $request->validate([
+                'image' => 'required|pdf_file|mimes:pdf|max:900240',
+            ]);
+
+            $pdf = $request->file('image');
+
+            $pdfName = time().'.'.$request->image->extension();
+
+            $destinationPath = public_path('images');
+
+            $pdf->save($destinationPath.'/'.$pdfName);
+
+            return $pdfName;
+
+        } else {
+
             $request->validate([
                 'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
             ]);
@@ -47,21 +64,6 @@ class ImageUploadController extends Controller
 
             return $imageName;
 
-        } else {
-
-            $request->validate([
-                'image' => 'required|pdf_file|mimes:pdf|max:900240',
-            ]);
-
-            $pdf = $request->file('image');
-
-            $pdfName = time().'.'.$request->image->extension();
-
-            $destinationPath = public_path('images');
-
-            $pdf->save($destinationPath.'/'.$pdfName);
-
-            return $pdfName;
         }
 
 
@@ -146,33 +148,68 @@ class ImageUploadController extends Controller
      */
     public function imageUploadPostVisit(Request $request)
     {
-        $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-        ]);
+        //get the filetype by extension
+        $extension = $request->image->extension();
 
-        $image = $request->file('image');
+        if ($extension === ".pdf") {
 
-        $imageName = time().'.'.$request->image->extension();
+            $request->validate([
+                'image' => 'required|pdf_file|mimes:pdf|max:900240',
+            ]);
 
-        $destinationPath = public_path('images');
+            $image = $request->file('image');
 
-        $img = Image::make($image->getRealPath());
+            $imageName = time().'.'.$request->image->extension();
 
-        $img->resize(1000, 1000, function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($destinationPath.'/'.$imageName);
+            $destinationPath = public_path('images');
 
-        $visitID = $request->visitID;
+            $image->save($destinationPath.'/'.$imageName);
 
-        $info = $request->info;
+            $visitID = $request->visitID;
 
-        $media = new Media();
-        $media->filename = $imageName;
-        $media->info = $info;
-        $media->visit_id = $visitID;
-        $media->save();
+            $info = $request->info;
 
-        return $imageName;
+            $media = new Media();
+            $media->filename = $imageName;
+            $media->info = $info;
+            $media->visit_id = $visitID;
+            $media->save();
+
+            return $imageName;
+
+        } else {
+
+            $request->validate([
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            ]);
+
+            $image = $request->file('image');
+
+            $imageName = time().'.'.$request->image->extension();
+
+            $destinationPath = public_path('images');
+
+            $img = Image::make($image->getRealPath());
+
+            $img->resize(1000, 1000, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$imageName);
+
+            $visitID = $request->visitID;
+
+            $info = $request->info;
+
+            $media = new Media();
+            $media->filename = $imageName;
+            $media->info = $info;
+            $media->visit_id = $visitID;
+            $media->save();
+
+            return $imageName;
+
+        }
+
+
 
     }
 
