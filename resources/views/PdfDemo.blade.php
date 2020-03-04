@@ -127,7 +127,7 @@
                             {{ $concernedMember['company'] }}
                         @endif
                         @if( $concernedMember['surname'] != "")
-                            ,{{ $concernedMember['firstname'] }} {{ $concernedMember['surname'] }} ({{ $concernedMember['subarea'] }})
+                            ({{ $concernedMember['subarea'] }})
                         @endif
                         <br>
                     @endforeach
