@@ -25,48 +25,23 @@ class ImageUploadController extends Controller
      */
     public function imageUploadPost(Request $request)
     {
-        //get the filetype by extension
-        $extension = $request->image->extension();
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        ]);
 
-        if ($extension === "pdf") {
+        $image = $request->file('image');
 
-            $request->validate([
-                'image' => 'required|mimetypes:application/pdf|max:900240',
-            ]);
+        $imageName = time().'.'.$request->image->extension();
 
-            $pdf = $request->file('image');
+        $destinationPath = public_path('images');
 
-            $pdfName = time().'.'.$request->image->extension();
+        $img = Image::make($image->getRealPath());
 
-            $destinationPath = public_path('images');
+        $img->resize(1000, 1000, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imageName);
 
-            $pdf->save($destinationPath.'/'.$pdfName);
-
-            return $pdfName;
-
-        } else {
-
-            $request->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-            ]);
-
-            $image = $request->file('image');
-
-            $imageName = time().'.'.$request->image->extension();
-
-            $destinationPath = public_path('images');
-
-            $img = Image::make($image->getRealPath());
-
-            $img->resize(1000, 1000, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$imageName);
-
-            return $imageName;
-
-        }
-
-
+        return $imageName;
     }
 
     /**
@@ -76,67 +51,30 @@ class ImageUploadController extends Controller
     public function imageUploadPostVisitationnote(Request $request)
     {
 
-        //get the filetype by extension
-        $extension = $request->image->extension();
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        ]);
 
-        if ($extension === "pdf") {
-            $request->validate([
-                'image' => 'required|mimetypes:application/pdf|max:900240',
-            ]);
+        $image = $request->file('image');
 
-            $image = $request->file('image');
+        $imageName = time().'.'.$request->image->extension();
 
-            $imageName = time().'.'.$request->image->extension();
+        $destinationPath = public_path('images');
 
-            $destinationPath = public_path('images');
+        $img = Image::make($image->getRealPath());
 
-            $image->move($destinationPath,$imageName);
+        $img->resize(1000, 1000, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imageName);
 
+        $visitationnoteID = $request->visitationnoteID;
 
+        $media = new Media();
+        $media->filename = $imageName;
+        $media->visitationnote_id = $visitationnoteID;
+        $media->save();
 
-            //$img = Image::make($image->getRealPath());
-
-            //$img->resize(1000, 1000, function ($constraint) {
-            //    $constraint->aspectRatio();
-            //})->save($destinationPath.'/'.$imageName);
-
-            $visitationnoteID = $request->visitationnoteID;
-
-            $media = new Media();
-            $media->filename = $imageName;
-            $media->visitationnote_id = $visitationnoteID;
-            $media->save();
-
-            return $imageName;
-
-        } else {
-
-            $request->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-            ]);
-
-            $image = $request->file('image');
-
-            $imageName = time().'.'.$request->image->extension();
-
-            $destinationPath = public_path('images');
-
-            $img = Image::make($image->getRealPath());
-
-            $img->resize(1000, 1000, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$imageName);
-
-            $visitationnoteID = $request->visitationnoteID;
-
-            $media = new Media();
-            $media->filename = $imageName;
-            $media->visitationnote_id = $visitationnoteID;
-            $media->save();
-
-            return $imageName;
-        }
-
+        return $imageName;
 
 
     }
@@ -148,68 +86,33 @@ class ImageUploadController extends Controller
      */
     public function imageUploadPostVisit(Request $request)
     {
-        //get the filetype by extension
-        $extension = $request->image->extension();
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        ]);
 
-        if ($extension === "pdf") {
+        $image = $request->file('image');
 
-            $request->validate([
-                'image' => 'required|mimetypes:application/pdf|max:900240',
-            ]);
+        $imageName = time().'.'.$request->image->extension();
 
-            $image = $request->file('image');
+        $destinationPath = public_path('images');
 
-            $imageName = time().'.'.$request->image->extension();
+        $img = Image::make($image->getRealPath());
 
-            $destinationPath = public_path('images');
+        $img->resize(1000, 1000, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imageName);
 
-            $image->save($destinationPath.'/'.$imageName);
+        $visitID = $request->visitID;
 
-            $visitID = $request->visitID;
+        $info = $request->info;
 
-            $info = $request->info;
+        $media = new Media();
+        $media->filename = $imageName;
+        $media->info = $info;
+        $media->visit_id = $visitID;
+        $media->save();
 
-            $media = new Media();
-            $media->filename = $imageName;
-            $media->info = $info;
-            $media->visit_id = $visitID;
-            $media->save();
-
-            return $imageName;
-
-        } else {
-
-            $request->validate([
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
-            ]);
-
-            $image = $request->file('image');
-
-            $imageName = time().'.'.$request->image->extension();
-
-            $destinationPath = public_path('images');
-
-            $img = Image::make($image->getRealPath());
-
-            $img->resize(1000, 1000, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$imageName);
-
-            $visitID = $request->visitID;
-
-            $info = $request->info;
-
-            $media = new Media();
-            $media->filename = $imageName;
-            $media->info = $info;
-            $media->visit_id = $visitID;
-            $media->save();
-
-            return $imageName;
-
-        }
-
-
+        return $imageName;
 
     }
 
