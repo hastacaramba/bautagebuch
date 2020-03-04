@@ -145,7 +145,7 @@
         <div class="modal-body">Wählen Sie "Logout" unten wenn Sie sich wirklich abmelden möchten.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
-          <a class="btn btn-primary" href="login2.blade.php">Logout</a>
+          <a class="btn btn-primary" href="/logout">Logout</a>
         </div>
       </div>
     </div>
