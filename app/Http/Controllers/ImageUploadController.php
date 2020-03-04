@@ -31,7 +31,7 @@ class ImageUploadController extends Controller
         if ($extension === "pdf") {
 
             $request->validate([
-                'image' => 'required|pdf_file|mimes:pdf|max:900240',
+                'image' => 'required|mimetypes:application/pdf|max:900240',
             ]);
 
             $pdf = $request->file('image');
@@ -81,7 +81,7 @@ class ImageUploadController extends Controller
 
         if ($extension === "pdf") {
             $request->validate([
-                'image' => 'required|pdf_file|mimes:pdf|max:900240',
+                'image' => 'required|mimetypes:application/pdf|max:900240',
             ]);
 
             $image = $request->file('image');
@@ -154,7 +154,7 @@ class ImageUploadController extends Controller
         if ($extension === "pdf") {
 
             $request->validate([
-                'image' => 'required|pdf_file|mimes:pdf|max:900240',
+                'image' => 'required|mimetypes:application/pdf|max:900240',
             ]);
 
             $image = $request->file('image');
