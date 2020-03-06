@@ -1824,6 +1824,12 @@
           ].join('')
       }
 
+      function pdfFormatter(value, row, index) {
+          return [
+              '<a href="/images/' + value + '"><i class="fas fa-file-pdf">' + value + '</a>'
+          ]
+      }
+
       /**
        * Initiiert die Bootstrap-Table.
        */
@@ -1836,7 +1842,7 @@
                       title: 'Foto',
                       sortable: false,
                       align: 'left',
-                      formatter: imageFormatterMediaPdf
+                      formatter: pdfFormatter
                   },{
                       field: 'info',
                       title: 'Beschreibung',
