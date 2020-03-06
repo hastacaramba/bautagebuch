@@ -142,7 +142,7 @@ class ReportController extends Controller {
 
         $log = $log . '<i class="far fa-envelope"></i> ' . now() . ', ';
 
-        for($i = 0; $i < count($mailAddresses); $i++)) {
+        for($i = 0; $i < count($mailAddresses); $i++) {
 
             $log .= $mailAddresses[$i];
 
