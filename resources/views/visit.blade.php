@@ -1841,7 +1841,7 @@
 
 
       function pdfFormatter(value, row, index) {
-          var url = "{{url('/storage/app/public/documents/')}}/" + value;
+          var url = "{{url('/storage/app/public/documents')}}/" + value;
 
           return '<a href="' + url + '"><i class=\"far fa-file-pdf\"></i> ' + value + '</a>';
       }
