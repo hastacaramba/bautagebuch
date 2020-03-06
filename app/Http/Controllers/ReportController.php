@@ -6,6 +6,7 @@ use App\Member;
 use App\Report;
 use Illuminate\Support\Facades\Mail;
 use DateTime;
+use App\Pdf;
 
 
 class ReportController extends Controller {
@@ -104,6 +105,11 @@ class ReportController extends Controller {
 
         $projectName = $project->name;
 
+
+        //get all documents of this visit
+        $documents = Pdf::where('visit_id', $visit->id)->get();
+
+
         //who has a subscription for visit mail at the moment?
         //get all members of the project
         $members = Member::where('project_id', '=', $report->visit->project_id)->get();
@@ -151,13 +157,18 @@ class ReportController extends Controller {
                 'projectName' => $projectName,
                 'visitDate' => $date->format('d.m.Y')
             );
-            Mail::send('emails.mail', $data, function($message) use ($to_email, $report, $visitDate, $projectName) {
+            Mail::send('emails.mail', $data, function($message) use ($to_email, $report, $visitDate, $projectName, $documents) {
                 $message->to($to_email)
                     ->subject($projectName . ', Begehungsbericht ' . $visitDate)
                     ->from('bauleitung@bautagebuch-cloud.de','maier + maier architekten gmbh');
                 $message->attach('storage/app/public/reports/' . $report->filename, [
                     'mime' => 'application/pdf'
                 ]);
+                foreach($documents as $document) {
+                    $message->attach('storage/app/public/documents/' . $document->filename, [
+                        'mime' => 'application/pdf'
+                    ]);
+                }
             });
 
         }
