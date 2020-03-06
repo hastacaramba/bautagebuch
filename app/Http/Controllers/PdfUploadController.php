@@ -88,11 +88,11 @@ class PdfUploadController extends Controller
 
         $pdf = $request->file('pdf');
 
-        $pdfName = $request->pdf->filename().time().'.'.$request->pdf->extension();
+        $pdfName = time()."_".$request->pdf->getClientOriginalName();
 
         $destinationPath = public_path('images');
 
-        $pdf->save($destinationPath.'/'.$pdfName);
+        $pdf->move($destinationPath.'/'.$pdfName);
 
         $pdfID = $request->pdfID;
 
