@@ -183,6 +183,7 @@ class ReportController extends Controller {
                     $log .= ", ";
                 }
             }
+            $log .= ")";
         }
 
         $log .= '<br>';
