@@ -6,6 +6,7 @@ use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Member;
 use App\Media;
+use App\Pdf;
 use App\Visit;
 use App\Project;
 use App\User;
