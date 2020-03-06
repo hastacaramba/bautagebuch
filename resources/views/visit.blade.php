@@ -723,6 +723,19 @@
           $("#btnNewVisitMedia").fadeIn();
       });
 
+
+      $("#btnNewVisitMediaPdf").click(function () {
+          $("#btnNewVisitMediaPdf").hide();
+          $("#pdf").text("");
+          $("#chooseNewVisitMediaPdf").fadeIn();
+      });
+
+      $("#btnNewVisitMediaPdfAbbrechen").click(function () {
+          $("#chooseNewVisitMediaPdf").hide();
+          $("#btnNewVisitMediaPdf").fadeIn();
+      });
+
+
     $("#btnNewVisitationnote").click(function () {
 
         $.ajax({
