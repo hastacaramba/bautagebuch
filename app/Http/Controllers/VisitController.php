@@ -329,12 +329,22 @@ class VisitController extends Controller
 
 
     /**
-     * Get the media of th visit.
+     * Get the media of the visit.
      */
     public function getVisitMedia($visitID) {
         $media = Media::where('visit_id', $visitID)->get();
 
         return $media;
+    }
+
+
+    /**
+     * Get the pdfs of the visit.
+     */
+    public function getVisitPdfs($visitID) {
+        $pdfs = Pdf::where('visit_id', $visitID)->get();
+
+        return $pdfs;
     }
 
 

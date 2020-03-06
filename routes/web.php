@@ -113,6 +113,8 @@ Route::patch('/visit/{visitID}/subscribe', 'VisitController@setSubscriptions')->
 
 Route::get('/visit/{visitID}/media', 'VisitController@getVisitMedia')->middleware('auth');
 
+Route::get('/visit/{visitID}/pdf', 'VisitController@getVisitPdfs')->middleware('auth');
+
 Route::patch('/visitationnote/{visitationnoteID}/concerned', 'VisitationnoteController@setConcernedMembers')->middleware('auth');
 
 Route::patch('/visitationnote/{visitationnoteID}/important', 'VisitationnoteController@setImportant')->middleware('auth');
