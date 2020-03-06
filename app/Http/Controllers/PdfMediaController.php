@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Media;
+use App\Pdf;
 
 class PdfMediaController extends Controller
 {
