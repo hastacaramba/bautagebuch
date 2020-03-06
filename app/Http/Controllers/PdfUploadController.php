@@ -32,7 +32,7 @@ class PdfUploadController extends Controller
 
         $pdf = $request->file('pdf');
 
-        $pdfName = $request->pdf->filename().time().'.'.$request->pdf->extension();
+        $pdfName = time().'.'.$request->pdf->extension();
 
         $destinationPath = public_path('images');
 
