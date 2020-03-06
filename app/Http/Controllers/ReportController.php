@@ -144,9 +144,22 @@ class ReportController extends Controller {
 
         $allMailAddresses = "";
 
-        foreach($mailAddresses as $mailAddress) {
+        for($i = 0; $i < count($mailAddresses); $i++)) {
 
-            $log .= $mailAddress . ", ";
+            if (count($documents) > 0) {
+                $log .= $mailAddresses[$i] . " (Anlagen: ";
+                for($j = 0; $j < count($documents); $j++) {
+                    $log .= $documents[$j]->filename;
+                    if ($j + 1 != count($documents)) {
+                        $log .= ", ";
+                    }
+                }
+                $log .= ")";
+            }
+
+            if ($i + 1 != count($mailAddresses)) {
+                $log .= ", ";
+            }
 
             //send mail with attached report
             $to_email = $mailAddress;
