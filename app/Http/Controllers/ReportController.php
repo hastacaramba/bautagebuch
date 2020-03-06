@@ -144,7 +144,7 @@ class ReportController extends Controller {
 
         $allMailAddresses = "";
 
-        for($i = 0; $i < count($mailAddresses); $i++)) {
+        for($i = 0; $i < count($mailAddresses); $i++) {
 
             if (count($documents) > 0) {
                 $log .= $mailAddresses[$i] . " (Anlagen: ";
@@ -162,7 +162,7 @@ class ReportController extends Controller {
             }
 
             //send mail with attached report
-            $to_email = $mailAddress;
+            $to_email = $mailAddresses[$i];
 
             $date = new DateTime($visitDate);
 
