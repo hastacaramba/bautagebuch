@@ -211,7 +211,7 @@
                       <h4><i class="far fa-file-pdf"></i> Dokumente</h4>
                   </div>
                   <div id="toolbarVisitMediaPdf">
-                      <button id="btnNewVisitMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Dokument hinzufügen</button>
+                      <button id="btnNewVisitMediaPdf" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Dokument hinzufügen</button>
                   </div>
                   <div class="card-body">
                       <!-- Choose New Media [start] -->
