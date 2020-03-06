@@ -186,7 +186,7 @@ class ReportController extends Controller {
 
         }
 
-        $log = substr($log, 0, -2);
+        //$log = substr($log, 0, -2);
 
         $log .= '<br>';
 
