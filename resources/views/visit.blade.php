@@ -2183,7 +2183,7 @@
 
               visitMediaFormPdfData.append('visitID', '{{ $visit->id }}');
 
-              visitMediaFormPdfData.append('info', $("#photoDescriptionPdf").val());
+              visitMediaFormPdfData.append('info', $("#pdfDescription").val());
 
               $.ajax({
                   url: '/pdf-upload-post-visit',
