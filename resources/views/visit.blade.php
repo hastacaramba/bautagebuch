@@ -138,63 +138,6 @@
                   </div>
               </div>
 
-              <!-- Begehungsdokumente -->
-              <div class="card shadow mb-4">
-                  <div class="card-header py-3">
-                      <h4><i class="far fa-file-pdf"></i> Dokumente</h4>
-                  </div>
-                  <div id="toolbarVisitMediaPdf">
-                      <button id="btnNewVisitMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Dokument hinzufügen</button>
-                  </div>
-                  <div class="card-body">
-                      <!-- Choose New Media [start] -->
-                      <div id="chooseNewVisitMediaPdf" style="display:none">
-                          <div class="form-group">
-                              <form id="newVisitMediaFormPdf" action="{{ route('pdf.upload.post.visit') }}" method="POST" enctype="multipart/form-data">
-                                  <label for="pdf">Dokument hochladen</label>
-                                  <div class="row">
-                                      <div class="col-md-12 mb-3">
-                                          <input id="pdfDescription" type="text" style="width:100%; color:#6e707e" placeholder="Beschreibung zum pdf...">
-                                      </div>
-                                      <div class="col-md-9">
-                                          <input type="file" id="pdf" name="pdf" class="form-control">
-                                      </div>
-                                      <div class="col-md-3">
-                                          <button id="btnUploadVisitPdf" type="submit" class="btn btn-success">Upload</button>
-                                          <div id="newProjectPdf"class="mt-1"></div>
-                                      </div>
-                                  </div>
-                              </form>
-                          </div>
-                          <div>
-                              <button id="btnNewVisitMediaPdfAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
-                          </div>
-                      </div>
-                      <!-- Choose New Media [end] -->
-                      <!-- Table Present Members -->
-                      <div class="table-responsive">
-                          <table
-                                  id="tableVisitMediaPdf"
-                                  data-id-field="id"
-                                  data-side-pagination="client"
-                                  data-toolbar="#toolbarVisitMediaPdf"
-                                  data-toggle="table"
-                                  data-sortable="true"
-                                  data-url="/visit/{{ $visit->id }}/pdf"
-                                  data-search="true"
-                                  data-show-columns="false"
-                                  data-pagination="true"
-                                  data-page-list="[10, 25, 50, 100, ALL]"
-                                  data-detail-formatter="detailFormatter"
-                                  data-detail-view="true"
-                                  data-response-handler="responseHandler"
-                                  data-show-export="false"
-                                  data-show-pagination-switch="true"
-                                  data-row-style="rowStyle">
-                          </table>
-                      </div>
-                  </div>
-              </div>
 
               <!-- Anwesende -->
               <div class="card shadow mb-4">
@@ -252,6 +195,65 @@
                                   data-page-list="[10, 25, 50, 100, ALL]"
                                   data-detail-formatter="detailFormatter"
                                   data-detail-view="false"
+                                  data-response-handler="responseHandler"
+                                  data-show-export="false"
+                                  data-show-pagination-switch="true"
+                                  data-row-style="rowStyle">
+                          </table>
+                      </div>
+                  </div>
+              </div>
+
+
+              <!-- Begehungsdokumente -->
+              <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                      <h4><i class="far fa-file-pdf"></i> Dokumente</h4>
+                  </div>
+                  <div id="toolbarVisitMediaPdf">
+                      <button id="btnNewVisitMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Dokument hinzufügen</button>
+                  </div>
+                  <div class="card-body">
+                      <!-- Choose New Media [start] -->
+                      <div id="chooseNewVisitMediaPdf" style="display:none">
+                          <div class="form-group">
+                              <form id="newVisitMediaFormPdf" action="{{ route('pdf.upload.post.visit') }}" method="POST" enctype="multipart/form-data">
+                                  <label for="pdf">Dokument hochladen</label>
+                                  <div class="row">
+                                      <div class="col-md-12 mb-3">
+                                          <input id="pdfDescription" type="text" style="width:100%; color:#6e707e" placeholder="Beschreibung zum pdf...">
+                                      </div>
+                                      <div class="col-md-9">
+                                          <input type="file" id="pdf" name="pdf" class="form-control">
+                                      </div>
+                                      <div class="col-md-3">
+                                          <button id="btnUploadVisitPdf" type="submit" class="btn btn-success">Upload</button>
+                                          <div id="newProjectPdf"class="mt-1"></div>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                          <div>
+                              <button id="btnNewVisitMediaPdfAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
+                          </div>
+                      </div>
+                      <!-- Choose New Media [end] -->
+                      <!-- Table Present Members -->
+                      <div class="table-responsive">
+                          <table
+                                  id="tableVisitMediaPdf"
+                                  data-id-field="id"
+                                  data-side-pagination="client"
+                                  data-toolbar="#toolbarVisitMediaPdf"
+                                  data-toggle="table"
+                                  data-sortable="true"
+                                  data-url="/visit/{{ $visit->id }}/pdf"
+                                  data-search="true"
+                                  data-show-columns="false"
+                                  data-pagination="true"
+                                  data-page-list="[10, 25, 50, 100, ALL]"
+                                  data-detail-formatter="detailFormatter"
+                                  data-detail-view="true"
                                   data-response-handler="responseHandler"
                                   data-show-export="false"
                                   data-show-pagination-switch="true"
