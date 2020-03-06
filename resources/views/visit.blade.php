@@ -1841,7 +1841,7 @@
 
       function pdfFormatter(value, row, index) {
           return [
-              '<a href="/images/' + value + '"><i class="fas fa-file-pdf">' + value + '</a>'
+              '<a href="/storage/app/public/documents' + value + '"><i class="fas fa-file-pdf">' + value + '</a>'
           ]
       }
 
