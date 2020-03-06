@@ -34,7 +34,7 @@ class PdfUploadController extends Controller
 
         $pdfName = time()."_".$request->pdf->getClientOriginalName();
 
-        $destinationPath = public_path('storage/app/public/documents');
+        $destinationPath = public_path('storage/app/public/documents/');
 
         $pdf->move($destinationPath, $pdfName);
 
@@ -57,7 +57,7 @@ class PdfUploadController extends Controller
 
         $pdfName = time()."_".$request->pdf->getClientOriginalName();
 
-        $destinationPath = public_path('storage/app/public/documents');
+        $destinationPath = public_path('storage/app/public/documents/');
 
         $pdf->move($destinationPath, $pdfName);
 
@@ -90,7 +90,7 @@ class PdfUploadController extends Controller
 
         $pdfName = time()."_".$request->pdf->getClientOriginalName();
 
-        $destinationPath = public_path('storage/app/public/documents');
+        $destinationPath = public_path('storage/app/public/documents/');
 
         $pdf->move($destinationPath, $pdfName);
 
