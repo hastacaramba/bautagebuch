@@ -1839,10 +1839,11 @@
           ].join('')
       }
 
+
       function pdfFormatter(value, row, index) {
-          return [
-              '<a href="/storage/app/public/documents/' + value + '"><i class="fas fa-file-pdf">' + value + '</a>'
-          ]
+          var url = "{{url('/storage/app/public/documents/')}}/" + value;
+
+          return '<a href="' + url + '"><i class=\"far fa-file-pdf\"></i> ' + value + '</a>';
       }
 
       /**
@@ -1854,8 +1855,8 @@
               columns: [
                   {
                       field: 'filename',
-                      title: 'Foto',
-                      sortable: false,
+                      title: 'Dokument',
+                      sortable: true,
                       align: 'left',
                       formatter: pdfFormatter
                   },{
