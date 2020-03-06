@@ -824,7 +824,7 @@
       $("#btnSaveEditedVisitMediaPdf").click(function () {
 
           $.ajax({
-              url: '/mediapdf/' + $("#mediaIDPdf").val(),
+              url: '/pdf/' + $("#mediaIDPdf").val(),
               data: {
                   'info' : $("#pdfDescription").val()
               },
