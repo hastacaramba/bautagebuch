@@ -826,7 +826,7 @@
           $.ajax({
               url: '/mediapdf/' + $("#mediaIDPdf").val(),
               data: {
-                  'info' : $("#newPhotoDescPdf").val()
+                  'info' : $("#pdfDescription").val()
               },
               type: 'PATCH',
               success: function(data) {
