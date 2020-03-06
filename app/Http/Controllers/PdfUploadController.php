@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Media;
 use Illuminate\Http\Request;
 use Image;
-use Pdf;
+use App\Pdf;
 
 class PdfUploadController extends Controller
 {
