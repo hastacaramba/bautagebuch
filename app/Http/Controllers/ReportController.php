@@ -142,18 +142,9 @@ class ReportController extends Controller {
 
         $log = $log . '<i class="far fa-envelope"></i> ' . now() . ', ';
 
-        for($i = 0; $i < count($mailAddresses); $i++) {
+        for($i = 0; $i < count($mailAddresses); $i++)) {
 
-            if (count($documents) > 0) {
-                $log .= $mailAddresses[$i] . " (Anlagen: ";
-                for($j = 0; $j < count($documents); $j++) {
-                    $log .= $documents[$j]->filename;
-                    if ($j + 1 != count($documents)) {
-                        $log .= ", ";
-                    }
-                }
-                $log .= ")";
-            }
+            $log .= $mailAddresses[$i];
 
             if ($i + 1 != count($mailAddresses)) {
                 $log .= ", ";
@@ -184,7 +175,15 @@ class ReportController extends Controller {
 
         }
 
-        //$log = substr($log, 0, -2);
+        if (count($documents) > 0) {
+            $log .= " (Anlagen: ";
+            for ($j = 0; $j < count($documents); $j++) {
+                    $log .= $documents[$j]->filename;
+                if ($j + 1 != count($documents)) {
+                    $log .= ", ";
+                }
+            }
+        }
 
         $log .= '<br>';
 
