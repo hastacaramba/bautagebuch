@@ -32,7 +32,7 @@ class PdfUploadController extends Controller
 
         $pdf = $request->file('pdf');
 
-        $pdfName = $request->pdf->getClientOriginalName().time().'.'.$request->pdf->extension();
+        $pdfName = time()."_".$request->pdf->getClientOriginalName();
 
         $destinationPath = public_path('images');
 
@@ -55,7 +55,7 @@ class PdfUploadController extends Controller
 
         $pdf = $request->file('pdf');
 
-        $pdfName = $request->pdf->getClientOriginalName().time().'.'.$request->pdf->extension();
+        $pdfName = time()."_".$request->pdf->getClientOriginalName();
 
         $destinationPath = public_path('images');
 
