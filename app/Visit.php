@@ -63,6 +63,13 @@ class Visit extends Model {
     }
 
     /**
+     * Get the pdfs of the visit.
+     */
+    public function pdf() {
+        return $this->hasMany('App\Pdf');
+    }
+
+    /**
      * Get the reports of the visit.
      */
     public function reports() {

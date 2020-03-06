@@ -180,7 +180,7 @@
                                   data-toolbar="#toolbarVisitMediaPdf"
                                   data-toggle="table"
                                   data-sortable="true"
-                                  data-url="/visit/{{ $visit->id }}/mediapdf"
+                                  data-url="/visit/{{ $visit->id }}/pdf"
                                   data-search="true"
                                   data-show-columns="false"
                                   data-pagination="true"
