@@ -36,7 +36,7 @@ class PdfUploadController extends Controller
 
         $destinationPath = public_path('images');
 
-        $pdf->save($destinationPath.'/'.$pdfName);
+        $pdf->move($destinationPath.'/'.$pdfName);
 
         return $pdfName;
     }
@@ -59,7 +59,7 @@ class PdfUploadController extends Controller
 
         $destinationPath = public_path('images');
 
-        $pdf->save($destinationPath.'/'.$pdfName);
+        $pdf->move($destinationPath.'/'.$pdfName);
 
         $visitID = $request->visitID;
 
