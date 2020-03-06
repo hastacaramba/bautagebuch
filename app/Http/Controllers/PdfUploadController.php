@@ -36,7 +36,7 @@ class PdfUploadController extends Controller
 
         $destinationPath = public_path('storage/app/public/documents');
 
-        $pdf->move($destinationPath.'/'.$pdfName);
+        $pdf->move($destinationPath);
 
         return $pdfName;
     }
@@ -59,7 +59,7 @@ class PdfUploadController extends Controller
 
         $destinationPath = public_path('storage/app/public/documents');
 
-        $pdf->move($destinationPath.'/'.$pdfName);
+        $pdf->move($destinationPath);
 
         $visitID = $request->visitID;
 
@@ -92,7 +92,7 @@ class PdfUploadController extends Controller
 
         $destinationPath = public_path('storage/app/public/documents');
 
-        $pdf->move($destinationPath.'/'.$pdfName);
+        $pdf->move($destinationPath);
 
         $pdfID = $request->pdfID;
 
