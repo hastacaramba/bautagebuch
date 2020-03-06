@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateExportdataTable extends Migration
+class CreatePdfTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,14 @@ class CreateExportdataTable extends Migration
      */
     public function up()
     {
-        Schema::create('exportdata', function (Blueprint $table) {
+        Schema::create('pdf', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->longText('idString');
-            $table->longText('data', 5000);
+            $table->string('filename');
+            $table->string('info')->nullable();
+            $table->integer('project_id')->nullable();
+            $table->integer('visit_id')->nullable();
             $table->timestamps();
+
         });
     }
 
@@ -28,6 +31,6 @@ class CreateExportdataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('exportdata');
+        Schema::dropIfExists('pdf');
     }
 }
