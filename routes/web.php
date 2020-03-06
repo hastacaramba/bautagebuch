@@ -141,9 +141,21 @@ Route::post('/image-upload-post-visit', 'ImageUploadController@imageUploadPostVi
 
 Route::post('/image-upload-post-edited-visit', 'ImageUploadController@imageUploadPostEditedVisit')->name('image.upload.post.edited.visit')->middleware('auth');
 
+Route::get('pdf-upload', 'PdfUploadController@pdfUpload')->name('pdf.upload')->middleware('auth');
+
+Route::post('pdf-upload-post', 'PdfUploadController@pdfUploadPost')->name('pdf.upload.post')->middleware('auth');
+
+Route::post('/pdf-upload-post-visit', 'PdfUploadController@pdfUploadPostVisit')->name('pdf.upload.post.visit')->middleware('auth');
+
+Route::post('/pdf-upload-post-edited-visit', 'PdfUploadController@pdfUploadPostEditedVisit')->name('pdf.upload.post.edited.visit')->middleware('auth');
+
 Route::delete('/media/{mediaID}', 'MediaController@deleteMedia')->name('media.delete')->middleware('auth');
 
 Route::patch('/media/{mediaID}', 'MediaController@editMedia')->name('media.edit')->middleware('auth');
+
+Route::delete('/pdf/{pdfID}', 'PdfMediaController@deletePdf')->name('pdf.delete')->middleware('auth');
+
+Route::patch('/pdf/{pdfID}', 'PdfMediaController@editPdf')->name('pdf.edit')->middleware('auth');
 
 Route::post('/projectnote', 'ProjectController@newProjectNote')->name('projectnote.new')->middleware('auth')->middleware('auth');
 

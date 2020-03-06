@@ -138,6 +138,64 @@
                   </div>
               </div>
 
+              <!-- Begehungsdokumente -->
+              <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                      <h4><i class="far fa-file-pdf"></i> Dokumente</h4>
+                  </div>
+                  <div id="toolbarVisitMediaPdf">
+                      <button id="btnNewVisitMedia" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Dokument hinzufügen</button>
+                  </div>
+                  <div class="card-body">
+                      <!-- Choose New Media [start] -->
+                      <div id="chooseNewVisitMediaPdf" style="display:none">
+                          <div class="form-group">
+                              <form id="newVisitMediaFormPdf" action="{{ route('pdf.upload.post.visit') }}" method="POST" enctype="multipart/form-data">
+                                  <label for="pdf">Dokument hochladen</label>
+                                  <div class="row">
+                                      <div class="col-md-12 mb-3">
+                                          <input id="pdfDescription" type="text" style="width:100%; color:#6e707e" placeholder="Beschreibung zum pdf...">
+                                      </div>
+                                      <div class="col-md-9">
+                                          <input type="file" id="pdf" name="pdf" class="form-control">
+                                      </div>
+                                      <div class="col-md-3">
+                                          <button id="btnUploadVisitPdf" type="submit" class="btn btn-success">Upload</button>
+                                          <div id="newProjectPdf"class="mt-1"></div>
+                                      </div>
+                                  </div>
+                              </form>
+                          </div>
+                          <div>
+                              <button id="btnNewVisitMediaPdfAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
+                          </div>
+                      </div>
+                      <!-- Choose New Media [end] -->
+                      <!-- Table Present Members -->
+                      <div class="table-responsive">
+                          <table
+                                  id="tableVisitMediaPdf"
+                                  data-id-field="id"
+                                  data-side-pagination="client"
+                                  data-toolbar="#toolbarVisitMediaPdf"
+                                  data-toggle="table"
+                                  data-sortable="true"
+                                  data-url="/visit/{{ $visit->id }}/mediapdf"
+                                  data-search="true"
+                                  data-show-columns="false"
+                                  data-pagination="true"
+                                  data-page-list="[10, 25, 50, 100, ALL]"
+                                  data-detail-formatter="detailFormatter"
+                                  data-detail-view="true"
+                                  data-response-handler="responseHandler"
+                                  data-show-export="false"
+                                  data-show-pagination-switch="true"
+                                  data-row-style="rowStyle">
+                          </table>
+                      </div>
+                  </div>
+              </div>
+
               <!-- Anwesende -->
               <div class="card shadow mb-4">
                   <div class="card-header py-3">
@@ -472,6 +530,52 @@
   </div>
   <!-- Edit VisitMedia Modal [end] -->
 
+  <!-- Edit VisitMediaPdf Modal [start] -->
+  <div class="modal fade" id="modalEditVisitMediaPdf" tabindex="-1" role="dialog" aria-labelledby="editVisitMediaPdfModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabelPdf"><i class="far fa-image"></i></i> Dokument bearbeiten</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">×</span>
+                  </button>
+              </div>
+              <div class="modal-body">
+                  <div class="form-group mb-3" style="display:none">
+                      <input type="text" class="form-control" id="mediaIDPdf">
+                  </div>
+                  <div class="form-group mb-3">
+                      <label for="newPhotoDescPdf">Beschreibung</label>
+                      <input type="text" class="form-control" id="newPhotoDescPdf" placeholder="Beschreibung...">
+                  </div>
+                  <div class="form-group">
+                      <label for="oldPdf">Aktuelles Dokument</label>
+                      <div class="mb-3" id="oldVisitPdf"></div>
+                  </div>
+                  <div class="form-group">
+                      <form id ="editVisitMediaFormPdf" action="{{ route('pdf.upload.post.edited.visit') }}" method="POST" enctype="multipart/form-data">
+                          <label for="pdf">Neues Dokument</label>
+                          <div class="row">
+                              <div class="col-md-9">
+                                  <input type="file" id="newVisitPdf" name="newVisitPdf" class="form-control">
+                              </div>
+                              <div class="col-md-3">
+                                  <button id="btnUploadNewPdf" type="submit" class="btn btn-success">Upload</button>
+                                  <div id="projectPdfUpdate"class="mt-1"></div>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                  <button id="btnSaveEditedVisitMediaPdf" type="button" class="btn btn-primary"><i class="fa fa-save"></i> Änderungen speichern</button>
+                  <button id="btnCancelEditedVisitMediaPdf" class="btn btn-secondary" type="button" data-dismiss="modal">Abbrechen</button>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- Edit VisitMediaPdf Modal [end] -->
+
 
   <!-- Bootstrap core JavaScript-->
   <script src="../../vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -699,6 +803,26 @@
 
       $("#btnCancelEditedVisitMedia").click(function () {
         $("#modalEditVisitMedia").modal('toggle');
+      });
+
+
+      $("#btnSaveEditedVisitMediaPdf").click(function () {
+
+          $.ajax({
+              url: '/mediapdf/' + $("#mediaIDPdf").val(),
+              data: {
+                  'info' : $("#newPhotoDescPdf").val()
+              },
+              type: 'PATCH',
+              success: function(data) {
+                  $("#btnCancelEditedVisitMediaPdf").click();
+                  $tableVisitMediaPdf.bootstrapTable('refresh');
+              }
+          });
+      });
+
+      $("#btnCancelEditedVisitMediaPdf").click(function () {
+          $("#modalEditVisitMediaPdf").modal('toggle');
       });
 
 
@@ -1003,6 +1127,39 @@
                               data: "",
                               success: function (data) {
                                   $tableVisitMedia.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
+          'click .editVisitMediaPdf': function (e, value, row, index) {
+              $("#modalEditVisitMediaPdf").modal('toggle');
+              $("#mediaIDPdf").val(row.id);
+              $("#newPhotoDescPdf").val(row.info);
+              $("#oldVisitPdf").html(row.filename);
+          },
+          'click .deleteVisitMediaPdf': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Dokument wirklich löschen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/pdf/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $tableVisitMediaPdf.bootstrapTable('refresh');
                               }
                           });
                       }
@@ -1622,7 +1779,7 @@
                   }
               ]
           })
-          $tableConcernedMembers.on('check.bs.table uncheck.bs.table ' +
+          $tableVisitMedia.on('check.bs.table uncheck.bs.table ' +
               'check-all.bs.table uncheck-all.bs.table',
               function () {
                   //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
@@ -1634,11 +1791,84 @@
                   selections = getIdSelections()
                   // push or splice the selections if you want to save all data selections
               })
-          $tableConcernedMembers.on('all.bs.table', function (e, name, args) {
+          $tableVisitMedia.on('all.bs.table', function (e, name, args) {
               //console.log(name, args)
           })
 
       }
+
+
+
+      // - BOOTSTRAP-TABLE VisitMediaPdf - //
+
+      var $tableVisitMediaPdf = $('#tableVisitMediaPdf')
+
+      /**
+       * Gibt eine map der Pdf-IDs der aktuell selektierten Zeilen zurück.
+       *
+       */
+      function getIdSelectionsVisitMediaPdf() {
+          return $.map($tableVisitMediaPdf.bootstrapTable('getSelections'), function (row) {
+              return row.id;
+          })
+      }
+
+      function operateFormatterVisitMediaPdf(value, row, index) {
+          return [
+              '<a class="editVisitMediaPdf" href="javascript:void(0)" title="Bearbeiten">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+              '</a> ',
+              '<a class="deleteVisitMediaPdf" href="javascript:void(0)" title="Löschen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+              '</a> '
+          ].join('')
+      }
+
+      /**
+       * Initiiert die Bootstrap-Table.
+       */
+      function initTableVisitMediaPdf() {
+          $tableVisitMediaPdf.bootstrapTable('destroy').bootstrapTable({
+              locale: 'de-DE',
+              columns: [
+                  {
+                      field: 'filename',
+                      title: 'Foto',
+                      sortable: false,
+                      align: 'left',
+                      formatter: imageFormatterMediaPdf
+                  },{
+                      field: 'info',
+                      title: 'Beschreibung',
+                      sortable: true,
+                      align: 'left'
+                  }, {
+                      field: 'operate',
+                      title: 'Aktionen',
+                      align: 'center',
+                      events: window.operateEvents,
+                      formatter: operateFormatterVisitMediaPdf
+                  }
+              ]
+          })
+          $tableVisitMediaPdf.on('check.bs.table uncheck.bs.table ' +
+              'check-all.bs.table uncheck-all.bs.table',
+              function () {
+                  //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                  // save your data, here just save the current page
+                  selections = getIdSelections()
+                  // push or splice the selections if you want to save all data selections
+              })
+          $tableVisitMediaPdf.on('all.bs.table', function (e, name, args) {
+              //console.log(name, args)
+          })
+
+      }
+
 
 
       // - REPORTS BOOTSTRAP-TABLE - //
@@ -1783,6 +2013,7 @@
           initTableMembers();
           initTableMedia();
           initTableVisitMedia();
+          initTableVisitMediaPdf();
           initTableConcernedMembers();
           initReportsTable();
 
@@ -1908,6 +2139,81 @@
                   }
               });
           });
+
+
+
+          var newVisitMediaFilePdf;
+
+          //file ulpoad
+          $('input[type="file"]').change(function(e) {
+              var fileName = e.target.files[0].name;
+              newVisitMediaFilePdf =  e.target.files[0];
+          });
+
+          // this is the id of the form
+          $("#newVisitMediaFormPdf").submit(function(e) {
+
+              e.preventDefault(); // avoid to execute the actual submit of the form.
+
+              var visitMediaFormPdfData = new FormData();
+
+              // Attach file
+              visitMediaFormPdfData.append('pdf', newVisitMediaFilePdf);
+
+              visitMediaFormPdfData.append('visitID', '{{ $visit->id }}');
+
+              visitMediaFormPdfData.append('info', $("#photoDescriptionPdf").val());
+
+              $.ajax({
+                  url: '/pdf-upload-post-visit',
+                  data: visitMediaFormPdfData,
+                  type: 'POST',
+                  contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                  processData: false, // NEEDED, DON'T OMIT THIS
+                  success: function(data) {
+                      $("#newVisitPdf").html(data);
+                      $("#btnUploadPdf").hide();
+                      $("#filename").val(data);
+                      $("#btnEditVisitMediaPdfAbbrechen").click();
+                      $tableVisitMediaPdf.bootstrapTable('refresh');
+                      $("#btnNewVisitMediaPdfAbbrechen").click();
+                  }
+              });
+          });
+
+          // this is the id of the form
+          $("#editVisitMediaFormPdf").submit(function(e) {
+
+              e.preventDefault(); // avoid to execute the actual submit of the form.
+
+              var editVisitMediaFormPdfData = new FormData();
+
+              // Attach file
+              editVisitMediaFormPdfData.append('pdf', newVisitMediaFilePdf);
+
+              editVisitMediaFormPdfData.append('visitID', '{{ $visit->id }}');
+
+              editVisitMediaFormPdfData.append('info', $("#newPhotoDescPdf").val());
+
+              editVisitMediaFormPdfData.append('pdfID', $("#mediaIDPdf").val());
+
+              $.ajax({
+                  url: '/pdf-upload-post-edited-visit',
+                  data: editVisitMediaFormPdfData,
+                  type: 'POST',
+                  contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                  processData: false, // NEEDED, DON'T OMIT THIS
+                  success: function(data) {
+                      $("#oldVisitPdf").html(data);
+                      $("#newVisitPdf").val('');
+                      $("#btnCancelEditedVisitMediaPdf").click();
+                      $tableVisitMediaPdf.bootstrapTable('refresh');
+                  }
+              });
+          });
+
+
+
 
       });
 
