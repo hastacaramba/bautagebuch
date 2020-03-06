@@ -142,8 +142,6 @@ class ReportController extends Controller {
 
         $log = $log . '<i class="far fa-envelope"></i> ' . now() . ', ';
 
-        $allMailAddresses = "";
-
         for($i = 0; $i < count($mailAddresses); $i++) {
 
             if (count($documents) > 0) {
@@ -159,6 +157,7 @@ class ReportController extends Controller {
 
             if ($i + 1 != count($mailAddresses)) {
                 $log .= ", ";
+                $log .= '<br>';
             }
 
             //send mail with attached report
@@ -187,8 +186,6 @@ class ReportController extends Controller {
         }
 
         //$log = substr($log, 0, -2);
-
-        $log .= '<br>';
 
         $report->log = $log;
         $report->save();
