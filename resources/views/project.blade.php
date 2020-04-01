@@ -639,7 +639,7 @@
         var d = date.getDate().toString();
         var m = date.getMonth().toString();
         if(date.getMonth() < 10) {
-            m = "0" + m;
+            m = "0" + m + 1;
         }
         if(date.getDate() < 10) {
             d = "0" + d;

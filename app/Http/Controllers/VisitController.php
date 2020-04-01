@@ -117,7 +117,7 @@ class VisitController extends Controller
 
         $visit = new Visit;
 
-        $visit->title = '';
+        $visit->title = 'Baustellenbegehung';
         $visit->user_id = $request->userID;
         $visit->date = date('Y-m-d');
         $visit->time = date('H:i');
