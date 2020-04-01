@@ -637,9 +637,10 @@
     function createdAtFormatter(value, row, index) {
         var date = new Date(value);
         var d = date.getDate().toString();
-        var m = date.getMonth().toString();
+        var month = date.getMonth() + 1;
+        var m = month.toString();
         if(date.getMonth() < 10) {
-            m = "0" + m + 1;
+            m = "0" + m;
         }
         if(date.getDate() < 10) {
             d = "0" + d;
