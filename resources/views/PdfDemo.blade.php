@@ -94,7 +94,7 @@
                 <span style="color:#000">
               @endif
               Erstellt am: {{ $visitationnote['createdAt'] }}
-              @if (($visitationnote['deadline'] != null) && ($visitationnote['deadline'] != '01.01.1970')) Fälligkeit: {{ $visitationnote['deadline'] }}
+              @if (($visitationnote['deadline'] != null) && ($visitationnote['deadline'] != "01.01.1970")) / Fälligkeit: {{ $visitationnote['deadline'] }}
               @endif
               </span>
             </td>
