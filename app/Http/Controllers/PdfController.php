@@ -55,13 +55,13 @@ class PdfController extends Controller {
             foreach($visitVisitationnotes as $visitationnote) {
                 $visitationnotes[] = $visitationnote;
             }
-        }
 
-        $visitationnotesWithMedia = [];
 
-        $openVisitationNotesCounter = 0;
+            $visitationnotesWithMedia = [];
 
-        foreach($visitationnotes as $visitationnote) {
+            $openVisitationNotesCounter = 0;
+
+            foreach($visitationnotes as $visitationnote) {
 
             if(!$visitationnote['done']) {
                 $openVisitationNotesCounter += 1;
@@ -119,10 +119,10 @@ class PdfController extends Controller {
             $item = [
                 'id' => $visitationnote->id,
                 'number' => $visitationnote->number,
-                'createdAt' => $visitationnote->createdAt,
+                'createdAt' => $createdAt,
                 'category' => $visitationnote->category,
                 'notes' => $visitationnote->notes,
-                'deadline' => $visitationnote->deadline,
+                'deadline' => $deadline,
                 'done' => $visitationnote->done,
                 'concernsAll' => $visitationnote->concernsAll,
                 'important' => $visitationnote->important,
@@ -132,6 +132,7 @@ class PdfController extends Controller {
             ];
 
             $visitationnotesWithMedia[] = $item;
+        }
         }
 
         //present members...
