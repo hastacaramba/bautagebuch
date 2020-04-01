@@ -63,76 +63,78 @@ class PdfController extends Controller {
 
             foreach($visitationnotes as $visitationnote) {
 
-            if(!$visitationnote['done']) {
-                $openVisitationNotesCounter += 1;
-            }
+                if(!$visitationnote['done']) {
+                    $openVisitationNotesCounter += 1;
+                }
 
-            //get all members of the project
-            $members = Member::where('project_id', '=', $visitationnote->visit->project_id)->get();
+                //get all members of the project
+                $members = Member::where('project_id', '=', $visitationnote->visit->project_id)->get();
 
-            $concernedMembers = [];
+                $concernedMembers = [];
 
-            //run through the members and decide if he was present during visit or not
-            for ($n = 0; $n < sizeof($members); $n++) {
-                $member = $members[$n];
-                $membersVisitationnotes = $member->visitationnotes()->get();
-                for ($i = 0; $i < sizeof($membersVisitationnotes); $i++) {
-                    if ($membersVisitationnotes[$i]['id'] == $visitationnote->id ) {
-                        $concernedMembers[] = $member;
+                //run through the members and decide if he was present during visit or not
+                for ($n = 0; $n < sizeof($members); $n++) {
+                    $member = $members[$n];
+                    $membersVisitationnotes = $member->visitationnotes()->get();
+                    for ($i = 0; $i < sizeof($membersVisitationnotes); $i++) {
+                        if ($membersVisitationnotes[$i]['id'] == $visitationnote->id ) {
+                            $concernedMembers[] = $member;
+                        }
                     }
                 }
-            }
 
-            $concernedmembersData = [];
+                $concernedmembersData = [];
 
-            for ($n = 0; $n < sizeof($members); $n++) {
-                if (in_array($members[$n],$concernedMembers)) {
-                    $concernedmembersData[] = [
-                        "id" => $members[$n]->id,
-                        "firstname" => $members[$n]->contact['firstname'],
-                        "surname" => $members[$n]->contact['surname'],
-                        "company" => $members[$n]->contact['company'],
-                        "street" => $members[$n]->contact['street'],
-                        "housenumber" => $members[$n]->contact['housenumber'],
-                        "postcode" => $members[$n]->contact['postcode'],
-                        "city" => $members[$n]->contact['city'],
-                        "email" => $members[$n]->contact['email'],
-                        "phone" => $members[$n]->contact['phone'],
-                        "mobile" => $members[$n]->contact['mobile'],
-                        "fax" => $members[$n]->contact['fax'],
-                        "info" => $members[$n]->contact['info'],
-                        "subarea" => $members[$n]->subarea['title'],
-                    ];
+                for ($n = 0; $n < sizeof($members); $n++) {
+                    if (in_array($members[$n],$concernedMembers)) {
+                        $concernedmembersData[] = [
+                            "id" => $members[$n]->id,
+                            "firstname" => $members[$n]->contact['firstname'],
+                            "surname" => $members[$n]->contact['surname'],
+                            "company" => $members[$n]->contact['company'],
+                            "street" => $members[$n]->contact['street'],
+                            "housenumber" => $members[$n]->contact['housenumber'],
+                            "postcode" => $members[$n]->contact['postcode'],
+                            "city" => $members[$n]->contact['city'],
+                            "email" => $members[$n]->contact['email'],
+                            "phone" => $members[$n]->contact['phone'],
+                            "mobile" => $members[$n]->contact['mobile'],
+                            "fax" => $members[$n]->contact['fax'],
+                            "info" => $members[$n]->contact['info'],
+                            "subarea" => $members[$n]->subarea['title'],
+                        ];
+                    }
                 }
+
+                $media = $visitationnote->media()->get();
+
+                $numOfRows = sizeof($media);
+
+                $createdAt = date('d.m.Y', strtotime($visitationnote->created_at));
+
+                if ($visitationnote->deadline == null) {
+                    $deadline = null;
+                } else {
+                    $deadline = date('d.m.Y', strtotime($visitationnote->deadline));
+                }
+
+                $item = [
+                    'id' => $visitationnote->id,
+                    'number' => $visitationnote->number,
+                    'createdAt' => $createdAt,
+                    'category' => $visitationnote->category,
+                    'notes' => $visitationnote->notes,
+                    'deadline' => $deadline,
+                    'done' => $visitationnote->done,
+                    'concernsAll' => $visitationnote->concernsAll,
+                    'important' => $visitationnote->important,
+                    'media' => $media,
+                    'numOfRows' => $numOfRows,
+                    'concernedMembers' => $concernedmembersData
+                ];
+
+                $visitationnotesWithMedia[] = $item;
             }
-
-            $media = $visitationnote->media()->get();
-
-            $numOfRows = sizeof($media);
-
-            $createdAt = date('d.m.Y', strtotime($visitationnote->created_at));
-
-            $deadline = date('d.m.Y', strtotime($visitationnote->deadline));
-
-
-
-            $item = [
-                'id' => $visitationnote->id,
-                'number' => $visitationnote->number,
-                'createdAt' => $visitationnote->created_at,
-                'category' => $visitationnote->category,
-                'notes' => $visitationnote->notes,
-                'deadline' => $visitationnote->deadline,
-                'done' => $visitationnote->done,
-                'concernsAll' => $visitationnote->concernsAll,
-                'important' => $visitationnote->important,
-                'media' => $media,
-                'numOfRows' => $numOfRows,
-                'concernedMembers' => $concernedmembersData
-            ];
-
-            $visitationnotesWithMedia[] = $item;
-        }
         }
 
         //present members...
