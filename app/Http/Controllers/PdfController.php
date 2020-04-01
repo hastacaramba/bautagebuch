@@ -119,10 +119,10 @@ class PdfController extends Controller {
             $item = [
                 'id' => $visitationnote->id,
                 'number' => $visitationnote->number,
-                'createdAt' => $createdAt,
+                'createdAt' => $visitationnote->created_at,
                 'category' => $visitationnote->category,
                 'notes' => $visitationnote->notes,
-                'deadline' => $deadline,
+                'deadline' => $visitationnote->deadline,
                 'done' => $visitationnote->done,
                 'concernsAll' => $visitationnote->concernsAll,
                 'important' => $visitationnote->important,
