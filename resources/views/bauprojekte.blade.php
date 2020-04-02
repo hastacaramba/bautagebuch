@@ -456,13 +456,21 @@
       ]
     }
 
-    function createdAtFormatter(value, row, index) {
 
-      var timestamp = new Date(value);
-      var d = timestamp.getDate().toString();
-      var month = timestamp.getMonth() + 1;
+    function createdAtFormatter(value, row, index) {
+      var date = new Date(value);
+      var d = date.getDate().toString();
+      var month = date.getMonth() + 1;
       var m = month.toString();
-      var y = timestamp.getFullYear().toString();
+      if(date.getMonth() < 10) {
+        m = "0" + m;
+      }
+      if(date.getDate() < 10) {
+        d = "0" + d;
+      }
+
+      var y = date.getFullYear().toString();
+
 
       var output = d + "." + m + "." + y;
 
