@@ -460,7 +460,8 @@
 
       var timestamp = new Date(value);
       var d = timestamp.getDate().toString();
-      var m = timestamp.getMonth().toString();
+      var month = timestamp.getMonth() + 1;
+      var m = month.toString();
       var y = timestamp.getFullYear().toString();
 
       var output = d + "." + m + "." + y;
