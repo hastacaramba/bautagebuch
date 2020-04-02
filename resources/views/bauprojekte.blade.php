@@ -488,7 +488,9 @@
       if(timestamp.getDate() < 10) {
         d = "0" + d;
       }
-      var m = timestamp.getMonth().toString();
+
+      var month = timestamp.getMonth() + 1;
+      var m = month.toString();
       if(timestamp.getMonth() < 10) {
         m = "0" + m;
       }
