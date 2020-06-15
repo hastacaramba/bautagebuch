@@ -450,23 +450,6 @@
                 // Return `null` if the term should not be displayed
                 return null;
             },
-            createTag: function(params) {
-                var term = $.trim(params.term);
-                if(term === "") { return null; }
-
-                var optionsMatch = false;
-
-                this.$element.find("option").each(function() {
-                    if(this.value.toLowerCase().indexOf(term.toLowerCase()) > -1) {
-                        optionsMatch = true;
-                    }
-                });
-
-                if(optionsMatch) {
-                    return null;
-                }
-                return {id: term, text: term};
-            },
             ajax: {
                 type: "GET",
                 url: '/contacts/select',
