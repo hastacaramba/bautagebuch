@@ -435,26 +435,6 @@
         //hol Dir alle Kontakte im geeigneten Format für select2
         $('#contactSelectBox').select2({
             placeholder: "Suchen Sie hier nach einem Kontakt...",
-            tags: true,
-            createTag: function (tag) {
-
-                // check if the option is already there
-                found = false;
-                $("#timezones option").each(function() {
-                    if ($.trim(tag.term).toUpperCase() == $.trim($(this).text()).toUpperCase()) {
-                        found = true;
-                    }
-                });
-
-                // if it's not there, then show the suggestion
-                if (!found) {
-                    return {
-                        id: tag.term,
-                        text: tag.term + " (new)",
-                        isNew: true
-                    };
-                }
-            },
             ajax: {
                 type: "GET",
                 url: '/contacts/select',
