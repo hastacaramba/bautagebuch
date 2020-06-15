@@ -435,9 +435,7 @@
         //hol Dir alle Kontakte im geeigneten Format für select2
         $('#contactSelectBox').select2({
             placeholder: "Suchen Sie hier nach einem Kontakt...",
-            tags: "true",
-            allowClear: "true",
-            case_insensitive: "true",
+            casesensitive: true,
             ajax: {
                 type: "GET",
                 url: '/contacts/select',
