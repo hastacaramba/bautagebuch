@@ -422,15 +422,6 @@
         }
     );
 
-
-    function matchStart(params, data) {
-        params.term = params.term || '';
-        if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) == 0) {
-            return data;
-        }
-        return false;
-    }
-
     $("#btnNewMember").click(function (e) {
 
         e.preventDefault();
@@ -444,9 +435,6 @@
         //hol Dir alle Kontakte im geeigneten Format für select2
         $('#contactSelectBox').select2({
             placeholder: "Suchen Sie hier nach einem Kontakt...",
-            matcher: function(params, data) {
-                return matchStart(params, data);
-            },
             ajax: {
                 type: "GET",
                 url: '/contacts/select',

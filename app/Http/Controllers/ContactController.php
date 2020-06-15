@@ -176,7 +176,7 @@ class ContactController extends Controller
         $resultsGefiltert = [];
         if($q != null && $_type == 'query') {
             for ($i = 0; $i < sizeof($antwort['results']); $i++) {
-                if (Str::contains($antwort['results'][$i]['text'], $q)) {
+                if (Str::contains(Str::lower($antwort['results'][$i]['text']), Str::lower($q))) {
                     $resultsGefiltert[] = $antwort['results'][$i];
                 }
             }
