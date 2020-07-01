@@ -87,7 +87,7 @@ class VisitController extends Controller
         for ($n = 0; $n < sizeof($visits); $n++) {
 
             //fetch the visitationnotes of the visit
-            $visitationnotes = Visitationnote::where('project_id', '=', $projectID)->first();
+            $visitationnotes = Visitationnote::where('visit_id', '=', $visits[$n]['id'])->get();
             //run through the visitationnotes and check if there is still one not done yet
             $notdone = 0;
             for ($i = 0; $i < sizeof($visitationnotes); $i++) {
