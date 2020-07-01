@@ -1042,6 +1042,25 @@
     }
 
     /**
+     *
+     * @param value
+     * @param row
+     * @param index
+     * @returns {string}
+     */
+    function visitDoneFormatter(value, row, index) {
+        var done = "";
+
+        if (value ===  0) {
+            done = '<i class="far fa-check-square"></i>';
+        }
+
+        return [
+            done
+        ]
+    }
+
+    /**
      * Initiiert die Bootstrap-Table.
      */
     function initTableVisits() {
@@ -1072,6 +1091,12 @@
                     align: 'left',
                     sortable: true,
                     formatter: timeFormatter
+                }, {
+                    field: 'notdone',
+                    title: 'abgeschlossen',
+                    align: 'center',
+                    sortable: true,
+                    formatter: visitDoneFormatter
                 }, {
                     field: 'operate',
                     title: 'Anzeigen',
