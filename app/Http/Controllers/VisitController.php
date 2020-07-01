@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Visitationnote;
 use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Member;
@@ -82,7 +83,36 @@ class VisitController extends Controller
 
         $visits = Visit::where('project_id', '=', $projectID)->get();
 
-        return json_encode($visits);
+        //run through the visits and decide if there are open visitationnotes
+        for ($n = 0; $n < sizeof($visits); $n++) {
+
+            //fetch the visitationnotes of the visit
+            $visitationnotes = Visitationnote::where('project_id', '=', projectID)->first();
+            //run through the visitationnotes and check if there is still one not done yet
+            $notdone = 0;
+            for ($i = 0; $i < sizeof($visitationnotes); $i++) {
+                if ($visitationnotes[$i]['done'] === 0) {
+                    $notdone = 1;
+                }
+            }
+
+            $visitsEdited[] = [
+                "id" => $visits[$n]->id,
+                "title" => $visits[$n]->title,
+                "date" => $visits[$n]->date,
+                "time" => $visits[$n]->time,
+                "weather" => $visits[$n]->weather,
+                "description" => $visits[$n]->description,
+                "project_id" => $visits[$n]->project_id,
+                "user_id" => $visits[$n]->user_id,
+                "created_at" => $visits[$n]->created_at,
+                "updated_at" => $visits[$n]->updated_at,
+                "notdone" => $notdone
+            ];
+
+        }
+
+        return json_encode($visitsEdited);
     }
 
 
