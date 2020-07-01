@@ -1049,7 +1049,7 @@
      * @returns {string}
      */
     function visitDoneFormatter(value, row, index) {
-        var done = "";
+        var done = '<i class="far fa-square"></i>';
 
         if (value ===  0) {
             done = '<i class="far fa-check-square"></i>';
