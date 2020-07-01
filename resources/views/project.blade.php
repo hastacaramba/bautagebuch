@@ -1093,7 +1093,7 @@
                     formatter: timeFormatter
                 }, {
                     field: 'notdone',
-                    title: 'abgeschlossen',
+                    title: 'Abgeschlossen',
                     align: 'center',
                     sortable: true,
                     formatter: visitDoneFormatter
