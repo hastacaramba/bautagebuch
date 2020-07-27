@@ -173,9 +173,8 @@ class ReportController extends Controller {
                         ]);
                     }
                 });
-            } catch (\Exception $e) {
-
-                    return $e->getMessage();
+            } catch (Exception $e) {
+                $e.getMessage();
             }
 
         }
