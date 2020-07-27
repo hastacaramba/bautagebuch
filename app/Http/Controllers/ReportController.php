@@ -159,19 +159,24 @@ class ReportController extends Controller {
                 'projectName' => $projectName,
                 'visitDate' => $date->format('d.m.Y')
             );
-            Mail::send('emails.mail', $data, function($message) use ($to_email, $report, $visitDate, $projectName, $documents) {
-                $message->to($to_email)
-                    ->subject($projectName . ', Begehungsbericht ' . $visitDate)
-                    ->from('bauleitung@bautagebuch-cloud.de','maier + maier architekten gmbh');
-                $message->attach('storage/app/public/reports/' . $report->filename, [
-                    'mime' => 'application/pdf'
-                ]);
-                foreach($documents as $document) {
-                    $message->attach('storage/app/public/documents/' . $document->filename, [
+            try {
+                Mail::send('emails.mail', $data, function ($message) use ($to_email, $report, $visitDate, $projectName, $documents) {
+                    $message->to($to_email)
+                        ->subject($projectName . ', Begehungsbericht ' . $visitDate)
+                        ->from('bauleitung@bautagebuch-cloud.de', 'maier + maier architekten gmbh');
+                    $message->attach('storage/app/public/reports/' . $report->filename, [
                         'mime' => 'application/pdf'
                     ]);
-                }
-            });
+                    foreach ($documents as $document) {
+                        $message->attach('storage/app/public/documents/' . $document->filename, [
+                            'mime' => 'application/pdf'
+                        ]);
+                    }
+                });
+            } catch (\Exception $e) {
+
+                    return $e->getMessage();
+            }
 
         }
 
