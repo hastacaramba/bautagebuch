@@ -174,7 +174,9 @@ class ReportController extends Controller {
                     }
                 });
             } catch (\Exception $e) {
-                $e.getMessage();
+                $report->log = 'Problem mit der Adresse '.$mailAddresses[$i].' festgestellt';
+                $report->save();
+                return;
             }
 
         }
