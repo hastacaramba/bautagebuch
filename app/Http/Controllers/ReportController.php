@@ -174,7 +174,7 @@ class ReportController extends Controller {
                     }
                 });
             } catch (\Exception $e) {
-                $report->log = 'Problem mit der Adresse '.$mailAddresses[$i].' festgestellt';
+                $report->log = 'Der Bericht konnte aufgrund eines Problems mit der E-Mail-Adresse '.$mailAddresses[$i].' nicht gesendet werden!';
                 $report->save();
                 return;
             }
