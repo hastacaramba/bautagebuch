@@ -532,10 +532,10 @@
 
     $("#btnSaveNewMember").click(function () {
 
-        alert($("#contactSelectBox").select2('data')[0]);
+        if ($("#contactSelectBox").select2('data').length == 0 || $("#subareaSelectBox").select2('data').length == 0) {
 
-        if ($("#contactSelectBox").select2('data')[0] === "" || $("#subareaSelectBox").select2('data')[0] === "") {
             alert ("Bitte wählen Sie sowohl Kontakt als auch Gerwerk aus!");
+
         } else {
 
             $.ajax({
