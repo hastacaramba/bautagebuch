@@ -532,7 +532,7 @@
 
     $("#btnSaveNewMember").click(function () {
 
-        if ($("#contactSelectBox").select2('data')[0]["id"] === "" || $("#subareaSelectBox").select2('data')[0]["id"] == "") {
+        if ($("#contactSelectBox").select2('data')[0] === "" || $("#subareaSelectBox").select2('data')[0] === "") {
             alert ("Bitte wählen Sie sowohl Kontakt als auch Gerwerk aus!");
         } else {
 
