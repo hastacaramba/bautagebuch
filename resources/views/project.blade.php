@@ -532,21 +532,28 @@
 
     $("#btnSaveNewMember").click(function () {
 
-        $.ajax({
-            type: "POST",
-            url: "/member",
-            data:
-                {
-                    'projectID' : '{{ $projectID }}',
-                    'contactID' : $("#contactSelectBox").select2('data')[0]["id"],
-                    'subareaID' : $("#subareaSelectBox").select2('data')[0]["id"]
+        if ($("#contactSelectBox").select2('data')[0]["id"] === "" || $("#subareaSelectBox").select2('data')[0]["id"] == "") {
+            alert ("Bitte wählen Sie sowohl Kontakt als auch Gerwerk aus!");
+        } else {
+
+            $.ajax({
+                type: "POST",
+                url: "/member",
+                data:
+                    {
+                        'projectID' : '{{ $projectID }}',
+                        'contactID' : $("#contactSelectBox").select2('data')[0]["id"],
+                        'subareaID' : $("#subareaSelectBox").select2('data')[0]["id"]
+                    }
+                ,
+                success: function (data) {
+                    $("#modalNewMember").modal('toggle');
+                    $tableMembers.bootstrapTable('refresh');
                 }
-            ,
-            success: function (data) {
-                $("#modalNewMember").modal('toggle');
-                $tableMembers.bootstrapTable('refresh');
-            }
-        });
+            });
+        }
+
+
     });
 
 
