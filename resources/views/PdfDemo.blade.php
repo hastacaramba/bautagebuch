@@ -54,7 +54,7 @@
 @for ($i = 0; $i < (ceil($numOfVisitMedia / 2)); $i++)
     <tr>
       <td>
-        <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="150"><br>
+        <img src="images/{{ $visitMedia[2 * $i]['filename'] ?? ""}}" width="250"><br>
         {{ $visitMedia[2 * $i]['info'] ?? ""}}<br>
       </td>
       @if( ($numOfVisitMedia % 2 == 1) && ($i == ceil($numOfVisitMedia / 2) - 1))
@@ -62,7 +62,7 @@
         </td>
       @else
         <td>
-          <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="150"><br>
+          <img src="images/{{ $visitMedia[2 * $i + 1]['filename'] ?? ""}}" width="250"><br>
           {{ $visitMedia[2 * $i + 1]['info'] ?? ""}}<br>
         </td>
       @endif
@@ -140,7 +140,7 @@
           @for ($i = 0; $i < (ceil($visitationnote['numOfRows'] / 2)); $i++)
             <tr>
               <td style="border: 0.5px solid lightgrey">
-                <img src="images/{{ $visitationnote['media'][2 * $i]['filename'] ?? ""}}" width="150">
+                <img src="images/{{ $visitationnote['media'][2 * $i]['filename'] ?? ""}}" width="250">
 
               </td>
               @if( ($visitationnote['numOfRows'] % 2 == 1) && ($i == ceil($visitationnote['numOfRows'] / 2) - 1))
@@ -148,7 +148,7 @@
                 </td>
               @else
                 <td style="border: 0.5px solid lightgrey">
-                  <img src="images/{{ $visitationnote['media'][2 * $i + 1]['filename'] ?? ""}}" width="150">
+                  <img src="images/{{ $visitationnote['media'][2 * $i + 1]['filename'] ?? ""}}" width="250">
                 </td>
               @endif
             </tr>
