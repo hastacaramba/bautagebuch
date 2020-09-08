@@ -844,6 +844,22 @@
       });
 
 
+      $("#imgRotate").click(function () {
+
+          $.ajax({
+              url: '/media/rotate/' + $("#mediaID").val(),
+              data: {
+                  'info' : $("#newPhotoDesc").val()
+              },
+              type: 'PATCH',
+              success: function(data) {
+                  $("#modalEditVisitMediaPdf").modal('toggle');
+                  $tableVisitMedia.bootstrapTable('refresh');
+                  $("#modalEditVisitMediaPdf").modal('toggle');
+              }
+          });
+      });
+
   </script>
 
 
