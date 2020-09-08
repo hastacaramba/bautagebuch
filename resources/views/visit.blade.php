@@ -853,6 +853,12 @@
               },
               type: 'PATCH',
               success: function(data) {
+                  $.ajax({
+                      url: '/clear-view-compiled-cache',
+                      type: 'GET',
+                      success: function(data) {
+                      }
+                  });
                   $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
               }
           });

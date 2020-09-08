@@ -191,3 +191,10 @@ Route::get('/sample-pdf', ['as'=>'SamplePDF','uses'=>'PdfController@samplePDF'])
 Route::get('/save-pdf', ['as'=>'SavePDF','uses'=>'PdfController@savePDF']);
 Route::get('/download-pdf', ['as'=>'DownloadPDF','uses'=>'PdfController@downloadPDF']);
 Route::get('/html-to-pdf', ['as'=>'HtmlToPDF','uses'=>'PdfController@htmlToPDF']);
+
+
+// clear view compiled files
+Route::get('/clear-view-compiled-cache', function() {
+    Artisan::call('view:clear');
+    return "View compiled files removed";
+});
