@@ -90,6 +90,8 @@ class ImageController extends Controller
             // Free the memory
             imagedestroy($source);
             imagedestroy($rotate);
+
+            return $media;
         }
     }
 
