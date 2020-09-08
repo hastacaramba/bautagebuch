@@ -177,8 +177,7 @@
           </div>
           <div class="form-group">
             <label for="oldPhoto">Aktuelles Foto</label>
-            <span class="mb-3" id="oldPhoto"></span>
-            <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fas fa-redo"></i></button>
+            <div class="mb-3" id="oldPhoto"></div>
           </div>
           <div class="form-group">
             <form id ="editForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
@@ -366,21 +365,6 @@
         } else {
           alert("Bitte füllen Sie die Pflichtfelder Nummer und Name für das Projekt aus!");
         }
-
-      });
-
-      $("#imgRotate").click(function () {
-
-        $.ajax({
-          url: '/media/rotate/' + $("#mediaID").val(),
-          data: {
-          },
-          type: 'PATCH',
-          success: function(data) {
-            $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
-          }
-        });
-
 
       });
 
