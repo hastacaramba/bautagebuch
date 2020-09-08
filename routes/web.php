@@ -195,6 +195,6 @@ Route::get('/html-to-pdf', ['as'=>'HtmlToPDF','uses'=>'PdfController@htmlToPDF']
 
 // clear view compiled files
 Route::get('/clear-view-compiled-cache', function() {
-    Artisan::call('cache:clear');
+    Artisan::call('view:clear');
     return "View compiled files removed";
 });
