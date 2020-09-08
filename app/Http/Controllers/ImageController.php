@@ -6,6 +6,8 @@ use App\Media;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Image;
+use File;
+
 class ImageController extends Controller
 {
 
