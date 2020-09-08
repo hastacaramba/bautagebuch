@@ -50,7 +50,7 @@ class MediaController extends Controller
         if ($media != null) {
 
             // File and rotation
-            $imagePath = public_path('/images');
+            $imagePath = public_path('/images/');
             $rotateFilename = $imagePath.$media->filename; // PATH
             $degrees = 90;
             $fileType = strtolower(substr($media->filename, strrpos($media->filename, '.') + 1));
