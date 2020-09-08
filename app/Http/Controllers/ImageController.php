@@ -82,7 +82,7 @@ class ImageController extends Controller
                 imagepng($rotate,$rotateFilename);
                 $newFileName = time().'.png';
                 $newFileNameWithPath = $imagePath.$newFileName;
-                file::move($rotateFilename,$newFileName);
+                file::move($rotateFilename,$newFileNameWithPath);
                 $media->filename = $newFileName;
             }
 
@@ -94,7 +94,7 @@ class ImageController extends Controller
                 imagejpeg($rotate,$rotateFilename);
                 $newFileName = time().'.jpeg';
                 $newFileNameWithPath = $imagePath.$newFileName;
-                file::move(resource_path($rotateFilename),resource_path($newFileName));
+                file::move($rotateFilename,$newFileNameWithPath);
                 $media->filename = $newFileName;
             }
 
