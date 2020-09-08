@@ -65,7 +65,7 @@ class ImageController extends Controller
             // File and rotation
             $imagePath = public_path('/images/');
             $rotateFilename = $imagePath.$media->filename; // PATH
-            $degrees = 90;
+            $degrees = -90;
             $fileType = strtolower(substr($media->filename, strrpos($media->filename, '.') + 1));
 
             if($fileType == 'png'){
