@@ -68,6 +68,8 @@ class ImageController extends Controller
             $degrees = -90;
             $fileType = strtolower(substr($media->filename, strrpos($media->filename, '.') + 1));
 
+            $newFileName = "";
+
             if($fileType == 'png'){
                 header('Content-type: image/png');
                 $source = imagecreatefrompng($rotateFilename);
@@ -76,7 +78,9 @@ class ImageController extends Controller
                 $rotate = imagerotate($source, $degrees, $bgColor);
                 imagesavealpha($rotate, true);
                 imagepng($rotate,$rotateFilename);
-
+                $newFileName = $imagePath.time().'.png';
+                file::move(resource_path($rotateFilename),resource_path($newFileName));
+                $media->filename = $newFileName;
             }
 
             if($fileType == 'jpg' || $fileType == 'jpeg'){
@@ -85,11 +89,18 @@ class ImageController extends Controller
                 // Rotate
                 $rotate = imagerotate($source, $degrees, 0);
                 imagejpeg($rotate,$rotateFilename);
+                file::move(resource_path($rotateFilename),resource_path($newFileName));
+                $media->filename = $newFileName;
             }
+
+
+            $media->save();
 
             // Free the memory
             imagedestroy($source);
             imagedestroy($rotate);
+
+
 
             return $media;
         }
