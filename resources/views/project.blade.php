@@ -42,6 +42,7 @@
                     </div>
                     <div class="col-md-2">
                         <img class="img-fluid img-rounded" src="/images/{{ $photo }}">
+                        <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fas fa-redo"></i></button>
                     </div>
                 </div>
             </div>
@@ -570,6 +571,22 @@
                 location.href="/visit/" + data;
             }
         });
+    });
+
+
+    $("#imgRotate").click(function () {
+
+        $.ajax({
+            url: '/media/rotate/' + $("#mediaID").val(),
+            data: {
+            },
+            type: 'PATCH',
+            success: function(data) {
+                $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
+            }
+        });
+
+
     });
 
 
