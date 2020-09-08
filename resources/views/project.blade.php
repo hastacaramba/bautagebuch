@@ -42,7 +42,6 @@
                     </div>
                     <div class="col-md-2">
                         <img class="img-fluid img-rounded" src="/images/{{ $photo }}">
-                        <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fas fa-redo"></i></button>
                     </div>
                 </div>
             </div>
