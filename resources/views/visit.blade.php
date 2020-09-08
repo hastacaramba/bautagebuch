@@ -849,15 +849,15 @@
           $.ajax({
               url: '/media/rotate/' + $("#mediaID").val(),
               data: {
-                  'info' : $("#newPhotoDesc").val()
               },
               type: 'PATCH',
               success: function(data) {
-                  $("#modalEditVisitMediaPdf").modal('toggle');
                   $tableVisitMedia.bootstrapTable('refresh');
-                  $("#modalEditVisitMediaPdf").modal('toggle');
+                  $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + row.filename + '">');
               }
           });
+
+
       });
 
   </script>
