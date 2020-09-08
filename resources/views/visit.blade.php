@@ -507,7 +507,7 @@
                   <div class="form-group">
                       <label for="oldPhoto">Aktuelles Foto</label>
                       <div class="mb-3" id="oldVisitPhoto"></div>
-                      <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fa-rotate-90"></i></button>
+                      <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fas fa-rotate-90"></i></button>
                   </div>
                   <div class="form-group">
                       <form id ="editVisitMediaForm" action="{{ route('image.upload.post.edited.visit') }}" method="POST" enctype="multipart/form-data">
