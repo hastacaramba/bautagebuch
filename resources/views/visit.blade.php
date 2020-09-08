@@ -821,6 +821,7 @@
 
       $("#btnCancelEditedVisitMedia").click(function () {
         $("#modalEditVisitMedia").modal('toggle');
+        $tableVisitMedia.bootstrapTable('refresh');
       });
 
 
@@ -852,7 +853,6 @@
               },
               type: 'PATCH',
               success: function(data) {
-                  $tableVisitMedia.bootstrapTable('refresh');
                   $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
               }
           });
