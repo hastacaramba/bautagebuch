@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Media;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Image;
@@ -47,6 +48,49 @@ class ImageController extends Controller
         return back()
             ->with('success','Image Upload successful')
             ->with('imageName',$input['imagename']);
+    }
+
+
+    /**
+     * Rotate the media for 90 degrees
+     *
+     * @param Request $request
+     * @param $mediaID
+     */
+    public function rotateImg($mediaID) {
+        $media = Media::where('id', $mediaID)->first();
+
+        if ($media != null) {
+
+            // File and rotation
+            $imagePath = public_path('/images/');
+            $rotateFilename = $imagePath.$media->filename; // PATH
+            $degrees = 90;
+            $fileType = strtolower(substr($media->filename, strrpos($media->filename, '.') + 1));
+
+            if($fileType == 'png'){
+                header('Content-type: image/png');
+                $source = imagecreatefrompng($rotateFilename);
+                $bgColor = imagecolorallocatealpha($source, 255, 255, 255, 127);
+                // Rotate
+                $rotate = imagerotate($source, $degrees, $bgColor);
+                imagesavealpha($rotate, true);
+                imagepng($rotate,$rotateFilename);
+
+            }
+
+            if($fileType == 'jpg' || $fileType == 'jpeg'){
+                header('Content-type: image/jpeg');
+                $source = imagecreatefromjpeg($rotateFilename);
+                // Rotate
+                $rotate = imagerotate($source, $degrees, 0);
+                imagejpeg($rotate,$rotateFilename);
+            }
+
+            // Free the memory
+            imagedestroy($source);
+            imagedestroy($rotate);
+        }
     }
 
 }
