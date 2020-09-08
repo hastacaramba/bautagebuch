@@ -80,8 +80,9 @@ class ImageController extends Controller
                 $rotate = imagerotate($source, $degrees, $bgColor);
                 imagesavealpha($rotate, true);
                 imagepng($rotate,$rotateFilename);
-                $newFileName = $imagePath.time().'.png';
-                file::move(resource_path($rotateFilename),resource_path($newFileName));
+                $newFileName = time().'.png';
+                $newFileNameWithPath = $imagePath.$newFileName;
+                file::move($rotateFilename,$newFileName);
                 $media->filename = $newFileName;
             }
 
@@ -91,6 +92,8 @@ class ImageController extends Controller
                 // Rotate
                 $rotate = imagerotate($source, $degrees, 0);
                 imagejpeg($rotate,$rotateFilename);
+                $newFileName = time().'.jpeg';
+                $newFileNameWithPath = $imagePath.$newFileName;
                 file::move(resource_path($rotateFilename),resource_path($newFileName));
                 $media->filename = $newFileName;
             }
