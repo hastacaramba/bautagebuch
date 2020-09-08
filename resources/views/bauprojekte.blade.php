@@ -369,6 +369,21 @@
 
       });
 
+      $("#imgRotate").click(function () {
+
+        $.ajax({
+          url: '/media/rotate/' + $("#mediaID").val(),
+          data: {
+          },
+          type: 'PATCH',
+          success: function(data) {
+            $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
+          }
+        });
+
+
+      });
+
     });
 
   </script>
