@@ -53,7 +53,7 @@ class MediaController extends Controller
             $imagePath = public_path('/images');
             $rotateFilename = $imagePath.$media->filename; // PATH
             $degrees = 90;
-            $fileType = strtolower(substr('$media->filename', strrpos('$media->filename', '.') + 1));
+            $fileType = strtolower(substr($media->filename, strrpos($media->filename, '.') + 1));
 
             if($fileType == 'png'){
                 header('Content-type: image/png');
