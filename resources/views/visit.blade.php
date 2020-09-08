@@ -506,9 +506,9 @@
                   </div>
                   <div class="form-group">
                       <label for="oldPhoto">Aktuelles Foto</label>
-                      <div class="mb-3" id="oldVisitPhoto"></div>
-                      <div class="mb-9" >
-                        <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fas fa-refresh"></i></button>
+                      <div class="col-md-4 mb-3" id="oldVisitPhoto"></div>
+                      <div class="col-md-8 mb-3" >
+                        <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fas fa-redo"></i></button>
                       </div>
                   </div>
                   <div class="form-group">
