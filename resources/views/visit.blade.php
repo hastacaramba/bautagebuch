@@ -1140,6 +1140,13 @@
                   }
               });
           },
+          'click .editVisitationNoteMedia': function (e, value, row, index) {
+              $("#modalEditVisitMedia").modal('toggle');
+              $("#mediaID").val(row.id);
+              $("#newPhotoDesc").val(row.info);
+              $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + row.filename + '">');
+
+          },
           'click .editVisitMedia': function (e, value, row, index) {
               $("#modalEditVisitMedia").modal('toggle');
               $("#mediaID").val(row.id);
@@ -1623,6 +1630,9 @@
 
       function operateFormatterMedia(value, row, index) {
           return [
+              '<a class="editVisitationNoteMedia" href="javascript:void(0)" title="Bearbeiten">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+              '</a> ',
               '<a class="deleteMedia" href="javascript:void(0)" title="Löschen">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
               '</a> '
