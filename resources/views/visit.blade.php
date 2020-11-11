@@ -815,6 +815,7 @@
               success: function(data) {
                   $("#btnCancelEditedVisitMedia").click();
                   $tableVisitMedia.bootstrapTable('refresh');
+                  $tableMedia.bootstrapTable('refresh');
               }
           });
       });
