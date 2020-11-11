@@ -1649,6 +1649,12 @@
                       sortable: false,
                       align: 'left',
                       formatter: imageFormatterMedia
+                  },
+                  {
+                      field: 'info',
+                      title: 'Beschreibung',
+                      sortable: false,
+                      align: 'left'
                   }, {
                       field: 'operate',
                       title: 'Aktionen',
