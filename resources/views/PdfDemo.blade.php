@@ -141,6 +141,7 @@
             <tr>
               <td style="border: 0.5px solid lightgrey">
                 <img src="images/{{ $visitationnote['media'][2 * $i]['filename'] ?? ""}}" width="250">
+                {{ $visitationnote['media'][2 * $i]['info'] ?? ""}}
 
               </td>
               @if( ($visitationnote['numOfRows'] % 2 == 1) && ($i == ceil($visitationnote['numOfRows'] / 2) - 1))
@@ -149,6 +150,7 @@
               @else
                 <td style="border: 0.5px solid lightgrey">
                   <img src="images/{{ $visitationnote['media'][2 * $i + 1]['filename'] ?? ""}}" width="250">
+                  {{ $visitationnote['media'][2 * $i + 1]['filename'] ?? ""}}
                 </td>
               @endif
             </tr>
