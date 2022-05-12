@@ -211,6 +211,8 @@ class PdfController extends Controller {
 
         $visitationnotes = json_decode($exportData->data, true)['visitationnotes'];
 
+        $visitationnotes = usort($visitationnotes, "number");
+
         $visitMedia = json_decode($exportData->data, true)['visitMedia'];
 
         $numOfVisitMedia = json_decode($exportData->data, true)['numOfVisitMedia'];
