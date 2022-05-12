@@ -174,6 +174,7 @@ class PdfController extends Controller {
             $presentMembersData[] = $item;
         }
 
+        $visitationnotes = usort($visitationnotes, "number");
 
         $data = [
             'visit' => $visit,
@@ -210,8 +211,6 @@ class PdfController extends Controller {
         $presentMembers = json_decode($exportData->data, true)['presentMembersData'];
 
         $visitationnotes = json_decode($exportData->data, true)['visitationnotes'];
-
-        $visitationnotes = usort($visitationnotes, "number");
 
         $visitMedia = json_decode($exportData->data, true)['visitMedia'];
 
