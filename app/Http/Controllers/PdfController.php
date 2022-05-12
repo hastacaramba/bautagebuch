@@ -57,7 +57,7 @@ class PdfController extends Controller {
             }
         }
 
-        $visitationnotes = $visitationnotes->unique()->sortBy('number');
+        $visitationnotes = $visitationnotes->sortBy('number');
 
         $visitationnotesWithMedia = [];
 
