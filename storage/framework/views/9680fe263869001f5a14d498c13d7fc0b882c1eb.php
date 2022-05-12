@@ -576,7 +576,7 @@
             field: 'number',
             align: 'left',
             valign: 'middle',
-            sortable: true,
+            sortable: true	
           }, {
             field: 'name',
             title: 'Name',
@@ -621,6 +621,7 @@
 
     }
 
+     
   </script>
 
   <?php $__env->startComponent('partials.js'); ?>
