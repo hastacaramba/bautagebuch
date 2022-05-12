@@ -138,6 +138,9 @@ class PdfController extends Controller {
             $visitationnotesWithMedia[] = $item;
         }
 
+        $visitationnotesWithMedia = $visitationnotesWithMedia->sortBy('number');
+
+
         //present members...
 
         //get all members of the project
