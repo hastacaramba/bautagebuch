@@ -174,8 +174,6 @@ class PdfController extends Controller {
             $presentMembersData[] = $item;
         }
 
-        $visitationnotes = usort($visitationnotes, "number");
-
         $data = [
             'visit' => $visit,
             'responsible' => $responsible,
