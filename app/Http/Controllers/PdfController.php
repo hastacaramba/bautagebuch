@@ -138,7 +138,8 @@ class PdfController extends Controller {
             $visitationnotesWithMedia[] = $item;
         }
 
-        $visitationnotesWithMedia = $visitationnotesWithMedia->sortBy('number');
+        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+        $out->writeln($visitationnotesWithMedia[0][number]);
 
 
         //present members...
