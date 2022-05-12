@@ -57,8 +57,6 @@ class PdfController extends Controller {
             }
         }
 
-        $visitationnotes = $visitationnotes->sortBy('number');
-
         $visitationnotesWithMedia = [];
 
         $openVisitationNotesCounter = 0;
@@ -211,6 +209,10 @@ class PdfController extends Controller {
         $presentMembers = json_decode($exportData->data, true)['presentMembersData'];
 
         $visitationnotes = json_decode($exportData->data, true)['visitationnotes'];
+
+        $visitationnotes = $visitationnotes->sortBy('number');
+
+        $visitationnotes->values()->all();
 
         $visitMedia = json_decode($exportData->data, true)['visitMedia'];
 
