@@ -31,7 +31,7 @@
         <div class="container-fluid">
 
           <div id="toolbar">
-            <button id="btnNewProject" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Neues Bauprojekt</button>
+            <button id="btnNewProject" type="button" class="btn btn-primary"><i class="fas fa-plus-circle"></i> neues Bauprojekt</button>
           </div>
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
