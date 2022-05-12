@@ -577,6 +577,7 @@
             align: 'left',
             valign: 'middle',
             sortable: true,
+            sorter: numericSort
           }, {
             field: 'name',
             title: 'Name',
@@ -620,6 +621,14 @@
       })
 
     }
+
+  function numericSort(a, b, rowA, rowB) {  
+      a = +a.substring(1); // remove $
+      b = +b.substring(1);
+      if (a > b) return 1;
+      if (a < b) return -1;
+      return 0;
+  }
 
   </script>
 
