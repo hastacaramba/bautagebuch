@@ -139,7 +139,7 @@ class PdfController extends Controller {
         }
 
         $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->writeln($visitationnotesWithMedia[0][number]);
+        $out->writeln("testxxx");
 
 
         //present members...
