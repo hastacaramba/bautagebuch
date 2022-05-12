@@ -138,9 +138,6 @@ class PdfController extends Controller {
             $visitationnotesWithMedia[] = $item;
         }
 
-        $out = new \Symfony\Component\Console\Output\ConsoleOutput();
-        $out->writeln("testxxx");
-
 
         //present members...
 
