@@ -138,6 +138,10 @@ class PdfController extends Controller {
             $visitationnotesWithMedia[] = $item;
         }
 
+        //sorting visitationnotesWithMedia according to id in ascending order
+        $order = array_column($visitationnotesWithMedia, 'id');
+        array_multisort($order, SORT_ASC, $visitationnotesWithMedia);
+
 
         //present members...
 
