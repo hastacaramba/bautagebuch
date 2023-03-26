@@ -53,7 +53,7 @@
                     data-toolbar="#toolbar"
                     data-search="true"
                     data-show-columns="false"
-                    data-pagination="true"
+                    data-pagination="false"
                     data-page-list="[10, 25, 50, 100, ALL]"
                     data-detail-formatter="detailFormatter"
                     data-detail-view="false"
