@@ -576,8 +576,7 @@
             field: 'number',
             align: 'left',
             valign: 'middle',
-            sortable: true,
-            sorter: 'numericOnly'
+            sortable: true
           }, {
             field: 'name',
             title: 'Name',
