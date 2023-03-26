@@ -178,13 +178,8 @@
             <input type="text" class="form-control" id="newName" placeholder="Projektname">
           </div>
           <div class="form-group">
-          <label for="oldPhoto">Aktuelles Foto</label>
-            <div class="row">
-              <div class="mb-3" id="oldPhoto"></div>
-              <div class="mb-3">
-                <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fas fa-redo"></i></button>
-              </div>
-            </div>
+            <label for="oldPhoto">Aktuelles Foto</label>
+            <div class="mb-3" id="oldPhoto"></div>
           </div>
           <div class="form-group">
             <form id ="editForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
