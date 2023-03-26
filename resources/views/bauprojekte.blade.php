@@ -47,7 +47,7 @@
                     data-side-pagination="client"
                     data-toggle="table"
                     data-sortable="true"
-                    data-sorter="numericSort"
+                    data-sorter="alphanum"
                     data-sort-name="number"
                     data-sort-order="desc"
                     data-url="/projects"
@@ -578,7 +578,7 @@
             align: 'left',
             valign: 'middle',
             sortable: true,
-            sorter: 'numericSort'
+            sorter: 'alphanum'
           }, {
             field: 'name',
             title: 'Name',
@@ -622,16 +622,10 @@
       })
 
     }
-     
-    function numericSort(a, b, rowA, rowB) {  
-      a = +a.substring(1); // remove $
-      b = +b.substring(1);
-      if (a > b) return 1;
-      if (a < b) return -1;
-      return 0;
-    }
 
   </script>
+
+  <script src="extensions/natural-sorting/bootstrap-table-natural-sorting.js"></script>
 
   @component('partials.js')
     <strong>Whoops!</strong> Something went wrong!
