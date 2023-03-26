@@ -47,6 +47,8 @@
                     data-side-pagination="client"
                     data-toggle="table"
                     data-sortable="true"
+                    data-sortname="number"
+                    data-sortorder="desc"
                     data-url="/projects"
                     data-toolbar="#toolbar"
                     data-search="true"
