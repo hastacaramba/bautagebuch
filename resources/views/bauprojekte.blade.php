@@ -577,7 +577,7 @@
             align: 'left',
             valign: 'middle',
             sortable: true,
-            sorter: 'naturalSorting'
+            sorter: 'numericOnly'
           }, {
             field: 'name',
             title: 'Name',
