@@ -47,6 +47,8 @@
                     data-side-pagination="client"
                     data-toggle="table"
                     data-sortable="true"
+                    data-sort-name="number"
+                    data-sort-order="desc"
                     data-url="/projects"
                     data-toolbar="#toolbar"
                     data-search="true"
@@ -574,8 +576,7 @@
             field: 'number',
             align: 'left',
             valign: 'middle',
-            sortable: true,
-            sorter: 'alphanum'
+            sortable: true
           }, {
             field: 'name',
             title: 'Name',
@@ -623,7 +624,7 @@
   </script>
 
   <script>
-    (function (global, factory) {
+(function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
     (global = global || self, global.BootstrapTable = factory());
@@ -1889,6 +1890,7 @@
   
   }));
   </script>
+
 
   @component('partials.js')
     <strong>Whoops!</strong> Something went wrong!
