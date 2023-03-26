@@ -480,6 +480,15 @@
     }
 
 
+    function numericSort(a, b, rowA, rowB) {  
+      a = (int)a;
+      b = (int)b;
+      a = +a.substring(1); // remove $
+      b = +b.substring(1);
+      if (a > b) return 1;
+      if (a < b) return -1;
+      return 0;
+    }
 
     function updatedAtFormatter(value, row, index) {
 
@@ -621,16 +630,6 @@
       })
 
     }
-
-    function numericSort(a, b, rowA, rowB) {  
-      a = (int)a;
-      b = (int)b;
-      a = +a.substring(1); // remove $
-      b = +b.substring(1);
-      if (a > b) return 1;
-      if (a < b) return -1;
-      return 0;
-  }
      
   </script>
 
