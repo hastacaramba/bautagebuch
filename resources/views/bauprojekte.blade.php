@@ -528,6 +528,18 @@
         $("#oldPhoto").html("<img class=\"img-rounded table-img\" src=\"images/" + row.photo + "\">");
         $("#modalEditProject").modal('toggle');
       },
+      'click .imgRotate': function (e, value, row, index) {
+        $("#projectID").val(row.id);
+        $("#newNumber").val(row.number);
+        $("#newName").val(row.name);
+        $("#newStreet").val(row.street);
+        $("#newHousenumber").val(row.housenumber);
+        $("#newPostcode").val(row.postcode);
+        $("#newCity").val(row.city);
+        $("#filename").val(row.photo);
+        $("#oldPhoto").html("<img class=\"img-rounded table-img\" src=\"images/" + row.photo + "\">");
+        $("#modalEditProject").modal('toggle');
+      },
       'click .open': function (e, value, row, index) {
         location.href = "/projects/" + row.id;
       },
