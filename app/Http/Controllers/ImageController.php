@@ -111,4 +111,62 @@ class ImageController extends Controller
         }
     }
 
+     /**
+     * Rotate the media for 90 degrees by fileName
+     *
+     * @param Request $request
+     * @param $fileName
+     */
+    public function rotateImgByFileName($fileName) {
+        $media = Media::where('filename', $fileName)->first();
+
+        if ($media != null) {
+
+            // File and rotation
+            $imagePath = public_path('/images/');
+            $rotateFilename = $imagePath.$media->filename; // PATH
+            $degrees = -90;
+            $fileType = strtolower(substr($media->filename, strrpos($media->filename, '.') + 1));
+
+            $newFileName = "";
+
+            if($fileType == 'png'){
+                header('Content-type: image/png');
+                $source = imagecreatefrompng($rotateFilename);
+                $bgColor = imagecolorallocatealpha($source, 255, 255, 255, 127);
+                // Rotate
+                $rotate = imagerotate($source, $degrees, $bgColor);
+                imagesavealpha($rotate, true);
+                imagepng($rotate,$rotateFilename);
+                $newFileName = time().'.png';
+                $newFileNameWithPath = $imagePath.$newFileName;
+                file::move($rotateFilename,$newFileNameWithPath);
+                $media->filename = $newFileName;
+            }
+
+            if($fileType == 'jpg' || $fileType == 'jpeg'){
+                header('Content-type: image/jpeg');
+                $source = imagecreatefromjpeg($rotateFilename);
+                // Rotate
+                $rotate = imagerotate($source, $degrees, 0);
+                imagejpeg($rotate,$rotateFilename);
+                $newFileName = time().'.jpeg';
+                $newFileNameWithPath = $imagePath.$newFileName;
+                file::move($rotateFilename,$newFileNameWithPath);
+                $media->filename = $newFileName;
+            }
+
+
+            $media->save();
+
+            // Free the memory
+            imagedestroy($source);
+            imagedestroy($rotate);
+
+
+
+            return $media;
+        }
+    }
+
 }

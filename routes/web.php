@@ -157,6 +157,8 @@ Route::patch('/media/{mediaID}', 'MediaController@editMedia')->name('media.edit'
 
 Route::patch('/media/rotate/{mediaID}', 'ImageController@rotateImg')->name('media.rotate')->middleware('auth');
 
+Route::patch('/media/rotate-filename/{filename}', 'ImageController@rotateImgByFileName')->name('media.rotateByFileName')->middleware('auth');
+
 Route::delete('/pdf/{pdfID}', 'PdfMediaController@deletePdf')->name('pdf.delete')->middleware('auth');
 
 Route::patch('/pdf/{pdfID}', 'PdfMediaController@editPdf')->name('pdf.edit')->middleware('auth');

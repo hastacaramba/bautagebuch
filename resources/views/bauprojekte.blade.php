@@ -529,7 +529,7 @@
       },
       'click .imgRotate': function (e, value, row, index) {
         $.ajax({
-        url: '/media/rotate/' + row.photo,
+        url: '/media/rotate-filename/' + row.photo,
         data: {
         },
         type: 'PATCH',
