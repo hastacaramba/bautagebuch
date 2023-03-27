@@ -445,7 +445,7 @@
         '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
           '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
         '</a>  ',
-        '<a class="imgRotate" href="javascript:void(0)" title="Bild drehen">',
+        '<a class="imgRotate" href="javascript:void(0)" id="imgRotate" title="Bild drehen">',
         '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-redo"></i></button>',
         '</a> ',
         '<a class="delete" href="javascript:void(0)" title="Löschen">',
@@ -453,6 +453,27 @@
         '</a> '
       ].join('')
     }
+
+    $("#imgRotate").click(function () {
+
+    $.ajax({
+        url: '/media/rotate/' + $("#mediaID").val(),
+        data: {
+        },
+        type: 'PATCH',
+        success: function(data) {
+            $.ajax({
+                url: '/clear-view-compiled-cache',
+                type: 'GET',
+                success: function(data) {
+                }
+            });
+            $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
+        }
+    });
+
+
+});
 
 
     function imageFormatter(value, row, index) {
