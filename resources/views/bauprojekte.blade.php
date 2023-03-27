@@ -540,7 +540,7 @@
                 success: function(data) {
                 }
             });
-            $("#oldPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
+            $("#oldPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + row.photo + '">');
         }
     });
       },
