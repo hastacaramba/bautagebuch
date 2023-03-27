@@ -445,11 +445,11 @@
         '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
           '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
         '</a>  ',
-        '<a class="delete" href="javascript:void(0)" title="Löschen">',
-        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
-        '</a> ',
         '<a class="imgRotate" href="javascript:void(0)" title="Bild drehen">',
         '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-redo"></i></button>',
+        '</a> ',
+        '<a class="delete" href="javascript:void(0)" title="Löschen">',
+        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
         '</a> '
       ].join('')
     }
