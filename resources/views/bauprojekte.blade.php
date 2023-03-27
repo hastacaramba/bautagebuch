@@ -541,6 +541,7 @@
                 }
             });
             $("#oldPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + row.photo + '">');
+            $table.bootstrapTable('refresh');
         }
     });
       },
