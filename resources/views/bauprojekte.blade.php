@@ -454,28 +454,6 @@
       ].join('')
     }
 
-    $("#imgRotate").click(function () {
-
-    $.ajax({
-        url: '/media/rotate/' + $("#mediaID").val(),
-        data: {
-        },
-        type: 'PATCH',
-        success: function(data) {
-            $.ajax({
-                url: '/clear-view-compiled-cache',
-                type: 'GET',
-                success: function(data) {
-                }
-            });
-            $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
-        }
-    });
-
-
-});
-
-
     function imageFormatter(value, row, index) {
       return [
         '<a href="/projects/' + row.id + '"><img class="img-fluid table-img" src="images/' + value + '" /></a>'
@@ -550,16 +528,21 @@
         $("#modalEditProject").modal('toggle');
       },
       'click .imgRotate': function (e, value, row, index) {
-        $("#projectID").val(row.id);
-        $("#newNumber").val(row.number);
-        $("#newName").val(row.name);
-        $("#newStreet").val(row.street);
-        $("#newHousenumber").val(row.housenumber);
-        $("#newPostcode").val(row.postcode);
-        $("#newCity").val(row.city);
-        $("#filename").val(row.photo);
-        $("#oldPhoto").html("<img class=\"img-rounded table-img\" src=\"images/" + row.photo + "\">");
-        $("#modalEditProject").modal('toggle');
+        $.ajax({
+        url: '/media/rotate/' + $("#mediaID").val(),
+        data: {
+        },
+        type: 'PATCH',
+        success: function(data) {
+            $.ajax({
+                url: '/clear-view-compiled-cache',
+                type: 'GET',
+                success: function(data) {
+                }
+            });
+            $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
+        }
+    });
       },
       'click .open': function (e, value, row, index) {
         location.href = "/projects/" + row.id;
