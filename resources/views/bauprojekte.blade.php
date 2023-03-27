@@ -448,6 +448,8 @@
         '<a class="delete" href="javascript:void(0)" title="Löschen">',
         '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
         '</a>  '
+        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-plus-circle"></i></button>',
+        '</a>  '
       ].join('')
     }
 
