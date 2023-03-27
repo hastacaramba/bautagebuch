@@ -449,7 +449,7 @@
         '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
         '</a> ',
         '<a class="imgRotate" href="javascript:void(0)" title="Bild drehen">',
-        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-plus-circle"></i></button>',
+        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-redo"></i></button>',
         '</a> '
       ].join('')
     }
