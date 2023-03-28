@@ -180,8 +180,8 @@
           <div class="form-group">
             <label for="oldPhoto">Aktuelles Foto</label>
             <div class="mb-3">
-              <span class="mb-3" id="oldPhoto"></span>
-              <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fas fa-redo"></i></button>
+              <span id="oldPhoto"></span>
+              <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotateInner"><i class="fas fa-redo"></i></button>
             </div>
           </div>
           <div class="form-group">
