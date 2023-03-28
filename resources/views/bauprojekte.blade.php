@@ -585,7 +585,7 @@
     $("#imgRotateInner").click(function () {
 
       $.ajax({
-              url: '/media/rotate-filename/' + row.photo,
+              url: '/media/rotate-filename/' + $("#filename").val(),
               data: {
               },
               type: 'PATCH',
@@ -597,6 +597,7 @@
                       }
                   });
                   $("#oldPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
+                  $table.bootstrapTable('refresh');
               }
           });
 
