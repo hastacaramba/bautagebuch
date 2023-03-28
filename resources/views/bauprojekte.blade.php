@@ -596,7 +596,7 @@
                       success: function(data) {
                       }
                   });
-                  $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
+                  $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + $("#filename").val() + '">');
               }
           });
 
