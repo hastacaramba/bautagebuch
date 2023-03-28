@@ -585,7 +585,7 @@
     $("#imgRotateInner").click(function () {
 
       $.ajax({
-              url: '/media/rotate-filename/' + $("#filename").val(),
+              url: '/media/rotate-filename/' + row.photo,
               data: {
               },
               type: 'PATCH',
