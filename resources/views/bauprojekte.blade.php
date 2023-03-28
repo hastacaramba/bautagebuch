@@ -179,8 +179,10 @@
           </div>
           <div class="form-group">
             <label for="oldPhoto">Aktuelles Foto</label>
-            <span class="mb-3" id="oldPhoto"></span>
-            <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fas fa-redo"></i></button>
+            <div class="mb-3">
+              <span class="mb-3" id="oldPhoto"></span>
+              <button class="btn btn-success btn-circle mt-4 ml-4" title="Foto 90° drehen" id="imgRotate"><i class="fas fa-redo"></i></button>
+            </div>
           </div>
           <div class="form-group">
             <form id ="editForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
