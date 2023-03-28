@@ -598,6 +598,7 @@
                   });
                   $("#oldPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + data.filename + '">');
                   $table.bootstrapTable('refresh');
+                  $("#filename") = data.filename;
               }
           });
 
