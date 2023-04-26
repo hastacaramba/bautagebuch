@@ -656,43 +656,6 @@
           return res
       }
 
-      /**
-       * Bootstrap-table detailFormatter
-       *
-       * @param index
-       * @param row
-       * @returns {string}
-       */
-      function detailFormatter(index, row) {
-          var html = []
-          $.each(row, function (key, value) {
-              html.push('<p><b>' + key + ':</b> ' + value + '</p>')
-          })
-          return html.join('')
-      }
-
-
-      /**
-       * Bootstrap-table detailFormatterReports
-       *
-       * @param index
-       * @param row
-       * @returns {string}
-       */
-      function detailFormatterReports(index, row) {
-          var html = []
-          $.each(row, function (key, value) {
-              if (value === null) {
-                  value = "Bericht wurde bisher noch nicht verschickt";
-              }
-              if (key === 'log') {
-                html.push('<p style="font-size:0.9em"><b>Verlauf:</b><br>' + value + '</p>')
-              }
-
-          })
-          return html.join('')
-      }
-
 
       /**
        *
@@ -833,8 +796,6 @@
               $("#visitationnoteConcernsAll").prop('checked', row.concernsAll);
               $("#visitationnoteCategory").val(row.category);
               $("#visitationnoteID").val(row.id)
-              $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + row.id });
-              $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/visitationnote/concerned/' + row.id });
 
 
           },
