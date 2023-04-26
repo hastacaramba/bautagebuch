@@ -47,7 +47,7 @@ class VisitationnoteController extends Controller
     for ($n = 0; $n < sizeof($visits); $n++) {
 
         //fetch the visitationnotes of the visit
-        $visitationnotes = Visitationnote::where('visit_id', '=', $visits[$n]['id'])->get();
+        $visitationnotes[] = Visitationnote::where('visit_id', '=', $visits[$n]['id'])->get();
     }
 
     return json_encode($visitationnotes);
