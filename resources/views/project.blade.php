@@ -1015,7 +1015,7 @@
        * Initiiert die Bootstrap-Table.
        *
        */
-       function initTable() {
+       function initTableVisitationnotes() {
           $tableVisitationnotes.bootstrapTable('destroy').bootstrapTable({
               locale: 'de-DE',
               columns: [
