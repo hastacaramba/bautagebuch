@@ -51,10 +51,10 @@ class VisitationnoteController extends Controller
         //fetch the visitationnotes of the visit
         $visitationnotes = Visitationnote::where('visit_id', '=', $visits[$n]['id'])->get();
 
-        $allVisitationNotesOfVisit .= json_encode($visitationnotes);        
+        //$allVisitationNotesOfVisit .= json_encode($visitationnotes);        
     }
 
-    return $allVisitationNotesOfVisit;
+    return json_encode($visitationnotes);
     }
 
 
