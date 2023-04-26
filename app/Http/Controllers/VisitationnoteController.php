@@ -54,7 +54,7 @@ class VisitationnoteController extends Controller
         //$allVisitationNotesOfVisit .= json_encode($visitationnotes);        
     }
 
-    return json_encode($visitationnotes);
+    return json_encode($visitationnotes[0]);
     }
 
 
