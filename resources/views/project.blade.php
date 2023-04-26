@@ -384,6 +384,7 @@
       initTableProjectNotes();
       initTableVisits();
       initTableConcernedMembers();
+      initTable();
 
       //tabs
         $('ul.tabs li').click(function(){
