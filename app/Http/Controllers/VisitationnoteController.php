@@ -61,7 +61,7 @@ class VisitationnoteController extends Controller
 
     $allVisitationnotesOfVisit = "[" . $allVisitationnotesOfVisit . "]";
 
-    return $allVisitationnotesOfVisit;
+    return $allVisitationnotesOfVisit[0];
     }
 
 
