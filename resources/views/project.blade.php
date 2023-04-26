@@ -113,7 +113,38 @@
                     </div>
                 </div>
             </div>
-
+            <div class="container-fluid">
+                <!-- Begehungsvermerke -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h4><i class="fas fa-clipboard-list"></i> Begehungsvermerke</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <!-- Table: Visitationnotes -->
+                            <table
+                                    id="table"
+                                    data-id-field="id"
+                                    data-side-pagination="client"
+                                    data-toggle="table"
+                                    data-sortable="true"
+                                    data-url="/visitationnotesByProject/{{$project->id}}"
+                                    data-toolbar="#toolbar"
+                                    data-search="true"
+                                    data-show-columns="true"
+                                    data-pagination="true"
+                                    data-page-list="[10, 25, 50, 100, ALL]"
+                                    data-detail-formatter="detailFormatter"
+                                    data-detail-view="false"
+                                    data-response-handler="responseHandler"
+                                    data-show-export="false"
+                                    data-show-pagination-switch="true"
+                                    data-row-style="rowStyle">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- End of Main Content -->
 

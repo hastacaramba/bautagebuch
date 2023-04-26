@@ -121,7 +121,7 @@ Route::patch('/visitationnote/{visitationnoteID}/important', 'VisitationnoteCont
 
 Route::get('/visitationnotes/{visitID}', 'VisitationnoteController@visitVisitationnotes')->middleware('auth');
 
-Route::get('/visitationnotes/{projectID}', 'VisitationnoteController@projectVisitationnotes')->middleware('auth');
+Route::get('/visitationnotesByProject/{projectID}', 'VisitationnoteController@projectVisitationnotes')->middleware('auth');
 
 Route::post('/visitationnote', 'VisitationnoteController@newVisitationnote')->middleware('auth');
 
