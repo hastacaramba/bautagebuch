@@ -132,7 +132,7 @@
                                 data-toolbar="#toolbar"
                                 data-search="true"
                                 data-show-columns="true"
-                                data-pagination="true"
+                                data-pagination="false"
                                 data-page-list="[50, 100, ALL]"
                                 data-detail-formatter="detailFormatter"
                                 data-detail-view="false"
