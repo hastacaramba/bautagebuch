@@ -115,36 +115,35 @@
             </div>
             <div class="container-fluid">
                 <!-- Begehungsvermerke -->
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3">
-                        <h4><i class="fas fa-clipboard-list"></i> Alle Begehungsvermerke</h4>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <!-- Table: Visitationnotes -->
-                            <table
-                                    id="tableVisitationnotes"
-                                    data-id-field="id"
-                                    data-side-pagination="client"
-                                    data-toggle="table"
-                                    data-sortable="true"
-                                    data-url="/visitationnotesByProject/34"
-                                    data-toolbar="#toolbar"
-                                    data-search="true"
-                                    data-show-columns="true"
-                                    data-pagination="true"
-                                    data-page-list="[10, 25, 50, 100, ALL]"
-                                    data-detail-formatter="detailFormatter"
-                                    data-detail-view="false"
-                                    data-response-handler="responseHandler"
-                                    data-show-export="false"
-                                    data-show-pagination-switch="true"
-                                    data-row-style="rowStyle">
-                            </table>
-                        </div>
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h4><i class="fas fa-clipboard-list"></i> Alle Begehungsvermerke dieses Bauvorhabens</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <!-- Table: Visitationnotes -->
+                        <table
+                                id="table"
+                                data-id-field="id"
+                                data-side-pagination="client"
+                                data-toggle="table"
+                                data-sortable="true"
+                                data-url="/visitationnotesByProject/{{ $projectID }}"
+                                data-toolbar="#toolbar"
+                                data-search="true"
+                                data-show-columns="true"
+                                data-pagination="true"
+                                data-page-list="[10, 25, 50, 100, ALL]"
+                                data-detail-formatter="detailFormatter"
+                                data-detail-view="false"
+                                data-response-handler="responseHandler"
+                                data-show-export="false"
+                                data-show-pagination-switch="true"
+                                data-row-style="rowStyle">
+                        </table>
                     </div>
                 </div>
-            </div>
+            </div>            
         </div>
         <!-- End of Main Content -->
 
@@ -385,7 +384,6 @@
       initTableProjectNotes();
       initTableVisits();
       initTableConcernedMembers();
-      initTableVisitationnotes();
 
       //tabs
         $('ul.tabs li').click(function(){
@@ -625,6 +623,486 @@
 
   <script>
 
+   // - BOOTSTRAP-TABLE Visitationnotes - //
+
+   var $table = $('#table')
+      var $remove = $('#remove')
+      var $activate = $('#activate')
+      var $deactivate = $('#deactivate')
+      var $newPW = $('#newPW')
+      var selections = []
+
+      /**
+       * Gibt eine map der Projekt-IDs der aktuell selektierten Zeilen zurück.
+       *
+       */
+      function getIdSelections() {
+          return $.map($table.bootstrapTable('getSelections'), function (row) {
+              return row.id;
+          })
+      }
+
+
+      /**
+       * Bootstrap-table response handler
+       *
+       * @param res
+       * @returns {*}
+       */
+      function responseHandler(res) {
+          $.each(res.rows, function (i, row) {
+              row.state = $.inArray(row.id, selections) !== -1
+          })
+          return res
+      }
+
+      /**
+       * Bootstrap-table detailFormatter
+       *
+       * @param index
+       * @param row
+       * @returns {string}
+       */
+      function detailFormatter(index, row) {
+          var html = []
+          $.each(row, function (key, value) {
+              html.push('<p><b>' + key + ':</b> ' + value + '</p>')
+          })
+          return html.join('')
+      }
+
+
+      /**
+       * Bootstrap-table detailFormatterReports
+       *
+       * @param index
+       * @param row
+       * @returns {string}
+       */
+      function detailFormatterReports(index, row) {
+          var html = []
+          $.each(row, function (key, value) {
+              if (value === null) {
+                  value = "Bericht wurde bisher noch nicht verschickt";
+              }
+              if (key === 'log') {
+                html.push('<p style="font-size:0.9em"><b>Verlauf:</b><br>' + value + '</p>')
+              }
+
+          })
+          return html.join('')
+      }
+
+
+      /**
+       *
+       * @param value
+       * @param row
+       * @param index
+       * @returns {string}
+       */
+      function operateFormatterVisitationnotes(value, row, index) {
+          return [
+              '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+              '</a>  ',
+              '<a class="delete" href="javascript:void(0)" title="Löschen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+              '</a> ',
+          ].join('')
+      }
+
+
+      function importantFormatter(value, row, index) {
+
+          if (value) {
+              return [
+                  '<input class=\"importantCheck\" type=\"checkbox\" name=\"important\" value=\"1\" checked onclick=\"handleImportantClick(this,\'' + row.id + '\')\">'
+              ]
+          }
+
+          return [
+              '<input class=\"importantCheck\" type=\"checkbox\" name=\"important\" value=\"0\" onclick=\"handleImportantClick(this,\'' + row.id + '\')\">'
+          ]
+      }
+
+      function handleImportantClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
+          //update the done status for this visitationnote
+          $.ajax({
+              type: "PATCH",
+              url: "/visitationnote/" + id + "/important",
+              data:
+                  {
+                      'important' : checked
+                  }
+              ,
+              success: function (data) {
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  $table.bootstrapTable('refresh');
+              }
+          });
+
+
+      }
+
+      function doneFormatter(value, row, index) {
+
+          if (value) {
+              return [
+                  '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"1\" checked onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
+              ]
+          }
+
+          return [
+              '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"0\" onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
+          ]
+      }
+
+      function handleDoneClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
+          //update the done status for this visitationnote
+          $.ajax({
+              type: "PATCH",
+              url: "/visitationnote/" + id,
+              data:
+                  {
+                      'done' : checked
+                  }
+              ,
+              success: function (data) {
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  $table.bootstrapTable('refresh');
+              }
+          });
+
+
+      }
+
+      function handleConcernedClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
+          //update the done status for this visitationnote
+          $.ajax({
+              type: "PATCH",
+              url: "/visitationnote/" + $("#visitationnoteID").val() + "/concerned",
+              data:
+                  {
+                      'memberID' : id,
+                      'concerned' : checked
+                  }
+              ,
+              success: function (data) {
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  $tableConcernedMembers.bootstrapTable('refresh');
+              }
+          });
+
+
+      }
+
+      //window.operateEvents for all bootstrap-tables
+      window.operateEvents = {
+          'click .edit': function (e, value, row, index) {
+
+              $("#editVisitationnoteLabel").html("<i class=\"fa fa-clipboard-list\"></i> Begehungsvermerk bearbeiten");
+              $("#modalEditVisitationnnote").modal('toggle');
+              $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
+              $("#visitationnoteNumber").val(row.number);
+              $("#visitationnoteDeadline").val(row.deadline);
+              $("#visitationnoteDescription").val(row.notes);
+              $("#visitationnoteDone").prop('checked', row.done);
+              $("#visitationnoteImportant").prop('checked', row.important);
+              $("#visitationnoteConcernsAll").prop('checked', row.concernsAll);
+              $("#visitationnoteCategory").val(row.category);
+              $("#visitationnoteID").val(row.id)
+              $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + row.id });
+              $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/visitationnote/concerned/' + row.id });
+
+
+          },
+          'click .delete': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Begehungsvermerk wirklich entfernen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/visitationnote/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $table.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
+          'click .deleteMedia': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Foto wirklich löschen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/media/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $tableMedia.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
+          'click .editVisitationNoteMedia': function (e, value, row, index) {
+              $("#modalEditVisitMedia").modal('toggle');
+              $("#mediaID").val(row.id);
+              $("#newPhotoDesc").val(row.info);
+              $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + row.filename + '">');
+
+          },
+          'click .editVisitMedia': function (e, value, row, index) {
+              $("#modalEditVisitMedia").modal('toggle');
+              $("#mediaID").val(row.id);
+              $("#newPhotoDesc").val(row.info);
+              $("#oldVisitPhoto").html('<img class="img-fluid img-rounded table-img" src="/images/' + row.filename + '">');
+          },
+          'click .deleteVisitMedia': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Foto wirklich löschen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/media/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $tableVisitMedia.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
+          'click .editVisitMediaPdf': function (e, value, row, index) {
+              $("#modalEditVisitMediaPdf").modal('toggle');
+              $("#mediaIDPdf").val(row.id);
+              $("#newPhotoDescPdf").val(row.info);
+              $("#oldVisitPdf").html(row.filename);
+          },
+          'click .deleteVisitMediaPdf': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Dokument wirklich löschen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/pdf/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $tableVisitMediaPdf.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
+          'click .deleteReport': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Bericht wirklich löschen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/report/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $reportsTable.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
+          'click .sendReport': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Bericht jetzt per E-Mail an alle Projektteilnehmer im aktuellen Verteiler senden?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "GET",
+                              url: "/report/" + row.id + "/send",
+                              data: "",
+                              success: function (data) {
+                                  $reportsTable.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
+      }
+
+      /**
+       * Initiiert die Bootstrap-Table.
+       *
+       */
+      function initTable() {
+          $table.bootstrapTable('destroy').bootstrapTable({
+              locale: 'de-DE',
+              columns: [
+                  {
+                      field: 'number',
+                      title: 'Nr',
+                      sortable: true,
+                      align: 'left',
+                      valign: 'top'
+                  },{
+                      field: 'notes',
+                      title: 'Beschreibung',
+                      sortable: false,
+                      align: 'left',
+                      valign: 'top'
+                  }, {
+                      field: 'created_at',
+                      title: 'erstellt',
+                      align: 'left',
+                      valign: 'top',
+                      sortable: true,
+                      formatter: createdAtFormatter
+                  }, {
+                      field: 'category',
+                      title: 'Kategorie',
+                      align: 'left',
+                      valign: 'top',
+                      sortable: true
+                  }, {
+                      field: 'deadline',
+                      title: 'Fälligkeit',
+                      sortable: true,
+                      align: 'left',
+                      valign: 'top'
+                  }, {
+                      field: 'important',
+                      title: 'wichtig',
+                      sortable: true,
+                      align: 'center',
+                      valign: 'top',
+                      formatter: importantFormatter
+                  }, {
+                      field: 'done',
+                      title: 'erledigt',
+                      sortable: true,
+                      align: 'center',
+                      valign: 'top',
+                      formatter: doneFormatter
+                  }, {
+                      field: 'operate',
+                      title: '',
+                      align: 'center',
+                      valign: 'top',
+                      events: window.operateEvents,
+                      formatter: operateFormatterVisitationnotes
+                  }
+
+              ]
+          })
+          $table.on('check.bs.table uncheck.bs.table ' +
+              'check-all.bs.table uncheck-all.bs.table',
+              function () {
+                  //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                  // save your data, here just save the current page
+                  selections = getIdSelections()
+                  // push or splice the selections if you want to save all data selections
+              })
+          $table.on('all.bs.table', function (e, name, args) {
+              //console.log(name, args)
+          })
+
+      }
+
 
     // - BOOTSTRAP-TABLE MEMBERS - //
 
@@ -668,9 +1146,6 @@
       })
       return html.join('')
     }
-
-
- 
 
 
     /**
@@ -779,19 +1254,6 @@
     }
 
     window.operateEvents = {
-        'click .edit': function (e, value, row, index) {
-            $("#editVisitationnoteLabel").html("<i class=\"fa fa-clipboard-list\"></i> Begehungsvermerk bearbeiten");
-            $("#modalEditVisitationnnote").modal('toggle');
-            $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
-            $("#visitationnoteNumber").val(row.number);
-            $("#visitationnoteDeadline").val(row.deadline);
-            $("#visitationnoteDescription").val(row.notes);
-            $("#visitationnoteDone").prop('checked', row.done);
-            $("#visitationnoteImportant").prop('checked', row.important);
-            $("#visitationnoteConcernsAll").prop('checked', row.concernsAll);
-            $("#visitationnoteCategory").val(row.category);
-            $("#visitationnoteID").val(row.id)
-      },  
       'click .delete': function (e, value, row, index) {
           bootbox.confirm({
               message: "Projektbeteiligten wirklich aus diesem Projekt entfernen?",
@@ -887,7 +1349,6 @@
           });
       }
     }
-
 
     /**
      * Initiiert die Bootstrap-Table.
@@ -1197,227 +1658,6 @@
         })
 
     }
-
-
-    // - BOOTSTRAP-TABLE Visitionnotes - //
-
-    var $tableVisitationnotes = $('#tableVisitationnotes')
-
-    /**
-     * Gibt eine map der Visitationnote-IDs der aktuell selektierten Zeilen zurück.
-     *
-     */
-     function getIdSelectionsVisitationnotes() {
-        return $.map($tableVisitationnotes.bootstrapTable('getSelections'), function (row) {
-            return row.id;
-        })
-    }
-
-    /**
-      * Initiiert die Bootstrap-Table.
-      *
-      */
-      function initTableVisitationnotes() {
-         $tableVisitationnotes.bootstrapTable('destroy').bootstrapTable({
-             locale: 'de-DE',
-             columns: [
-                 {
-                     field: 'number',
-                     title: 'Nr',
-                     sortable: true,
-                     align: 'left',
-                     valign: 'top'
-                 },{
-                     field: 'notes',
-                     title: 'Beschreibung',
-                     sortable: false,
-                     align: 'left',
-                     valign: 'top'
-                 }, {
-                     field: 'created_at',
-                     title: 'erstellt',
-                     align: 'left',
-                     valign: 'top',
-                     sortable: true,
-                     formatter: createdAtFormatter
-                 }, {
-                     field: 'category',
-                     title: 'Kategorie',
-                     align: 'left',
-                     valign: 'top',
-                     sortable: true
-                 }, {
-                     field: 'deadline',
-                     title: 'Fälligkeit',
-                     sortable: true,
-                     align: 'left',
-                     valign: 'top'
-                 }, {
-                     field: 'important',
-                     title: 'wichtig',
-                     sortable: true,
-                     align: 'center',
-                     valign: 'top',
-                     formatter: importantFormatter
-                 }, {
-                     field: 'done',
-                     title: 'erledigt',
-                     sortable: true,
-                     align: 'center',
-                     valign: 'top',
-                     formatter: doneFormatter
-                 }, {
-                     field: 'operate',
-                     title: '',
-                     align: 'center',
-                     valign: 'top',
-                     events: window.operateEvents,
-                     formatter: operateFormatterVisitationnotes
-                 }
-
-             ]
-         })
-         $tableVisitationnotes.on('check.bs.table uncheck.bs.table ' +
-             'check-all.bs.table uncheck-all.bs.table',
-             function () {
-                 //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
-                 //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
-                 //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
-                 //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
-
-                 // save your data, here just save the current page
-                 selections = getIdSelections()
-                 // push or splice the selections if you want to save all data selections
-             })
-         $tableVisitationnotes.on('all.bs.table', function (e, name, args) {
-             //console.log(name, args)
-         })
-
-     }
-
-          /**
-       *
-       * @param value
-       * @param row
-       * @param index
-       * @returns {string}
-       */
-       function operateFormatterVisitationnotes(value, row, index) {
-          return [
-              '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
-              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
-              '</a>  ',
-              '<a class="delete" href="javascript:void(0)" title="Löschen">',
-              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
-              '</a> ',
-          ].join('')
-      }
-
-
-      function importantFormatter(value, row, index) {
-
-          if (value) {
-              return [
-                  '<input class=\"importantCheck\" type=\"checkbox\" name=\"important\" value=\"1\" checked onclick=\"handleImportantClick(this,\'' + row.id + '\')\">'
-              ]
-          }
-
-          return [
-              '<input class=\"importantCheck\" type=\"checkbox\" name=\"important\" value=\"0\" onclick=\"handleImportantClick(this,\'' + row.id + '\')\">'
-          ]
-      }
-
-      function handleImportantClick(cb, id) {
-          //alert("Clicked id " + id + " , new value = " + cb.checked);
-
-          var checked = 0;
-          if (cb.checked) {
-              checked = 1;
-          }
-
-          //update the done status for this visitationnote
-          $.ajax({
-              type: "PATCH",
-              url: "/visitationnote/" + id + "/important",
-              data:
-                  {
-                      'important' : checked
-                  }
-              ,
-              success: function (data) {
-                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
-                  $tableVisitationnotes.bootstrapTable('refresh');
-              }
-          });
-
-
-      }
-
-      function doneFormatter(value, row, index) {
-
-          if (value) {
-              return [
-                  '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"1\" checked onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
-              ]
-          }
-
-          return [
-              '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"0\" onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
-          ]
-      }
-
-      function handleDoneClick(cb, id) {
-          //alert("Clicked id " + id + " , new value = " + cb.checked);
-
-          var checked = 0;
-          if (cb.checked) {
-              checked = 1;
-          }
-
-          //update the done status for this visitationnote
-          $.ajax({
-              type: "PATCH",
-              url: "/visitationnote/" + id,
-              data:
-                  {
-                      'done' : checked
-                  }
-              ,
-              success: function (data) {
-                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
-                  $tableVisitationnotes.bootstrapTable('refresh');
-              }
-          });
-
-
-      }
-
-      function handleConcernedClick(cb, id) {
-          //alert("Clicked id " + id + " , new value = " + cb.checked);
-
-          var checked = 0;
-          if (cb.checked) {
-              checked = 1;
-          }
-
-          //update the done status for this visitationnote
-          $.ajax({
-              type: "PATCH",
-              url: "/visitationnote/" + $("#visitationnoteID").val() + "/concerned",
-              data:
-                  {
-                      'memberID' : id,
-                      'concerned' : checked
-                  }
-              ,
-              success: function (data) {
-                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
-                  $tableConcernedMembers.bootstrapTable('refresh');
-              }
-          });
-
-
-      }
 
 
     // - BOOTSTRAP-TABLE ConcernedMembers - //
