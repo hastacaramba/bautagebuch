@@ -988,6 +988,7 @@
        *
        */
       function initTable() {
+        alert("test");
           $table.bootstrapTable('destroy').bootstrapTable({
               locale: 'de-DE',
               columns: [
