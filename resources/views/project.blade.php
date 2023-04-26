@@ -117,13 +117,13 @@
                 <!-- Begehungsvermerke -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h4><i class="fas fa-clipboard-list"></i> Begehungsvermerke</h4>
+                        <h4><i class="fas fa-clipboard-list"></i> Alle Begehungsvermerke</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <!-- Table: Visitationnotes -->
                             <table
-                                    id="table"
+                                    id="tableVisitationnotes"
                                     data-id-field="id"
                                     data-side-pagination="client"
                                     data-toggle="table"
@@ -385,6 +385,7 @@
       initTableProjectNotes();
       initTableVisits();
       initTableConcernedMembers();
+      initTableVisitationnotes();
 
       //tabs
         $('ul.tabs li').click(function(){
@@ -669,6 +670,131 @@
     }
 
 
+      /**
+       *
+       * @param value
+       * @param row
+       * @param index
+       * @returns {string}
+       */
+       function operateFormatterVisitationnotes(value, row, index) {
+          return [
+              '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+              '</a>  ',
+              '<a class="delete" href="javascript:void(0)" title="Löschen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+              '</a> ',
+          ].join('')
+      }
+
+
+      function importantFormatter(value, row, index) {
+
+          if (value) {
+              return [
+                  '<input class=\"importantCheck\" type=\"checkbox\" name=\"important\" value=\"1\" checked onclick=\"handleImportantClick(this,\'' + row.id + '\')\">'
+              ]
+          }
+
+          return [
+              '<input class=\"importantCheck\" type=\"checkbox\" name=\"important\" value=\"0\" onclick=\"handleImportantClick(this,\'' + row.id + '\')\">'
+          ]
+      }
+
+      function handleImportantClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
+          //update the done status for this visitationnote
+          $.ajax({
+              type: "PATCH",
+              url: "/visitationnote/" + id + "/important",
+              data:
+                  {
+                      'important' : checked
+                  }
+              ,
+              success: function (data) {
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  $table.bootstrapTable('refresh');
+              }
+          });
+
+
+      }
+
+      function doneFormatter(value, row, index) {
+
+          if (value) {
+              return [
+                  '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"1\" checked onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
+              ]
+          }
+
+          return [
+              '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"0\" onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
+          ]
+      }
+
+      function handleDoneClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
+          //update the done status for this visitationnote
+          $.ajax({
+              type: "PATCH",
+              url: "/visitationnote/" + id,
+              data:
+                  {
+                      'done' : checked
+                  }
+              ,
+              success: function (data) {
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  $table.bootstrapTable('refresh');
+              }
+          });
+
+
+      }
+
+      function handleConcernedClick(cb, id) {
+          //alert("Clicked id " + id + " , new value = " + cb.checked);
+
+          var checked = 0;
+          if (cb.checked) {
+              checked = 1;
+          }
+
+          //update the done status for this visitationnote
+          $.ajax({
+              type: "PATCH",
+              url: "/visitationnote/" + $("#visitationnoteID").val() + "/concerned",
+              data:
+                  {
+                      'memberID' : id,
+                      'concerned' : checked
+                  }
+              ,
+              success: function (data) {
+                  //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
+                  $tableConcernedMembers.bootstrapTable('refresh');
+              }
+          });
+
+
+      }
+
+
     /**
      *
      * @param value
@@ -775,6 +901,19 @@
     }
 
     window.operateEvents = {
+        'click .edit': function (e, value, row, index) {
+            $("#editVisitationnoteLabel").html("<i class=\"fa fa-clipboard-list\"></i> Begehungsvermerk bearbeiten");
+            $("#modalEditVisitationnnote").modal('toggle');
+            $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
+            $("#visitationnoteNumber").val(row.number);
+            $("#visitationnoteDeadline").val(row.deadline);
+            $("#visitationnoteDescription").val(row.notes);
+            $("#visitationnoteDone").prop('checked', row.done);
+            $("#visitationnoteImportant").prop('checked', row.important);
+            $("#visitationnoteConcernsAll").prop('checked', row.concernsAll);
+            $("#visitationnoteCategory").val(row.category);
+            $("#visitationnoteID").val(row.id)
+      },  
       'click .delete': function (e, value, row, index) {
           bootbox.confirm({
               message: "Projektbeteiligten wirklich aus diesem Projekt entfernen?",
@@ -870,6 +1009,90 @@
           });
       }
     }
+
+
+    /**
+       * Initiiert die Bootstrap-Table.
+       *
+       */
+       function initTable() {
+          $tableVisitationnotes.bootstrapTable('destroy').bootstrapTable({
+              locale: 'de-DE',
+              columns: [
+                  {
+                      field: 'number',
+                      title: 'Nr',
+                      sortable: true,
+                      align: 'left',
+                      valign: 'top'
+                  },{
+                      field: 'notes',
+                      title: 'Beschreibung',
+                      sortable: false,
+                      align: 'left',
+                      valign: 'top'
+                  }, {
+                      field: 'created_at',
+                      title: 'erstellt',
+                      align: 'left',
+                      valign: 'top',
+                      sortable: true,
+                      formatter: createdAtFormatter
+                  }, {
+                      field: 'category',
+                      title: 'Kategorie',
+                      align: 'left',
+                      valign: 'top',
+                      sortable: true
+                  }, {
+                      field: 'deadline',
+                      title: 'Fälligkeit',
+                      sortable: true,
+                      align: 'left',
+                      valign: 'top'
+                  }, {
+                      field: 'important',
+                      title: 'wichtig',
+                      sortable: true,
+                      align: 'center',
+                      valign: 'top',
+                      formatter: importantFormatter
+                  }, {
+                      field: 'done',
+                      title: 'erledigt',
+                      sortable: true,
+                      align: 'center',
+                      valign: 'top',
+                      formatter: doneFormatter
+                  }, {
+                      field: 'operate',
+                      title: '',
+                      align: 'center',
+                      valign: 'top',
+                      events: window.operateEvents,
+                      formatter: operateFormatterVisitationnotes
+                  }
+
+              ]
+          })
+          $table.on('check.bs.table uncheck.bs.table ' +
+              'check-all.bs.table uncheck-all.bs.table',
+              function () {
+                  //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                  // save your data, here just save the current page
+                  selections = getIdSelections()
+                  // push or splice the selections if you want to save all data selections
+              })
+          $table.on('all.bs.table', function (e, name, args) {
+              //console.log(name, args)
+          })
+
+      }
+
 
     /**
      * Initiiert die Bootstrap-Table.
