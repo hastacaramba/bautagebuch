@@ -1201,7 +1201,7 @@
 
     // - BOOTSTRAP-TABLE Visitionnotes - //
 
-    var $tableVisitationnotes = $('#tableVIsitationnotes')
+    var $tableVisitationnotes = $('#tableVisitationnotes')
 
     /**
      * Gibt eine map der Visitationnote-IDs der aktuell selektierten Zeilen zurück.
@@ -1418,10 +1418,6 @@
 
 
       }
-
-      
-
-
 
 
     // - BOOTSTRAP-TABLE ConcernedMembers - //
