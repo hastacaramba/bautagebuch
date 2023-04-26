@@ -53,11 +53,10 @@ class VisitationnoteController extends Controller
 
         for ($i = 0; $i < sizeof($visitationnotes); $i++) {
             $allVisitationnotesOfVisit .= json_encode($visitationnotes[$i]); 
-
-            if ($n < sizeof($visits) - 1) {
-                $allVisitationnotesOfVisit .= ",";  
-            }
         }       
+        if ($n < sizeof($visits) - 1) {
+            $allVisitationnotesOfVisit .= ",";  
+        }
               
     }
 
