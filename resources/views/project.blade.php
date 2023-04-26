@@ -128,7 +128,7 @@
                                     data-side-pagination="client"
                                     data-toggle="table"
                                     data-sortable="true"
-                                    data-url="/visitationnotesByProject/{{$project->id}}"
+                                    data-url="/visitationnotesByProject/{{ $projectID }}"
                                     data-toolbar="#toolbar"
                                     data-search="true"
                                     data-show-columns="true"
