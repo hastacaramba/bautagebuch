@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 namespace App\Http\Controllers\Str;
+namespace App\Http\Controllers\Str\Controller;
 
 use http\Client\Response;
 use Illuminate\Http\Request;
