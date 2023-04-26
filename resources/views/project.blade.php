@@ -133,7 +133,7 @@
                                 data-search="true"
                                 data-show-columns="true"
                                 data-pagination="false"
-                                data-page-list="[10, 25, 50, 100, ALL]"
+                                data-page-list="[ALL]"
                                 data-detail-formatter="detailFormatter"
                                 data-detail-view="false"
                                 data-response-handler="responseHandler"
