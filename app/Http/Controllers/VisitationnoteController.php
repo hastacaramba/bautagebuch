@@ -21,7 +21,7 @@ class VisitationnoteController extends Controller
      * @param $visitID The visit_id of the visit
      * @return false|string|null
      */
-    public function projectVisitationnotes($visitID) {
+    public function visitVisitationnotes($visitID) {
         $visitationnotes = Visitationnote::where('visit_id', '=', $visitID)->get();
 
         if ($visitationnotes != null) {
@@ -300,6 +300,28 @@ class VisitationnoteController extends Controller
             ])->delete();
         }
 
+    }
+
+
+    /**
+     * Returns all visitationnotes of a project as json.
+     *
+     * @param $projectID
+     * @return mixed
+     */
+    public function projectVisitationnotes($projectID) {
+
+        //get all visits of the project
+        $visits = Visit::where('project_id', '=', $projectID)->get();
+
+        //run through the visits and decide if there are open visitationnotes
+        for ($n = 0; $n < sizeof($visits); $n++) {
+
+            //fetch the visitationnotes of the visit
+            $visitationnotes = Visitationnote::where('visit_id', '=', $visits[$n]['id'])->get();
+        }
+
+        return json_encode($visitationnotes);
     }
 
 }
