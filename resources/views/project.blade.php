@@ -666,8 +666,7 @@
        * @returns {string}
        */
       function operateFormatterVisitationnotes(value, row, index) {
-        /*  
-        return [
+          return [
               '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
               '</a>  ',
@@ -675,7 +674,6 @@
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
               '</a> ',
           ].join('')
-          */
       }
 
 
@@ -837,7 +835,9 @@
                       align: 'center',
                       valign: 'top',
                       formatter: doneFormatter
-                  }, {
+                  }
+                  /*
+                  , {
                       field: 'operate',
                       title: '',
                       align: 'center',
@@ -845,6 +845,7 @@
                       events: window.operateEvents,
                       formatter: operateFormatterVisitationnotes
                   }
+                  */
 
               ]
           })
