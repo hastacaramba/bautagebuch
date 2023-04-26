@@ -50,7 +50,7 @@ class VisitationnoteController extends Controller
         $visitationnotes[] = Visitationnote::where('visit_id', '=', $visits[$n]['id'])->get();
     }
 
-    return json_encode($visitationnotes);
+    return json_encode($visitationnotes[0]);
     }
 
 
