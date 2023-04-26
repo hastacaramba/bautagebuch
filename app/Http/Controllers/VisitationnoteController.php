@@ -43,14 +43,18 @@ class VisitationnoteController extends Controller
     //get all visits of the project
     $visits = Visit::where('project_id', '=', $projectID)->get();
 
+    $allVisitationNotesOfVisit = '';
+
     //run through the visits and decide if there are open visitationnotes
     for ($n = 0; $n < sizeof($visits); $n++) {
 
         //fetch the visitationnotes of the visit
-        $visitationnotes[] = Visitationnote::where('visit_id', '=', $visits[$n]['id'])->get();
+        $visitationnotes = Visitationnote::where('visit_id', '=', $visits[$n]['id'])->get();
+
+        $allVisitationNotesOfVisit .= json_encode($visitationnotes);        
     }
 
-    return json_encode($visitationnotes[0]);
+    return $allVisitationNotesOfVisit;
     }
 
 
