@@ -62,7 +62,7 @@ class VisitationnoteController extends Controller
 
     $allVisitationnotesOfVisit = "[" . $allVisitationnotesOfVisit . "]";
 
-    return substr($allVisitationnotesOfVisit, 1, Str::length($allVisitationnotesOfVisit) - 1);
+    return substr($allVisitationnotesOfVisit, 1, Str::length($allVisitationnotesOfVisit) - 2);
     }
 
 
