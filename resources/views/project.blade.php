@@ -1277,7 +1277,7 @@
 
              ]
          })
-         $table.on('check.bs.table uncheck.bs.table ' +
+         $tableVisitationnotes.on('check.bs.table uncheck.bs.table ' +
              'check-all.bs.table uncheck-all.bs.table',
              function () {
                  //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
@@ -1289,7 +1289,7 @@
                  selections = getIdSelections()
                  // push or splice the selections if you want to save all data selections
              })
-         $table.on('all.bs.table', function (e, name, args) {
+         $tableVisitationnotes.on('all.bs.table', function (e, name, args) {
              //console.log(name, args)
          })
 
@@ -1346,7 +1346,7 @@
               ,
               success: function (data) {
                   //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
-                  $table.bootstrapTable('refresh');
+                  $tableVisitationnotes.bootstrapTable('refresh');
               }
           });
 
@@ -1385,7 +1385,7 @@
               ,
               success: function (data) {
                   //alert("Die Änderungen beim Begehungsvermerk wurden übernommen.");
-                  $table.bootstrapTable('refresh');
+                  $tableVisitationnotes.bootstrapTable('refresh');
               }
           });
 
