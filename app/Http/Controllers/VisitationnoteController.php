@@ -1,8 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-namespace App\Http\Controllers\Str;
-namespace App\Http\Controllers\Str\Controller;
 
 use http\Client\Response;
 use Illuminate\Http\Request;
@@ -13,6 +11,7 @@ use App\Visit;
 use App\Project;
 use App\Visitationnote;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class VisitationnoteController extends Controller
 {
