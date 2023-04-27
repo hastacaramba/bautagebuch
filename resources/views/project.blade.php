@@ -816,7 +816,7 @@
               '<a class="editVisitationnote" href="javascript:void(0)" title="Bearbeiten">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
               '</a>  ',
-              '<a class="delete" href="javascript:void(0)" title="Löschen">',
+              '<a class="deleteVisitationnote" href="javascript:void(0)" title="Löschen">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
               '</a> ',
           ].join('')
@@ -1179,6 +1179,34 @@
 
 
     },
+
+        'click .deleteVisitationnote': function (e, value, row, index) {
+              bootbox.confirm({
+                  message: "Begehungsvermerk wirklich entfernen?",
+                  buttons: {
+                      confirm: {
+                          label: 'Ja',
+                          className: 'btn-success'
+                      },
+                      cancel: {
+                          label: 'Nein',
+                          className: 'btn-danger'
+                      }
+                  },
+                  callback: function (result) {
+                      if (result) {
+                          $.ajax({
+                              type: "DELETE",
+                              url: "/visitationnote/" + row.id,
+                              data: "",
+                              success: function (data) {
+                                  $table.bootstrapTable('refresh');
+                              }
+                          });
+                      }
+                  }
+              });
+          },
 
       'click .delete': function (e, value, row, index) {
           bootbox.confirm({
