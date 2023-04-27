@@ -813,7 +813,7 @@
        */
       function operateFormatterVisitationnotes(value, row, index) {
           return [
-              '<a class="edit" href="javascript:void(0)" title="Bearbeiten">',
+              '<a class="editVisitationnote" href="javascript:void(0)" title="Bearbeiten">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
               '</a>  ',
               '<a class="delete" href="javascript:void(0)" title="Löschen">',
@@ -1161,6 +1161,25 @@
     }
 
     window.operateEvents = {
+        'click .editVisitationnote': function (e, value, row, index) {
+
+            $("#editVisitationnoteLabel").html("<i class=\"fa fa-clipboard-list\"></i> Begehungsvermerk bearbeiten");
+            $("#modalEditVisitationnnote").modal('toggle');
+            $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
+            $("#visitationnoteNumber").val(row.number);
+            $("#visitationnoteDeadline").val(row.deadline);
+            $("#visitationnoteDescription").val(row.notes);
+            $("#visitationnoteDone").prop('checked', row.done);
+            $("#visitationnoteImportant").prop('checked', row.important);
+            $("#visitationnoteConcernsAll").prop('checked', row.concernsAll);
+            $("#visitationnoteCategory").val(row.category);
+            $("#visitationnoteID").val(row.id)
+            $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + row.id });
+            $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/visitationnote/concerned/' + row.id });
+
+
+    },
+
       'click .delete': function (e, value, row, index) {
           bootbox.confirm({
               message: "Projektbeteiligten wirklich aus diesem Projekt entfernen?",
