@@ -599,6 +599,88 @@
         }
     );
 
+    $("#date").flatpickr(
+          {
+              enableTime: false,
+              noCalendar: false,
+              dateFormat: "Y-m-d",
+          }
+      );
+      $("#time").flatpickr(
+          {
+              enableTime: true,
+              noCalendar: true,
+              time_24hr: true,
+          }
+      );
+      $("#visitationnoteDate").flatpickr(
+          {
+              enableTime: false,
+              noCalendar: false,
+              dateFormat: "Y-m-d",
+          }
+      );
+      $("#visitationnoteDeadline").flatpickr(
+          {
+              enableTime: false,
+              noCalendar: false,
+              dateFormat: "Y-m-d",
+          }
+      );
+      $("#newVisitationnoteDate").flatpickr(
+          {
+              enableTime: false,
+              noCalendar: false,
+              dateFormat: "Y-m-d",
+          }
+      );
+      $("#newVisitationnoteDeadline").flatpickr(
+          {
+              enableTime: false,
+              noCalendar: false,
+              dateFormat: "Y-m-d",
+          }
+      );
+  </script>
+
+  <script>
+
+      $(document).ready(function () {
+
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              }
+          });
+          //init bootstrap tables
+          initTable();
+          initTableMembers();
+          initTableMedia();
+          initTableVisitMedia();
+          initTableVisitMediaPdf();
+          initTableConcernedMembers();
+          initReportsTable();
+
+          $("#showDate").click(function () {
+              var status = $("#date").val();
+              alert(status);
+          })
+
+          $("#showTime").click(function () {
+              var status = $("#time").val();
+              alert(status);
+          })
+
+          $("#showDateVisitationNote").click(function () {
+              var status = $("#newVisitationnoteDate").val();
+              alert(status);
+          })
+
+          $("#showDeadlineVisitationNote").click(function () {
+              var status = $("#newVisitationnoteDeadline").val();
+              alert(status);
+          })
+
     $("#btnNewMember").click(function (e) {
 
         e.preventDefault();
