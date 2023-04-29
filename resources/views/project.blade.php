@@ -948,16 +948,16 @@
 
           if (value) {
               return [
-                  '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"1\" checked onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
+                  '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"1\" checked onclick=\"handleDoneClickVisitationnote(this,\'' + row.id + '\')\">'
               ]
           }
 
           return [
-              '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"0\" onclick=\"handleDoneClick(this,\'' + row.id + '\')\">'
+              '<input class=\"doneCheck\" type=\"checkbox\" name=\"done\" value=\"0\" onclick=\"handleDoneClickVisitationnote(this,\'' + row.id + '\')\">'
           ]
       }
 
-      function handleDoneClick(cb, id) {
+      function handleDoneClickVisitationnote(cb, id) {
           //alert("Clicked id " + id + " , new value = " + cb.checked);
 
           var checked = 0;
