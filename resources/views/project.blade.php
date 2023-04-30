@@ -945,7 +945,7 @@
 
       }
 
-      function doneFormatter(value, row, index) {
+      function doneFormatterVisitationnote(value, row, index) {
 
           if (value) {
               return [
@@ -1012,9 +1012,9 @@
       }
 
 
-           // - BOOTSTRAP-TABLE MEDIA - //
+    // - BOOTSTRAP-TABLE MEDIA - //
 
-           var $tableMedia = $('#tableMedia')
+    var $tableMedia = $('#tableMedia')
 
 /**
  * Gibt eine map der Media-IDs der aktuell selektierten Zeilen zurück.
@@ -1142,7 +1142,7 @@ function initTableMedia() {
                       sortable: true,
                       align: 'center',
                       valign: 'top',
-                      formatter: doneFormatter
+                      formatter: doneFormatterVisitationnote
                   }, {
                       field: 'operate',
                       title: '',
