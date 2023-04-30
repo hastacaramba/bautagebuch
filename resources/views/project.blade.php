@@ -1011,6 +1011,85 @@
 
       }
 
+
+           // - BOOTSTRAP-TABLE MEDIA - //
+
+           var $tableMedia = $('#tableMedia')
+
+/**
+ * Gibt eine map der Media-IDs der aktuell selektierten Zeilen zurück.
+ *
+ */
+function getIdSelectionsMedia() {
+    return $.map($tableMedia.bootstrapTable('getSelections'), function (row) {
+        return row.id;
+    })
+}
+
+function operateFormatterMedia(value, row, index) {
+    return [
+        '<a class="editVisitationNoteMedia" href="javascript:void(0)" title="Bearbeiten">',
+        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
+        '</a> ',
+        '<a class="deleteMedia" href="javascript:void(0)" title="Löschen">',
+        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+        '</a> '
+    ].join('')
+}
+
+function imageFormatterMedia(value, row, index) {
+    return [
+        '<a href="/images/' + value + '"><img class="img-fluid visitationnote-img" src="/images/' + value + '" /></a>'
+    ]
+}
+
+
+/**
+ * Initiiert die Bootstrap-Table.
+ */
+function initTableMedia() {
+    $tableMedia.bootstrapTable('destroy').bootstrapTable({
+        locale: 'de-DE',
+        columns: [
+            {
+                field: 'filename',
+                title: 'Foto',
+                sortable: false,
+                align: 'left',
+                formatter: imageFormatterMedia
+            },
+            {
+                field: 'info',
+                title: 'Beschreibung',
+                sortable: false,
+                align: 'left'
+            }, {
+                field: 'operate',
+                title: 'Aktionen',
+                align: 'center',
+                events: window.operateEvents,
+                formatter: operateFormatterMedia
+            }
+        ]
+    })
+    $tableMedia.on('check.bs.table uncheck.bs.table ' +
+        'check-all.bs.table uncheck-all.bs.table',
+        function () {
+            //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+            //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+            //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+            //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+            // save your data, here just save the current page
+            selections = getIdSelections()
+            // push or splice the selections if you want to save all data selections
+        })
+    $tableMedia.on('all.bs.table', function (e, name, args) {
+        //console.log(name, args)
+    })
+
+}
+
       /**
        * Initiiert die Bootstrap-Table.
        *
