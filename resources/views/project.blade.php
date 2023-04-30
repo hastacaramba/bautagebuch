@@ -656,8 +656,6 @@
           initTable();
           initTableMembers();
           initTableMedia();
-          initTableVisitMedia();
-          initTableVisitMediaPdf();
           initTableConcernedMembers();
           initReportsTable();
 
