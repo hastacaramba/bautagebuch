@@ -848,9 +848,6 @@
     });
 
 
-  </script>
-
-  <script>
 
    // - BOOTSTRAP-TABLE Visitationnotes - //
 
