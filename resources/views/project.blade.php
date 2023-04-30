@@ -1169,6 +1169,96 @@ function initTableMedia() {
 
       }
 
+  // - BOOTSTRAP-TABLE ConcernedMembers - //
+
+  var $tableConcernedMembers = $('#tableConcernedMembers')
+
+/**
+ * Gibt eine map der Member-IDs der aktuell selektierten Zeilen zurück.
+ *
+ */
+function getIdSelectionsConcernedMembers() {
+    return $.map($tableConcernedMembers.bootstrapTable('getSelections'), function (row) {
+        return row.id;
+    })
+}
+
+function operateFormatterConcernedMembers(value, row, index) {
+    return [
+        '<a class="deleteConcernedMember" href="javascript:void(0)" title="Löschen">',
+        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
+        '</a> '
+    ].join('')
+}
+
+function concernedFormatter(value, row, index) {
+
+    if (value) {
+        return [
+            '<input class=\"concernedCheck\" type=\"checkbox\" name=\"concerned\" value=\"1\" checked onclick=\"handleConcernedClick(this,\'' + row.id + '\')\">'
+        ]
+    }
+
+    return [
+        '<input class=\"concernedCheck\" type=\"checkbox\" name=\"concerned\" value=\"0\" onclick=\"handleConcernedClick(this,\'' + row.id + '\')\">'
+    ]
+}
+
+
+/**
+ * Initiiert die Bootstrap-Table.
+ */
+function initTableConcernedMembers() {
+    $tableConcernedMembers.bootstrapTable('destroy').bootstrapTable({
+        locale: 'de-DE',
+        columns: [
+            {
+                field: 'company',
+                title: 'Firma',
+                sortable: true,
+                align: 'left',
+            }, {
+                title: 'Nachname',
+                field: 'surname',
+                align: 'left',
+                sortable: true,
+            }, {
+                field: 'firstname',
+                title: 'Vorname',
+                sortable: true,
+                align: 'left'
+            }, {
+                field: 'subarea',
+                title: 'Gewerk',
+                sortable: true,
+                align: 'left',
+            }, {
+                field: 'concerned',
+                title: 'Betroffen',
+                align: 'center',
+                formatter: concernedFormatter
+            }
+
+        ]
+    })
+    $tableConcernedMembers.on('check.bs.table uncheck.bs.table ' +
+        'check-all.bs.table uncheck-all.bs.table',
+        function () {
+            //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+            //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+            //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+            //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+            // save your data, here just save the current page
+            selections = getIdSelections()
+            // push or splice the selections if you want to save all data selections
+        })
+    $tableConcernedMembers.on('all.bs.table', function (e, name, args) {
+        //console.log(name, args)
+    })
+
+}
+
 
     // - BOOTSTRAP-TABLE MEMBERS - //
 
