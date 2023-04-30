@@ -657,7 +657,6 @@
           initTableMembers();
           initTableMedia();
           initTableConcernedMembers();
-          initReportsTable();
 
           $("#showDate").click(function () {
               var status = $("#date").val();
