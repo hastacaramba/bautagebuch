@@ -156,13 +156,13 @@ class ReportController extends Controller {
 
             $date = new DateTime($visitDate);
 
-            $mailAddressees = "<br>";
+            $mailAddressees = "" . PHP_EOL;
 
             foreach($subscribedMembers as $member) {
                 if ($member->contact->email != null) {
                     $mailAddressees .= $member->contact->company;
                     $mailAddressees .= ' (' . $member->contact->email . ') ';
-                    $mailAddressees .= ", <br>";
+                    $mailAddressees .= PHP_EOL;
                 } 
             }
 
