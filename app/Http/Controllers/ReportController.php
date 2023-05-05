@@ -7,6 +7,7 @@ use App\Report;
 use Illuminate\Support\Facades\Mail;
 use DateTime;
 use App\Pdf;
+use App\Str;
 
 
 class ReportController extends Controller {
