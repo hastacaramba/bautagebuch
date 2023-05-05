@@ -2,9 +2,7 @@
 <p></p>
 <p>anbei erhalten Sie unseren Bericht von der Begehung des Bauprojekts "{{ $projectName }}" am {{ $visitDate }}.</p>
 <p></p>
-<p>Diese E-Mail ging an folgende Empfänger:</p>
-{{ $addressees }}
-<p></p>
+<p>Diese E-Mail ging an folgende Empfänger:</p>{{ $addressees }}
 <p>Mit freundlichen Grüßen</p>
 <p></p>
 maier + maier architekten gmbh<br>
