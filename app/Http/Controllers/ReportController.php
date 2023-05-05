@@ -156,13 +156,15 @@ class ReportController extends Controller {
 
             $date = new DateTime($visitDate);
 
-            $mailAddressees = "{!! nl2br(e($text)) !!}";
+            $mailAddressees = "";
 
             foreach($subscribedMembers as $member) {
                 if ($member->contact->email != null) {
-                    $mailAddressees .= $member->contact->company;
-                    $mailAddressees .= ' (' . $member->contact->email . ') ';
-                    $mailAddressees .= "{!! nl2br(e($text)) !!}";
+                    $newAddressee = "";
+                    $newAddressee .= $member->contact->company;
+                    $newAddressee .= ' (' . $member->contact->email . ') ';
+                    $newAddressee .= ' (' . $member->contact->email . ') ';
+                    $mailAddressees .= "{!! nl2br(e($newAddressee)) !!}";
                 } 
             }
 
