@@ -160,13 +160,13 @@ class ReportController extends Controller {
 
             foreach($subscribedMembers as $member) {
                 if ($member->contact->email != null) {
-                    $mailAddressees .= $member->contact->company;
+                    $mailAddressees .= '<p>' . $member->contact->company;
                     $mailAddressees .= ' (' . $member->contact->email . ') ';
-                    $mailAddressees .= ", ";
+                    $mailAddressees .= "</p>";
                 } 
             }
 
-            Str::substr($mailAddressees, 0, Str::length($mailAddressees) - 1);
+            //Str::substr($mailAddressees, 0, Str::length($mailAddressees) - 1);
             
             $data = array(
                 'projectName' => $projectName,
