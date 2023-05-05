@@ -172,7 +172,7 @@ class ReportController extends Controller {
                             'mime' => 'application/pdf'
                         ]);
                     }
-                    $message->attach('Diese E-Mail ging an folgende Adressaten: ');
+                    $message->text('Diese E-Mail ging an folgende Adressaten: ');
                     /*foreach($subscribedMembers as $member) {
                         if ($member->contact->email != null) {
                             $message->attach($member->contact->email);
