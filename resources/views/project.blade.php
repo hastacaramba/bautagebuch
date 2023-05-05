@@ -1410,8 +1410,7 @@ function initTableConcernedMembers() {
     }
 
     window.operateEvents = {
-        'click .editVisitationnote': function (e, value, row, index) {
-            initTableConcernedMembers();
+        'click .editVisitationnote': function (e, value, row, index) {            
             $("#editVisitationnoteLabel").html("<i class=\"fa fa-clipboard-list\"></i> Begehungsvermerk bearbeiten");
             $("#modalEditVisitationnnote").modal('toggle');
             $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
