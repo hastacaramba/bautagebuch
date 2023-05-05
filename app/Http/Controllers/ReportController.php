@@ -173,11 +173,11 @@ class ReportController extends Controller {
                         ]);
                     }
                     $message->attach('Diese E-Mail ging an folgende Adressaten: ');
-                    foreach($subscribedMembers as $member) {
+                    /*foreach($subscribedMembers as $member) {
                         if ($member->contact->email != null) {
                             $message->attach($member->contact->email);
                         }
-                    }
+                    }*/
                 });
             } catch (\Exception $e) {
                 $log = '<br>';
