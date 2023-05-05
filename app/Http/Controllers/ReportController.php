@@ -155,12 +155,22 @@ class ReportController extends Controller {
 
             $date = new DateTime($visitDate);
 
+            $mailAddressees = "";
+
+            foreach($subscribedMembers as $member) {
+                if ($member->contact->email != null) {
+                    $mailAddressees .= $member->contact->email;
+                    $mailAddressees .= ", ";
+                } 
+            }
+            
             $data = array(
                 'projectName' => $projectName,
-                'visitDate' => $date->format('d.m.Y')
+                'visitDate' => $date->format('d.m.Y'),
+                'addressees' => $mailAddressees
             );
             try {
-                Mail::send('emails.mail', $data, function ($message) use ($to_email, $members, $report, $visitDate, $projectName, $documents) {
+                Mail::send('emails.mail', $data, function ($message) use ($to_email, $report, $visitDate, $projectName, $documents) {
                     $message->to($to_email)
                         ->subject($projectName . ', Begehungsbericht ' . $visitDate)
                         ->from('bauleitung@bautagebuch-cloud.de', 'maier + maier architekten gmbh');
@@ -171,12 +181,6 @@ class ReportController extends Controller {
                         $message->attach('storage/app/public/documents/' . $document->filename, [
                             'mime' => 'application/pdf'
                         ]);
-                    }
-                    foreach($subscribedMembers as $member) {
-                        if ($member->contact->email != null) {
-                            $members .= $member->contact->email;
-                            $members .= ', ';
-                        } 
                     }
                 });
             } catch (\Exception $e) {
