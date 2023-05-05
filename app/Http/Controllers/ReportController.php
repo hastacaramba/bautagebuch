@@ -160,7 +160,7 @@ class ReportController extends Controller {
                 'visitDate' => $date->format('d.m.Y')
             );
             try {
-                Mail::send('emails.mail', $data, function ($message) use ($to_email, $report, $visitDate, $projectName, $documents) {
+                Mail::send('emails.mail', $data, function ($message) use ($to_email, $members, $report, $visitDate, $projectName, $documents) {
                     $message->to($to_email)
                         ->subject($projectName . ', Begehungsbericht ' . $visitDate)
                         ->from('bauleitung@bautagebuch-cloud.de', 'maier + maier architekten gmbh');
@@ -172,12 +172,12 @@ class ReportController extends Controller {
                             'mime' => 'application/pdf'
                         ]);
                     }
-                    /*$message->text('Diese E-Mail ging an folgende Adressaten: ');
                     foreach($subscribedMembers as $member) {
                         if ($member->contact->email != null) {
-                            $message->attach($member->contact->email);
-                        }
-                    }*/
+                            $members .= $member->contact->email;
+                            $members .= ', ';
+                        } 
+                    }
                 });
             } catch (\Exception $e) {
                 $log = '<br>';
