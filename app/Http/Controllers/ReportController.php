@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Member;
 use App\Report;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use DateTime;
 use App\Pdf;
-use App\Str;
 
 
 class ReportController extends Controller {
@@ -166,7 +166,7 @@ class ReportController extends Controller {
                 } 
             }
 
-            Strg::substr($mailAddressees, 0, Str::length($mailAddressees) - 1);
+            Str::substr($mailAddressees, 0, Str::length($mailAddressees) - 1);
             
             $data = array(
                 'projectName' => $projectName,
