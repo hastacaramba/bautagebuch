@@ -155,18 +155,17 @@ class ReportController extends Controller {
 
             $date = new DateTime($visitDate);
 
-            $mailAddressees = "<br>";
+            $mailAddressees = "";
 
-            for($x = 0; $x <  count($subscribedMembers); $x++) {
-                if ($member[$x]->contact->email != null) {
+            foreach($subscribedMembers as $member) {
+                if ($member->contact->email != null) {
                     $mailAddressees .= $member->contact->company;
                     $mailAddressees .= ' (' . $member->contact->email . ') ';
-                    if ($x = count($subscribedMembers) - 1) {
-                        $mailAddressees .= ", ";
-                    }
-                    $mailAddressees .= 'br';
+                    $mailAddressees .= ", ";
                 } 
             }
+
+            Strg::substr($mailAddressees, 0, Str::length($mailAddressees) - 1);
             
             $data = array(
                 'projectName' => $projectName,
