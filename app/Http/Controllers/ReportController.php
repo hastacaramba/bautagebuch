@@ -166,7 +166,7 @@ class ReportController extends Controller {
                 } 
             }
 
-            Str::substr($mailAddressees, 0, Str::length($mailAddressees) - 2);
+            Str::substr($mailAddressees, 0, Str::length($mailAddressees) - 3);
             
             $data = array(
                 'projectName' => $projectName,
