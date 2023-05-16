@@ -1369,10 +1369,12 @@ function initTableConcernedMembers() {
     }
 
     function deadlineFormatter(value, row, index) {
-        var date = new Date(strtotime(value.substr(0,10)));
-        var d = date.getDate();
-        var m = date.getMonth();
-        if(date.getMonth() < 10) {
+        //var date = value.substr(0,10)));
+        var year = value.substr(0,4);
+        var month = value.substr(6,7);
+        var day = value.substr(9,10);
+        
+        /*if(date.getMonth() < 10) {
             m = "0" + m;
         }
         if(date.getDate() < 10) {
@@ -1380,9 +1382,9 @@ function initTableConcernedMembers() {
         }
 
         var y = date.getFullYear().toString();
+        */
 
-
-        var output = d + "." + m + "." + y;
+        var output = day + "." + month + "." + year;
 
         return [
             output
