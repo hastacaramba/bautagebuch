@@ -1327,7 +1327,7 @@ function initTableConcernedMembers() {
     }
 
     function createdAtFormatter(value, row, index) {
-        if (value <> null) {
+        if (value != null) {
             var date = new Date(value);
             var d = date.getDate().toString();
             var month = date.getMonth() + 1;
