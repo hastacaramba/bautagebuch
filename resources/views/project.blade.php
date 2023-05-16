@@ -1125,7 +1125,8 @@ function initTableMedia() {
                       title: 'Fälligkeit',
                       sortable: true,
                       align: 'left',
-                      valign: 'top'
+                      valign: 'top',
+                      formatter: deadlineFormatter
                   }, {
                       field: 'important',
                       title: 'wichtig',
@@ -1348,7 +1349,6 @@ function initTableConcernedMembers() {
     }
 
     function createdAtFormatterProjectNotes(value, row, index) {
-        alert("test");
         var date = new Date(value.substr(0,10));
         var d = date.getDate();
         var m = date.getMonth();
