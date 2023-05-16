@@ -1369,6 +1369,7 @@ function initTableConcernedMembers() {
     }
 
     function deadlineFormatter(value, row, index) {
+        alert('test');
         //var date = value.substr(0,10)));
         var year = value.substr(0,4);
         var month = value.substr(6,7);
@@ -1737,7 +1738,7 @@ function initTableConcernedMembers() {
             title: 'erledigt',
             align: 'center',
             sortable: true,
-                formatter: doneFormatter
+            formatter: doneFormatter
           }, {
             field: 'operate',
             title: 'Aktionen',
