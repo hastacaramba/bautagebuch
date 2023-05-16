@@ -1126,7 +1126,7 @@ function initTableMedia() {
                       sortable: true,
                       align: 'left',
                       valign: 'top',
-                      formatter: deadlineFormatter
+                      formatter: createdAtFormatter
                   }, {
                       field: 'important',
                       title: 'wichtig',
