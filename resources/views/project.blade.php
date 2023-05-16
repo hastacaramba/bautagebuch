@@ -573,14 +573,14 @@
         {
             enableTime: false,
             noCalendar: false,
-            dateFormat: "Y-m-d",
+            dateFormat: "d.m.Y",
         }
     );
     $("#projectnoteDeadline").flatpickr(
         {
             enableTime: false,
             noCalendar: false,
-            dateFormat: "Y-m-d",
+            dateFormat: "d.m.Y",
         }
     );
 
@@ -588,14 +588,14 @@
         {
             enableTime: false,
             noCalendar: false,
-            dateFormat: "Y-m-d",
+            dateFormat: "d.m.Y",
         }
     );
     $("#newProjectnoteDeadline").flatpickr(
         {
             enableTime: false,
             noCalendar: false,
-            dateFormat: "Y-m-d",
+            dateFormat: "d.m.Y",
         }
     );
 
@@ -603,7 +603,7 @@
           {
               enableTime: false,
               noCalendar: false,
-              dateFormat: "Y-m-d",
+              dateFormat: "d.m.Y",
           }
       );
       $("#time").flatpickr(
@@ -617,28 +617,28 @@
           {
               enableTime: false,
               noCalendar: false,
-              dateFormat: "Y-m-d",
+              dateFormat: "d.m.Y",
           }
       );
       $("#visitationnoteDeadline").flatpickr(
           {
               enableTime: false,
               noCalendar: false,
-              dateFormat: "Y-m-d",
+              dateFormat: "d-m-Y",
           }
       );
       $("#newVisitationnoteDate").flatpickr(
           {
               enableTime: false,
               noCalendar: false,
-              dateFormat: "Y-m-d",
+              dateFormat: "d.m.Y",
           }
       );
       $("#newVisitationnoteDeadline").flatpickr(
           {
               enableTime: false,
               noCalendar: false,
-              dateFormat: "Y-m-d",
+              dateFormat: "d.m.Y",
           }
       );
   </script>
