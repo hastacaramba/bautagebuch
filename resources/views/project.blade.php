@@ -1448,7 +1448,7 @@ function initTableConcernedMembers() {
             let y = deadline.getFullYear;
             let m = deadline.getMonth;
             let d = deadline.getDate;
-            let myDate = d . "." . m . "." . y; 
+            let myDate = d + "." + m + "." + y; 
             $("#visitationnoteDeadline").val(myDate);
             $("#visitationnoteDescription").val(row.notes);
             $("#visitationnoteDone").prop('checked', row.done);
