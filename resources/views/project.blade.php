@@ -1368,6 +1368,27 @@ function initTableConcernedMembers() {
         ]
     }
 
+    function deadlineFormatter(value, row, index) {
+        var date = new Date(strtotime(value.substr(0,10)));
+        var d = date.getDate();
+        var m = date.getMonth();
+        if(date.getMonth() < 10) {
+            m = "0" + m;
+        }
+        if(date.getDate() < 10) {
+            d = "0" + d;
+        }
+
+        var y = date.getFullYear().toString();
+
+
+        var output = d + "." + m + "." + y;
+
+        return [
+            output
+        ]
+    }
+
     function updatedAtFormatter(value, row, index) {
       var date = value.substring(0,value.length - 3);
       return [
@@ -1708,7 +1729,7 @@ function initTableConcernedMembers() {
             title: 'Fälligkeit',
             align: 'left',
             sortable: true,
-            formatter: createdAtFormatterProjectNotes
+            formatter: deadlineFormatter
           }, {
             field: 'done',
             title: 'erledigt',
