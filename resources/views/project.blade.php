@@ -1444,7 +1444,12 @@ function initTableConcernedMembers() {
             $("#modalEditVisitationnnote").modal('toggle');
             $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
             $("#visitationnoteNumber").val(row.number);
-            $("#visitationnoteDeadline").val(row.deadline);
+            let deadline = newDate(row.deadline);
+            let y = deadline.getFullYear;
+            let m = deadline.getMonth;
+            let d = deadline.getDate;
+            let myDate = d . "." . m . "." . y; 
+            $("#visitationnoteDeadline").val(myDate);
             $("#visitationnoteDescription").val(row.notes);
             $("#visitationnoteDone").prop('checked', row.done);
             $("#visitationnoteImportant").prop('checked', row.important);
