@@ -1327,25 +1327,30 @@ function initTableConcernedMembers() {
     }
 
     function createdAtFormatter(value, row, index) {
-        var date = new Date(value);
-        var d = date.getDate().toString();
-        var month = date.getMonth() + 1;
-        var m = month.toString();
-        if(date.getMonth() < 10) {
-            m = "0" + m;
+        if (value <> null) {
+            var date = new Date(value);
+            var d = date.getDate().toString();
+            var month = date.getMonth() + 1;
+            var m = month.toString();
+            if(date.getMonth() < 10) {
+                m = "0" + m;
+            }
+            if(date.getDate() < 10) {
+                d = "0" + d;
+            }
+
+            var y = date.getFullYear().toString();
+
+
+            var output = d + "." + m + "." + y;
+
+            return [
+                output
+            ]
+            
         }
-        if(date.getDate() < 10) {
-            d = "0" + d;
-        }
-
-        var y = date.getFullYear().toString();
-
-
-        var output = d + "." + m + "." + y;
-
-      return [
-        output
-      ]
+        return null
+        
     }
 
     function createdAtFormatterProjectNotes(value, row, index) {
