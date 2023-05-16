@@ -1348,6 +1348,7 @@ function initTableConcernedMembers() {
     }
 
     function createdAtFormatterProjectNotes(value, row, index) {
+        alert("test");
         var date = new Date(value.substr(0,10));
         var d = date.getDate();
         var m = date.getMonth();
@@ -1369,7 +1370,6 @@ function initTableConcernedMembers() {
     }
 
     function deadlineFormatter(value, row, index) {
-        alert('test');
         //var date = value.substr(0,10)));
         var year = value.substr(0,4);
         var month = value.substr(6,7);
