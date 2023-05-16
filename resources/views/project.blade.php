@@ -1446,8 +1446,14 @@ function initTableConcernedMembers() {
             $("#visitationnoteNumber").val(row.number);
             let deadline = new Date(row.deadline);
             let y = deadline.getFullYear();
-            let m = deadline.getMonth();
+            let m = deadline.getMonth() + 1;
+            if (m < 10) {
+                m = "0" + m;
+            }
             let d = deadline.getDate();
+            if (d < 10) {
+                d = "0" + d;
+            }
             let myDate = d + "." + m + "." + y; 
             $("#visitationnoteDeadline").val(myDate);
             $("#visitationnoteDescription").val(row.notes);
