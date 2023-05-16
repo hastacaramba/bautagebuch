@@ -1708,7 +1708,7 @@ function initTableConcernedMembers() {
             title: 'Fälligkeit',
             align: 'left',
             sortable: true,
-            formatter: createdAtFormatter
+            formatter: createdAtFormatterProjectNotes
           }, {
             field: 'done',
             title: 'erledigt',
