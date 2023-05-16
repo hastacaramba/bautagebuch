@@ -624,7 +624,7 @@
           {
               enableTime: false,
               noCalendar: false,
-              dateFormat: "d-m-Y",
+              dateFormat: "d.m.Y",
           }
       );
       $("#newVisitationnoteDate").flatpickr(
