@@ -2170,7 +2170,7 @@
             var formData = new FormData();
 
             // Attach files
-            for(let i = 0 ; i < files.length ; i++){
+            for(let i = 0 ; i < newFile.length ; i++){
         	    formData.append('files[]', newFile[i]);
             }
             formData.append('newImages', $("#multiImages").val());
