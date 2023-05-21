@@ -2176,7 +2176,9 @@
             e.preventDefault(); // avoid to execute the actual submit of the form.
 
             var formData = new FormData();
-
+     
+            myFiles = e.target.files;            
+          
             // Attach files
             formData.append('newImages[]', myFiles);
 
