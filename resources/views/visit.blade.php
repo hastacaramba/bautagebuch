@@ -2128,7 +2128,7 @@
 
           var newFile;
 
-          var files[];
+          var files;
 
           //file ulpoad
           $('input[type="file"]').change(function(e) {
