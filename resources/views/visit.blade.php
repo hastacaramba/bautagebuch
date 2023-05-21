@@ -440,7 +440,7 @@
                           <!-- Choose New Media [start] -->
                           <div id="chooseNewMedia">
                               <div class="form-group">
-                                <form method="post" action="{{ route('multiImage.upload.post') }}" enctype="multipart/form-data">
+                                <form method="post" action="{{ route('multiimage.upload.post') }}" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                       <div class="input-group hdtuto control-group lst increment" >
                                         <input type="file" multiple name="imagename[]" class="myfrm form-control">
