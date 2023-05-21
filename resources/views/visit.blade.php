@@ -2171,9 +2171,8 @@
 
             // Attach files
             for(let i = 0 ; i < newFile.length ; i++){
-        	    formData.append('files[]', newFile[i]);
+        	    formData.append('newImages[]', newFile[i]);
             }
-            formData.append('newImages', $("#multiImages").val());
 
             formData.append('visitationnoteID', $("#visitationnoteID").val());
 
