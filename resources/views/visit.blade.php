@@ -2132,7 +2132,7 @@
           $('input[type="file"]').change(function(e) {
               var fileName = e.target.files[0].name;
               newFile =  e.target.files[0];
-              files = e.target.files[];
+              files = e.target.files;
           });
 
           // this is the id of the form
