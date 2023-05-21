@@ -2265,7 +2265,7 @@
             var arr = ['this', 'is', 'an', 'array'];
 
             for (var i = 0; i < myFiles.length; i++) {
-                formData.append('arr[]', myFiles[i]);
+                visitMultiMediaFormData.append('arr[]', myFiles[i]);
             }
 
             visitMultiMediaFormData.append('visitID', '{{ $visit->id }}');
