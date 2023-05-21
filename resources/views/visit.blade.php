@@ -2128,6 +2128,8 @@
 
           var newFile;
 
+          var files;
+
           //file ulpoad
           $('input[type="file"]').change(function(e) {
               var fileName = e.target.files[0].name;
