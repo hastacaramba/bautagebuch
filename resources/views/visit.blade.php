@@ -2255,6 +2255,37 @@
           });
 
           // this is the id of the form
+          $("#newVisitMultiMediaForm").submit(function(e) {
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+
+            var visitMultiMediaFormData = new FormData();
+
+            // Attach files
+            var arr = ['this', 'is', 'an', 'array'];
+
+            for (var i = 0; i < myFiles.length; i++) {
+                formData.append('arr[]', myFiles[i]);
+            }
+
+            visitMultiMediaFormData.append('visitID', '{{ $visit->id }}');
+
+            visitMultiMediaFormData.append('info', '');
+
+            $.ajax({
+                url: '/multi-image-upload-post-visit',
+                data: visitMultiMediaFormData,
+                type: 'POST',
+                contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                processData: false, // NEEDED, DON'T OMIT THIS
+                success: function(data) {
+                    $tableVisitMedia.bootstrapTable('refresh');
+                    $("#btnNewVisitMediaAbbrechen").click();
+                }
+            });
+            });
+
+          // this is the id of the form
           $("#editVisitMediaForm").submit(function(e) {
 
               e.preventDefault(); // avoid to execute the actual submit of the form.

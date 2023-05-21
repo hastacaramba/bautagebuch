@@ -162,6 +162,83 @@ class ImageUploadController extends Controller
      * @param Request $request
      * @return string
      */
+    public function multiImageUploadPostVisit(Request $request)
+    {
+        /*
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+        ]);
+        */
+
+        $imageNames= []; 
+
+        $test = $request->file('arr'); 
+        
+        //foreach($request->file('imagename') as $file)
+        foreach ($test as $image) {
+            
+            $imageName = time().'.'.$image->extension();
+
+            $destinationPath = public_path('images');
+
+
+            $img = Image::make($image->getRealPath());
+
+            $img->resize(1000, 1000, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$imageName);
+
+            $visitID = $request->visitID;            
+
+            $media = new Media();
+            $media->filename = $imageName;
+            $media->info = $request->info;          
+            $media->visit_id = $visitID;
+            
+
+            $media->save();
+
+            $imageNames[] = $imageName;
+
+        }
+        return $imageNames;
+
+
+
+
+        /*
+        $image = $request->file('image');
+
+        $imageName = time().'.'.$request->image->extension();
+
+        $destinationPath = public_path('images');
+
+        $img = Image::make($image->getRealPath());
+
+        $img->resize(1000, 1000, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imageName);
+
+        $visitID = $request->visitID;
+
+        $info = $request->info;
+
+        $media = new Media();
+        $media->filename = $imageName;
+        $media->info = $info;
+        $media->visit_id = $visitID;
+        $media->save();
+
+        return $imageName;
+        */
+
+    }
+
+
+    /**
+     * @param Request $request
+     * @return string
+     */
     public function imageUploadPostEditedVisit(Request $request)
     {
         $request->validate([
