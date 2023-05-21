@@ -2187,7 +2187,7 @@
             const test = ["file1", "file2"]; 
 
             for (let i = 0; i < test.length; i++) {
-                formData.append("images[]", test[i]);    
+                formData.append("images", test[i]);    
             }
 
             //formData.append("images", test);
