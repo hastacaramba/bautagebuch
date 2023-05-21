@@ -2180,8 +2180,10 @@
             myFiles = e.target.files;            
           
             // Attach files
-            formData.append('newImages', "test");
-
+            for (var x = 0; x < myFiles; x++) {
+                formData.append("newFiles[]", document.getElementById('multiImages').files[x]);
+            }
+            
             formData.append('visitationnoteID', $("#visitationnoteID").val());
 
             $.ajax({

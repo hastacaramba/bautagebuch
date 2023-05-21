@@ -51,11 +51,9 @@ class ImageUploadController extends Controller
      */
     public function multiImageUploadPostVisitationnote(Request $request)
     {
-        $imageNames = [];    
-        
-        return $request->newImages;
+        $imageNames = [];
 
-        foreach ($request->newImages as $image) {
+        foreach ($request->file('newImages') as $image) {
             
             $imageName = time().'.'.$image->extension();
 
