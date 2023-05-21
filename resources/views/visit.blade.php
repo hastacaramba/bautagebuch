@@ -2186,7 +2186,7 @@
 
             const test = ["file1", "file2"]; 
 
-            formData.append("images", test);
+            formData.append("images[]", test[0try]);
             
             formData.append('visitationnoteID', $("#visitationnoteID").val());
 
