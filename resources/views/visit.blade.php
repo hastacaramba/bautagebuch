@@ -438,14 +438,14 @@
                       <div class="table-responsive">
                           <label class="mt-3" for="tableMedia">Fotos</label>
                           <!-- Choose New Media [start] -->
-                          <div id="chooseNewMedia">
-                            <div class="form-group mb-3">
-                                <label for="newPhotoDescVisitationNote">Beschreibung</label>
-                                <input type="text" class="form-control" id="newPhotoDescVisitationNote" placeholder="Beschreibung...">
-                            </div>  
+                          <div id="chooseNewMedia">                            
                             <div class="form-group">
                                 <form id="newForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
                                     <label for="image">Foto hochladen</label>
+                                    <div class="form-group mb-3">
+                                        <label for="newPhotoDescVisitationNote">Beschreibung</label>
+                                        <input type="text" class="form-control" id="newPhotoDescVisitationNote" placeholder="Beschreibung...">
+                                    </div>  
                                     <div class="row">
                                         <div class="col-md-9">
                                             <input type="file" id="image" name="image" class="form-control">
