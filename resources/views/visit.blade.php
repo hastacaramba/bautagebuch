@@ -2184,7 +2184,10 @@
                 formData.append("newFiles[]", document.getElementById('multiImages').files[x]);
             }*/
 
-            formData.append("newFiles[]", myFiles);
+            var test[] = "test1";
+            var test[] = "test2";
+
+            formData.append("newFiles[]", test);
             
             formData.append('visitationnoteID', $("#visitationnoteID").val());
 
