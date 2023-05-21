@@ -52,7 +52,7 @@ class ImageUploadController extends Controller
     public function multiImageUploadPost(Request $request)
     {
         $countImages = 0;
-        foreach ($request->file('images') as $image) {
+        foreach ($request->file('newImages') as $image) {
 
             $imageName = time().'.'.$image->extension();
 
