@@ -2135,8 +2135,8 @@
               var fileName = e.target.files[0].name;
               newFile =  e.target.files[0];
               
-              for (var i = 0; i < length(files); i++) {
-                files[] = e.target.files[i];      
+              for (var i = 0; i < files.length; i++) {
+                files.append = e.target.files[i];      
               }
               
           });
