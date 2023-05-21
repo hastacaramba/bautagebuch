@@ -53,7 +53,7 @@ class ImageUploadController extends Controller
     {
         $imageNames = [];
 
-        $test = $request->file(images); 
+        $test = $request->file("images[]"); 
         return $test[0];
 
         foreach ($request->newImages as $image) {
