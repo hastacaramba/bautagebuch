@@ -2177,7 +2177,7 @@
 
             var formData = new FormData();
      
-            myFiles = e.target.files;            
+            //myFiles = e.target.files;            
           
             // Attach files
             for (var x = 0; x < myFiles.length; x++) {
