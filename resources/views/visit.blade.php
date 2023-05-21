@@ -457,6 +457,7 @@
                                     </div>
                                 </form>                            
                               </div>
+                              <hr>
                               <!-- Add Multiple Media [start] -->
                             <div id="addMultipleMedia">
                                 <div class="form-group">
