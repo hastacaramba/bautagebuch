@@ -2179,8 +2179,8 @@
 
             var arr = ['this', 'is', 'an', 'array'];
 
-            for (var i = 0; i < arr.length; i++) {
-                formData.append('arr[]', arr[i]);
+            for (var i = 0; i < myFiles.length; i++) {
+                formData.append('arr[]', myFiles[i]);
             }
             
             //formData.append("images", test);
