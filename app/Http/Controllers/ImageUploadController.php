@@ -53,7 +53,7 @@ class ImageUploadController extends Controller
     {
         $countImages = 0;
 
-        foreach ($request->file('imageName') as $image) {
+        foreach ($request->file('multiImages') as $image) {
             
             $imageName = time().'.'.$image->extension();
 
