@@ -453,12 +453,7 @@
                                     </div>
                                 </form>                            
                               </div>
-                              <div>
-                                  <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
-                              </div>
-                          </div>
-                          <!-- Choose New Media [end] -->
-                          <!-- Add Multiple Media [start] -->
+                              <!-- Add Multiple Media [start] -->
                             <div id="addMultipleMedia">
                                 <div class="form-group">
                                     <form id="newForm" action="{{ route('multiimage.upload.post') }}" multiple method="POST" enctype="multipart/form-data">
@@ -473,12 +468,14 @@
                                             </div>
                                         </div>
                                     </form>                            
-                                </div>
-                                <div>
-                                    <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
-                                </div>
+                                </div>                                
                             </div>
                           <!-- Add Multiple Media [end] -->
+                              <div>
+                                  <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
+                              </div>
+                          </div>
+                          <!-- Choose New Media [end] -->
                           <!-- Table: Media -->
                           <table
                                   id="tableMedia"
