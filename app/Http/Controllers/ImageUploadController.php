@@ -58,6 +58,8 @@ class ImageUploadController extends Controller
 
             $destinationPath = public_path('images');
 
+            return $destinationPath;
+
             $img = Image::make($image->getRealPath());
 
             $img->resize(1000, 1000, function ($constraint) {
