@@ -51,7 +51,7 @@ class ImageUploadController extends Controller
      */
     public function multiImageUploadPostVisitationnote(Request $request)
     {
-        $imageNames[];
+        $imageNames= []; 
 
         $test = $request->file('arr'); 
         
