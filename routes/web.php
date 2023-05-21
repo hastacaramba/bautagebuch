@@ -143,6 +143,8 @@ Route::post('multiimage-upload-post', 'ImageUploadController@multiImageUploadPos
 
 Route::post('/image-upload-post-visitationnote', 'ImageUploadController@imageUploadPostVisitationnote')->name('image.upload.post.visitationnote')->middleware('auth');
 
+Route::post('/multi-image-upload-post-visitationnote', 'ImageUploadController@multiImageUploadPostVisitationnote')->name('multi.image.upload.post.visitationnote')->middleware('auth');
+
 Route::post('/image-upload-post-visit', 'ImageUploadController@imageUploadPostVisit')->name('image.upload.post.visit')->middleware('auth');
 
 Route::post('/image-upload-post-edited-visit', 'ImageUploadController@imageUploadPostEditedVisit')->name('image.upload.post.edited.visit')->middleware('auth');

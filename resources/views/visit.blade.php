@@ -460,7 +460,7 @@
                               <!-- Add Multiple Media [start] -->
                             <div id="addMultipleMedia">
                                 <div class="form-group">
-                                    <form id="multipleImagesUploadForm" action="{{ route('multiimage.upload.post') }}" multiple method="POST" enctype="multipart/form-data">
+                                    <form id="multipleImagesUploadForm" action="{{ route('multi.image.upload.post.visitationnote') }}" multiple method="POST" enctype="multipart/form-data">
                                         <label for="multiImages">Mehrere Fotos auf einmal hochladen</label>
                                         <div class="row">
                                             <div class="col-md-9">
@@ -2175,7 +2175,7 @@
             formData.append('visitationnoteID', $("#visitationnoteID").val());
 
             $.ajax({
-                url: '/multiImage-upload-post-visitationnote',
+                url: '/multi-image-upload-post-visitationnote',
                 data: formData,
                 type: 'POST',
                 contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)

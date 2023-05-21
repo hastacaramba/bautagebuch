@@ -49,9 +49,9 @@ class ImageUploadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function multiImageUploadPost(Request $request)
+    public function multiImageUploadPostVisitationnote(Request $request)
     {
-        $countImages = 0;
+        $imageNames = [];
 
         foreach ($request->file('multiImages') as $image) {
             
@@ -66,24 +66,18 @@ class ImageUploadController extends Controller
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$imageName);
 
-            $visitID = $request->visitID;
-
-            $info = $request->info;
+            $visitID = $request->visitID;            
 
             $media = new Media();
             $media->filename = $imageName;
-            if ($info == null) {
-                $media->info = "";
-            } else {
-                $media->info = $info;
-            }
+            $media->info = "";          
             $media->visit_id = $visitID;
             $media->save();
 
-            $countImages += 1;
+            $imageNames[] = $imageName;
 
         }
-        return $countImages;
+        return $imageNames;
     }
 
     /**
