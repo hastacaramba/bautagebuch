@@ -72,7 +72,11 @@ class ImageUploadController extends Controller
 
             $media = new Media();
             $media->filename = $imageName;
-            $media->info = $info;
+            if ($info == null) {
+                $media->info = "";
+            } else {
+                $media->info = $info;
+            }
             $media->visit_id = $visitID;
             $media->save();
 
