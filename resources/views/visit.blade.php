@@ -443,7 +443,7 @@
                                 <form method="post" action="{{url('multiImage.upload.post')}}" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                       <div class="input-group hdtuto control-group lst increment" >
-                                        <input type="file" name="imagename[]" class="myfrm form-control">
+                                        <input type="file" multiple name="imagename[]" class="myfrm form-control">
                                         <div class="input-group-btn"> 
                                           <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
                                         </div>
