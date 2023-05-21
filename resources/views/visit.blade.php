@@ -2128,13 +2128,17 @@
 
           var newFile;
 
-          var files;
+          var files[];
 
           //file ulpoad
           $('input[type="file"]').change(function(e) {
               var fileName = e.target.files[0].name;
               newFile =  e.target.files[0];
-              files = e.target.files;
+              
+              for (var i = 0; i < length(files); i++) {
+                files[] = e.target.files[i];      
+              }
+              
           });
 
           // this is the id of the form
@@ -2173,7 +2177,7 @@
             var formData = new FormData();
 
             // Attach files
-            formData.append('newImages', files);
+            formData.append('newImages[]', files);
 
             formData.append('visitationnoteID', $("#visitationnoteID").val());
 
