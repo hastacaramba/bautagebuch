@@ -2193,6 +2193,7 @@
                 success: function(data) {
                     $("#btnNewMediaAbbrechen").click();
                     $tableMedia.bootstrapTable('refresh');
+                    alert(data);
                 }
             });
             });
