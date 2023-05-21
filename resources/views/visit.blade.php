@@ -2145,9 +2145,7 @@
               formData.append('image', newFile);
 
               // Attach info
-              formData.append('newPhotoDescVisitationNote', info);
-
-
+              formData.append('info', $("#newPhotoDescVisitationNote").val());
 
               formData.append('visitationnoteID', $("#visitationnoteID").val());
 
