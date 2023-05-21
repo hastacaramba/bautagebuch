@@ -2184,9 +2184,7 @@
                 formData.append("newFiles[]", document.getElementById('multiImages').files[x]);
             }*/
 
-            var test;
-            test[0] = "trytest1";
-            test[1] = "test2";
+            const test = [item1, item2]; 
 
             formData.append("newFiles[]", test);
             
