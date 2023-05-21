@@ -461,10 +461,10 @@
                             <div id="addMultipleMedia">
                                 <div class="form-group">
                                     <form id="multipleImagesUploadForm" action="{{ route('multiimage.upload.post') }}" multiple method="POST" enctype="multipart/form-data">
-                                        <label for="multiImage">Mehrere Fotos auf einmal hochladen</label>
+                                        <label for="multiImages">Mehrere Fotos auf einmal hochladen</label>
                                         <div class="row">
                                             <div class="col-md-9">
-                                                <input type="file" id="multiImage" name="newImages[]" class="form-control">
+                                                <input type="file" id="multiImages" name="newImages[]" multiple class="form-control">
                                             </div>
                                             <div class="col-md-3">
                                                 <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
@@ -2161,6 +2161,31 @@
                   }
               });
           });
+
+            // this is the id of the form
+            $("#multipleImagesUploadForm").submit(function(e) {
+
+            e.preventDefault(); // avoid to execute the actual submit of the form.
+
+            var formData = new FormData();
+
+            // Attach files
+            formData.append('newImages', $("#multiImages").val());
+
+            formData.append('visitationnoteID', $("#visitationnoteID").val());
+
+            $.ajax({
+                url: '/multiImage-upload-post-visitationnote',
+                data: formData,
+                type: 'POST',
+                contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                processData: false, // NEEDED, DON'T OMIT THIS
+                success: function(data) {
+                    $("#btnNewMediaAbbrechen").click();
+                    $tableMedia.bootstrapTable('refresh');
+                }
+            });
+            });
 
           var newVisitMediaFile;
 
