@@ -59,7 +59,6 @@ class ImageUploadController extends Controller
 
             $destinationPath = public_path('images');
 
-            return $destinationPath;
 
             $img = Image::make($image->getRealPath());
 
