@@ -2134,7 +2134,6 @@
           $('input[type="file"]').change(function(e) {
               var fileName = e.target.files[0].name;
               newFile =  e.target.files[0];
-
               myFiles = e.target.files;
               /*
               for (var i = 0; i < e.target.files.length; i++) {
@@ -2172,7 +2171,7 @@
           });
 
             // this is the id of the form
-            $("#1multipleImagesUploadForm").submit(function(e) {
+            $("#multipleImagesUploadForm").submit(function(e) {
 
             e.preventDefault(); // avoid to execute the actual submit of the form.
 
@@ -2202,6 +2201,7 @@
           $('input[type="file"]').change(function(e) {
               var fileName = e.target.files[0].name;
               newVisitMediaFile =  e.target.files[0];
+              myFiles = e.target.files;
           });
 
           // this is the id of the form
