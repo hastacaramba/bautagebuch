@@ -2129,10 +2129,10 @@
           var newFile;
 
           //file ulpoad
-          $('input[type="file"]').change(function(e) {
+          /*$('input[type="file"]').change(function(e) {
               var fileName = e.target.files[0].name;
               newFile =  e.target.files[0];
-          });
+          });*/
 
           // this is the id of the form
           $("#newForm").submit(function(e) {
