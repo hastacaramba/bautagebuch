@@ -440,7 +440,7 @@
                           <!-- Choose New Media [start] -->
                           <div id="chooseNewMedia">
                               <div class="form-group">
-                                <form method="post" action="{{url('multiImage.upload.post')}}" enctype="multipart/form-data">
+                                <form method="post" action="{{ route('multiImage.upload.post') }}" enctype="multipart/form-data">
                                     {{csrf_field()}}
                                       <div class="input-group hdtuto control-group lst increment" >
                                         <input type="file" multiple name="imagename[]" class="myfrm form-control">
@@ -459,20 +459,6 @@
                                       </div>
                                       <button type="submit" class="btn btn-success" style="margin-top:10px">Submit</button>
                                   </form>        
-                                  <!--
-                                  <form id="newForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-                                      <label for="image">Foto hochladen</label>
-                                      <div class="row">
-                                          <div class="col-md-9">
-                                              <input type="file" id="image" name="image" class="form-control">
-                                          </div>
-                                          <div class="col-md-3">
-                                              <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
-                                              <div id="newProjectImage"class="mt-1"></div>
-                                          </div>
-                                      </div>
-                                  </form>
-                                -->
                               </div>
                               <div>
                                   <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
