@@ -51,7 +51,7 @@ class ImageUploadController extends Controller
      */
     public function multiImageUploadPost(Request $request)
     {
-        $imageNames = [];
+        $countImages = 0;
         foreach ($request->file('images') as $image) {
 
             $imageName = time().'.'.$image->extension();
@@ -74,10 +74,10 @@ class ImageUploadController extends Controller
             $media->visit_id = $visitID;
             $media->save();
 
-            $imageNames[] = $imageName;
+            $countImages += 1;
 
         }
-        return $imageNames[1];
+        return $countImages;
     }
 
     /**
