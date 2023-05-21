@@ -2180,7 +2180,7 @@
             myFiles = e.target.files;            
           
             // Attach files
-            for (var x = 0; x < myFiles; x++) {
+            for (var x = 0; x < myFiles.length; x++) {
                 formData.append("newFiles[]", document.getElementById('multiImages').files[x]);
             }
             
