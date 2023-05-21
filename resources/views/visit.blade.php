@@ -108,6 +108,20 @@
                                   </div>
                               </form>
                           </div>
+                          <hr>
+                          <div class="form-group">
+                            <form id="newVisitMultiMediaForm" action="{{ route('multi.image.upload.post.visit') }}" method="POST" enctype="multipart/form-data">
+                                <label for="visitImages">Foto hochladen</label>
+                                <div class="row">                                    
+                                    <div class="col-md-9">
+                                        <input type="file" multiple id="visitImages" name="visitImages" class="form-control">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <button id="btnUploadVisitMultiImage" type="submit" class="btn btn-success">Upload</button>                                        
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                           <div>
                               <button id="btnNewVisitMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
                           </div>
@@ -441,7 +455,7 @@
                           <div id="chooseNewMedia">                            
                             <div class="form-group">
                                 <form id="newForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-                                    <label for="image">Foto hochladen</label>
+                                    <label for="image">Foto mit Beschreibung hochladen</label>
                                     <div class="form-group mb-3">
                                         <input type="text" class="form-control" id="newPhotoDescVisitationNote" placeholder="Beschreibung...">
                                     </div>  
