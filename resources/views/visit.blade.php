@@ -2173,9 +2173,7 @@
             var formData = new FormData();
 
             // Attach files
-            for(let i = 0 ; i < files.length ; i++){
-        	    formData.append('newImages[]', files[i]);
-            }
+            formData.append('newImages[]', files);
 
             formData.append('visitationnoteID', $("#visitationnoteID").val());
 
