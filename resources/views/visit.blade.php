@@ -440,6 +440,14 @@
                           <!-- Choose New Media [start] -->
                           <div id="chooseNewMedia">
                               <div class="form-group">
+                                <form method="POST" action="{{ route('image.upload.post') }}" enctype="multipart/form-data" >
+                                {{ csrf_field() }}                                                           
+                                    <label>Choose Images</label>
+                                    <input type="file"  name="images" multiple>
+                                    </div>
+                                    <hr>
+                                    <button type="submit" >Submit</button>
+                                  </form>
                                   <form id="newForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
                                       <label for="image">Foto hochladen</label>
                                       <div class="row">

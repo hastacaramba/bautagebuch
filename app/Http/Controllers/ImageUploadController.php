@@ -45,6 +45,42 @@ class ImageUploadController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function multiImageUploadPost(Request $request)
+    {
+        $imageNames = [];
+        foreach ($request->file('images') as $image) {
+
+            $imageName = time().'.'.$request->image->extension();
+
+            $destinationPath = public_path('images');
+
+            $img = Image::make($image->getRealPath());
+
+            $img->resize(1000, 1000, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$imageName);
+
+            $visitID = $request->visitID;
+
+            $info = $request->info;
+
+            $media = new Media();
+            $media->filename = $imageName;
+            $media->info = $info;
+            $media->visit_id = $visitID;
+            $media->save();
+
+            $imageNames[] = $imageName;
+
+        }
+        return $imageNames;
+    }
+
+    /**
      * @param Request $request
      * @return string
      */
@@ -78,7 +114,6 @@ class ImageUploadController extends Controller
 
 
     }
-
 
     /**
      * @param Request $request

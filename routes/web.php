@@ -139,6 +139,8 @@ Route::get('image-upload', 'ImageUploadController@imageUpload')->name('image.upl
 
 Route::post('image-upload-post', 'ImageUploadController@imageUploadPost')->name('image.upload.post')->middleware('auth');
 
+Route::post('multiimage-upload-post', 'ImageUploadController@multiImageUploadPost')->name('multiimage.upload.post')->middleware('auth');
+
 Route::post('/image-upload-post-visitationnote', 'ImageUploadController@imageUploadPostVisitationnote')->name('image.upload.post.visitationnote')->middleware('auth');
 
 Route::post('/image-upload-post-visit', 'ImageUploadController@imageUploadPostVisit')->name('image.upload.post.visit')->middleware('auth');
