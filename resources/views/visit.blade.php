@@ -460,7 +460,7 @@
                               <!-- Add Multiple Media [start] -->
                             <div id="addMultipleMedia">
                                 <div class="form-group">
-                                    <form id="newForm" action="{{ route('multiimage.upload.post') }}" multiple method="POST" enctype="multipart/form-data">
+                                    <form id="multipleImagesUploadForm" action="{{ route('multiimage.upload.post') }}" multiple method="POST" enctype="multipart/form-data">
                                         <label for="multiImage">Mehrere Fotos auf einmal hochladen</label>
                                         <div class="row">
                                             <div class="col-md-9">
@@ -2143,6 +2143,11 @@
 
               // Attach file
               formData.append('image', newFile);
+
+              // Attach info
+              formData.append('newPhotoDescVisitationNote', info);
+
+
 
               formData.append('visitationnoteID', $("#visitationnoteID").val());
 
