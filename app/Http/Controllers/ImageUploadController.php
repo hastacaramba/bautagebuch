@@ -54,7 +54,7 @@ class ImageUploadController extends Controller
         $imageNames = [];
         foreach ($request->file('images') as $image) {
 
-            $imageName = time().'.'.$request->image->extension();
+            $imageName = time().'.'.$image->extension();
 
             $destinationPath = public_path('images');
 
@@ -66,7 +66,7 @@ class ImageUploadController extends Controller
 
             $visitID = $request->visitID;
 
-            $info = $request->info;
+            //$info = $request->info;
 
             $media = new Media();
             $media->filename = $imageName;
@@ -77,7 +77,7 @@ class ImageUploadController extends Controller
             $imageNames[] = $imageName;
 
         }
-        return $request;
+        return $imageNames;
     }
 
     /**
