@@ -77,7 +77,7 @@ class ImageUploadController extends Controller
             $imageNames[] = $imageName;
 
         }
-        return $request->file('images');
+        return $request;
     }
 
     /**
