@@ -75,7 +75,7 @@ class ImageUploadController extends Controller
             $media->filename = $imageName;
             $media->info = "";          
             $media->visitationnote_id = $visitationnoteID;
-            $log .= "visitationnateID" . $visitationnateID . " zugeordnet";
+            $log .= "visitationnateID" . $visitationnoteID . " zugeordnet";
 
             $media->save();
 
