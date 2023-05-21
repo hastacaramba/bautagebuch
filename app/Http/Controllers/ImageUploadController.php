@@ -69,13 +69,13 @@ class ImageUploadController extends Controller
                 $constraint->aspectRatio();
             })->save($destinationPath.'/'.$imageName);
 
-            $visitationnoteID = $request->visitationnateID;            
+            $visitationnoteID = $request->visitationnoteID;            
 
             $media = new Media();
             $media->filename = $imageName;
             $media->info = "";          
             $media->visitationnote_id = $visitationnoteID;
-            $log .= "visitationnateID" . $visitationnoteID . " zugeordnet";
+            $log .= "visitationnoteID" . $visitationnoteID . " zugeordnet";
 
             $media->save();
 
