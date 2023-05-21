@@ -2172,7 +2172,7 @@
           });
 
             // this is the id of the form
-            $("#multipleImagesUploadForm").submit(function(e) {
+            $("#1multipleImagesUploadForm").submit(function(e) {
 
             e.preventDefault(); // avoid to execute the actual submit of the form.
 
