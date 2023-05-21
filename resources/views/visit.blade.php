@@ -2180,7 +2180,7 @@
             myFiles = e.target.files;            
           
             // Attach files
-            formData.append('newImages[]', myFiles);
+            formData.append('newImages', myFiles);
 
             formData.append('visitationnoteID', $("#visitationnoteID").val());
 
