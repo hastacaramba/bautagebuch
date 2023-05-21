@@ -443,7 +443,7 @@
                                 <form method="POST" action="{{ route('multiimage.upload.post') }}" enctype="multipart/form-data" >
                                 {{ csrf_field() }}                                                           
                                     <label>Choose Images</label>
-                                    <input type="file"  name="imagename[]" multiple>                                    
+                                    <input type="file"  name="imageName[]" multiple>                                    
                                     <hr>
                                     <button type="submit" >Submit</button>
                                   </form>
