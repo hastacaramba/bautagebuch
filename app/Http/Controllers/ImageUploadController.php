@@ -51,7 +51,7 @@ class ImageUploadController extends Controller
      */
     public function multiImageUploadPostVisitationnote(Request $request)
     {
-        $log = "";
+        $imageNames[];
 
         $test = $request->file('arr'); 
         
@@ -75,16 +75,14 @@ class ImageUploadController extends Controller
             $media->filename = $imageName;
             $media->info = "";          
             $media->visitationnote_id = $visitationnoteID;
-            $log .= "visitationnoteID" . $visitationnoteID . " zugeordnet";
+            
 
             $media->save();
-
-            $log .= ", saved";
 
             $imageNames[] = $imageName;
 
         }
-        return $log;
+        return $imageNames;
     }
 
     /**
