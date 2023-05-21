@@ -443,7 +443,6 @@
                                 <form id="newForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
                                     <label for="image">Foto hochladen</label>
                                     <div class="form-group mb-3">
-                                        <label for="newPhotoDescVisitationNote">Beschreibung</label>
                                         <input type="text" class="form-control" id="newPhotoDescVisitationNote" placeholder="Beschreibung...">
                                     </div>  
                                     <div class="row">
@@ -477,7 +476,7 @@
                             </div>
                           <!-- Add Multiple Media [end] -->
                               <div>
-                                  <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
+                                  <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Foto-Upload abbrechen</button>
                               </div>
                           </div>
                           <!-- Choose New Media [end] -->
