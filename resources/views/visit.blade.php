@@ -728,10 +728,12 @@
         $("#btnNewMedia").hide();
         $("#image").val("");
         $("#chooseNewMedia").fadeIn();
+        $("#addMultipleMedia").fadeIn();
     });
 
       $("#btnNewMediaAbbrechen").click(function () {
         $("#chooseNewMedia").hide();
+        $("#addMultipleMedia").hide();
         $("#image").val("");
         $("#btnNewMedia").fadeIn();
       });
