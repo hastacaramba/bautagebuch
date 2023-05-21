@@ -54,9 +54,9 @@ class ImageUploadController extends Controller
         $imageNames = [];
 
         $test = $request->arr; 
-        return $test[0];
+        //return $test[0];
 
-        foreach ($request->newImages as $image) {
+        foreach ($request->arr as $image) {
             
             $imageName = time().'.'.$image->extension();
 
