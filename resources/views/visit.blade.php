@@ -2280,6 +2280,7 @@
                 processData: false, // NEEDED, DON'T OMIT THIS
                 success: function(data) {
                     $tableVisitMedia.bootstrapTable('refresh');
+                    visitMultiMediaFormData = null;
                     $("#btnNewVisitMediaAbbrechen").click();
                 }
             });
