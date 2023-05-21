@@ -111,7 +111,7 @@
                           <hr>
                           <div class="form-group">
                             <form id="newVisitMultiMediaForm" action="{{ route('multi.image.upload.post.visit') }}" method="POST" enctype="multipart/form-data">
-                                <label for="visitImages">Foto hochladen</label>
+                                <label for="visitImages">Mehrere Fotos auf einmal hochladen</label>
                                 <div class="row">                                    
                                     <div class="col-md-9">
                                         <input type="file" multiple id="visitImages" name="visitImages" class="form-control">
