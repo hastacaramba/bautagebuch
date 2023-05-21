@@ -2247,6 +2247,7 @@
                       $("#newVisitImage").html('<img class="img-fluid img-rounded" src="images/' + data + '">');
                       $("#btnUploadImage").hide();
                       $("#filename").val(data);
+                      $("#image").val('');
                       $("#btnEditVisitMediaAbbrechen").click();
                       $tableVisitMedia.bootstrapTable('refresh');
                       $("#btnNewVisitMediaAbbrechen").click();
