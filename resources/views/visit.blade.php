@@ -2187,18 +2187,17 @@
             
             formData.append('visitationnoteID', $("#visitationnoteID").val());
 
-            $.ajax({
-                url: '/multi-image-upload-post-visitationnote',
-                data: formData,
-                type: 'POST',
-                contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-                processData: false, // NEEDED, DON'T OMIT THIS
-                success: function(data) {
-                    $("#btnNewMediaAbbrechen").click();
-                    $tableMedia.bootstrapTable('refresh');
-                    alert(data);
-                }
-            });
+                $.ajax({
+                    url: '/multi-image-upload-post-visitationnote',
+                    data: formData,
+                    type: 'POST',
+                    contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                    processData: false, // NEEDED, DON'T OMIT THIS
+                    success: function(data) {
+                        $("#btnNewMediaAbbrechen").click();
+                        $tableMedia.bootstrapTable('refresh');
+                    }
+                });
             });
 
           var newVisitMediaFile;
