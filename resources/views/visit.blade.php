@@ -2176,18 +2176,12 @@
             e.preventDefault(); // avoid to execute the actual submit of the form.
 
             var formData = new FormData();
-     
-            //myFiles = e.target.files;            
-          
-            // Attach files
-            /*for (var x = 0; x < myFiles.length; x++) {
-                formData.append("newFiles[]", document.getElementById('multiImages').files[x]);
-            }*/
 
-            const test = ["file1", "file2"]; 
+            var arr = ['this', 'is', 'an', 'array'];
 
-            
-            formData.append("images", test);    
+            for (var i = 0; i < arr.length; i++) {
+                formData.append('arr[]', arr[i]);
+            }
             
             //formData.append("images", test);
             
