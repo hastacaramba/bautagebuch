@@ -440,25 +440,14 @@
                           <!-- Choose New Media [start] -->
                           <div id="chooseNewMedia">
                               <div class="form-group">
-                                <form method="post" action="{{ route('multiimage.upload.post') }}" enctype="multipart/form-data">
-                                    {{csrf_field()}}
-                                      <div class="input-group hdtuto control-group lst increment" >
-                                        <input type="file" multiple name="imagename[]" class="myfrm form-control">
-                                        <div class="input-group-btn"> 
-                                          <button class="btn btn-success" type="button"><i class="fldemo glyphicon glyphicon-plus"></i>Add</button>
-                                        </div>
-                                      </div>
-                                      <div class="clone hide">
-                                        <div class="hdtuto control-group lst input-group" style="margin-top:10px">
-                                          <input type="file" name="imagename[]" class="myfrm form-control" multiple="
-                                          multiple">
-                                          <div class="input-group-btn"> 
-                                            <button class="btn btn-danger" type="button"><i class="fldemo glyphicon glyphicon-remove"></i> Remove</button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                      <button type="submit" class="btn btn-success" style="margin-top:10px">Submit</button>
-                                  </form>        
+                                <form method="POST" action="{{ route('multiimage.upload.post') }}" enctype="multipart/form-data" >
+                                {{ csrf_field() }}                                                           
+                                    <label>Choose Images</label>
+                                    <input type="file"  name="imagename[]" multiple>                                    
+                                    <hr>
+                                    <button type="submit" >Submit</button>
+                                  </form>
+                                  
                               </div>
                               <div>
                                   <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
