@@ -123,7 +123,7 @@
                             </form>
                         </div>
                           <div>
-                              <button id="btnNewVisitMediaAbbrechen" class="btn btn-secondary" type="button">Foto-Upload schließen</button>
+                              <button id="btnNewVisitMediaAbbrechen" class="btn btn-secondary" type="button">Upload-Bereich schließen</button>
                           </div>
                       </div>
                       <!-- Choose New Media [end] -->
@@ -490,7 +490,7 @@
                             </div>
                           <!-- Add Multiple Media [end] -->
                               <div>
-                                  <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Foto-Upload schließen</button>
+                                  <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Upload-Bereich schließen</button>
                               </div>
                           </div>
                           <!-- Choose New Media [end] -->
