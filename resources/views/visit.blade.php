@@ -2148,7 +2148,7 @@
           }
           if(date.getDate() < 10) {
               d = "0" + d;
-     
+          }
           var y = date.getFullYear().toString();
 
 
