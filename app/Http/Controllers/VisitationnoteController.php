@@ -54,8 +54,6 @@ class VisitationnoteController extends Controller
 
         $allVisitationnotesOfVisit .= substr(json_encode($visitationnotes),1,Str::length(json_encode($visitationnotes)) - 2); 
 
-        $allVisitationnotesOfVisit = str_replace("/", "", $allVisitationnotesOfVisit);
-
         if ($n < sizeof($visits) - 1) {
             $allVisitationnotesOfVisit .= ",";  
         }
