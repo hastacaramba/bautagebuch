@@ -755,16 +755,18 @@
        * @returns {string}
        */
       function operateFormatterVisitationnotes(value, row, index) {
-        /* REMOVE ME
+        
           return [
+            /* REMOVE ME
               '<a class="editVisitationnote" href="javascript:void(0)" title="Bearbeiten">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
               '</a>  ',
+              REMOVE ME */
               '<a class="deleteVisitationnote" href="javascript:void(0)" title="Löschen">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
               '</a> ',
           ].join('')
-          REMOVE ME */
+          
       }
 
 
