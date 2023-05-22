@@ -2138,7 +2138,23 @@
       $(document).ready(function () {
         
 
-        
+          var date = new Date($("#date").val());
+          var d = date.getDate();
+          var m = date.getMonth() + 1;
+          var h = date.getHours();
+          var min = date.getMinutes();
+          if((date.getMonth() + 1) < 10) {
+              m = "0" + m;
+          }
+          if(date.getDate() < 10) {
+              d = "0" + d;
+          }
+          var y = date.getFullYear().toString();
+
+
+          var output = d + "." + m + "." + y;    
+
+          $("#date").val(output);
         
 
 
