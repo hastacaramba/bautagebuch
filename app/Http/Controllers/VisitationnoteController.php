@@ -56,16 +56,16 @@ class VisitationnoteController extends Controller
 
 
         if ($n < sizeof($visits) - 1) {
-            $allVisitationnotesOfVisit .= ",";  
+            //$allVisitationnotesOfVisit .= ",";  
         }
               
     }
 
     if (Str::endsWith($allVisitationnotesOfVisit, ',')) {
-        $allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit,0 , Str::length($allVisitationnotesOfVisit) - 1);     
+        //$allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit,0 , Str::length($allVisitationnotesOfVisit) - 1);     
     }
 
-    str_replace(", ,", ",", $allVisitationnotesOfVisit);
+    //str_replace(", ,", ",", $allVisitationnotesOfVisit);
 
     $allVisitationnotesOfVisit = "[" . $allVisitationnotesOfVisit . "]";
 
