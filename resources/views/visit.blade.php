@@ -123,7 +123,7 @@
                             </form>
                         </div>
                           <div>
-                              <button id="btnNewVisitMediaAbbrechen" class="btn btn-secondary" type="button">Foto-Upload abbrechen</button>
+                              <button id="btnNewVisitMediaAbbrechen" class="btn btn-secondary" type="button">Foto-Upload schließen</button>
                           </div>
                       </div>
                       <!-- Choose New Media [end] -->
@@ -455,7 +455,7 @@
                           <div id="chooseNewMedia">                            
                             <div class="form-group">
                                 <form id="newForm" action="{{ route('image.upload.post') }}" method="POST" enctype="multipart/form-data">
-                                    <label for="image">Foto mit Beschreibung hochladen</label>
+                                    <label for="image"><i class="far fa-image"></i> Foto mit Beschreibung hochladen</label>
                                     <div class="form-group mb-3">
                                         <input type="text" class="form-control" id="newPhotoDescVisitationNote" placeholder="Beschreibung...">
                                     </div>  
@@ -475,7 +475,7 @@
                             <div id="addMultipleMedia">
                                 <div class="form-group">
                                     <form id="multipleImagesUploadForm" action="{{ route('multi.image.upload.post.visitationnote') }}" multiple method="POST" enctype="multipart/form-data">
-                                        <label for="multiImages">Mehrere Fotos auf einmal hochladen</label>
+                                        <label for="multiImages"><i class="far fa-images"></i> Mehrere Fotos auf einmal hochladen</label>
                                         <div class="row">
                                             <div class="col-md-9">
                                                 <input type="file" id="multiImages" name="newImages[]" multiple class="form-control">
@@ -490,7 +490,7 @@
                             </div>
                           <!-- Add Multiple Media [end] -->
                               <div>
-                                  <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Foto-Upload abbrechen</button>
+                                  <button id="btnNewMediaAbbrechen" class="btn btn-secondary" type="button">Foto-Upload schließen</button>
                               </div>
                           </div>
                           <!-- Choose New Media [end] -->
