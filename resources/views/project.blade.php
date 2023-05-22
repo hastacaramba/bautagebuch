@@ -755,6 +755,7 @@
        * @returns {string}
        */
       function operateFormatterVisitationnotes(value, row, index) {
+        /* REMOVE ME
           return [
               '<a class="editVisitationnote" href="javascript:void(0)" title="Bearbeiten">',
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-edit"></i></button>',
@@ -763,6 +764,7 @@
               '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
               '</a> ',
           ].join('')
+          REMOVE ME */
       }
 
 
