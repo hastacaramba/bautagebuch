@@ -1524,7 +1524,7 @@
 
           var output = d + "." + m + "." + y + ", " + h + ":" + min;
 
-          output = output.substring(0,output.length - 9);
+          output = output.substring(0,output.length - 7);
 
           return [
               output
