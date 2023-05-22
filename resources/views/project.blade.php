@@ -1170,40 +1170,7 @@ function initTableMedia() {
 
       }
 
-  // - BOOTSTRAP-TABLE ConcernedMembers - //
 
-  var $tableConcernedMembers = $('#tableConcernedMembers')
-
-/**
- * Gibt eine map der Member-IDs der aktuell selektierten Zeilen zurück.
- *
- */
-function getIdSelectionsConcernedMembers() {
-    return $.map($tableConcernedMembers.bootstrapTable('getSelections'), function (row) {
-        return row.id;
-    })
-}
-
-function operateFormatterConcernedMembers(value, row, index) {
-    return [
-        '<a class="deleteConcernedMember" href="javascript:void(0)" title="Löschen">',
-        '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-trash"></i></button>',
-        '</a> '
-    ].join('')
-}
-
-function concernedFormatter(value, row, index) {
-
-    if (value) {
-        return [
-            '<input class=\"concernedCheck\" type=\"checkbox\" name=\"concerned\" value=\"1\" checked onclick=\"handleConcernedClick(this,\'' + row.id + '\')\">'
-        ]
-    }
-
-    return [
-        '<input class=\"concernedCheck\" type=\"checkbox\" name=\"concerned\" value=\"0\" onclick=\"handleConcernedClick(this,\'' + row.id + '\')\">'
-    ]
-}
 
 
 /**
@@ -1479,7 +1446,6 @@ function initTableConcernedMembers() {
             $("#visitationnoteCategory").val(row.category);
             $("#visitationnoteID").val(row.id)
             $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + row.id });
-            alert(row.id);
             $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/visitationnote/concerned/' + row.id });
 
 
@@ -1567,6 +1533,7 @@ function initTableConcernedMembers() {
               }
           });
       },
+      /*
       'click .editProjectnote':function (e, value, row, index) {
           $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/projectnote/concerned/' + row.id });
           $("#modalEditProjectnote").modal('toggle');
@@ -1579,7 +1546,7 @@ function initTableConcernedMembers() {
           $("#editedProjectnoteID").val(row.id);
           //$("#visitModalLabel").html('<h5><i class="fa fa-walking"></i> Begehung: ' + row.title + ' ' + row.date + '</h5>');
 
-      },
+      },*/
       'click .deleteProjectnote':function (e, value, row, index) {
           bootbox.confirm({
               message: "Projektvermerk wirklich löschen?",
