@@ -60,7 +60,7 @@ class VisitationnoteController extends Controller
     }
 
     if (Str::endsWith($allVisitationnotesOfVisit, ',')) {
-        $allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit,0 , Str::length($allVisitationnotesOfVisit) - 1);     
+        $allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit,0 , Str::length($allVisitationnotesOfVisit) - 2);     
     }
 
     //str_replace(", ,", ",", $allVisitationnotesOfVisit);
