@@ -1348,7 +1348,7 @@
                       sortable: true,
                       align: 'left',
                       valign: 'top',
-                      formatter: operateFormatterVisitationnotes
+                      formatter: createdAtFormatterVisits
                   }, {
                       field: 'important',
                       title: 'wichtig',
