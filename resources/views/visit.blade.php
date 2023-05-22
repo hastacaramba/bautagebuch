@@ -1501,8 +1501,7 @@
       }
 
       function createdAtFormatterVisits(value, row, index) {
-        
-        var date = new Date(value.substring(0,value.length - 9));
+        var date = new Date(value);
           var d = date.getDate();
           var m = date.getMonth() + 1;
           var h = date.getHours();
@@ -1526,7 +1525,7 @@
           var output = d + "." + m + "." + y + ", " + h + ":" + min;
 
           return [
-              output
+              output = var date = output.substring(0,value.length - 9);
           ]
       }
 
