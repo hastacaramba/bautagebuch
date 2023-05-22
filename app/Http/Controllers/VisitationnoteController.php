@@ -63,10 +63,7 @@ class VisitationnoteController extends Controller
 
     $allVisitationnotesOfVisit = "[" . $allVisitationnotesOfVisit . "]";
 
-    if (Str::endsWith($allVisitationnotesOfVisit, ',]')) {
-        str_replace(",]", "]", $allVisitationnotesOfVisit);
-        str_replace(",,]", "]", $allVisitationnotesOfVisit);
-    }
+    Str::replaceLast(',]', ']', $allVisitationnotesOfVisit);
 
     return $allVisitationnotesOfVisit;
     }
