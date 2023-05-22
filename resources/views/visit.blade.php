@@ -59,7 +59,7 @@
               <div class="row mb-3">
                   <div class="col-md-3">
                       <label>Datum</label><br>
-                      <input id="date" type="text" style="width:100%; color:#6e707e" value="{{$createdAtFormatterVisits($visit->date)}}" placeholder="Datum...">
+                      <input id="date" type="text" style="width:100%; color:#6e707e" value="{{$visit->date}}" placeholder="Datum...">
                   </div>
                   <div class="col-md-3">
                       <label>Uhrzeit</label><br>
