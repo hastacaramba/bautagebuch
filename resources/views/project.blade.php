@@ -1479,6 +1479,7 @@ function initTableConcernedMembers() {
             $("#visitationnoteCategory").val(row.category);
             $("#visitationnoteID").val(row.id)
             $('#tableMedia').bootstrapTable('refresh', {url: '/visitationnote/media/' + row.id });
+            alert(row.id);
             $('#tableConcernedMembers').bootstrapTable('refresh', {url: '/visitationnote/concerned/' + row.id });
 
 
