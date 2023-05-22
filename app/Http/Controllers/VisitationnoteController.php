@@ -53,16 +53,14 @@ class VisitationnoteController extends Controller
         $visitationnotes = Visitationnote::where('visit_id', '=', $visits[$n]['id'])->get();
 
         $allVisitationnotesOfVisit .= substr(json_encode($visitationnotes),1,Str::length(json_encode($visitationnotes)) - 2); 
-
-
-        if ($n < sizeof($visits) - 1) {
-            //$allVisitationnotesOfVisit .= ",";  
-        }
+        
+        $allVisitationnotesOfVisit .= ",";  
+        
               
     }
 
     if (Str::endsWith($allVisitationnotesOfVisit, ',')) {
-        //$allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit,0 , Str::length($allVisitationnotesOfVisit) - 1);     
+        $allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit,0 , Str::length($allVisitationnotesOfVisit) - 1);     
     }
 
     //str_replace(", ,", ",", $allVisitationnotesOfVisit);
