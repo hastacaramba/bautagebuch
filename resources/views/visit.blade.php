@@ -63,7 +63,7 @@
                   </div>
                   <div class="col-md-3">
                       <label>Uhrzeit</label><br>
-                      <input id="time" type="text" style="width:100%; color:#6e707e" value="{{$visit->time}}" placeholder="Uhrzeit...">
+                      <input id="time" type="text" style="width:100%; color:#6e707e" value="{{$visit->time}}" data-date-format="DD MMMM YYYY" placeholder="Uhrzeit...">
                   </div>
                   <div class="col-md-6">
                       <label>Wetter</label><br>
