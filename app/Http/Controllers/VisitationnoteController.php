@@ -54,7 +54,7 @@ class VisitationnoteController extends Controller
 
         $allVisitationnotesOfVisit .= substr(json_encode($visitationnotes),1,Str::length(json_encode($visitationnotes)) - 2); 
 
-        if ($n < sizeof($visits) - 1) {
+        if ($n < sizeof($visits) - 2) {
             $allVisitationnotesOfVisit .= ",";  
         }
               
