@@ -2137,12 +2137,12 @@
 
       $(document).ready(function () {
         
-        var d = new Date(document.getElementById("date").value);
-        var date = d.getDate();
+        var d = $("#date").value();
+        var day = d.getDate();
         var m = d.getMonth();
         var y = d.getFullYear();
-        var fulldate = date + "." + m + "." + y;
-        document.getElementById("date").value(fulldate);
+        var fulldate = day + "." + m + "." + y;
+        $("#date").value(fulldate);
 
 
           $.ajaxSetup({
