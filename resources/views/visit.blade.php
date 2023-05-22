@@ -1347,7 +1347,8 @@
                       title: 'Fälligkeit',
                       sortable: true,
                       align: 'left',
-                      valign: 'top'
+                      valign: 'top',
+                      formatter: operateFormatterVisitationnotes
                   }, {
                       field: 'important',
                       title: 'wichtig',
