@@ -55,11 +55,14 @@ class VisitationnoteController extends Controller
         $allVisitationnotesOfVisit .= substr(json_encode($visitationnotes),1,Str::length(json_encode($visitationnotes)) - 2); 
         
         $allVisitationnotesOfVisit .= ",";  
-        
               
     }
 
-    str_replace(',,','',$allVisitationnotesOfVisit);
+    if (Str::endsWith($allVisitationnotesOfVisit, ',,')) {
+        $allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit, 0, Str::length($allVisitationnotesOfVisit) - 2);
+    } elseif (Str::endsWith($allVisitationnotesOfVisit, ',')) {
+            $allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit, 0, Str::length($allVisitationnotesOfVisit) - 1);        
+    }
 
     $allVisitationnotesOfVisit = "[" . $allVisitationnotesOfVisit . "]";
 
