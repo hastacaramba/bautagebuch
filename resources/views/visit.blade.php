@@ -1335,7 +1335,7 @@
                       align: 'left',
                       valign: 'top',
                       sortable: true,
-                      formatter: createdAtFormatter
+                      formatter: createdAtFormatterReports
                   }, {
                       field: 'category',
                       title: 'Kategorie',
