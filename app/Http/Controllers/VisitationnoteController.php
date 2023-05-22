@@ -59,11 +59,9 @@ class VisitationnoteController extends Controller
               
     }
 
-    
+    str_replace(',,','',$allVisitationnotesOfVisit);
 
-    $allVisitationnotesOfVisit = "[" . $allVisitationnotesOfVisit . "]" . "test";
-
-    //str_replace(',,]',']',$allVisitationnotesOfVisit);
+    $allVisitationnotesOfVisit = "[" . $allVisitationnotesOfVisit . "]";
 
     return $allVisitationnotesOfVisit;
     }
