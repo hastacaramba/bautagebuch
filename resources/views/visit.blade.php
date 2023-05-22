@@ -1524,8 +1524,10 @@
 
           var output = d + "." + m + "." + y + ", " + h + ":" + min;
 
+          output = output.substring(0,output.length - 9);
+
           return [
-              output = var date = output.substring(0,value.length - 9);
+              output
           ]
       }
 
