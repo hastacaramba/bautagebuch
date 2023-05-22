@@ -1334,7 +1334,8 @@
                       title: 'erstellt',
                       align: 'left',
                       valign: 'top',
-                      sortable: true
+                      sortable: true,
+                      formatter: createdAtFormatterVisits
                   }, {
                       field: 'category',
                       title: 'Kategorie',
@@ -1501,7 +1502,7 @@
 
       function createdAtFormatterVisits(value, row, index) {
         
-        var date = new Date(value.substring(0,value.length - 3));
+        var date = new Date(value.substring(0,value.length - 9));
           var d = date.getDate();
           var m = date.getMonth() + 1;
           var h = date.getHours();
