@@ -1114,7 +1114,9 @@
               $("#modalEditVisitationnnote").modal('toggle');
               $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
               $("#visitationnoteNumber").val(row.number);
-              $("#visitationnoteDeadline").val(row.deadline);
+              if (row.deadline != null) {
+                $("#visitationnoteDeadline").val(row.deadline);      
+              }              
               $("#visitationnoteDescription").val(row.notes);
               $("#visitationnoteDone").prop('checked', row.done);
               $("#visitationnoteImportant").prop('checked', row.important);
