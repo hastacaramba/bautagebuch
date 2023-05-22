@@ -1503,6 +1503,11 @@
 
       function createdAtFormatterVisits(value, row, index) {
         var date = new Date(value);
+
+        if (value == null) {
+            return null;
+        }  
+        
           var d = date.getDate();
           var m = date.getMonth() + 1;
           var h = date.getHours();
