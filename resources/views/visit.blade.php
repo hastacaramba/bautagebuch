@@ -2136,6 +2136,14 @@
   <script>
 
       $(document).ready(function () {
+        
+        d = new Date(document.getElementById("date").value);
+        date = d.getDate();
+        m = d.getMonth();
+        y = d.getFullYear();
+        fulldate = date + "." + m + "." + y;
+        document.getElementById("date").value(fulldate);
+
 
           $.ajaxSetup({
               headers: {
