@@ -52,9 +52,9 @@ class VisitationnoteController extends Controller
         //fetch the visitationnotes of the visit
         $visitationnotes = Visitationnote::where('visit_id', '=', $visits[$n]['id'])->get();
 
-        $allVisitationnotesOfVisit .= substr(json_encode($visitationnotes),1,Str::length(json_encode($visitationnotes)) - 2); 
+        $allVisitationnotesOfVisit .= substr(json_encode($visitationnotes),1,Str::length(json_encode($visitationnotes)) - 1); 
 
-        if ($n < sizeof($visits) - 2) {
+        if ($n < sizeof($visits) - 1) {
             $allVisitationnotesOfVisit .= ",";  
         }
               
