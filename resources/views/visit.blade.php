@@ -1335,7 +1335,7 @@
                       align: 'left',
                       valign: 'top',
                       sortable: true,
-                      formatter: createdAtFormatterReports
+                      formatter: createdAtFormatterVisits
                   }, {
                       field: 'category',
                       title: 'Kategorie',
@@ -1473,6 +1473,36 @@
 
       function createdAtFormatterReports(value, row, index) {
           var date = new Date(value);
+          var d = date.getDate();
+          var m = date.getMonth() + 1;
+          var h = date.getHours();
+          var min = date.getMinutes();
+          if((date.getMonth() + 1) < 10) {
+              m = "0" + m;
+          }
+          if(date.getDate() < 10) {
+              d = "0" + d;
+          }
+          if(date.getHours() < 10) {
+              h = "0" + h;
+          }
+          if(date.getMinutes() < 10) {
+              min = "0" + min;
+          }
+
+          var y = date.getFullYear().toString();
+
+
+          var output = d + "." + m + "." + y + ", " + h + ":" + min;
+
+          return [
+              output
+          ]
+      }
+
+      function createdAtFormatterVisits(value, row, index) {
+        
+        var date = new Date(value.substring(0,value.length - 3));
           var d = date.getDate();
           var m = date.getMonth() + 1;
           var h = date.getHours();
