@@ -61,8 +61,8 @@ class VisitationnoteController extends Controller
               
     }
 
-    if (Str::endsWith($allVisitationnotesOfVisit, ',') {
-        $allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit,1, Str::length($allVisitationnotesOfVisit) - 1);     
+    if (Str::endsWith($allVisitationnotesOfVisit, ',')) {
+        $allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit,1 , Str::length($allVisitationnotesOfVisit) - 1);     
     }
 
     $allVisitationnotesOfVisit = "[" . $allVisitationnotesOfVisit . "]";
