@@ -93,7 +93,7 @@
                       <div id="chooseNewVisitMedia" style="display:none">
                           <div class="form-group">
                               <form id="newVisitMediaForm" action="{{ route('image.upload.post.visit') }}" method="POST" enctype="multipart/form-data">
-                                  <label for="image">Foto hochladen</label>
+                                  <label for="image">Foto mit Beschreibung hochladen</label>
                                   <div class="row">
                                       <div class="col-md-12 mb-3">
                                           <input id="photoDescription" type="text" style="width:100%; color:#6e707e" placeholder="Beschreibung zum Foto...">
@@ -123,7 +123,7 @@
                             </form>
                         </div>
                           <div>
-                              <button id="btnNewVisitMediaAbbrechen" class="btn btn-secondary" type="button">Abbrechen</button>
+                              <button id="btnNewVisitMediaAbbrechen" class="btn btn-secondary" type="button">Foto-Upload abbrechen</button>
                           </div>
                       </div>
                       <!-- Choose New Media [end] -->
