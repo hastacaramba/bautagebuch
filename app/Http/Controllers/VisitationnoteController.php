@@ -65,7 +65,7 @@ class VisitationnoteController extends Controller
         $allVisitationnotesOfVisit = substr($allVisitationnotesOfVisit,0 , Str::length($allVisitationnotesOfVisit) - 1);     
     }
 
-    str_replace(",,", ",", $allVisitationnotesOfVisit);
+    str_replace(", ,", ",", $allVisitationnotesOfVisit);
 
     $allVisitationnotesOfVisit = "[" . $allVisitationnotesOfVisit . "]";
 
