@@ -2137,11 +2137,11 @@
 
       $(document).ready(function () {
         
-        d = new Date(document.getElementById("date").value);
-        date = d.getDate();
-        m = d.getMonth();
-        y = d.getFullYear();
-        fulldate = date + "." + m + "." + y;
+        var d = new Date(document.getElementById("date").value);
+        var date = d.getDate();
+        var m = d.getMonth();
+        var y = d.getFullYear();
+        var fulldate = date + "." + m + "." + y;
         document.getElementById("date").value(fulldate);
 
 
