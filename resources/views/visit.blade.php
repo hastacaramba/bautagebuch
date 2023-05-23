@@ -2316,7 +2316,7 @@
                         $("#uploading2").html("");   
                         $("#btnUploadMultiImage").show();
                         $("#image").val("");
-                        $("#multiImage").val("");  
+                        $("#multiImages").val("");  
                         
 
                     }
