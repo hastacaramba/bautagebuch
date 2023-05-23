@@ -2306,9 +2306,7 @@
                     processData: false, // NEEDED, DON'T OMIT THIS
                     success: function(data) {
                         $("#btnNewMediaAbbrechen").click();
-                        $tableMedia.bootstrapTable('refresh');
-                        $("#btnUploadVisitMultiImage").show;  
-                        $("#uploading").html("");    
+                        $tableMedia.bootstrapTable('refresh'); 
                     }
                 });
             });
@@ -2381,6 +2379,8 @@
                 success: function(data) {
                     $tableVisitMedia.bootstrapTable('refresh');
                     $("#visitImages").val('');
+                    $("#btnUploadVisitMultiImage").show;  
+                    $("#uploading").html("");   
                     $("#btnNewVisitMediaAbbrechen").click();
                 }
             });
