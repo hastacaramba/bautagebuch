@@ -2211,8 +2211,8 @@
 
 
           $("#btnUploadVisitMultiImage").click(function () {
-                    
-              $("#btnUploadVisitMultiImage").html("<i class=\"fa-solid fa-cloud-arrow-up\"></i>  Upload läuft...");      
+            $("#btnUploadVisitMultiImage").$deactivate();      
+              $("#btnUploadVisitMultiImage").html("Upload läuft...");      
           })
 
           $("#showDate").click(function () {
