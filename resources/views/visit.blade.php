@@ -2314,7 +2314,9 @@
                         $("#btnNewMediaAbbrechen").click();
                         $tableMedia.bootstrapTable('refresh'); 
                         $("#uploading2").html("");   
-                        $("#btnUploadMultiImage").show();  
+                        $("#btnUploadMultiImage").show();
+                        $("#image").val("");
+                        $("#multiImage").val("");  
                         
 
                     }
