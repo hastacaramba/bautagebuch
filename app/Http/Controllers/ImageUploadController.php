@@ -183,7 +183,7 @@ class ImageUploadController extends Controller
         foreach ($test as $image) {
             
 
-            $imageName = time() + 1 .'.'.$image->extension();
+            $imageName = time() + $salt .'.'.$image->extension();
 
             $salt += 1;
 
