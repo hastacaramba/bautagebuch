@@ -2212,7 +2212,7 @@
 
 
           $("#btnUploadVisitMultiImage").click(function () {
-            $("#btnUploadVisitMultiImage").hide;  
+            $("#btnUploadVisitMultiImage").hide();  
             $("#uploading").html("Upload läuft...");      
 
           })
@@ -2379,7 +2379,7 @@
                 success: function(data) {
                     $tableVisitMedia.bootstrapTable('refresh');
                     $("#visitImages").val('');
-                    $("#btnUploadVisitMultiImage").show;  
+                    $("#btnUploadVisitMultiImage").show();  
                     $("#uploading").html("");   
                     $("#btnNewVisitMediaAbbrechen").click();
                 }
