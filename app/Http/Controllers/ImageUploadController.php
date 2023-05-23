@@ -55,10 +55,14 @@ class ImageUploadController extends Controller
 
         $test = $request->file('arr'); 
         
+        $salt = 0;
+
         //foreach($request->file('imagename') as $file)
         foreach ($test as $image) {
             
-            $imageName = time().'.'.$image->extension();
+            $imageName = time() + $salt .'.'.$image->extension();
+
+            $salt += 1;
 
             $destinationPath = public_path('images');
 
