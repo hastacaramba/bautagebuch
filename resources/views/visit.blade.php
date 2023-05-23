@@ -2283,6 +2283,8 @@
                   success: function(data) {
                       $("#btnNewMediaAbbrechen").click();
                       $tableMedia.bootstrapTable('refresh');
+                      $("#image").val("");
+                      $("#multiImages").val("");  
                   }
               });
           });
@@ -2360,6 +2362,8 @@
                       $("#btnEditVisitMediaAbbrechen").click();
                       $tableVisitMedia.bootstrapTable('refresh');                                            
                       $("#btnNewVisitMediaAbbrechen").click();
+                      $("#image").val("");
+                      $("#multiImages").val("");  
                   }
               });
           });
@@ -2394,6 +2398,8 @@
                     $("#btnUploadVisitMultiImage").show();  
                     $("#uploading").html("");   
                     $("#btnNewVisitMediaAbbrechen").click();
+                    $("#image").val("");
+                    $("#multiImages").val("");  
                 }
             });
             });
