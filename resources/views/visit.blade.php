@@ -2212,8 +2212,9 @@
 
 
           $("#btnUploadVisitMultiImage").click(function () {
-              $("#uploading").html("Upload läuft...");      
-              $("#btnUploadVisitMultiImage").hide;
+            $("#btnUploadVisitMultiImage").hide;  
+            $("#uploading").html("Upload läuft...");      
+
           })
 
           $("#showDate").click(function () {
@@ -2306,6 +2307,8 @@
                     success: function(data) {
                         $("#btnNewMediaAbbrechen").click();
                         $tableMedia.bootstrapTable('refresh');
+                        $("#btnUploadVisitMultiImage").show;  
+                        $("#uploading").html("");    
                     }
                 });
             });
