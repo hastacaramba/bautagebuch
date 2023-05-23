@@ -2212,7 +2212,7 @@
 
           $("#btnUploadVisitMultiImage").click(function () {
                     
-              $("#btnUploadVisitMultiImage").html("<i class=\"fa-solid fa-cloud-arrow-up fa-bounce\"></i>  Upload läuft...");      
+              $("#btnUploadVisitMultiImage").html("<i class=\"fa-solid fa-cloud-arrow-up\"></i>  Upload läuft...");      
           })
 
           $("#showDate").click(function () {
