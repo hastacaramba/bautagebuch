@@ -2345,6 +2345,7 @@
                       $("#image").val('');
                       $("#btnEditVisitMediaAbbrechen").click();
                       $tableVisitMedia.bootstrapTable('refresh');
+                      $("#btnUploadVisitMultiImage").html("Upload");
                       $("#btnNewVisitMediaAbbrechen").click();
                   }
               });
