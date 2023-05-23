@@ -2211,7 +2211,7 @@
 
 
           $("#btnUploadVisitMultiImage").click(function () {
-              $("#btnUploadVisitMultiImage").hide();      
+              //$("#btnUploadVisitMultiImage").hide();      
               $("#btnUploadVisitMultiImage").html("<i class=\"fa-solid fa-spinner fa-spin\"></i> Upload läuft...");      
           })
 
