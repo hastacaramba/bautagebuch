@@ -2211,8 +2211,8 @@
 
 
           $("#btnUploadVisitMultiImage").click(function () {
-              $("#btnUploadVisitMultiImage").hide;
               $("#uploading").html("Upload läuft...");      
+              $("#btnUploadVisitMultiImage").hide;
           })
 
           $("#showDate").click(function () {
