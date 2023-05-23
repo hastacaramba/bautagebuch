@@ -60,7 +60,9 @@ class ImageUploadController extends Controller
         //foreach($request->file('imagename') as $file)
         foreach ($test as $image) {
             
-            $imageName = time() + $salt .'.'.$image->extension();
+            $timeModified = time() + $salt;
+
+            $imageName = $timeModified .'.'.$image->extension();
 
             $salt += 1;
 
@@ -181,9 +183,10 @@ class ImageUploadController extends Controller
 
         //foreach($request->file('imagename') as $file)
         foreach ($test as $image) {
-            
 
-            $imageName = time() + $salt .'.'.$image->extension();
+            $timeModified = time() + $salt;
+
+            $imageName = $timeModified .'.'.$image->extension();
 
             $salt += 1;
 
