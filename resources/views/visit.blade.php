@@ -2209,6 +2209,11 @@
           initTableConcernedMembers();
           initReportsTable();
 
+
+          $("#btnUploadVisitMultiImage").click(function () {
+              $("#btnUploadVisitMultiImage").disabled = true;              
+          })
+
           $("#showDate").click(function () {
               var status = $("#date").val();
               alert(status);
