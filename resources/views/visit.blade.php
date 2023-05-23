@@ -117,7 +117,8 @@
                                         <input type="file" multiple id="visitImages" name="visitImages" class="form-control">
                                     </div>
                                     <div class="col-md-3">
-                                        <span id="uploading"><button id="btnUploadVisitMultiImage" type="submit" class="btn btn-success">Upload</button>                                        
+                                        <span id="uploading"></span>
+                                        <button id="btnUploadVisitMultiImage" type="submit" class="btn btn-success">Upload</button>                                        
                                     </div>
                                 </div>
                             </form>
