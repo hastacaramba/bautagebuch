@@ -2210,7 +2210,7 @@
           initReportsTable();
 
 
-          $("#btnUploadVisitMultiImage").click(function () {try
+          $("#btnUploadVisitMultiImage").click(function () {
               $("#btnUploadVisitMultiImage").hide();      
               $("#btnUploadVisitMultiImage").html("<i class="fa-solid fa-spinner fa-spin"></i>" Upload läuft...)      
           })
