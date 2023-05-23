@@ -2211,7 +2211,7 @@
 
 
           $("#btnUploadVisitMultiImage").click(function () {
-            $("#btnUploadVisitMultiImage").$deactivate();      
+              $("#btnUploadVisitMultiImage").disabled = true;
               $("#btnUploadVisitMultiImage").html("Upload läuft...");      
           })
 
