@@ -2211,7 +2211,7 @@
 
 
           $("#btnUploadVisitMultiImage").click(function () {
-              $("#btnUploadVisitMultiImage").disabled = true;              
+              $("#btnUploadVisitMultiImage").hide();            
           })
 
           $("#showDate").click(function () {
