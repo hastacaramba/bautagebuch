@@ -482,7 +482,7 @@
                                                 <input type="file" id="multiImages" name="newImages[]" multiple class="form-control">
                                             </div>
                                             <div class="col-md-3">
-                                                <button id="btnUploadImage" type="submit" class="btn btn-success">Upload</button>
+                                                <span id="uploading2"></span><button id="btnUploadMultiImage" type="submit" class="btn btn-success">Upload</button>
                                                 <div id="newProjectImages"class="mt-1"></div>
                                             </div>
                                         </div>
@@ -2217,6 +2217,12 @@
 
           })
 
+          $("#btnUploadMultiImage").click(function () {
+            $("#btnUploadMultiImage").hide();  
+            $("#uploading2").html("Upload läuft...");      
+
+          })
+
           $("#showDate").click(function () {
               var status = $("#date").val();
               alert(status);
@@ -2307,6 +2313,10 @@
                     success: function(data) {
                         $("#btnNewMediaAbbrechen").click();
                         $tableMedia.bootstrapTable('refresh'); 
+                        $("#uploading2").html("");   
+                        $("#btnUploadMultiImage").show();  
+                        
+
                     }
                 });
             });
