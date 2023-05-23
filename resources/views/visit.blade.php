@@ -117,7 +117,7 @@
                                         <input type="file" multiple id="visitImages" name="visitImages" class="form-control">
                                     </div>
                                     <div class="col-md-3">
-                                        <button id="btnUploadVisitMultiImage" type="submit" class="btn btn-success">Upload</button>                                        
+                                        <span id="uploading"><button id="btnUploadVisitMultiImage" type="submit" class="btn btn-success">Upload</button>                                        
                                     </div>
                                 </div>
                             </form>
@@ -2211,8 +2211,8 @@
 
 
           $("#btnUploadVisitMultiImage").click(function () {
-              $("#btnUploadVisitMultiImage").disabled = true;
-              $("#btnUploadVisitMultiImage").html("Upload läuft...");      
+              $("#btnUploadVisitMultiImage").hide;
+              $("#uploading").html("Upload läuft...");      
           })
 
           $("#showDate").click(function () {
@@ -2344,8 +2344,7 @@
                       $("#filename").val(data);
                       $("#image").val('');
                       $("#btnEditVisitMediaAbbrechen").click();
-                      $tableVisitMedia.bootstrapTable('refresh');
-                      $("#btnUploadVisitMultiImage").html("Upload");
+                      $tableVisitMedia.bootstrapTable('refresh');                                            
                       $("#btnNewVisitMediaAbbrechen").click();
                   }
               });
