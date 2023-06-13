@@ -2178,7 +2178,7 @@
 
       $(document).ready(function () {
         
-
+/*
           var date = new Date($("#date").val());
           var d = date.getDate();
           var m = date.getMonth() + 1;
@@ -2196,7 +2196,7 @@
           var output = d + "." + m + "." + y;    
 
           $("#date").val(output);
-        
+        */
 
 
           $.ajaxSetup({
