@@ -1114,7 +1114,7 @@
               $("#editVisitationnoteLabel").html("<i class=\"fa fa-clipboard-list\"></i> Begehungsvermerk bearbeiten");
               $("#modalEditVisitationnnote").modal('toggle');
 
-              $("#visitationnoteDate").val(row.created_at);
+              $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
               /* 
               let vNoteDate = new Date(row.created_at.substring(0,row.created_at.length - 9));
               let yvn = vNoteDate.getFullYear();
