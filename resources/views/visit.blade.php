@@ -1369,8 +1369,7 @@
                       title: 'erstellt',
                       align: 'left',
                       valign: 'top',
-                      sortable: true,
-                      formatter: createdAtFormatterVisits
+                      sortable: true
                   }, {
                       field: 'category',
                       title: 'Kategorie',
