@@ -1114,7 +1114,8 @@
               $("#editVisitationnoteLabel").html("<i class=\"fa fa-clipboard-list\"></i> Begehungsvermerk bearbeiten");
               $("#modalEditVisitationnnote").modal('toggle');
 
-              //$("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
+              $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
+              /* 
               let vNoteDate = new Date(row.created_at.substring(0,row.created_at.length - 9));
               let yvn = vNoteDate.getFullYear();
               let mvn = vNoteDate.getMonth() + 1;
@@ -1127,8 +1128,9 @@
               }
               let myVnDate = dvn + "." + mvn + "." + yvn; 
               $("#visitationnoteDate").val(myVnDate);
+              */
               $("#visitationnoteNumber").val(row.number);
-            
+              /*
               if (row.deadline != null) {
                   let deadline = new Date(row.deadline);
                   let y = deadline.getFullYear();
@@ -1145,7 +1147,8 @@
               } else {
                 $("#visitationnoteDeadline").val(null);
               }           
-              
+              */
+              $("#visitationnoteDeadline").val(row.deadline);
               $("#visitationnoteNumber").val(row.number);
               $("#visitationnoteDescription").val(row.notes);
               $("#visitationnoteDone").prop('checked', row.done);

@@ -1276,6 +1276,7 @@ function initTableConcernedMembers() {
         'click .editVisitationnote': function (e, value, row, index) {            
             $("#editVisitationnoteLabel").html("<i class=\"fa fa-clipboard-list\"></i> Begehungsvermerk bearbeiten");
             $("#modalEditVisitationnnote").modal('toggle');
+            /*
             let vNoteDate = new Date(row.created_at.substring(0,row.created_at.length - 9));
             let yvn = vNoteDate.getFullYear();
             let mvn = vNoteDate.getMonth() + 1;
@@ -1287,9 +1288,10 @@ function initTableConcernedMembers() {
                 dvn = "0" + dvn;
             }
             let myVnDate = dvn + "." + mvn + "." + yvn; 
-            $("#visitationnoteDate").val(myVnDate);
+            */
+            $("#visitationnoteDate").val(row.created_at.substring(0,row.created_at.length - 9));
             $("#visitationnoteNumber").val(row.number);
-            
+            /*
             if (row.deadline != null) {
                 let deadline = new Date(row.deadline);
                 let y = deadline.getFullYear();
@@ -1305,7 +1307,8 @@ function initTableConcernedMembers() {
                 $("#visitationnoteDeadline").val(myDate);        
             } else {
                 $("#visitationnoteDeadline").val(null);
-            }            
+            }*/          
+            $("#visitationnoteDeadline").val(row.deadline);        
             $("#visitationnoteDescription").val(row.notes);
             $("#visitationnoteDone").prop('checked', row.done);
             $("#visitationnoteImportant").prop('checked', row.important);
