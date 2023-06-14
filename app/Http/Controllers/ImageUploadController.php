@@ -37,6 +37,8 @@ class ImageUploadController extends Controller
 
         $img = Image::make($image->getRealPath());
 
+        $img->orientate();
+
         $img->resize(1000, 1000, function ($constraint) {
             $constraint->aspectRatio();
         })->save($destinationPath.'/'.$imageName);
@@ -68,8 +70,9 @@ class ImageUploadController extends Controller
 
             $destinationPath = public_path('images');
 
-
             $img = Image::make($image->getRealPath());
+
+            $img->orientate();
 
             $img->resize(1000, 1000, function ($constraint) {
                 $constraint->aspectRatio();
@@ -110,6 +113,8 @@ class ImageUploadController extends Controller
 
         $img = Image::make($image->getRealPath());
 
+        $img->orientate();
+
         $img->resize(1000, 1000, function ($constraint) {
             $constraint->aspectRatio();
         })->save($destinationPath.'/'.$imageName);
@@ -144,6 +149,8 @@ class ImageUploadController extends Controller
         $destinationPath = public_path('images');
 
         $img = Image::make($image->getRealPath());
+
+        $img->orientate();
 
         $img->resize(1000, 1000, function ($constraint) {
             $constraint->aspectRatio();
@@ -193,8 +200,9 @@ class ImageUploadController extends Controller
 
             $destinationPath = public_path('images');
 
-
             $img = Image::make($image->getRealPath());
+
+            $img->orientate();
 
             $img->resize(1000, 1000, function ($constraint) {
                 $constraint->aspectRatio();
@@ -264,6 +272,8 @@ class ImageUploadController extends Controller
         $destinationPath = public_path('images');
 
         $img = Image::make($image->getRealPath());
+
+        $img->orientate();
 
         $img->resize(1000, 1000, function ($constraint) {
             $constraint->aspectRatio();
