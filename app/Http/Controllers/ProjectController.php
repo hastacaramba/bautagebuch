@@ -52,6 +52,7 @@ class ProjectController extends Controller
      */
     public function updateProject(Request $request, $projectID) {
         $project = Project::where('id', '=', $projectID)->first();
+        $now = time();
 
         if ($project != null) {
             $project->name = $request->name;
@@ -60,7 +61,7 @@ class ProjectController extends Controller
             $project->housenumber = $request->housenumber;
             $project->postcode = $request->postcode;
             $project->city = $request->city;
-            $project->updated_at = time();
+            $project->updated_at = $now;
             $project->save();
 
             //Does Project-File-Combi already exist?
