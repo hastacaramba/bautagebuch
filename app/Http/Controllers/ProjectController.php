@@ -61,7 +61,6 @@ class ProjectController extends Controller
             $project->housenumber = $request->housenumber;
             $project->postcode = $request->postcode;
             $project->city = $request->city;
-            $project->updated_at = $now;
             $project->save();
 
             //Does Project-File-Combi already exist?
@@ -80,6 +79,24 @@ class ProjectController extends Controller
                 $media->project_id = $projectID;
                 $media->save();
             }
+            updateProjectUpdatedAt($projectID);
+        }
+    }
+
+
+     /**
+     * Update project attribute updated_at with the current timestamp.
+     *
+     * @param $id The id of the project
+     * @return Response
+     */
+    public function updateProjectUpdatedAt($projectID) {
+        $project = Project::where('id', '=', $projectID)->first();
+        $now = time();
+
+        if ($project != null) {
+            $project->updated_at = $now;
+            $project->save();
         }
     }
 
