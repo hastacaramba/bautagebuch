@@ -17,23 +17,6 @@ class VisitController extends Controller
 {
 
     /**
-     * Update project attribute updated_at with the current timestamp.
-     *
-     * @param $id The id of the project
-     * @return Response
-     */
-    public function updateProjectUpdatedAt($projectID) {
-        $project = Project::where('id', '=', $projectID)->first();
-        $now = time();
-
-        if ($project != null) {
-            $project->updated_at = $now;
-            $project->save();
-        }
-    }
-
-
-    /**
      * Create a new visit instance.
      *
      * @param  Request  $request
@@ -53,7 +36,7 @@ class VisitController extends Controller
         $visit->save();
         
         //update updated_at for this project
-        updateProjectUpdatedAt($projectID);
+        updateProjectUpdatedAt2($projectID);
     }
 
 
@@ -396,6 +379,23 @@ class VisitController extends Controller
         $pdfs = Pdf::where('visit_id', $visitID)->get();
 
         return $pdfs;
+    }
+
+
+    /**
+     * Update project attribute updated_at with the current timestamp.
+     *
+     * @param $id The id of the project
+     * @return Response
+     */
+    public function updateProjectUpdatedAt2($projectID) {
+        $project = Project::where('id', '=', $projectID)->first();
+        $now = time();
+
+        if ($project != null) {
+            $project->updated_at = $now;
+            $project->save();
+        }
     }
 
 }
