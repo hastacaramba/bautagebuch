@@ -356,7 +356,7 @@
             url: "/projects/" + $("#projectID").val() + "/update",
             data: {
               "number": $("#newNumber").val(),
-              "updated_at": now(),
+              "updated_at": Date.now(),
               "name": $("#newName").val(),
               "street": $("#newStreet").val(),
               "housenumber": $("#newHousenumber").val(),
