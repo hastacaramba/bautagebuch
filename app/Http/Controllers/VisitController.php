@@ -34,6 +34,9 @@ class VisitController extends Controller
         $visit->project_id = $projectID;
 
         $visit->save();
+        
+        //update updated_at for this project
+        updateProjectUpdatedAt($projectID);
     }
 
 
