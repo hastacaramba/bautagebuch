@@ -60,6 +60,7 @@ class ProjectController extends Controller
             $project->housenumber = $request->housenumber;
             $project->postcode = $request->postcode;
             $project->city = $request->city;
+            $project->updated_at = $request->updated_at;
             $project->save();
 
             //Does Project-File-Combi already exist?
