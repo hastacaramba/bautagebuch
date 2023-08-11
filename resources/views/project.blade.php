@@ -689,6 +689,10 @@
                 location.href="/visit/" + data;
             }
         });
+        $.ajax({
+            type: "PATCH",
+            url: "/projects/{{ $projectID }}/updateUpdatedAt"
+        });
     });
 
 

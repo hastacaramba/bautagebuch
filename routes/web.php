@@ -83,6 +83,8 @@ Route::patch('/subareas/{subareaID}/update', 'SubareaController@updateSubarea')-
 
 Route::patch('/projects/{projectID}/update', 'ProjectController@updateProject')->middleware('auth');
 
+Route::patch('/projects/{projectID}/updateUpdatedAt', 'ProjectController@updateProjectUpdatedAt')->middleware('auth');
+
 Route::get('/projects/{projectID}', 'ProjectController@getProject')->middleware('auth');
 
 Route::post('/member', 'MemberController@newMember')->middleware('auth');

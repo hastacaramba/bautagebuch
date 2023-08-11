@@ -32,17 +32,7 @@ class VisitController extends Controller
         $visit->weather = $request->weather;
         $visit->description = $request->description;
         $visit->project_id = $projectID;
-
         $visit->save();
-        
-        //update updated_at for this project
-        $project = Project::where('id', '=', $projectID)->first();
-        $now = time();
-
-        if ($project != null) {
-            $project->updated_at = $now;
-            $project->save();
-        }
     }
 
 
