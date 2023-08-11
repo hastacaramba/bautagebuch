@@ -79,7 +79,7 @@ class ProjectController extends Controller
                 $media->project_id = $projectID;
                 $media->save();
             }
-            updateProjectUpdatedAt($projectID);
+            //updateProjectUpdatedAt($projectID);
         }
     }
 
