@@ -381,5 +381,21 @@ class VisitController extends Controller
         return $pdfs;
     }
 
+         /**
+     * Update project attribute updated_at with the current timestamp.
+     *
+     * @param $id The id of the project
+     * @return Response
+     */
+    public function updateProjectUpdatedAt($projectID) {
+        $project = Project::where('id', '=', $projectID)->first();
+        $now = time();
+
+        if ($project != null) {
+            $project->updated_at = $now;
+            $project->save();
+        }
+    }
+
 
 }
