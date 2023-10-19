@@ -497,7 +497,7 @@
       var month = timestamp.getMonth() + 1;
       var m = month.toString();
       if(timestamp.getMonth() < 10) {
-        m = "0" + m;
+        //m = "0" + m;
       }
       var y = timestamp.getFullYear().toString();
 
