@@ -469,7 +469,7 @@
       var d = date.getDate().toString();
       var month = date.getMonth() + 1;
       var m = month.toString();
-      if(date.getMonth() < 10) {
+      if(date.getMonth() + 1 < 10) {
         m = "0" + m;
       }
       if(date.getDate() < 10) {
@@ -496,7 +496,7 @@
 
       var month = timestamp.getMonth() + 1;
       var m = month.toString();
-      if(timestamp.getMonth() < 10) {
+      if(timestamp.getMonth() + 1 < 10) {
         m = "0" + m;
       }
       var y = timestamp.getFullYear().toString();
@@ -639,7 +639,7 @@
             title: 'zuletzt bearbeitet',
             sortable: true,
             align: 'left',
-            formatter: createdAtFormatter
+            formatter: updatedAtFormatter
           }, {
             field: 'operate',
             title: 'Aktionen',
