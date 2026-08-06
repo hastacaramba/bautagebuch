@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Member;
 use App\Report;
+use App\Project;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use DateTime;
@@ -35,7 +36,7 @@ class ReportController extends Controller {
             $result[] = $item;
         }
 
-        return json_encode($result);
+        return json_encode($reports);
     }
 
 
