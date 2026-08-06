@@ -81,6 +81,15 @@ class ReportController extends Controller {
         //get all visits of the project
         $visits = Visit::where('project_id', '=', $projectID)->get();
 
+        $reports = [];
+
+        foreach ($visits as $visit) {
+        
+            if ($projectID == $visit->project_id) {
+                $reports = Report::where('visit_id', $visit->id)->get();    
+            }
+
+        }
 
         /*
         //get all currently existing reports
@@ -105,7 +114,7 @@ class ReportController extends Controller {
             }
         }
 */
-        return json_encode($visits);
+        return json_encode($reports);
     }
 
 
