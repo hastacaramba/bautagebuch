@@ -77,24 +77,31 @@ class ReportController extends Controller {
      */
     public function projectReportsJson($projectID) {
 
+        //get all visits of the project
+        //$visits = Visit::where('project_id', '=', $projectID)->get();
+
+        //get all currently existing reports
         $reports = Report::all();
-/*
+
+        //something to store the report data
         $result = [];
 
         foreach ($reports as $report) {
+            if ($projectID == $report->visit->projectID) {
+
             $item = [
                 'id' => $report->id,
                 'filename' => $report->filename,
                 'created_at' => $report->created_at,
                 'visit_id' => $report->visit['id'],
                 'visit_date' => $report->visit['date'],
-
             ];
 
             $result[] = $item;
+            }
         }
-*/
-        return json_encode($reports);
+
+        return json_encode($result);
     }
 
 
