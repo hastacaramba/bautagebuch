@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Member;
 use App\Report;
+use App\Visit;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use DateTime;
@@ -15,13 +16,14 @@ class ReportController extends Controller {
     /**
      * Get all reports as json.
      *
-     * @return false|string
+     * @return json
      */
     public function reportsJson() {
-        $reports = Report::all();
+       
+	$reports = Report::all();
 
-        $result = [];
-
+        
+/*
         foreach ($reports as $report) {
             $item = [
                 'id' => $report->id,
@@ -34,9 +36,63 @@ class ReportController extends Controller {
 
             $result[] = $item;
         }
+*/
+        return json_encode($reports);
 
-        return json_encode($result);
+}
+
+
+    /**
+     * Get all reports for a certain project as json.
+     * @param $projectID
+     * @return json
+     */
+/*
+    public function projectReportsJson($projectID) {
+       //get all visits of the project
+        $visits = Visit::where('project_id', '=', $projectID)->get();
+
+        $reports = [];
+	$result = [];
+
+        foreach ($visits as $visit) {
+           $reports[] = Report::where('visit_id', $visit->id)->get(['id','filename','visit_id','log','created_at','updated_at']);
+	   
+
+	   $counter = 1;
+           foreach ($reports as $report) {
+             $item = [
+                'id' => $report[$counter]['id'],
+               // 'filename' => $report[$counter],
+               // 'created_at' => $report[$counter]->created_at,
+               // 'log' => $report[$counter]->log,
+               // 'visit_id' => $report[$counter]['visit_id'],
+               // 'visit_date' => $report[$counter]['visit_date'],
+
+            ];
+	   
+	    $counter += 1;
+
+            $result[] = $item;
+	  }
+
+        }
+
+        return json_encode($reports);
+	
+
     }
+*/
+
+
+public function projectReportsJson($projectID)
+{
+    $reports = Report::whereHas('visit', function($q) use ($projectID) {
+        $q->where('project_id', $projectID);
+    })->get(['id','filename','visit_id', 'log','created_at','updated_at']);
+
+    return response()->json($reports->values());
+}
 
 
     /**

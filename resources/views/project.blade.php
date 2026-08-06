@@ -113,6 +113,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="container-fluid">
                 <!-- Begehungsvermerke -->
               <div class="card shadow mb-4">
@@ -143,8 +144,43 @@
                         </table>
                     </div>
                 </div>
-            </div>            
+            </div>
+
+<!--test -->
+
+                <!-- Berichte -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h4><i class="fas fa-clipboard-list"></i> Alle Berichte dieses Bauvorhabens</h4>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <!-- Table: projectReports -->
+                        <table
+                        id="tableAllReports"
+                        data-id-field="id"
+                        data-side-pagination="client"
+                        data-toggle="table"
+                        data-sortable="true"
+                        data-url="/project/reports/{{$projectID}}"
+                        data-search="true"
+                        data-toolbar="#toolbarReports"
+                        data-show-columns="true"
+                        data-pagination="true"
+          	        data-detail-view="false"
+                        data-response-handler="responseHandler"
+                        data-show-export="false">
+                        </table>
+                    </div>
+                </div>
+
+<!-- test -->
+
+
+
+
         </div>
+	
         <!-- End of Main Content -->
 
         @component('partials.footer')
@@ -394,6 +430,7 @@
       initTableVisits();
       initTableConcernedMembers();
       initTable();
+      initTableAllReports();
 
       //tabs
         $('ul.tabs li').click(function(){
@@ -520,6 +557,7 @@
           initTableMembers();
           initTableMedia();
           initTableConcernedMembers();
+          initTableAllReports();
 
           $("#showDate").click(function () {
               var status = $("#date").val();
@@ -1042,6 +1080,86 @@ function initTableMedia() {
       }
 
 
+// - BOOTSTRAP-TABLE ConcernedMembers - //
+
+    var $tableAllReports = $('#tableAllReports')
+
+    function filenameFormatterReports(value, row, index) {
+          var url = "{{url('/storage/app/public/reports/')}}/" + value;
+
+          return '<a href="' + url + '"><i class=\"far fa-file-pdf\"></i> ' + value + '</a>';
+      }
+
+function operateFormatterReports(value, row, index) {
+          var url = "{{url('/storage/app/public/reports/')}}/" + row.filename;
+          return [
+              '<a class="showReport" href="' + url + '" title="Anzeigen">',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-eye"></i></button>',
+              '</a>  ',
+              '<a class="downloadReport" href="' + url + '" title="Download" download>',
+              '<button type="button" class="btn btn-default" style="color:#345589; border: none" ><i class="fas fa-download"></i></button>',
+              '</a>  ',
+          ].join('')
+      }
+
+
+/* test */
+
+      /**
+       * Initiiert die Bootstrap-Table.
+     i  */
+      function initTableAllReports() {
+          $tableAllReports.bootstrapTable('destroy').bootstrapTable({
+              locale: 'de-DE',
+              columns: [
+                  {
+                      field: 'filename',
+                      title: 'Dateiname',
+                      sortable: false,
+                      align: 'left',
+                      formatter: filenameFormatterReports
+                  }, {
+                      field: 'created_at',
+                      title: 'erstellt am',
+                      align: 'left',
+                      sortable: true,
+                      formatter: createdAtFormatterReports
+
+                  },{
+                      field: 'operate',
+                      title: 'Aktion',
+                      sortable: false,
+                      align: 'left',
+                      events: window.operateEvents,
+                      formatter: operateFormatterReports
+                  }
+              ]
+          })
+          $tableAllReports.on('check.bs.table uncheck.bs.table ' +
+              'check-all.bs.table uncheck-all.bs.table',
+              function () {
+                  //$remove.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$activate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$deactivate.prop('disabled', !$table.bootstrapTable('getSelections').length)
+                  //$newPW.prop('disabled', !$table.bootstrapTable('getSelections').length)
+
+                  // save your data, here just save the current page
+                  selections = getIdSelections()
+                  // push or splice the selections if you want to save all data selections
+              })
+          $tableAllReports.on('all.bs.table', function (e, name, args) {
+              //console.log(name, args)
+          })
+
+      }
+
+/* test ende */
+
+
+
+
+
+
 
 
 /**
@@ -1163,6 +1281,38 @@ function initTableConcernedMembers() {
         '<a href="/projects/' + row.id + '"><img class="img-fluid table-img" src="images/' + value + '" /></a>'
       ]
     }
+
+
+   function createdAtFormatterReports(value, row, index) {
+          var date = new Date(value);
+          var d = date.getDate();
+          var m = date.getMonth() + 1;
+          var h = date.getHours();
+          var min = date.getMinutes();
+          if((date.getMonth() + 1) < 10) {
+              m = "0" + m;
+          }
+          if(date.getDate() < 10) {
+              d = "0" + d;
+          }
+          if(date.getHours() < 10) {
+              h = "0" + h;
+          }
+          if(date.getMinutes() < 10) {
+              min = "0" + min;
+          }
+
+          var y = date.getFullYear().toString();
+
+
+          var output = d + "." + m + "." + y + ", " + h + ":" + min;
+
+          return [
+              output
+          ]
+      }
+
+
 
     function createdAtFormatter(value, row, index) {
         if (value != null) {
