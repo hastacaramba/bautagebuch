@@ -17,8 +17,7 @@
       </li>
       <li class="nav-item {% if page.group == "themes" %}active{% endif %}">
         <a class="nav-link" href="{{ site.baseurl }}/themes">
-          CSS Frameworks
-          <span class="badge badge-warning">New</span>
+          Themes
         </a>
       </li>
       <li class="nav-item">
@@ -27,9 +26,11 @@
           Examples
         </a>
       </li>
-      <li class="nav-item {% if page.title == "Donate" %}active{% endif %}">
-        <a class="nav-link" href="{{ site.baseurl }}/donate">
-          Donate
+      <li class="nav-item">
+        <a class="nav-link"
+          href="https://live.bootstrap-table.com"
+          target="_blank">
+          Online Editor
         </a>
       </li>
       <li class="nav-item {% if page.title == "News" %}active{% endif %}">
@@ -37,10 +38,28 @@
           News
         </a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link"
+          href="https://blog.bootstrap-table.com"
+          target="_blank">
+          Blog
+        </a>
+      </li>
     </ul>
   </div>
 
   <ul class="navbar-nav flex-row ml-md-auto d-none d-md-flex">
+    <li class="nav-item dropdown">
+      <a class="nav-item nav-link dropdown-toggle mr-md-2" href="#" id="bd-versions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        v{{ site.current_version }}
+      </a>
+      <div class="dropdown-menu dropdown-menu-md-right" aria-labelledby="bd-versions">
+        <a class="dropdown-item active" href="/">Latest ({{ site.current_version }})</a>
+        {% for version in site.data.versions %}
+        <a class="dropdown-item" href="http://bootstrap-table.com/versions/{{ version }}/" target="_blank">v{{ version }}</a>
+        {% endfor %}
+      </div>
+    </li>
     <li class="nav-item">
       <a class="nav-link p-2" href="{{ site.repo }}" target="_blank" rel="noopener" aria-label="GitHub">
         {%- include icons/github.svg class="navbar-nav-svg" -%}

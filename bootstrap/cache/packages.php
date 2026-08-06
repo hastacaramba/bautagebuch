@@ -74,4 +74,11 @@
       0 => 'NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider',
     ),
   ),
+  'spresnac/laravel-create-user-cli' => 
+  array (
+    'providers' => 
+    array (
+      0 => 'spresnac\\createcliuser\\CreateCliUserCommandServiceProvider',
+    ),
+  ),
 );

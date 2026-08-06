@@ -6,43 +6,63 @@ group: extensions
 toc: true
 ---
 
-Use Plugin: [bootstrap-table-multiple-sort](https://github.com/dimbslmh/bootstrap-table/tree/master/src/extensions/multiple-sort)
-
 ## Usage
 
 {% highlight html %}
 <script src="extensions/multiple-sort/bootstrap-table-multiple-sort.js"></script>
 {% endhighlight %}
 
+## Example
+
+[Multiple Sort](https://examples.bootstrap-table.com/#extensions/multiple-sort.html)
+
 ## Options
 
 ### showMultiSort
+
+- **attribute:** `data-show-multi-sort`
 
 - **type:** `Boolean`
 
 - **Detail:**
 
-   Set true to allow the multiple sort.
+  Set true to allow the multiple sort.
 
 - **Default:** `false`
 
 ### showMultiSortButton
 
+- **attribute:** `data-show-multi-sort-button`
+
 - **type:** `Boolean`
 
 - **Detail:**
 
-   Set false to hide multiple sort UI button.
+  Set false to hide multiple sort UI button.
 
 - **Default:** `true`
 
+### multiSortStrictSort
+
+- **attribute:** `data-multi-sort-strict-sort`
+
+- **type:** `Boolean`
+
+- **Detail:**
+
+  Set true to enable strict sorting. This means that strings will be compared and ordered using toLowerCase.
+
+- **Default:** `false`
+
 ### sortPriority
+
+- **attribute:** `data-sort-priority`
 
 - **type:** `Object`
 
 - **Detail:**
 
-   Set one or multiple sort priority. Example: '[{"sortName": "forks_count","sortOrder":"desc"},{"sortName":"stargazers_count","sortOrder":"desc"}]'
+  Set one or multiple sort priority. Example: '[{"sortName": "forks_count","sortOrder":"desc"},{"sortName":"stargazers_count","sortOrder":"desc"}]'
 
 - **Default:**null
 
@@ -59,117 +79,130 @@ Use Plugin: [bootstrap-table-multiple-sort](https://github.com/dimbslmh/bootstra
 
 - **Detail:**
 
-   Force mutltiple sort table (usable after manual data changes).
+  Force multiple sort table (usable after manual data changes).
 
-## Locales
 
-### formatMultipleSort
+### multiSort
 
+- **parameters:** sortPriority
 
 - **Detail:**
 
-   Title of the advanced search modal
+  Set one or multiple sort priority
 
-- **Default:** `Multiple Sort`
+  Example:
+  ```
+  [
+  {
+  "sortName": "forks_count",
+  "sortOrder": "desc"
+  },
+  {
+  "sortName": "stargazers_count",
+  "sortOrder": "asc"
+  }
+  ]
+  ```
+
+## Localizations
 
 ### formatAddLevel
 
-
 - **Detail:**
 
-   Text of the add level button
+  Text of the add level button
 
-- **Default:** `Add Level`
-
-### formatDeleteLevel
-
-
-- **Detail:**
-
-   Text of the delete level button
-
-- **Default:** `Delete Level`
-
-### formatColumn
-
-
-- **Detail:**
-
-   Text of Column header
-
-- **Default:** `Column`
-
-### formatOrder
-
-
-- **Detail:**
-
-   Text of the delete level button
-
-- **Default:** `Order`
-
-### formatSortBy
-
-
-- **Detail:**
-
-   Text of the delete level button
-
-- **Default:** `Sort by`
-
-### formatThenBy
-
-
-- **Detail:**
-
-   Text of the delete level button
-
-- **Default:** `Then by`
-
-### formatSort
-
-
-- **Detail:**
-
-   Text of the delete level button
-
-- **Default:** `Sort`
+- **Default:** `function () { return "Add Level" }`
 
 ### formatCancel
 
+- **Detail:**
+
+  Text of the delete level button
+
+- **Default:** `function () { return "Cancel" }`
+
+### formatColumn
 
 - **Detail:**
 
-   Text of the delete level button
+  Text of Column header
 
-- **Default:** `Cancel`
+- **Default:** `function () { return "Column" }`
+
+### formatDeleteLevel
+
+- **Detail:**
+
+  Text of the delete level button
+
+- **Default:** `function () { return "Delete Level" }`
 
 ### formatDuplicateAlertTitle
 
-
 - **Detail:**
 
-   Title of the duplicate alert
+  Title of the duplicate alert
 
-- **Default:** `Duplicate(s) detected!`
+- **Default:** `function () { return "Duplicate(s) detected!" }`
 
 ### formatDuplicateAlertDescription
 
+- **Detail:**
+
+  Text of the duplicate alert
+
+- **Default:** `function () { return "Please remove or change any duplicate column." }`
+
+### formatMultipleSort
 
 - **Detail:**
 
-   Text of the duplicate alert
+  Title of the advanced search modal
 
-- **Default:** `Please remove or change any duplicate column.`
+- **Default:** `function () { return "Multiple Sort" }`
+
+### formatOrder
+
+- **Detail:**
+
+  Text of the delete level button
+
+- **Default:** `function () { return "Order" }`
+
+### formatSort
+
+- **Detail:**
+
+  Text of the delete level button
+
+- **Default:** `function () { return "Sort" }`
+
+### formatSortBy
+
+- **Detail:**
+
+  Text of the delete level button
+
+- **Default:** `function () { return "Sort by" }`
 
 ### formatSortOrders
 
+- **Detail:**
+
+  Text of the sort orders
+
+- **Default:**
+  - asc : `function () { return "Ascending" }`
+  - desc : `function () { return "Descending" }`
+
+### formatThenBy
 
 - **Detail:**
 
-   Text of the sort orders
+  Text of the delete level button
 
-- **Default:**asc : `Ascending` and desc : `Descending`
+- **Default:** `function () { return "Then by" }`
 
 ## Events
 

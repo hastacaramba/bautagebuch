@@ -1,72 +1,68 @@
 /**
  * @author: Dennis Hernández
- * @webSite: http://djhvscf.github.io/Blog
  * @version: v2.0.0
  */
 
-(function($) {
-  "use strict";
+const isInit = that => that.$el.data('resizableColumns') !== undefined
 
-  var initResizable = function(that) {
-    if (that.options.resizable && !that.options.cardView && !isInit(that)) {
-      that.$el.resizableColumns();
-    }
-  };
+const initResizable = that => {
+  if (
+    that.options.resizable &&
+    !that.options.cardView &&
+    !isInit(that) &&
+    that.$el.is(':visible')
+  ) {
+    that.$el.resizableColumns({
+      store: window.store
+    })
+  }
+}
 
-  var reInitResizable = function(that) {
-    destroy(that);
-    initResizable(that);
-  };
+const destroy = that => {
+  if (isInit(that)) {
+    that.$el.data('resizableColumns').destroy()
+  }
+}
 
-  var destroy = function(that) {
-    if (isInit(that)) {
-      that.$el.data("resizableColumns").destroy();
-    }
-  };
+const reInitResizable = that => {
+  destroy(that)
+  initResizable(that)
+}
 
-  var isInit = function(that) {
-    return that.$el.data("resizableColumns") !== undefined;
-  };
+Object.assign($.fn.bootstrapTable.defaults, {
+  resizable: false
+})
 
-  $.extend($.fn.bootstrapTable.defaults, {
-    resizable: false
-  });
+$.BootstrapTable = class extends $.BootstrapTable {
 
-  var BootstrapTable = $.fn.bootstrapTable.Constructor,
-    _initBody = BootstrapTable.prototype.initBody,
-    _toggleView = BootstrapTable.prototype.toggleView,
-    _resetView = BootstrapTable.prototype.resetView;
+  initBody (...args) {
+    super.initBody(...args)
 
-  BootstrapTable.prototype.initBody = function() {
-    var that = this;
-    _initBody.apply(this, Array.prototype.slice.apply(arguments));
+    this.$el.off('column-switch.bs.table page-change.bs.table')
+      .on('column-switch.bs.table page-change.bs.table', () => {
+        reInitResizable(this)
+      })
 
-    that.$el
-      .off("column-switch.bs.table, page-change.bs.table")
-      .on("column-switch.bs.table, page-change.bs.table", function() {
-        reInitResizable(that);
-      });
-  };
+    reInitResizable(this)
+  }
 
-  BootstrapTable.prototype.toggleView = function() {
-    _toggleView.apply(this, Array.prototype.slice.apply(arguments));
+  toggleView (...args) {
+    super.toggleView(...args)
 
     if (this.options.resizable && this.options.cardView) {
-      //Destroy the plugin
-      destroy(this);
+      // Destroy the plugin
+      destroy(this)
     }
-  };
+  }
 
-  BootstrapTable.prototype.resetView = function() {
-    var that = this;
-
-    _resetView.apply(this, Array.prototype.slice.apply(arguments));
+  resetView (...args) {
+    super.resetView(...args)
 
     if (this.options.resizable) {
       // because in fitHeader function, we use setTimeout(func, 100);
-      setTimeout(function() {
-        initResizable(that);
-      }, 100);
+      setTimeout(() => {
+        initResizable(this)
+      }, 100)
     }
-  };
-})(jQuery);
+  }
+}

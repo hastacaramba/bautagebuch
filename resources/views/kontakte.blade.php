@@ -460,6 +460,10 @@
                 success: function (data) {
                   alert("Der Kontakt wurde gelöscht.")
                   $table.bootstrapTable('refresh');
+                },
+                error: function (data) {
+                  alert("Der Kontakt kann aktuell nicht gelöscht werden. Kann es sein, dass der Kontakt noch als Projektbeteiligter eingetragen ist?")
+                  $table.bootstrapTable('refresh');
                 }
               });
             }

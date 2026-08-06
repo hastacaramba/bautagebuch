@@ -3,223 +3,333 @@
  * extensions: https://github.com/hhurz/tableExport.jquery.plugin
  */
 
-($ => {
-  const Utils = $.fn.bootstrapTable.utils
+const Utils = $.fn.bootstrapTable.utils
 
-  const bootstrap = {
-    3: {
-      icons: {
-        export: 'glyphicon-export icon-share'
-      },
-      html: {
-        dropmenu: '<ul class="dropdown-menu" role="menu"></ul>',
-        dropitem: '<li role="menuitem" data-type="%s"><a href="javascript:">%s</a></li>'
-      }
-    },
-    4: {
-      icons: {
-        export: 'fa-download'
-      },
-      html: {
-        dropmenu: '<div class="dropdown-menu dropdown-menu-right"></div>',
-        dropitem: '<a class="dropdown-item" data-type="%s" href="javascript:">%s</a>'
-      }
-    }
-  }[Utils.bootstrapVersion]
+const TYPE_NAME = {
+  json: 'JSON',
+  xml: 'XML',
+  png: 'PNG',
+  csv: 'CSV',
+  txt: 'TXT',
+  sql: 'SQL',
+  doc: 'MS-Word',
+  excel: 'MS-Excel',
+  xlsx: 'MS-Excel (OpenXML)',
+  powerpoint: 'MS-Powerpoint',
+  pdf: 'PDF'
+}
 
-  const TYPE_NAME = {
-    json: 'JSON',
-    xml: 'XML',
-    png: 'PNG',
-    csv: 'CSV',
-    txt: 'TXT',
-    sql: 'SQL',
-    doc: 'MS-Word',
-    excel: 'MS-Excel',
-    xlsx: 'MS-Excel (OpenXML)',
-    powerpoint: 'MS-Powerpoint',
-    pdf: 'PDF'
+Object.assign($.fn.bootstrapTable.defaults, {
+  showExport: false,
+  exportDataType: 'basic', // basic, all, selected
+  exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel'],
+  exportOptions: {},
+  exportFooter: false
+})
+
+Object.assign($.fn.bootstrapTable.columnDefaults, {
+  forceExport: false,
+  forceHide: false
+})
+
+Object.assign($.fn.bootstrapTable.defaults.icons, {
+  export: {
+    bootstrap3: 'glyphicon-export icon-share',
+    bootstrap5: 'bi-download',
+    materialize: 'file_download',
+    'bootstrap-table': 'icon-download'
+  }[$.fn.bootstrapTable.theme] || 'fa-download'
+})
+
+Object.assign($.fn.bootstrapTable.locales, {
+  formatExport () {
+    return 'Export data'
   }
+})
+Object.assign($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales)
 
-  $.extend($.fn.bootstrapTable.defaults, {
-    showExport: false,
-    exportDataType: 'basic', // basic, all, selected
-    exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel'],
-    exportOptions: {},
-    exportFooter: false
-  })
+$.fn.bootstrapTable.methods.push('exportTable')
 
-  $.extend($.fn.bootstrapTable.defaults.icons, {
-    export: bootstrap.icons.export
-  })
+Object.assign($.fn.bootstrapTable.defaults, {
+  // eslint-disable-next-line no-unused-vars
+  onExportSaved (exportedRows) {
+    return false
+  },
+  onExportStarted () {
+    return false
+  }
+})
 
-  $.extend($.fn.bootstrapTable.locales, {
-    formatExport () {
-      return 'Export data'
-    }
-  })
-  $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales)
+Object.assign($.fn.bootstrapTable.events, {
+  'export-saved.bs.table': 'onExportSaved',
+  'export-started.bs.table': 'onExportStarted'
+})
 
-  $.fn.bootstrapTable.methods.push('exportTable')
+$.BootstrapTable = class extends $.BootstrapTable {
+  initToolbar (...args) {
+    const o = this.options
+    let exportTypes = o.exportTypes
 
-  $.BootstrapTable = class extends $.BootstrapTable {
-    initToolbar () {
-      const o = this.options
+    this.showToolbar = this.showToolbar || o.showExport
 
-      this.showToolbar = this.showToolbar || o.showExport
+    if (this.options.showExport) {
 
-      super.initToolbar()
+      if (typeof exportTypes === 'string') {
+        const types = exportTypes.slice(1, -1).replace(/ /g, '').split(',')
 
-      if (!this.options.showExport) {
-        return
+        exportTypes = types.map(t => t.slice(1, -1))
       }
-      const $btnGroup = this.$toolbar.find('>.btn-group')
-      this.$export = $btnGroup.find('div.export')
 
+      if (typeof o.exportOptions === 'string') {
+        o.exportOptions = Utils.calculateObjectValue(null, o.exportOptions)
+      }
+
+      this.$export = this.$toolbar.find('>.columns div.export')
       if (this.$export.length) {
         this.updateExportButton()
         return
       }
-      this.$export = $(`
-        <div class="export btn-group">
-        <button class="btn btn-${o.buttonsClass} btn-${o.iconSize} dropdown-toggle"
-          aria-label="export type"
-          title="${o.formatExport()}"
-          data-toggle="dropdown"
-          type="button">
-          <i class="${o.iconsPrefix} ${o.icons.export}"></i>
-          <span class="caret"></span>
-        </button>
-        ${bootstrap.html.dropmenu}
-        </div>
-      `).appendTo($btnGroup)
 
-      this.updateExportButton()
+      this.buttons = Object.assign(this.buttons, {
+        export: {
+          html:
+            () => {
+              if (exportTypes.length === 1) {
+                return `
+                  <div class="export ${this.constants.classes.buttonsDropdown}"
+                  data-type="${exportTypes[0]}">
+                  <button class="${this.constants.buttonsClass}"
+                  aria-label="${o.formatExport()}"
+                  type="button"
+                  title="${o.formatExport()}">
+                  ${o.showButtonIcons ? Utils.sprintf(this.constants.html.icon, o.iconsPrefix, o.icons.export) : ''}
+                  ${o.showButtonText ? o.formatExport() : ''}
+                  </button>
+                  </div>
+                `
+              }
 
-      const $menu = this.$export.find('.dropdown-menu')
-      let exportTypes = o.exportTypes
+              const html = []
 
-      if (typeof exportTypes === 'string') {
-        const types = exportTypes.slice(1, -1).replace(/ /g, '').split(',')
-        exportTypes = types.map(t => t.slice(1, -1))
-      }
-      for (const type of exportTypes) {
-        if (TYPE_NAME.hasOwnProperty(type)) {
-          $menu.append(Utils.sprintf(bootstrap.html.dropitem, type, TYPE_NAME[type]))
+              html.push(`
+                <div class="export ${this.constants.classes.buttonsDropdown}">
+                <button class="${this.constants.buttonsClass} dropdown-toggle"
+                aria-label="${o.formatExport()}"
+                ${this.constants.dataToggle}="dropdown"
+                type="button"
+                title="${o.formatExport()}">
+                ${o.showButtonIcons ? Utils.sprintf(this.constants.html.icon, o.iconsPrefix, o.icons.export) : ''}
+                ${o.showButtonText ? o.formatExport() : ''}
+                ${this.constants.html.dropdownCaret}
+                </button>
+                ${this.constants.html.toolbarDropdown[0]}
+              `)
+
+              for (const type of exportTypes) {
+                if (TYPE_NAME.hasOwnProperty(type)) {
+                  const $item = $(Utils.sprintf(this.constants.html.pageDropdownItem, '', TYPE_NAME[type]))
+
+                  $item.attr('data-type', type)
+                  html.push($item.prop('outerHTML'))
+                }
+              }
+
+              html.push(this.constants.html.toolbarDropdown[1], '</div>')
+              return html.join('')
+            }
         }
-      }
-
-      $menu.find('>li, >a').click(({currentTarget}) => {
-        const type = $(currentTarget).data('type')
-        const exportOptions = {
-          type,
-          escape: false
-        }
-
-        this.exportTable(exportOptions)
       })
     }
 
-    exportTable (options) {
-      const o = this.options
-      const stateField = this.header.stateField
-      const isCardView = o.cardView
+    super.initToolbar(...args)
+    this.$export = this.$toolbar.find('>.columns div.export')
 
-      const doExport = callback => {
-        if (stateField) {
-          this.hideColumn(stateField)
-        }
-        if (isCardView) {
-          this.toggleView()
-        }
-
-        const data = this.getData()
-        if (o.exportFooter) {
-          const $footerRow = this.$tableFooter.find('tr').first()
-          const footerData = {}
-          const footerHtml = []
-
-          $.each($footerRow.children(), (index, footerCell) => {
-            const footerCellHtml = $(footerCell).children('.th-inner').first().html()
-            footerData[this.columns[index].field] = footerCellHtml === '&nbsp;' ? null : footerCellHtml
-
-            // grab footer cell text into cell index-based array
-            footerHtml.push(footerCellHtml)
-          })
-
-          this.append(footerData)
-
-          const $lastTableRow = this.$body.children().last()
-
-          $.each($lastTableRow.children(), (index, lastTableRowCell) => {
-            $(lastTableRowCell).html(footerHtml[index])
-          })
-        }
-
-        this.$el.tableExport($.extend({
-          onAfterSaveToFile: () => {
-            if (o.exportFooter) {
-              this.load(data)
-            }
-
-            if (stateField) {
-              this.showColumn(stateField)
-            }
-            if (isCardView) {
-              this.toggleView()
-            }
-
-            callback()
-          }
-        }, o.exportOptions, options))
-      }
-
-      if (o.exportDataType === 'all' && o.pagination) {
-        const eventName = o.sidePagination === 'server'
-          ? 'post-body.bs.table' : 'page-change.bs.table'
-        this.$el.one(eventName, () => {
-          doExport(() => {
-            this.togglePagination()
-          })
-        })
-        this.togglePagination()
-      } else if (o.exportDataType === 'selected') {
-        let data = this.getData()
-        let selectedData = this.getSelections()
-        if (!selectedData.length) {
-          return
-        }
-
-        if (o.sidePagination === 'server') {
-          data = {
-            total: o.totalRows,
-            [this.options.dataField]: data
-          }
-          selectedData = {
-            total: selectedData.length,
-            [this.options.dataField]: selectedData
-          }
-        }
-
-        this.load(selectedData)
-        doExport(() => {
-          this.load(data)
-        })
-      } else {
-        doExport()
-      }
+    if (!this.options.showExport) {
+      return
     }
 
-    updateSelected () {
-      super.updateSelected()
-      this.updateExportButton()
+    this.updateExportButton()
+    let $exportButtons = this.$export.find('[data-type]')
+
+    if (exportTypes.length === 1) {
+      $exportButtons = this.$export
     }
 
-    updateExportButton () {
-      if (this.options.exportDataType === 'selected') {
-        this.$export.find('> button')
-          .prop('disabled', !this.getSelections().length)
-      }
+    $exportButtons.click(e => {
+      e.preventDefault()
+      this.trigger('export-started')
+      this.exportTable({
+        type: $(e.currentTarget).data('type')
+      })
+    })
+    this.handleToolbar()
+  }
+
+  handleToolbar () {
+    if (!this.$export) {
+      return
+    }
+
+    if (super.handleToolbar) {
+      super.handleToolbar()
     }
   }
-})(jQuery)
+
+  exportTable (options) {
+    const o = this.options
+    const stateField = this.header.stateField
+    const isCardView = o.cardView
+
+    const doExport = callback => {
+      if (stateField) {
+        this.hideColumn(stateField)
+      }
+      if (isCardView) {
+        this.toggleView()
+      }
+
+      this.columns.forEach(row => {
+        if (row.forceHide) {
+          this.hideColumn(row.field)
+        }
+      })
+
+      const data = this.getData()
+
+      if (o.detailView && o.detailViewIcon) {
+        const detailViewIndex = o.detailViewAlign === 'left' ? 0 : this.getVisibleFields().length + Utils.getDetailViewIndexOffset(this.options)
+
+        o.exportOptions.ignoreColumn = [detailViewIndex].concat(o.exportOptions.ignoreColumn || [])
+      }
+
+      if (o.exportFooter && o.height) {
+        const $footerRow = this.$tableFooter.find('tr').first()
+        const footerData = {}
+        const footerHtml = []
+
+        $.each($footerRow.children(), (index, footerCell) => {
+          const footerCellHtml = $(footerCell).children('.th-inner').first().html()
+
+          footerData[this.columns[index].field] = footerCellHtml === '&nbsp;' ? null : footerCellHtml
+
+          // grab footer cell text into cell index-based array
+          footerHtml.push(footerCellHtml)
+        })
+
+        this.$body.append(this.$body.children().last()[0].outerHTML)
+        const $lastTableRow = this.$body.children().last()
+
+        $.each($lastTableRow.children(), (index, lastTableRowCell) => {
+          $(lastTableRowCell).html(footerHtml[index])
+        })
+      }
+
+      const hiddenColumns = this.getHiddenColumns()
+
+      hiddenColumns.forEach(row => {
+        if (row.forceExport) {
+          this.showColumn(row.field)
+        }
+      })
+
+      if (typeof o.exportOptions.fileName === 'function') {
+        options.fileName = o.exportOptions.fileName()
+      }
+
+      this.$el.tableExport(Utils.extend({
+        onAfterSaveToFile: () => {
+          if (o.exportFooter) {
+            this.load(data)
+          }
+
+          if (stateField) {
+            this.showColumn(stateField)
+          }
+          if (isCardView) {
+            this.toggleView()
+          }
+
+          hiddenColumns.forEach(row => {
+            if (row.forceExport) {
+              this.hideColumn(row.field)
+            }
+          })
+
+          this.columns.forEach(row => {
+            if (row.forceHide) {
+              this.showColumn(row.field)
+            }
+          })
+
+          if (callback) callback()
+        }
+      }, o.exportOptions, options))
+    }
+
+    if (o.exportDataType === 'all' && o.pagination) {
+      const eventName = o.sidePagination === 'server' ?
+        'post-body.bs.table' : 'page-change.bs.table'
+      const virtualScroll = this.options.virtualScroll
+
+      this.$el.one(eventName, () => {
+        setTimeout(() => {
+          const data = this.getData()
+
+          doExport(() => {
+            this.options.virtualScroll = virtualScroll
+            this.togglePagination()
+          })
+          this.trigger('export-saved', data)
+        }, 0)
+      })
+      this.options.virtualScroll = false
+      this.togglePagination()
+    } else if (o.exportDataType === 'selected') {
+      let data = this.getData()
+      let selectedData = this.getSelections()
+      const pagination = o.pagination
+
+      if (!selectedData.length) {
+        return
+      }
+
+      if (o.sidePagination === 'server') {
+        data = {
+          total: o.totalRows,
+          [this.options.dataField]: data
+        }
+        selectedData = {
+          total: selectedData.length,
+          [this.options.dataField]: selectedData
+        }
+      }
+
+      this.load(selectedData)
+      if (pagination) {
+        this.togglePagination()
+      }
+      doExport(() => {
+        if (pagination) {
+          this.togglePagination()
+        }
+        this.load(data)
+      })
+      this.trigger('export-saved', selectedData)
+    } else {
+      doExport()
+      this.trigger('export-saved', this.getData(true))
+    }
+  }
+
+  updateSelected () {
+    super.updateSelected()
+    this.updateExportButton()
+  }
+
+  updateExportButton () {
+    if (this.options.exportDataType === 'selected') {
+      this.$export.find('> button')
+        .prop('disabled', !this.getSelections().length)
+    }
+  }
+}

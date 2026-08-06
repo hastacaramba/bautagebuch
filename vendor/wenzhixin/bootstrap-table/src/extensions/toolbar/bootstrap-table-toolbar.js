@@ -2,227 +2,383 @@
  * @author: aperez <aperez@datadec.es>
  * @version: v2.0.0
  *
- * @update Dennis Hernández <http://djhvscf.github.io/Blog>
+ * @update Dennis Hernández
  * @update zhixin wen <wenzhixin2010@gmail.com>
  */
 
-($ => {
-  const Utils = $.fn.bootstrapTable.utils
+const Utils = $.fn.bootstrapTable.utils
 
-  const bootstrap = {
-    3: {
-      icons: {
-        advancedSearchIcon: 'glyphicon-chevron-down'
-      },
-      html: {
-        modalHeader: `
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-            <h4 class="modal-title">%s</h4>
-          </div>
-        `
-      }
+const theme = {
+  bootstrap3: {
+    icons: {
+      advancedSearchIcon: 'glyphicon-chevron-down'
     },
-    4: {
-      icons: {
-        advancedSearchIcon: 'fa-chevron-down'
-      },
-      html: {
-        modalHeader: `
-          <div class="modal-header">
-            <h4 class="modal-title">%s</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        `
-      }
-    }
-  }[Utils.bootstrapVersion]
-
-  $.extend($.fn.bootstrapTable.defaults, {
-    advancedSearch: false,
-    idForm: 'advancedSearch',
-    actionForm: '',
-    idTable: undefined,
-    onColumnAdvancedSearch (field, text) {
-      return false
-    }
-  })
-
-  $.extend($.fn.bootstrapTable.defaults.icons, {
-    advancedSearchIcon: bootstrap.icons.advancedSearchIcon
-  })
-
-  $.extend($.fn.bootstrapTable.Constructor.EVENTS, {
-    'column-advanced-search.bs.table': 'onColumnAdvancedSearch'
-  })
-
-  $.extend($.fn.bootstrapTable.locales, {
-    formatAdvancedSearch () {
-      return 'Advanced search'
-    },
-    formatAdvancedCloseButton () {
-      return 'Close'
-    }
-  })
-
-  $.extend($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales)
-
-  $.BootstrapTable = class extends $.BootstrapTable {
-    initToolbar () {
-      const o = this.options
-
-      this.showToolbar = this.showToolbar ||
-        (o.search &&
-        o.advancedSearch &&
-        o.idTable)
-
-      super.initToolbar()
-
-      if (!o.search || !o.advancedSearch || !o.idTable) {
-        return
-      }
-
-      this.$toolbar.find('>.btn-group').append(`
-        <button class="btn btn-default${Utils.sprintf(' btn-%s', o.buttonsClass)}${Utils.sprintf(' btn-%s', o.iconSize)}"
-          type="button"
-          name="advancedSearch"
-          aria-label="advanced search"
-          title="${o.formatAdvancedSearch()}">
-        <i class="${o.iconsPrefix} ${o.icons.advancedSearchIcon}"></i>
-        </button>
-      `)
-
-      this.$toolbar.find('button[name="advancedSearch"]').off('click').on('click', () => this.showAvdSearch())
-    }
-
-    showAvdSearch () {
-      const o = this.options
-
-      if (!$(`#avdSearchModal_${o.idTable}`).hasClass('modal')) {
-        $('body').append(`
-          <div id="avdSearchModal_${o.idTable}"  class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xs">
-              <div class="modal-content">
-                ${Utils.sprintf(bootstrap.html.modalHeader, o.formatAdvancedSearch())}
-                <div class="modal-body modal-body-custom">
-                  <div class="container-fluid" id="avdSearchModalContent_${o.idTable}"
-                    style="padding-right: 0px; padding-left: 0px;" >
-                  </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" id="btnCloseAvd_${o.idTable}" class="btn btn-${o.buttonsClass}">
-                    ${o.formatAdvancedCloseButton()}
-                  </button>
-                </div>
+    classes: {},
+    html: {
+      modal: `
+        <div id="avdSearchModal_%s" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-xs">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button class="close toolbar-modal-close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title toolbar-modal-title"></h4>
               </div>
+              <div class="modal-body toolbar-modal-body"></div>
+              <div class="modal-footer toolbar-modal-footer">
+                <button class="btn btn-%s toolbar-modal-close"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+    }
+  },
+  bootstrap4: {
+    icons: {
+      advancedSearchIcon: 'fa-chevron-down'
+    },
+    classes: {},
+    html: {
+      modal: `
+        <div id="avdSearchModal_%s" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-xs">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title toolbar-modal-title"></h4>
+                <button class="close toolbar-modal-close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body toolbar-modal-body"></div>
+              <div class="modal-footer toolbar-modal-footer">
+                <button class="btn btn-%s toolbar-modal-close"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+    }
+  },
+  bootstrap5: {
+    icons: {
+      advancedSearchIcon: 'bi-chevron-down'
+    },
+    classes: {
+      formGroup: 'mb-3'
+    },
+    html: {
+      modal: `
+        <div id="avdSearchModal_%s" class="modal fade" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-xs">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title toolbar-modal-title"></h5>
+                <button class="btn-close toolbar-modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body toolbar-modal-body"></div>
+              <div class="modal-footer toolbar-modal-footer">
+                <button class="btn btn-%s toolbar-modal-close"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+    }
+  },
+  bulma: {
+    icons: {
+      advancedSearchIcon: 'fa-chevron-down'
+    },
+    classes: {},
+    html: {
+      modal: `
+        <div class="modal" id="avdSearchModal_%s">
+          <div class="modal-background"></div>
+          <div class="modal-card">
+            <header class="modal-card-head">
+              <p class="modal-card-title toolbar-modal-title"></p>
+              <button class="delete toolbar-modal-close"></button>
+            </header>
+            <section class="modal-card-body toolbar-modal-body"></section>
+            <footer class="modal-card-foot toolbar-modal-footer">
+              <button class="button button-%s toolbar-modal-close"></button>
+            </footer>
+          </div>
+        </div>
+      `
+    }
+  },
+  foundation: {
+    icons: {
+      advancedSearchIcon: 'fa-chevron-down'
+    },
+    classes: {},
+    html: {
+      modal: `
+        <div class="reveal" id="avdSearchModal_%s" data-reveal>
+          <h1 class="toolbar-modal-title"></h1>
+          <div class="toolbar-modal-body"></div>
+          <button class="close-button toolbar-modal-close" data-close aria-label="Close modal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="toolbar-modal-footer">
+            <button class="button button-%s toolbar-modal-close"></button>
+          </div>
+        </div>
+      `
+    }
+  },
+  materialize: {
+    icons: {
+      advancedSearchIcon: 'expand_more'
+    },
+    classes: {},
+    html: {
+      modal: `
+        <div id="avdSearchModal_%s" class="modal">
+          <div class="modal-content">
+            <h4 class="toolbar-modal-title"></h4>
+            <div class="toolbar-modal-body"></div>
+          </div>
+          <div class="modal-footer toolbar-modal-footer">
+            <a href="javascript:void(0)" class="modal-close waves-effect waves-green btn-flat btn-%s toolbar-modal-close"></a>
+          </div>
+        </div>
+      `
+    }
+  },
+  semantic: {
+    icons: {
+      advancedSearchIcon: 'fa-chevron-down'
+    },
+    classes: {},
+    html: {
+      modal: `
+        <div class="ui modal" id="avdSearchModal_%s">
+          <i class="close icon toolbar-modal-close"></i>
+          <div class="header toolbar-modal-title""></div>
+          <div class="image content ui form toolbar-modal-body"></div>
+          <div class="actions toolbar-modal-footer">
+            <div class="ui black deny button button-%s toolbar-modal-close"></div>
+          </div>
+        </div>
+      `
+    }
+  }
+}[$.fn.bootstrapTable.theme]
+
+Object.assign($.fn.bootstrapTable.defaults, {
+  advancedSearch: false,
+  idForm: 'advancedSearch',
+  actionForm: '',
+  idTable: undefined,
+  // eslint-disable-next-line no-unused-vars
+  onColumnAdvancedSearch (field, text) {
+    return false
+  }
+})
+
+Object.assign($.fn.bootstrapTable.defaults.icons, {
+  advancedSearchIcon: theme.icons.advancedSearchIcon
+})
+
+Object.assign($.fn.bootstrapTable.events, {
+  'column-advanced-search.bs.table': 'onColumnAdvancedSearch'
+})
+
+Object.assign($.fn.bootstrapTable.locales, {
+  formatAdvancedSearch () {
+    return 'Advanced search'
+  },
+  formatAdvancedCloseButton () {
+    return 'Close'
+  }
+})
+
+Object.assign($.fn.bootstrapTable.defaults, $.fn.bootstrapTable.locales)
+
+$.BootstrapTable = class extends $.BootstrapTable {
+  initToolbar () {
+    this.showToolbar = this.showToolbar ||
+      this.options.search &&
+      this.options.advancedSearch &&
+      this.options.idTable
+
+    if (this.showToolbar) {
+      this.buttons = Object.assign(this.buttons, {
+        advancedSearch: {
+          text: this.options.formatAdvancedSearch(),
+          icon: this.options.icons.advancedSearchIcon,
+          event: this.showAdvancedSearch,
+          attributes: {
+            'aria-label': this.options.formatAdvancedSearch(),
+            title: this.options.formatAdvancedSearch()
+          }
+        }
+      })
+
+      if (Utils.isEmptyObject(this.filterColumnsPartial)) {
+        this.filterColumnsPartial = {}
+      }
+    }
+
+    super.initToolbar()
+  }
+
+  showAdvancedSearch () {
+    this.$toolbarModal = $(`#avdSearchModal_${this.options.idTable}`)
+
+    if (this.$toolbarModal.length <= 0) {
+      $('body').append(Utils.sprintf(theme.html.modal,
+        this.options.idTable, this.options.buttonsClass))
+
+      this.$toolbarModal = $(`#avdSearchModal_${this.options.idTable}`)
+      this.$toolbarModal.find('.toolbar-modal-close')
+        .off('click')
+        .on('click', () => this.hideToolbarModal())
+    }
+
+    this.initToolbarModalBody()
+    this.showToolbarModal()
+  }
+
+  initToolbarModalBody () {
+    this.$toolbarModal.find('.toolbar-modal-title')
+      .html(this.options.formatAdvancedSearch())
+    this.$toolbarModal.find('.toolbar-modal-footer .toolbar-modal-close')
+      .html(this.options.formatAdvancedCloseButton())
+
+    this.$toolbarModal.find('.toolbar-modal-body')
+      .html(this.createToolbarForm())
+      .off('keyup blur', 'input').on('keyup blur', 'input', e => {
+        this.onColumnAdvancedSearch(e)
+      })
+  }
+
+  showToolbarModal () {
+    const theme = $.fn.bootstrapTable.theme
+
+    if (['bootstrap3', 'bootstrap4'].includes(theme)) {
+      this.$toolbarModal.modal()
+    } else if (theme === 'bootstrap5') {
+      if (!this.toolbarModal) {
+        this.toolbarModal = new window.bootstrap.Modal(this.$toolbarModal[0], {})
+      }
+      this.toolbarModal.show()
+    } else if (theme === 'bulma') {
+      this.$toolbarModal.toggleClass('is-active')
+    } else if (theme === 'foundation') {
+      if (!this.toolbarModal) {
+        this.toolbarModal = new window.Foundation.Reveal(this.$toolbarModal)
+      }
+      this.toolbarModal.open()
+    } else if (theme === 'materialize') {
+      this.$toolbarModal.modal().modal('open')
+    } else if (theme === 'semantic') {
+      this.$toolbarModal.modal('show')
+    }
+  }
+
+  hideToolbarModal () {
+    const theme = $.fn.bootstrapTable.theme
+
+    if (['bootstrap3', 'bootstrap4'].includes(theme)) {
+      this.$toolbarModal.modal('hide')
+    } else if (theme === 'bootstrap5') {
+      this.toolbarModal.hide()
+    } else if (theme === 'bulma') {
+      $('html').toggleClass('is-clipped')
+      this.$toolbarModal.toggleClass('is-active')
+    } else if (theme === 'foundation') {
+      this.toolbarModal.close()
+    } else if (theme === 'materialize') {
+      this.$toolbarModal.modal('open')
+    } else if (theme === 'semantic') {
+      this.$toolbarModal.modal('close')
+    }
+
+    if (this.options.sidePagination === 'server') {
+      this.options.pageNumber = 1
+      this.updatePagination()
+      this.trigger('column-advanced-search', this.filterColumnsPartial)
+    }
+  }
+
+  createToolbarForm () {
+    const html = [
+      `<form class="form-horizontal toolbar-model-form" action="${this.options.actionForm}">`
+    ]
+
+    for (const column of this.columns) {
+      if (!column.checkbox && column.visible && column.searchable) {
+        const title = $('<div/>').html(column.title).text().trim()
+        const value = this.filterColumnsPartial[column.field] || ''
+
+        html.push(`
+          <div class="form-group row ${theme.classes.formGroup || ''}">
+            <label class="col-sm-4 control-label">${title}</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control ${this.constants.classes.input}"
+                name="${column.field}" placeholder="${title}" value="${value}">
             </div>
           </div>
         `)
-
-        let timeoutId = 0
-
-        $(`#avdSearchModalContent_${o.idTable}`).append(this.createFormAvd().join(''))
-
-        $(`#${o.idForm}`).off('keyup blur', 'input').on('keyup blur', 'input', e => {
-          if (o.sidePagination === 'server') {
-            this.onColumnAdvancedSearch(e)
-          } else {
-            clearTimeout(timeoutId)
-            timeoutId = setTimeout(() => {
-              this.onColumnAdvancedSearch(e)
-            }, o.searchTimeOut)
-          }
-        })
-
-        $(`#btnCloseAvd_${o.idTable}`).click(() => {
-          $(`#avdSearchModal_${o.idTable}`).modal('hide')
-          if (o.sidePagination === 'server') {
-            this.options.pageNumber = 1
-            this.updatePagination()
-            this.trigger('column-advanced-search', this.filterColumnsPartial)
-          }
-        })
-
-        $(`#avdSearchModal_${o.idTable}`).modal()
-      } else {
-        $(`#avdSearchModal_${o.idTable}`).modal()
       }
     }
 
-    createFormAvd () {
-      const o = this.options
-      const html = [`<form class="form-horizontal" id="${o.idForm}" action="${o.actionForm}">`]
+    html.push('</form>')
 
-      for (const column of this.columns) {
-        if (!column.checkbox && column.visible && column.searchable) {
-          html.push(`
-            <div class="form-group row">
-              <label class="col-sm-4 control-label">${column.title}</label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control input-md" name="${column.field}" placeholder="${column.title}" id="${column.field}">
-              </div>
-            </div>
-          `)
+    return html.join('')
+  }
+
+  initSearch () {
+    super.initSearch()
+
+    if (!this.options.advancedSearch || this.options.sidePagination === 'server') {
+      return
+    }
+
+    const fp = Utils.isEmptyObject(this.filterColumnsPartial) ? null : this.filterColumnsPartial
+
+    this.data = fp ? this.data.filter((item, i) => {
+      for (const [key, v] of Object.entries(fp)) {
+        const val = v.toLowerCase()
+        let value = item[key]
+        const index = this.header.fields.indexOf(key)
+
+        value = Utils.calculateObjectValue(this.header,
+          this.header.formatters[index], [value, item, i], value)
+
+        if (
+          !(index !== -1 &&
+          (typeof value === 'string' || typeof value === 'number') &&
+          `${value}`.toLowerCase().includes(val))
+        ) {
+          return false
         }
       }
+      return true
+    }) : this.data
+    this.unsortedData = [...this.data]
+  }
 
-      html.push('</form>')
+  onColumnAdvancedSearch (e) {
+    const text = $(e.currentTarget).val().trim()
+    const field = $(e.currentTarget).attr('name')
 
-      return html
+    if (text) {
+      this.filterColumnsPartial[field] = text
+    } else {
+      delete this.filterColumnsPartial[field]
     }
 
-    initSearch () {
-      super.initSearch()
-
-      if (!this.options.advancedSearch || this.options.sidePagination === 'server') {
-        return
-      }
-
-      const fp = $.isEmptyObject(this.filterColumnsPartial) ? null : this.filterColumnsPartial
-
-      this.data = fp ? $.grep(this.data, (item, i) => {
-        for (const [key, v] of Object.entries(fp)) {
-          const fval = v.toLowerCase()
-          let value = item[key]
-          const index = this.header.fields.indexOf(key)
-          value = Utils.calculateObjectValue(this.header,
-            this.header.formatters[index], [value, item, i], value)
-
-          if (
-            !(index !== -1 &&
-            (typeof value === 'string' || typeof value === 'number') &&
-            (`${value}`).toLowerCase().includes(fval))
-          ) {
-            return false
-          }
-        }
-        return true
-      }) : this.data
-    }
-
-    onColumnAdvancedSearch (e) {
-      const text = $.trim($(e.currentTarget).val())
-      const $field = $(e.currentTarget)[0].id
-
-      if ($.isEmptyObject(this.filterColumnsPartial)) {
-        this.filterColumnsPartial = {}
-      }
-      if (text) {
-        this.filterColumnsPartial[$field] = text
-      } else {
-        delete this.filterColumnsPartial[$field]
-      }
-
-      if (this.options.sidePagination !== 'server') {
-        this.options.pageNumber = 1
-        this.onSearch(e)
-        this.updatePagination()
-        this.trigger('column-advanced-search', $field, text)
-      }
+    if (this.options.sidePagination !== 'server') {
+      this.options.pageNumber = 1
+      this.initSearch()
+      this.updatePagination()
+      this.trigger('column-advanced-search', field, text)
     }
   }
-})(jQuery)
+}

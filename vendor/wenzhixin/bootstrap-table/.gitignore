@@ -1,27 +1,28 @@
 node_modules
 bower_components
 
+# Tools
+tools/bootstrap-table-examples
+
 # docs site
 _gh_pages
 
 # use scss instead
-src/bootstrap-table.css
-src/bootstrap-table.css.map
-src/themes/**/*.css
-src/themes/**/*.css.map
+src/**/*.css
+src/**/*.css.map
 .sass-cache
 
 # old docs
 docs_
 
 # check the locale file on README
-check.js
+release.*
 
 # Common IDE files
 nbproject
 .~lock.*
+Gemfile.lock
 package-lock.json
-*.lock
 .buildpath
 .idea
 .project

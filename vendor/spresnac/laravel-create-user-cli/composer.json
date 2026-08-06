@@ -1,0 +1,51 @@
+{
+  "name": "spresnac/laravel-create-user-cli",
+  "description": "Create a user-entry from cli with artisan",
+  "keywords": ["php", "laravel", "cli", "usermanagement", "ci", "cd"],
+  "type": "library",
+  "require": {
+    "php": "^7.4|^8.0|^8.1"
+  },
+  "require-dev": {
+    "orchestra/testbench": "^6|^7",
+    "laravel/framework": "^8|^9"
+  },
+  "autoload": {
+    "psr-4": {
+      "spresnac\\": "src/spresnac/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "spresnac\\tests\\": "tests/spresnac/"
+    }
+  },
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Sascha Presnac",
+      "email": "sascha.presnac@protonmail.com"
+    }
+  ],
+  "funding": [
+    {
+      "type": "other",
+      "url": "https://www.buymeacoffee.com/spresnac"
+    },
+    {
+      "type": "paypal",
+      "url": "https://www.paypal.me/paladin"
+    }
+  ],
+  "extra": {
+    "laravel": {
+      "providers": [
+        "spresnac\\createcliuser\\CreateCliUserCommandServiceProvider"
+      ]
+    }
+  },
+  "scripts": {
+    "test-ci": "phpunit --coverage-clover=coverage.xml"
+  }
+}

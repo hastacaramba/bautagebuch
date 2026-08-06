@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use http\Client\Response;
 use Illuminate\Http\Request;
 use App\Contact;
+use App\Member;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -45,14 +46,16 @@ class ContactController extends Controller
      */
     public function deleteContact($contactID) {
         $contact = Contact::where('id', '=', $contactID)->first();
+        $members = Member::where('contact_id', '=', $contactID)->get();
 
-        if ($contact != null) {
+        if ($contact != null && !$members->first()) {
             $contact->delete();
-
+				 
             return "Contact successfully deleted.";
         }
 
-        return "Contact was not found.";
+        abort(); 
+        //return "Contact was not found.";
     }
 
 

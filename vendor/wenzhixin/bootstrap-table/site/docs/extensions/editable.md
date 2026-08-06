@@ -18,17 +18,33 @@ Use Plugin: [x-editable](https://github.com/vitalets/x-editable)
 
 ### editable
 
+- **Attribute:** `data-editable`
+
 - **type:** `Boolean`
 
 - **Detail:**
 
-   Set false to disabled editable of all columns.
+  Set false to disabled editable of all columns.
 
 - **Default:** `true`
 
 ## Column options
 
+### alwaysUseFormatter
+
+- **Attribute:** `data-always-use-formatter`
+
+- **type:** `Boolean`
+
+- **Detail:**
+
+    Set `true` to use always the formatter, even if the column was already edited.
+
+- **Default:** `false`
+
 ### editable
+
+- **Attribute:** `data-editable`
 
 - **type:** `Object | Function`
 
@@ -36,10 +52,10 @@ Use Plugin: [x-editable](https://github.com/vitalets/x-editable)
 
   Configuration of x-editable. Full list of options: [http://vitalets.github.io/x-editable/docs.html#editable](http://vitalets.github.io/x-editable/docs.html#editable).
 
-  If it is type of Function, it is called with params: index, row, element for
-  each row of the table. It should return Object of the x-editable configuration.
+  If it is the type of Function, it is called with params: index, row, element for
+  each row of the table. It should return the Object of the x-editable configuration.
 
-  All options can be defined via `data-editable-*` HTML attributes. Table wide options are used for every column but can be overridden:
+  All options can be defined via `data-editable-*` HTML attributes. Table-wide options are used for every column but can be overridden:
 
   {% highlight html %}
   <table id="my_table_id"
@@ -57,19 +73,34 @@ Use Plugin: [x-editable](https://github.com/vitalets/x-editable)
   </table>
   {% endhighlight %}
 
+  You can use `noEditFormatter` to disable the editable column, for example:
+
+  {% highlight javascript %}
+  {
+    editable: {
+      noEditFormatter (value, row, index) {
+        if (value === 'noEdit') {
+          return 'No Edit'
+        }
+        return false
+      }
+    }
+  }
+  {% endhighlight %}
+
 - **Default:** `undefined`
 
 ## Events
 
 ### onEditableInit(editable-init.bs.table)
 
-Fired when all columns was initialized by `$().editable()` method.
+Fired when all columns were initialized by the `$().editable()` method.
 
 ### onEditableSave(editable-save.bs.table)
 
 Fired when an editable cell is saved.
 
-parameters: field, row, oldValue, $el
+parameters: field, row, rowIndex, oldValue, $el
 
 ### onEditableShown(editable-shown.bs.table)
 
@@ -79,10 +110,10 @@ parameters: field, row, $el
 
 ### onEditableHidden(editable-hidden.bs.table)
 
-Fired when an editable cell is hidden / closed.
+Fired when an editable cell is hidden/closed.
 
 parameters: field, row, $el, reason
 
 ## The existing problems
 
-* Editable extension does not support searchable in the select type.
+* The editable extension does not support searchable in the select type.

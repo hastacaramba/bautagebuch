@@ -6,11 +6,12 @@ group: extensions
 toc: true
 ---
 
-This is an extension which provides a sticky header for the table when scrolling.
+This is an extension that provides a sticky header for the table when scrolling.
 
 ## Usage
 
 {% highlight html %}
+<link rel="stylesheet" href="extensions/sticky-header/bootstrap-table-sticky-header.css">
 <script src="extensions/sticky-header/bootstrap-table-sticky-header.js"></script>
 {% endhighlight %}
 
@@ -22,20 +23,48 @@ This is an extension which provides a sticky header for the table when scrolling
 
 ### stickyHeader
 
+- **attribute:** `data-sticky-header`
+
 - **type:** `Boolean`
 
 - **Detail:**
 
-   Set true to use sticky header.
+  Set true to use a sticky header.
 
 - **Default:** `false`
 
-### stickyHeaderOffsetY
+### stickyHeaderOffsetLeft
+
+- **attribute:** `data-sticky-header-offset-left`
 
 - **type:** `Number`
 
 - **Detail:**
 
-   Set the Y offset from the top of the window to pin the sticky header. If there is a fixed navigation bar with a height of 60px, this value would be `60`.
+  Set the left offset of the sticky header container. If the body padding left is `60px`, this value would be `60`.
+
+- **Default:** `0`
+
+### stickyHeaderOffsetRight
+
+- **attribute:** `data-sticky-header-offset-right`
+
+- **type:** `Number`
+
+- **Detail:**
+
+  Set the right offset of the sticky header container. If the body padding right is `60px`, this value would be `60`.
+
+- **Default:** `0`
+
+### stickyHeaderOffsetY
+
+- **attribute:** `data-sticky-header-offset-y`
+
+- **type:** `Number`
+
+- **Detail:**
+
+  Set the Y offset from the top of the window to pin the sticky header. If there is a fixed navigation bar with a height of `60px`, this value would be `60`.
 
 - **Default:** `0`
