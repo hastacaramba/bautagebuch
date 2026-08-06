@@ -88,7 +88,7 @@ class ReportController extends Controller {
         $result = [];
 
         foreach ($reports as $report) {
-            if ($projectID == $report->visit->projectID) {
+            if ($projectID == $report->visit['project_id']) {
 
             $item = [
                 'id' => $report->id,
