@@ -94,9 +94,9 @@ class ReportController extends Controller {
             $item = [
                 'id' => $report->id,
                 'filename' => $report->filename,
-                'created_at' => $report->created_at,
-                'visit_id' => $report->visit['id'],
-                'visit_date' => $report->visit['date'],
+                //'created_at' => $report->created_at,
+                //'visit_id' => $report->visit['id'],
+                //'visit_date' => $report->visit['date'],
             ];
 
             $result[] = $item;
