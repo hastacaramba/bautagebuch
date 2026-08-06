@@ -68,6 +68,44 @@ class ReportController extends Controller {
     }
 
 
+     /**
+     * Returns all visits of a project as json.
+     *
+     * @param $projectID
+     * @return mixed
+     */
+    public function projectReportsJson($projectID) {
+
+        //get alle the visits of the project
+        $visits = Visit::where('project_id', '=', $projectID)->get();
+
+        //run through the visits and collect all the reports of every visit
+        foreach ($visits as $visit) {
+            
+            //get all the reports of the current visit
+            $reports = Report::where('visit_id', $visit->id)->get();
+            $result = [];
+
+            foreach ($reports as $report) {
+                $item = [
+                    'id' => $report->id,
+                    'filename' => $report->filename,
+                    'created_at' => $report->created_at,
+                    'log' => $report->log,
+                    'visit_id' => $report->visit['id'],
+                    'visit_date' => $report->visit['date'],
+
+                ];
+
+                $result[] = $item;
+            }
+
+        }
+
+        return json_encode($result);
+    }
+
+
     /**
      * Deletes a report.
      *

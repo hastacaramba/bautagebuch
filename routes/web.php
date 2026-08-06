@@ -69,6 +69,8 @@ Route::get('/reports/{visitID}', 'ReportController@visitReportsJson')->name('vis
 
 Route::get('/report/{reportID}/send', 'ReportController@sendReport')->name('sendReport')->middleware('auth');
 
+Route::get('/report/projectReports/{projectID}', 'ReportController@projectReportsJson')->name('projectReportsJson')->middleware('auth');
+
 Route::delete('/report/{reportID}', 'ReportController@deleteReport')->name('deleteReport')->middleware('auth');
 
 Route::post('/subarea', 'SubareaController@newSubarea')->name('newSubarea')->middleware('auth');
