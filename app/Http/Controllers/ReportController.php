@@ -20,7 +20,7 @@ class ReportController extends Controller {
      */
     public function reportsJson() {
         $reports = Report::all();
-
+/*
         $result = [];
 
         foreach ($reports as $report) {
@@ -35,7 +35,7 @@ class ReportController extends Controller {
 
             $result[] = $item;
         }
-
+*/
         return json_encode($reports);
     }
 
