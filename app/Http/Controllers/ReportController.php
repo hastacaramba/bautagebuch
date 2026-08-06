@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Member;
 use App\Report;
 use App\Project;
+use App\Visit;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use DateTime;
