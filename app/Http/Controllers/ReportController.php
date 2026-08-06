@@ -89,7 +89,7 @@ class ReportController extends Controller {
 
         foreach ($reports as $report) {
             //if ($projectID == $report->visit['project_id']) {
-            //if ($projectID == $report->visit['project_id']) {
+            if ($projectID == $report->visit['project_id']) {
 
             $item = [
                 'id' => $report->id,
@@ -100,7 +100,7 @@ class ReportController extends Controller {
             ];
 
             $result[] = $item;
-            //}
+            }
         }
 
         return json_encode($result);
