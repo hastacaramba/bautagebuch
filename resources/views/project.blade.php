@@ -162,6 +162,8 @@
                         data-side-pagination="client"
                         data-toggle="table"
                         data-sortable="true"
+                        data-sort-name="created_at"
+                        data-sort-order="desc"
                         data-url="/project/reports/{{$projectID}}"
                         data-search="true"
                         data-toolbar="#toolbarReports"
